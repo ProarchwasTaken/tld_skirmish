@@ -1,7 +1,8 @@
 # Synopsis
 **True Human Tribulation: Skirmish** is a wave-based fighter where you
-have to fight off 3 waves of enemies. The game features controller support
-simple enough that you could play with just an SNES controller.
+have to survive against multiple waves of enemies. The game features 
+controller support simple enough that you could play with just an SNES 
+controller.
 
 
 # Controls
@@ -35,6 +36,6 @@ sure it would work with other controllers.
 * **D-Pad** - Movement
 * **A Button** - Light Attack
 * **B Button** - Heavy Attack
-* **Y/R Button - Guard
-* **X/L Button - Special/Sub-Weapon
+* **Y/R Button** - Guard
+* **X/L Button** - Special/Sub-Weapon
 
