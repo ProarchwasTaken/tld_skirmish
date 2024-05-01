@@ -5,3 +5,6 @@
 
 #define CANVAS_WIDTH 426
 #define CANVAS_HEIGHT 240
+
+#define TARGET_FRAMERATE 60
+
