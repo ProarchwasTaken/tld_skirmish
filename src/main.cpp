@@ -1,8 +1,10 @@
 #include <raylib.h>
+#include "constants.h"
 
 
 int main() {
-  InitWindow(1280, 720, "True Human Tribulation: Skirmish");
+  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
+             "True Human Tribulation: Skirmish");
   SetTargetFPS(60);
 
   while (WindowShouldClose() == false) {

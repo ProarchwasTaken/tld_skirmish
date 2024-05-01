@@ -26,7 +26,7 @@ set(SOURCE_FILES
 )
 
 set(HEADER_FILES
-""
+"include/constants.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
