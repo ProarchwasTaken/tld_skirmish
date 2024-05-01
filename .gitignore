@@ -2,4 +2,5 @@
 build/
 logs/
 res_test.png
-game*
+game.exe
+game
