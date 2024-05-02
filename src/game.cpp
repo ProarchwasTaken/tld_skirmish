@@ -6,12 +6,13 @@
 
 
 Game::Game() {
-
+  setupCanvas();
 }
 
 Game::~Game() {
   PLOGV << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
+  PLOGV << "Thanks for playing!";
 }
 
 void Game::correctWindow() {
@@ -39,7 +40,7 @@ void Game::correctWindow() {
 }
 
 void Game::setupCanvas() {
-  PLOGI << "Setting up canvas...";
+  PLOGI << "Setting up the canvas...";
   canvas = LoadRenderTexture(CANVAS_WIDTH, CANVAS_HEIGHT);
   canvas_source = {0, 0, CANVAS_WIDTH, -CANVAS_HEIGHT};
   canvas_dest = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
