@@ -7,11 +7,13 @@
 
 Game::Game() {
   setupCanvas();
+  test_room = LoadTexture("concept_art/test_room1.png");
 }
 
 Game::~Game() {
   PLOGV << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
+  UnloadTexture(test_room);
   PLOGV << "Thanks for playing!";
 }
 
@@ -50,6 +52,7 @@ void Game::refresh() {
   BeginTextureMode(canvas);
   {
     ClearBackground(BLACK);
+    DrawTexture(test_room, 0, 0, WHITE);
   }
   EndTextureMode();
 

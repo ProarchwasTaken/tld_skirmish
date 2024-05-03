@@ -33,4 +33,6 @@ private:
   RenderTexture canvas;
   Rectangle canvas_source;
   Rectangle canvas_dest;
+
+  Texture test_room;
 };
