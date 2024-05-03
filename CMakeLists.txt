@@ -24,14 +24,14 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 set(SOURCE_FILES 
 "src/main.cpp"
 "src/game.cpp"
-"src/player_char.cpp"
+"src/char_player.cpp"
 )
 
 set(HEADER_FILES
 "include/defaults.h"
 "include/game.h"
 "include/color_palette.h"
-"include/player_char.h"
+"include/char_player.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
