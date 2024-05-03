@@ -1,3 +1,4 @@
+// main.cpp
 #include <raylib.h>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -11,8 +12,6 @@
 using plog::RollingFileAppender, plog::TxtFormatter, 
 plog::ColorConsoleAppender;
 
-Color *COLORS::PALETTE;
-
 
 void setupCustomLogger() {
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
@@ -22,6 +21,9 @@ void setupCustomLogger() {
     .addAppender(&console_appender);
   PLOGV << "Logger initialized.";
 }
+
+
+Color *COLORS::PALETTE;
 
 
 int main() {

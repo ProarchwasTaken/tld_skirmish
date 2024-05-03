@@ -1,3 +1,4 @@
+// defaults.h
 #pragma once
 
 #define WINDOW_WIDTH 1280

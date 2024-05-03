@@ -25,6 +25,9 @@ public:
    * more info on that.*/
   void setupCanvas();
 
+  /* For defining the COLOR::PALETTE external variable to be properly 
+   * used. This should only be called once, and only before the
+   * color palette is actually used.*/
   void defineColorPalette();
 
   /* The root function for checking for inputs, updating all active game
