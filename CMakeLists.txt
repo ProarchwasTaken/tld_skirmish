@@ -29,6 +29,7 @@ set(SOURCE_FILES
 set(HEADER_FILES
 "include/defaults.h"
 "include/game.h"
+"include/color_palette.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
