@@ -1,22 +1,30 @@
 // game.cpp
+#include <raylib.h>
+#include <memory>
 #include "defaults.h"
 #include "game.h"
 #include "color_palette.h"
-#include <raylib.h>
+#include "char_player.h"
 #include <plog/Log.h>
+
+using std::make_unique;
 
 
 Game::Game() {
   setupCanvas();
   defineColorPalette();
+
   test_room = LoadTexture("concept_art/test_room1.png");
+  player = make_unique<PlayerCharacter>();
 }
 
 Game::~Game() {
   PLOGV << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
+
   UnloadTexture(test_room);
+  player.reset();
   PLOGV << "Thanks for playing!";
 }
 
@@ -67,6 +75,7 @@ void Game::refresh() {
   {
     ClearBackground(BLACK);
     DrawTexture(test_room, 0, 0, WHITE);
+    player->draw();
   }
   EndTextureMode();
 

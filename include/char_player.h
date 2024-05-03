@@ -8,7 +8,6 @@
 class PlayerCharacter {
 public:
   PlayerCharacter();
-  ~PlayerCharacter();
 
   void draw();
 

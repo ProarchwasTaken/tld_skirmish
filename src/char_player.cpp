@@ -7,9 +7,12 @@
 
 PlayerCharacter::PlayerCharacter() {
   PLOGI << "Initializing the player character.";
-  position = {213, 208};
+  position = {214, 208};
   hitbox_scale = {32, 64};
   tex_scale = {64, 64};
+
+  hitboxCorrection();
+  texRectCorrection();
 }
 
 void PlayerCharacter::hitboxCorrection() {
@@ -29,6 +32,6 @@ void PlayerCharacter::texRectCorrection() {
 }
 
 void PlayerCharacter::draw() {
-  DrawRectangleLinesEx(tex_rect, 2, COLORS::PALETTE[10]);
+  DrawRectangleLinesEx(tex_rect, 1, COLORS::PALETTE[10]);
   DrawRectangleLinesEx(hitbox, 2, COLORS::PALETTE[26]);
 }

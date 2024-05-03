@@ -1,6 +1,8 @@
 // game.h
 #pragma once
+#include <memory>
 #include <raylib.h>
+#include "char_player.h"
 
 
 /* As you may have guessed, this class is important as hell as it defines
@@ -40,4 +42,5 @@ private:
   Rectangle canvas_dest;
 
   Texture test_room;
+  std::unique_ptr<PlayerCharacter> player;
 };
