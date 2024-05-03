@@ -25,6 +25,8 @@ public:
    * more info on that.*/
   void setupCanvas();
 
+  void defineColorPalette();
+
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
    * gamestate.*/

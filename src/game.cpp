@@ -1,18 +1,21 @@
 // game.cpp
 #include "defaults.h"
 #include "game.h"
+#include "color_palette.h"
 #include <raylib.h>
 #include <plog/Log.h>
 
 
 Game::Game() {
   setupCanvas();
+  defineColorPalette();
   test_room = LoadTexture("concept_art/test_room1.png");
 }
 
 Game::~Game() {
   PLOGV << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
+  UnloadImagePalette(COLORS::PALETTE);
   UnloadTexture(test_room);
   PLOGV << "Thanks for playing!";
 }
@@ -46,6 +49,17 @@ void Game::setupCanvas() {
   canvas = LoadRenderTexture(CANVAS_WIDTH, CANVAS_HEIGHT);
   canvas_source = {0, 0, CANVAS_WIDTH, -CANVAS_HEIGHT};
   canvas_dest = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+}
+
+void Game::defineColorPalette() {
+  PLOGI << "Loading the game's color palette...";
+  int color_count;
+  Image palette = LoadImage("graphics/color_palette.png");
+
+  COLORS::PALETTE = LoadImagePalette(palette, 56, &color_count);
+  PLOGI << "Successfully loaded palette!";
+  PLOGI << "Color Count: " << color_count;
+  UnloadImage(palette);
 }
 
 void Game::refresh() {

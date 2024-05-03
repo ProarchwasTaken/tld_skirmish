@@ -6,9 +6,12 @@
 #include <plog/Appenders/ColorConsoleAppender.h>
 #include "defaults.h"
 #include "game.h"
+#include "color_palette.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, 
 plog::ColorConsoleAppender;
+
+Color *COLORS::PALETTE;
 
 
 void setupCustomLogger() {
