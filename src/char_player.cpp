@@ -11,6 +11,9 @@ PlayerCharacter::PlayerCharacter() {
   hitbox_scale = {32, 64};
   tex_scale = {64, 64};
 
+  movement_speed = 1;
+  direction = RIGHT;
+
   hitboxCorrection();
   texRectCorrection();
 }
@@ -29,6 +32,95 @@ void PlayerCharacter::texRectCorrection() {
 
   tex_position = {x, y};
   tex_rect = {x, y, tex_scale.x, tex_scale.y};
+}
+
+void PlayerCharacter::update(double &delta_time) {
+  moving = isMoving();
+  movement(delta_time);
+}
+
+bool PlayerCharacter::isMoving() {
+  if (moving_left && moving_right) {
+    return false;
+  }
+  else if (!moving_left && !moving_right) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+void PlayerCharacter::movement(double &delta_time) {
+  if (!moving) {
+    return;
+  }
+  else if (moving_right) {
+    direction = RIGHT;
+  }
+  else if (moving_left) {
+    direction = LEFT;
+  }
+
+  position.x += (movement_speed * direction) * delta_time;
+  hitboxCorrection();
+  texRectCorrection();
+}
+
+void PlayerCharacter::inputPressed() {
+  bool key_right = IsKeyPressed(KEY_RIGHT);
+  bool key_left = IsKeyPressed(KEY_LEFT);
+
+  bool gamepad_available = IsGamepadAvailable(1);
+  bool gamepad_right = false;
+  bool gamepad_left = false;
+
+  if (gamepad_available) {
+    gamepad_right = IsGamepadButtonPressed(
+      1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
+    );
+    gamepad_left = IsGamepadButtonPressed(
+      1, GAMEPAD_BUTTON_LEFT_FACE_LEFT
+    );
+  }
+
+  bool input_right = key_right || (gamepad_available && gamepad_right);
+  bool input_left = key_left || (gamepad_available && gamepad_left);
+
+  if (input_right && moving_right == false) {
+    moving_right = true;
+  }
+  if (input_left && moving_left == false) {
+    moving_left = true;
+  }
+}
+
+void PlayerCharacter::inputReleased() {
+  bool key_right = IsKeyReleased(KEY_RIGHT);
+  bool key_left = IsKeyReleased(KEY_LEFT);
+
+  bool gamepad_available = IsGamepadAvailable(1);
+  bool gamepad_right = false;
+  bool gamepad_left = false;
+
+  if (gamepad_available) {
+    gamepad_right = IsGamepadButtonReleased(
+      1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
+    );
+    gamepad_left = IsGamepadButtonReleased(
+      1, GAMEPAD_BUTTON_LEFT_FACE_LEFT
+    ); 
+  }
+
+  bool input_right = key_right || (gamepad_available && gamepad_right);
+  bool input_left = key_left || (gamepad_available && gamepad_left);
+
+  if (input_right && moving_right) {
+    moving_right = false;
+  }
+  if (input_left && moving_left) {
+    moving_left = false;
+  }
 }
 
 void PlayerCharacter::draw() {
