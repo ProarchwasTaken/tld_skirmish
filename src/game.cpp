@@ -71,6 +71,12 @@ void Game::defineColorPalette() {
 }
 
 void Game::refresh() {
+  delta_time = GetFrameTime() * TARGET_FRAMERATE;
+  player->inputPressed();
+  player->inputReleased();
+
+  player->update(delta_time);
+
   BeginTextureMode(canvas);
   {
     ClearBackground(BLACK);
