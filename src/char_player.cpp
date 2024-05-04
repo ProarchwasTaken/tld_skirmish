@@ -11,11 +11,12 @@ PlayerCharacter::PlayerCharacter() {
   hitbox_scale = {32, 64};
   tex_scale = {64, 64};
 
-  movement_speed = 1;
+  movement_speed = 1.5;
   direction = RIGHT;
 
   hitboxCorrection();
   texRectCorrection();
+  PLOGI << "Player initialization complete.";
 }
 
 void PlayerCharacter::hitboxCorrection() {
@@ -71,16 +72,16 @@ void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
-  bool gamepad_available = IsGamepadAvailable(1);
+  bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
   bool gamepad_left = false;
 
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonPressed(
-      1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
+      0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
     );
     gamepad_left = IsGamepadButtonPressed(
-      1, GAMEPAD_BUTTON_LEFT_FACE_LEFT
+      0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     );
   }
 
@@ -99,16 +100,16 @@ void PlayerCharacter::inputReleased() {
   bool key_right = IsKeyReleased(KEY_RIGHT);
   bool key_left = IsKeyReleased(KEY_LEFT);
 
-  bool gamepad_available = IsGamepadAvailable(1);
+  bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
   bool gamepad_left = false;
 
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonReleased(
-      1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
+      0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
     );
     gamepad_left = IsGamepadButtonReleased(
-      1, GAMEPAD_BUTTON_LEFT_FACE_LEFT
+      0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     ); 
   }
 
@@ -124,6 +125,6 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  DrawRectangleLinesEx(tex_rect, 1, COLORS::PALETTE[10]);
-  DrawRectangleLinesEx(hitbox, 2, COLORS::PALETTE[26]);
+  DrawRectangleLinesEx(tex_rect, 1, BLUE);
+  DrawRectangleLinesEx(hitbox, 2, RED);
 }
