@@ -41,6 +41,8 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
+  double delta_time;
+
   Texture test_room;
   std::unique_ptr<PlayerCharacter> player;
 };
