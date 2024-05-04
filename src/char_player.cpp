@@ -1,6 +1,5 @@
 // char_player.cpp
 #include <raylib.h>
-#include "color_palette.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
