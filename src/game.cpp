@@ -89,6 +89,13 @@ void Game::refresh() {
   {
     DrawTexturePro(canvas.texture, canvas_source, canvas_dest, 
                    {0, 0}, 0, WHITE);
+
+    if (DEBUG_MODE) {
+      DrawText(TextFormat("FPS: %i", GetFPS()), 16, 16, 32, GREEN);
+      DrawText(TextFormat("Player Position: (%02.02f, %02.02f)",
+                          player->position.x, player->position.y), 
+               16, 48, 32, GREEN);
+    }
   }
   EndDrawing();
 }
