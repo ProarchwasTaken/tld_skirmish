@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
 #include <plog/Formatters/TxtFormatter.h>
@@ -9,25 +10,22 @@
 #include "game.h"
 #include "globals.h"
 
-using plog::RollingFileAppender, plog::TxtFormatter, 
+using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender;
 
-
-void setupCustomLogger() {
-  static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
-                                                           1000000, 10);
-  static ColorConsoleAppender<TxtFormatter> console_appender;
-  plog::init(plog::verbose, &file_appender)
-    .addAppender(&console_appender);
-  PLOGV << "Logger initialized.";
-}
-
-
 Color *COLORS::PALETTE;
+bool DEBUG_MODE = false;
+
+void setupCustomLogger();
+void parseArguments(int argc, char *argv[]);
 
 
-int main() {
+int main(int argc, char *argv[]) {
   setupCustomLogger();
+
+  if (argc > 1) {
+    parseArguments(argc, argv);
+  }
 
   PLOGI << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -52,3 +50,27 @@ int main() {
 
   return 0;
 }
+
+
+void setupCustomLogger() {
+  static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
+                                                           1000000, 10);
+  static ColorConsoleAppender<TxtFormatter> console_appender;
+  plog::init(plog::verbose, &file_appender)
+    .addAppender(&console_appender);
+  PLOGV << "Logger initialized.";
+}
+
+
+void parseArguments(int argc, char *argv[]) {
+  PLOGI << "Parsing command line arguments.";
+
+  for (int x = 0; x < argc; x++) {
+    string arg = argv[x];
+    if (arg == "--debug") {
+      PLOGV << "Starting the game in debug mode.";
+      DEBUG_MODE = true;
+    }
+  }
+}
+
