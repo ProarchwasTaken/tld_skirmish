@@ -30,7 +30,7 @@ set(SOURCE_FILES
 set(HEADER_FILES
 "include/defaults.h"
 "include/game.h"
-"include/color_palette.h"
+"include/globals.h"
 "include/char_player.h"
 )
 

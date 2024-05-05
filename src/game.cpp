@@ -3,7 +3,7 @@
 #include <memory>
 #include "defaults.h"
 #include "game.h"
-#include "color_palette.h"
+#include "globals.h"
 #include "char_player.h"
 #include <plog/Log.h>
 

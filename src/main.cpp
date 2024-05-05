@@ -7,7 +7,7 @@
 #include <plog/Appenders/ColorConsoleAppender.h>
 #include "defaults.h"
 #include "game.h"
-#include "color_palette.h"
+#include "globals.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, 
 plog::ColorConsoleAppender;
