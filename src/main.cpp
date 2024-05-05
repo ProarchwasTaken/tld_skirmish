@@ -22,12 +22,18 @@ void parseArguments(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
   setupCustomLogger();
+  if (PLATFORM == WINDOWS) {
+    PLOGV << "Operating System: Windows";
+  }
+  else if (PLATFORM == LINUX) {
+    PLOGV << "Operating System: LINUX";
+  }
 
   if (argc > 1) {
     parseArguments(argc, argv);
   }
 
-  PLOGI << "Initializing the game...";
+  PLOGV << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
              "True Human Tribulation: Skirmish");

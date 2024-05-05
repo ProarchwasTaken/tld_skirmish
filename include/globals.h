@@ -1,13 +1,16 @@
-// color_palette.h
+// globals
 #pragma once
 #include <raylib.h>
 
+#define WINDOWS 0
+#define LINUX 1
+
 #if defined(_WIN32)
-  #define PLATFORM "windows"
+  #define PLATFORM WINDOWS
 #elif defined(__linux__)
-  #define PLATFORM "linux"
+  #define PLATFORM LINUX
 #elif defined(__unix__)
-  #define PLATFORM "linux"
+  #define PLATFORM LINUX
 #endif
 
 namespace COLORS {
