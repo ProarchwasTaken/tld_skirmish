@@ -1,5 +1,7 @@
 .cache/
 build/
+build_linux/
+build_win32/
 logs/
 game.exe
 game
