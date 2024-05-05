@@ -54,22 +54,22 @@ using an proper distro, I would really appreciate it if you tried the game
 on linux, and let me know how it turns out. Like if there are more issues,
 or maybe you found the solution to fix it!
 
-- Controller support not working.
+* Controller support not working.
 
-- Problems with resizing the window. Most notably with trying to change
-the height.
+* Problems with resizing the window. Most notably with trying to change
+  the height.
 
-- Borderless fullscreen is broken. Every time I try to go fullscreen, the
-game throws an warning along the lines of: "Wayland: The platform does not
-provide the window position". The only reason I could assume this warning 
-could be thrown is due to the calling of "correctWindow()", which is a 
-method of the game class. 
+* Borderless fullscreen is broken. Every time I try to go fullscreen, the
+  game throws an warning along the lines of: "Wayland: The platform does 
+  not provide the window position". The only reason I could assume this 
+  warning could be thrown is due to the calling of "correctWindow()", 
+  which is a method of the game class. 
 
-When the method is called, it first gets the current width and height of 
-the window. Which I assume is what caused the warning. The method is 
-supposed to be called whenever the window gets resized or enters
-borderless fullscreen. It seems like for some reason the game doesn't
-detect when the window is resized on linux.
+  When the method is called, it first gets the current width and height of 
+  the window. Which I assume is what caused the warning. The method is 
+  supposed to be called whenever the window gets resized or enters
+  borderless fullscreen. It seems like for some reason the game doesn't
+  detect when the window is resized on linux.
 
 Again, I would like to state that this could all be attributed to me using
 WSL, and most of these issues are present on actual distros.
