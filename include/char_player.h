@@ -47,11 +47,12 @@ public:
   void inputPressed();
   void inputReleased();
 
+  Vector2 position;
+
   bool moving;
   float movement_speed;
   int8_t direction;
 private:
-  Vector2 position;
 
   Rectangle hitbox;
   Vector2 hitbox_position;
