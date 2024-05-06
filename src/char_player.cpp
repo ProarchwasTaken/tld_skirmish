@@ -6,7 +6,7 @@
 
 PlayerCharacter::PlayerCharacter() {
   PLOGI << "Initializing the player character.";
-  position = {214, 208};
+  position = {0, 208};
   hitbox_scale = {32, 64};
   tex_scale = {64, 64};
 

@@ -15,7 +15,12 @@ Game::Game() {
   defineColorPalette();
 
   test_room = LoadTexture("concept_art/test_room2.png");
+
   player = make_unique<PlayerCharacter>();
+  camera.target = {player->position.x, 120};
+  camera.offset = {CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0};
+  camera.zoom = 1;
+  camera.rotation = 0;
 }
 
 Game::~Game() {
@@ -70,18 +75,27 @@ void Game::defineColorPalette() {
   UnloadImage(palette);
 }
 
+void Game::cameraFollowPlayer() {
+  camera.target = {player->position.x, 120};
+}
+
 void Game::refresh() {
   delta_time = GetFrameTime() * TARGET_FRAMERATE;
   player->inputPressed();
   player->inputReleased();
 
   player->update(delta_time);
+  cameraFollowPlayer();
 
   BeginTextureMode(canvas);
   {
+    BeginMode2D(camera);
+
     ClearBackground(BLACK);
     DrawTexture(test_room, -512, 0, WHITE);
     player->draw();
+
+    EndMode2D();
   }
   EndTextureMode();
 

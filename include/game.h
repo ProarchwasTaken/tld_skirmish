@@ -32,6 +32,8 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
+  void cameraFollowPlayer();
+
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
    * gamestate.*/
@@ -44,5 +46,6 @@ private:
   double delta_time;
 
   Texture test_room;
+  Camera2D camera;
   std::unique_ptr<PlayerCharacter> player;
 };
