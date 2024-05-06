@@ -44,7 +44,6 @@ int main(int argc, char *argv[]) {
   PLOGV << "Everything seems good to go!";
   while (WindowShouldClose() == false) {
     if (IsWindowResized()) {
-      PLOGI << "Window has been resized.";
       game.correctWindow();
     }
     if (IsKeyPressed(KEY_F11)) {

@@ -71,5 +71,8 @@ or maybe you found the solution to fix it!
   borderless fullscreen. It seems like for some reason the game doesn't
   detect when the window is resized on linux.
 
+  EDIT: After some more testing it seems the warning is because 
+  ToggleBorderlessWindowed is called, not because of correctWindow().
+
 Again, I would like to state that this could all be attributed to me using
 WSL, and most of these issues are present on actual distros.
