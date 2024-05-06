@@ -32,6 +32,9 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
+  /* For keeping the player at the center of the screen at all times.
+   * Unless the camera has hit a boundary. Called once every frame of
+   * which the player is off-center.*/
   void cameraFollowPlayer();
 
   /* The root function for checking for inputs, updating all active game
@@ -47,5 +50,6 @@ private:
 
   Texture test_room;
   Camera2D camera;
+  int camera_boundX;
   std::unique_ptr<PlayerCharacter> player;
 };

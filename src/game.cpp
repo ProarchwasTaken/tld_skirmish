@@ -1,5 +1,6 @@
 // game.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include <memory>
 #include "defaults.h"
 #include "game.h"
@@ -21,6 +22,8 @@ Game::Game() {
   camera.offset = {CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0};
   camera.zoom = 1;
   camera.rotation = 0;
+
+  camera_boundX = 512;
 }
 
 Game::~Game() {
@@ -77,6 +80,37 @@ void Game::defineColorPalette() {
 }
 
 void Game::cameraFollowPlayer() {
+  bool player_offCenter = camera.target.x != player->position.x;
+  if (player_offCenter == false) {
+    return;
+  }
+
+  float x_difference = player->position.x - camera.target.x;
+  float direction = Clamp(x_difference, -1, 1);
+
+  float boundary = camera_boundX * direction;
+  int half_width = CANVAS_WIDTH / 2;
+  float screen_side = camera.target.x + (half_width * direction);
+
+  bool already_at_boundary = screen_side == boundary; 
+  if (already_at_boundary) {
+    return;
+  }
+
+  float offset = screen_side + x_difference;
+
+  bool hit_left_bounds = direction < 0 && offset <= boundary;
+  if (hit_left_bounds) {
+    camera.target = {boundary + half_width, 120}; 
+    return;
+  }
+
+  bool hit_right_bounds = direction > 0 && offset > boundary;
+  if (hit_right_bounds) {
+    camera.target = {boundary - half_width, 120};
+    return;
+  }
+
   camera.target = {player->position.x, 120};
 }
 
