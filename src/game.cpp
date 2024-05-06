@@ -14,7 +14,7 @@ Game::Game() {
   setupCanvas();
   defineColorPalette();
 
-  test_room = LoadTexture("concept_art/test_room1.png");
+  test_room = LoadTexture("concept_art/test_room2.png");
   player = make_unique<PlayerCharacter>();
 }
 
@@ -80,7 +80,7 @@ void Game::refresh() {
   BeginTextureMode(canvas);
   {
     ClearBackground(BLACK);
-    DrawTexture(test_room, 0, 0, WHITE);
+    DrawTexture(test_room, -512, 0, WHITE);
     player->draw();
   }
   EndTextureMode();
