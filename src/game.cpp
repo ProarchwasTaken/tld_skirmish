@@ -34,6 +34,7 @@ Game::~Game() {
 }
 
 void Game::correctWindow() {
+  PLOGI << "Attempting window correction.";
   int screen_width = GetScreenWidth();
   int screen_height = GetScreenHeight();
 
