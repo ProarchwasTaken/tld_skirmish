@@ -62,7 +62,20 @@ void PlayerCharacter::movement(double &delta_time) {
     direction = LEFT;
   }
 
-  position.x += (movement_speed * direction) * delta_time;
+  float magnitude = (movement_speed * direction) * delta_time;
+  int half_scaleX = hitbox_scale.x / 2;
+  float offset = position.x + (half_scaleX * direction);
+
+  if (offset <= -PLAYER_BOUNDS) {
+    position.x = -PLAYER_BOUNDS + half_scaleX;
+  }
+  else if (offset >= PLAYER_BOUNDS) {
+    position.x = PLAYER_BOUNDS - half_scaleX;
+  }
+  else {
+    position.x += magnitude;
+  }
+
   hitboxCorrection();
   texRectCorrection();
 }

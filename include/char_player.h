@@ -6,6 +6,7 @@
 #define RIGHT 1
 #define LEFT -1
 
+#define PLAYER_BOUNDS 384
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.*/
