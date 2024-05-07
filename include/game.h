@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include "char_player.h"
 
+#define CAMERA_BOUNDS 512
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties
@@ -50,6 +51,6 @@ private:
 
   Texture test_room;
   Camera2D camera;
-  int camera_boundX;
+
   std::unique_ptr<PlayerCharacter> player;
 };

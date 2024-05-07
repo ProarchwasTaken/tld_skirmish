@@ -22,8 +22,6 @@ Game::Game() {
   camera.offset = {CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0};
   camera.zoom = 1;
   camera.rotation = 0;
-
-  camera_boundX = 512;
 }
 
 Game::~Game() {
@@ -88,7 +86,7 @@ void Game::cameraFollowPlayer() {
   float x_difference = player->position.x - camera.target.x;
   float direction = Clamp(x_difference, -1, 1);
 
-  float boundary = camera_boundX * direction;
+  float boundary = CAMERA_BOUNDS * direction;
   int half_width = CANVAS_WIDTH / 2;
   float screen_side = camera.target.x + (half_width * direction);
 
