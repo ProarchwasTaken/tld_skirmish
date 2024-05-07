@@ -25,6 +25,7 @@ set(SOURCE_FILES
 "src/main.cpp"
 "src/game.cpp"
 "src/char_player.cpp"
+"src/base/actor.cpp"
 )
 
 set(HEADER_FILES
@@ -32,6 +33,7 @@ set(HEADER_FILES
 "include/game.h"
 "include/globals.h"
 "include/char_player.h"
+"include/base/actor.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
