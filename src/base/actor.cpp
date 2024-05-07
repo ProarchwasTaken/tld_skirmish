@@ -3,8 +3,7 @@
 #include "base/actor.h"
 
 
-Actor::Actor(Vector2 position, Vector2 hitbox_scale={32, 64},
-             Vector2 tex_scale={64, 64}) {
+Actor::Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale) {
   this->position = position;
   this->hitbox_scale = hitbox_scale;
   this->tex_scale = tex_scale;

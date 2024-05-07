@@ -2,6 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
+#include "base/actor.h"
 
 #define RIGHT 1
 #define LEFT -1
@@ -10,7 +11,7 @@
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.*/
-class PlayerCharacter {
+class PlayerCharacter : public Actor{
 public:
   PlayerCharacter();
 
@@ -18,18 +19,6 @@ public:
    * in here.*/
   void update(double &delta_time);
   void draw();
-
-  /* The hitbox is used for checking for collision with the level's 
-   * boundaries, or enemy attacks. Whenever the player's position changes,
-   * this method must be called to maintain accuracy.*/
-  void hitboxCorrection();
-
-  /* The texture rect and position is used to determine where on the
-   * screen should the player be drawn. With the former being used to
-   * check if the player is on-screen. Like it's corresponding method,
-   * this must be called whenever the player's base position changes in
-   * any way.*/
-  void texRectCorrection();
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
@@ -48,21 +37,10 @@ public:
   void inputPressed();
   void inputReleased();
 
-  Vector2 position;
-
   bool moving;
   float movement_speed;
   int8_t direction;
 private:
-
-  Rectangle hitbox;
-  Vector2 hitbox_position;
-  Vector2 hitbox_scale;
-
-  Rectangle tex_rect;
-  Vector2 tex_position;
-  Vector2 tex_scale;
-
   bool moving_right = false;
   bool moving_left = false;
 };

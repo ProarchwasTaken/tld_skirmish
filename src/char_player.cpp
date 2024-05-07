@@ -1,37 +1,16 @@
 // char_player.cpp
 #include <raylib.h>
+#include "base/actor.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
 
-PlayerCharacter::PlayerCharacter() {
+PlayerCharacter::PlayerCharacter() : Actor({0, 208}){
   PLOGI << "Initializing the player character.";
-  position = {0, 208};
-  hitbox_scale = {32, 64};
-  tex_scale = {64, 64};
-
   movement_speed = 1.5;
   direction = RIGHT;
 
-  hitboxCorrection();
-  texRectCorrection();
   PLOGI << "Player initialization complete.";
-}
-
-void PlayerCharacter::hitboxCorrection() {
-  float x = position.x - hitbox_scale.x / 2;
-  float y = position.y - hitbox_scale.y;
-
-  hitbox_position = {x, y};
-  hitbox = {x, y, hitbox_scale.x, hitbox_scale.y};
-}
-
-void PlayerCharacter::texRectCorrection() {
-  float x = position.x - tex_scale.x / 2;
-  float y = position.y - tex_scale.y;
-
-  tex_position = {x, y};
-  tex_rect = {x, y, tex_scale.x, tex_scale.y};
 }
 
 void PlayerCharacter::update(double &delta_time) {
