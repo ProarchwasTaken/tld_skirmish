@@ -84,10 +84,17 @@ void Game::cameraFollowPlayer() {
   }
 
   float x_difference = player->position.x - camera.target.x;
-  float direction = Clamp(x_difference, -1, 1);
+  int direction;
+
+  if (x_difference > 0) {
+    direction = 1;
+  }
+  else if (x_difference < 0) {
+    direction = -1;
+  }
 
   float boundary = CAMERA_BOUNDS * direction;
-  int half_width = CANVAS_WIDTH / 2;
+  float half_width = CANVAS_WIDTH / 2.0;
   float screen_side = camera.target.x + (half_width * direction);
 
   bool already_at_boundary = screen_side == boundary; 
@@ -97,19 +104,17 @@ void Game::cameraFollowPlayer() {
 
   float offset = screen_side + x_difference;
 
-  bool hit_left_bounds = direction < 0 && offset <= boundary;
+  bool hit_left_bounds = offset <= -CAMERA_BOUNDS;
+  bool hit_right_bounds = offset >= CAMERA_BOUNDS;
   if (hit_left_bounds) {
-    camera.target = {boundary + half_width, 120}; 
-    return;
+    camera.target.x = -CAMERA_BOUNDS + half_width; 
   }
-
-  bool hit_right_bounds = direction > 0 && offset > boundary;
-  if (hit_right_bounds) {
-    camera.target = {boundary - half_width, 120};
-    return;
+  else if (hit_right_bounds) {
+    camera.target.x = CAMERA_BOUNDS - half_width;
   }
-
-  camera.target = {player->position.x, 120};
+  else {
+    camera.target.x += x_difference;
+  }
 }
 
 void Game::refresh() {

@@ -64,7 +64,7 @@ void PlayerCharacter::movement(double &delta_time) {
 
   float magnitude = (movement_speed * direction) * delta_time;
   int half_scaleX = hitbox_scale.x / 2;
-  float offset = position.x + (half_scaleX * direction);
+  float offset = position.x + magnitude + (half_scaleX * direction);
 
   if (offset <= -PLAYER_BOUNDS) {
     position.x = -PLAYER_BOUNDS + half_scaleX;
