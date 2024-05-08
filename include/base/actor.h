@@ -3,6 +3,10 @@
 #include <raylib.h>
 
 
+/* The Actor Base class is the root of pretty much every game object that
+ * serves a purpose that's more than just being decoration. Some may
+ * refer to this as an abstract class, only meant to be expanded upon by
+ * other base classes.*/
 class Actor {
 public:
   Actor(Vector2 position, Vector2 hitbox_scale = {32, 64}, 
