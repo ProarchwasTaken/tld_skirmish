@@ -1,12 +1,14 @@
 // char_player.cpp
 #include <raylib.h>
 #include "globals.h"
-#include "base/actor.h"
+#include "base/combatant.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
 
-PlayerCharacter::PlayerCharacter() : Actor({0, 208}){
+PlayerCharacter::PlayerCharacter():
+  Combatant("Player", CBT_PLAYER, 100, {0, 208})
+{
   PLOGI << "Initializing the player character.";
   movement_speed = 1.5;
   direction = RIGHT;

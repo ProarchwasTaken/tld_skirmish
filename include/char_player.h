@@ -2,7 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
-#include "base/actor.h"
+#include "base/combatant.h"
 
 #define RIGHT 1
 #define LEFT -1
@@ -11,7 +11,7 @@
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.*/
-class PlayerCharacter : public Actor{
+class PlayerCharacter : public Combatant{
 public:
   PlayerCharacter();
 
