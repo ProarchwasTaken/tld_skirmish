@@ -1,5 +1,6 @@
 // char_player.cpp
 #include <raylib.h>
+#include "globals.h"
 #include "base/actor.h"
 #include "char_player.h"
 #include <plog/Log.h>
@@ -116,6 +117,14 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  DrawRectangleLinesEx(tex_rect, 1, BLUE);
-  DrawRectangleLinesEx(hitbox, 2, RED);
+  DrawRectangleRec(hitbox, BLUE);
+
+  if (DEBUG_MODE) {
+    debugDraw();
+  }
+}
+
+void PlayerCharacter::debugDraw() {
+  DrawRectangleLinesEx(tex_rect, 1, YELLOW);
+  DrawRectangleLinesEx(hitbox, 1, RED);
 }

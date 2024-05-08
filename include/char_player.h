@@ -19,6 +19,7 @@ public:
    * in here.*/
   void update(double &delta_time);
   void draw();
+  void debugDraw();
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
