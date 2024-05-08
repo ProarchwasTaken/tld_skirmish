@@ -11,7 +11,8 @@ using std::string;
 Combatant::Combatant(string name, uint8_t type, uint16_t max_health,
                      Vector2 position, Vector2 hitbox_scale,
                      Vector2 tex_scale):
-Actor(position, hitbox_scale, tex_scale) {
+Actor(position, hitbox_scale, tex_scale) 
+{
   this->name = name;
   this->type = type;
 
