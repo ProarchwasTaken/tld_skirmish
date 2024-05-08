@@ -7,7 +7,7 @@
 
 
 PlayerCharacter::PlayerCharacter():
-  Combatant("Player", CBT_PLAYER, 100, {0, 208})
+  Combatant("Player", TYPE_PLAYER, 100, {0, 208})
 {
   PLOGI << "Initializing the player character.";
   movement_speed = 1.5;

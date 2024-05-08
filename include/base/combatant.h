@@ -5,8 +5,8 @@
 #include <raylib.h>
 #include "actor.h"
 
-#define CBT_PLAYER 0
-#define CBT_ENEMY 1
+#define TYPE_PLAYER 0
+#define TYPE_ENEMY 1
 
 #define NEUTRAL 0
 #define CHARGING 1
@@ -14,6 +14,12 @@
 #define RECOVER 3
 #define HIT_STUN 4
 
+
+/* Everything, including the player, enemies, and bosses derive from this
+ * class. Sets the ground work for the "fighting" aspect of the game,
+ * (Which is basically all of it.) so the implementation must be done
+ * correctly. Every combatant will have a name and type that will be used
+ * for identification.*/
 class Combatant : public Actor {
 public:
   Combatant(std::string name, uint8_t type, uint16_t max_health,
