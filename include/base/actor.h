@@ -5,7 +5,7 @@
 
 class Actor {
 public:
-  Actor(Vector2 position, Vector2 hitbox_scale= {30, 64}, 
+  Actor(Vector2 position, Vector2 hitbox_scale = {32, 64}, 
         Vector2 tex_scale = {64, 64});
 
   /* The hitbox is used for checking for collision with the level's 
