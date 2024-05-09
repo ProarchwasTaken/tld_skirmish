@@ -17,8 +17,10 @@ PlayerCharacter::PlayerCharacter():
 }
 
 void PlayerCharacter::update(double &delta_time) {
-  moving = isMoving();
-  movement(delta_time);
+  if (state != NEUTRAL) {
+    moving = isMoving();
+    movement(delta_time);
+  }
 }
 
 bool PlayerCharacter::isMoving() {
@@ -63,10 +65,6 @@ void PlayerCharacter::movement(double &delta_time) {
 }
 
 void PlayerCharacter::inputPressed() {
-  if (state != NEUTRAL) {
-    return;
-  }
-
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
