@@ -1,15 +1,17 @@
 // action_command.h
+#include <string>
 #include "combatant.h"
 
 
 class ActionCommand {
 public:
-  ActionCommand(Combatant &user, float charge_time, float act_time,
-                float recovery_time);
+  ActionCommand(Combatant &user, std::string command_name, 
+                float charge_time, float act_time, float recovery_time);
   virtual void chargeSequence(float time_elapsed);
   virtual void actSequence(float time_elapsed);
   virtual void recoverySequence(float time_elapsed);
 private:
+  std::string command_name;
   Combatant *user;
 
   float charge_time;

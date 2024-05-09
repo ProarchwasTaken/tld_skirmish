@@ -1,12 +1,17 @@
 // action_command.cpp
+#include <string>
 #include <raylib.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
 
+using std::string;
 
-ActionCommand::ActionCommand(Combatant &user, float charge_time, 
-                             float act_time, float recovery_time)
+
+ActionCommand::ActionCommand(Combatant &user, string command_name,
+                             float charge_time, float act_time, 
+                             float recovery_time)
 {
+  this->command_name = command_name;
   this->user = &user;
   user.state = CHARGING;
 
