@@ -28,6 +28,15 @@ public:
             Vector2 position, Vector2 hitbox_scale = {32, 64},
             Vector2 tex_scale = {64, 64});
 
+  /* Takes a action command as a parameter, and assigns it to the 
+   * combatant. Acts as a streamlined way to assign any class that derives
+   * from ActionCommand.*/
+  void useCommand(std::unique_ptr<ActionCommand> command);
+
+  /* Usually called after the combatant takes damage. Unless they are in
+   * hit stun, they will be set back to neutral.*/
+  void cancelCommand();
+
   std::string name;
   uint16_t max_health;
   uint8_t type;
@@ -36,4 +45,5 @@ public:
   uint8_t state;
 
   std::unique_ptr<ActionCommand> current_command;
+
 };
