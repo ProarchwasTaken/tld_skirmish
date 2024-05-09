@@ -1,6 +1,6 @@
 // action_command.h
 #include <string>
-#include "combatant.h"
+#include "generics.h"
 
 
 class ActionCommand {
