@@ -1,4 +1,5 @@
 // action_command.h
+#pragma once
 #include <string>
 #include "generics.h"
 
