@@ -35,6 +35,7 @@ set(HEADER_FILES
 "include/game.h"
 "include/globals.h"
 "include/char_player.h"
+"include/base/generics.h"
 "include/base/actor.h"
 "include/base/combatant.h"
 "include/base/action_command.h"
