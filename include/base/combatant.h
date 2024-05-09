@@ -2,7 +2,9 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <memory>
 #include <raylib.h>
+#include "generics.h"
 #include "actor.h"
 
 #define TYPE_PLAYER 0
@@ -33,8 +35,5 @@ public:
   uint16_t health;
   uint8_t state;
 
-  float charge_time;
-  float act_time;
-  float recovery_time;
-  float stun_time;
+  std::unique_ptr<ActionCommand> current_command;
 };
