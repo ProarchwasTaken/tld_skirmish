@@ -24,12 +24,13 @@ Actor(position, hitbox_scale, tex_scale)
   state = NEUTRAL;
 }
 
-void Combatant::useCommand(unique_ptr<ActionCommand> command) {
+void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
   if (current_command != nullptr) {
     current_command.reset();
   }
 
   current_command.swap(command);
+  command.reset();
 }
 
 void Combatant::cancelCommand() {

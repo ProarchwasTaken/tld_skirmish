@@ -31,7 +31,7 @@ public:
   /* Takes a action command as a parameter, and assigns it to the 
    * combatant. Acts as a streamlined way to assign any class that derives
    * from ActionCommand.*/
-  void useCommand(std::unique_ptr<ActionCommand> command);
+  virtual void useCommand(std::unique_ptr<ActionCommand> &command);
 
   /* Usually called after the combatant takes damage. Unless they are in
    * hit stun, they will be set back to neutral.*/
