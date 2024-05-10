@@ -4,8 +4,8 @@
 #include <string>
 #include <memory>
 #include <raylib.h>
-#include "generics.h"
 #include "actor.h"
+#include "action_command.h"
 
 #define TYPE_PLAYER 0
 #define TYPE_ENEMY 1
