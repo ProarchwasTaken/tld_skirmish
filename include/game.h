@@ -52,5 +52,5 @@ private:
   Texture test_room;
   Camera2D camera;
 
-  std::unique_ptr<PlayerCharacter> player;
+  std::shared_ptr<PlayerCharacter> player;
 };

@@ -8,7 +8,7 @@
 #include "char_player.h"
 #include <plog/Log.h>
 
-using std::make_unique;
+using std::make_shared;
 
 
 Game::Game() {
@@ -17,7 +17,7 @@ Game::Game() {
 
   test_room = LoadTexture("concept_art/test_room2.png");
 
-  player = make_unique<PlayerCharacter>();
+  player = make_shared<PlayerCharacter>();
   camera.target = {player->position.x, 120};
   camera.offset = {CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0};
   camera.zoom = 1;
