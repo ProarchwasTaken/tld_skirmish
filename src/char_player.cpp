@@ -66,6 +66,7 @@ void PlayerCharacter::bufferTimerCheck() {
 
   bool detected_first_input = !buf_empty && buf_timer_started == false;
   if (detected_first_input) {
+    PLOGD << "Detected first input in the buffer. Starting timer.";
     buf_input_timestamp = GetTime();
     buf_timer_started = true;
   }
@@ -83,15 +84,22 @@ void PlayerCharacter::interpretBuffer() {
     return;
   }
 
+  PLOGD << "Interpreting input buffer...";
   int8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command;
 
+  PLOGI << "Deciding what commands to use depending on input buffer.";
   switch (first_input) {
     case BTN_LIGHT_ATK: {
+      PLOGI << "Attempting to assign LightAttack";
       // Oh my god, what kind of black magic did I just do?
       Combatant *user = this;
       command = make_unique<LightAttack>(*user);
       useCommand(command);
+      break;
+    }
+    default: {
+      PLOGI << "No valid commands found!";
       break;
     }
   }
@@ -104,6 +112,7 @@ void PlayerCharacter::clearBufferCheck() {
 
   float time_elapsed = GetTime() - buf_input_timestamp;
   if (time_elapsed >= buf_clear_time) {
+    PLOGD << "Clearing input buffer.";
     input_buffer.clear();
     buf_timer_started = false;
   }

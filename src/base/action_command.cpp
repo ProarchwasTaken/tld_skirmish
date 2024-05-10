@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include <plog/Log.h>
 
 using std::string;
 
@@ -19,6 +20,8 @@ ActionCommand::ActionCommand(Combatant &user, string command_name,
   this->act_time = act_time;
   this->recovery_time = recovery_time;
 
+  PLOGD << "{Combatant: " << user.name << "} is now attempting to use "
+    << "{Command: "<< command_name << "}";
   sequence_timestamp = GetTime();
 }
 

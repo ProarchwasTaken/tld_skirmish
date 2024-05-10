@@ -32,6 +32,10 @@ public:
    * combatant. Acts as a streamlined way to assign any class that derives
    * from ActionCommand.*/
   virtual void useCommand(std::unique_ptr<ActionCommand> &command);
+
+  /* For handling the all of the stages of using a command, like the 
+   * charge up, action, and recovery. Is called once every frame of which
+   * the combatant is in a state other than Neutral or Hit Stun.*/
   void commandSequence();
 
   /* Usually called after the combatant takes damage. Unless they are in
