@@ -18,8 +18,13 @@ PlayerCharacter::PlayerCharacter():
   movement_speed = 1.5;
   direction = RIGHT;
 
-  buf_clear_time = 0.15;
+  buf_clear_time = 0.025;
   PLOGI << "Player initialization complete.";
+}
+
+PlayerCharacter::~PlayerCharacter() {
+  PLOGI << "Deleting the player character from memory.";
+  input_buffer.clear();
 }
 
 void PlayerCharacter::update(double &delta_time) {
@@ -29,6 +34,8 @@ void PlayerCharacter::update(double &delta_time) {
     case NEUTRAL: {
       moving = isMoving();
       movement(delta_time);
+
+      interpretBuffer();
       break;
     }
     case HIT_STUN: {
@@ -135,9 +142,13 @@ void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
+  bool key_c = IsKeyPressed(KEY_C);
+
   bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
   bool gamepad_left = false;
+
+  bool gamepad_face_right = false;
 
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonPressed(
@@ -146,16 +157,24 @@ void PlayerCharacter::inputPressed() {
     gamepad_left = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     );
+    gamepad_face_right = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
+    );
   }
 
   bool input_right = key_right || (gamepad_available && gamepad_right);
   bool input_left = key_left || (gamepad_available && gamepad_left);
+  bool input_light_attack = key_c || (gamepad_available && 
+    gamepad_face_right);
 
   if (input_right && moving_right == false) {
     moving_right = true;
   }
   if (input_left && moving_left == false) {
     moving_left = true;
+  }
+  if (input_light_attack) {
+    input_buffer.push_back(BTN_LIGHT_ATK);
   }
 }
 
@@ -188,7 +207,12 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  DrawRectangleRec(hitbox, BLUE);
+  if (state == NEUTRAL) {
+    DrawRectangleRec(hitbox, BLUE);
+  }
+  else {
+    DrawRectangleRec(hitbox, ORANGE);
+  }
 
   if (DEBUG_MODE) {
     debugDraw();

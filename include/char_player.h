@@ -17,6 +17,7 @@
 class PlayerCharacter : public Combatant{
 public:
   PlayerCharacter();
+  ~PlayerCharacter();
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
@@ -52,7 +53,8 @@ private:
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;
-  bool buf_timer_started;
+  bool buf_timer_started = false;
+
   float buf_clear_time;
   float buf_input_timestamp;
 
