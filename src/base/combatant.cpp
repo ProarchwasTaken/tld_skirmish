@@ -45,3 +45,29 @@ void Combatant::cancelCommand() {
     state = NEUTRAL;
   }
 }
+
+void Combatant::commandSequence() {
+  if (current_command == nullptr) {
+    PLOGE << name << "Combatant has attempted to go though command"
+      << " sequence when no command is assigned to them!";
+    state = NEUTRAL;
+    return;
+  }
+
+  float time_elapsed = GetTime() - current_command->sequence_timestamp;
+
+  switch (state) {
+    case CHARGING: {
+      current_command->chargeSequence(time_elapsed);
+      break;
+    }
+    case ACT: {
+      current_command->actSequence(time_elapsed);
+      break;
+    }
+    case RECOVER: {
+      current_command->recoverySequence(time_elapsed);
+      break;
+    }
+  }
+}
