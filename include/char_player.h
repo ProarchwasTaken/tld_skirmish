@@ -1,6 +1,7 @@
 // char_player.h
 #pragma once
 #include <cstdint>
+#include <vector>
 #include <raylib.h>
 #include "base/combatant.h"
 
@@ -8,6 +9,8 @@
 #define LEFT -1
 
 #define PLAYER_BOUNDS 384
+
+#define BTN_LIGHT_ATK 0
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.*/
@@ -38,10 +41,21 @@ public:
   void inputPressed();
   void inputReleased();
 
+  void bufferTimerCheck();
+  void interpretBuffer();
+  void clearBufferCheck();
+
   bool moving;
   float movement_speed;
   int8_t direction;
 private:
+  std::vector<uint8_t> input_buffer;
+
+  bool buf_empty = false;
+  bool buf_timer_started;
+  float buf_clear_time;
+  float buf_input_timestamp;
+
   bool moving_right = false;
   bool moving_left = false;
 };

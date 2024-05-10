@@ -1,9 +1,14 @@
 // char_player.cpp
+#include <memory>
 #include <raylib.h>
+#include "base/action_command.h"
 #include "globals.h"
 #include "base/combatant.h"
+#include "cmd_light_atk.h"
 #include "char_player.h"
 #include <plog/Log.h>
+
+using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter():
@@ -13,10 +18,13 @@ PlayerCharacter::PlayerCharacter():
   movement_speed = 1.5;
   direction = RIGHT;
 
+  buf_clear_time = 0.15;
   PLOGI << "Player initialization complete.";
 }
 
 void PlayerCharacter::update(double &delta_time) {
+  bufferTimerCheck();
+
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
@@ -30,6 +38,8 @@ void PlayerCharacter::update(double &delta_time) {
       commandSequence();
     }
   }
+
+  clearBufferCheck();
 }
 
 bool PlayerCharacter::isMoving() {
@@ -41,6 +51,54 @@ bool PlayerCharacter::isMoving() {
   }
   else {
     return true;
+  }
+}
+
+void PlayerCharacter::bufferTimerCheck() {
+  buf_empty = input_buffer.size() == 0;
+
+  bool detected_first_input = !buf_empty && buf_timer_started == false;
+  if (detected_first_input) {
+    buf_input_timestamp = GetTime();
+    buf_timer_started = true;
+  }
+}
+
+void PlayerCharacter::interpretBuffer() {
+  if (buf_timer_started == false) {
+    return;
+  }
+
+  float time_elapsed = GetTime() - buf_input_timestamp;
+  bool about_to_clear = time_elapsed >= buf_clear_time;
+
+  if (about_to_clear == false) {
+    return;
+  }
+
+  int8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  switch (first_input) {
+    case BTN_LIGHT_ATK: {
+      // Oh my god, what kind of black magic did I just do?
+      Combatant *user = this;
+      command = make_unique<LightAttack>(*user);
+      useCommand(command);
+      break;
+    }
+  }
+}
+
+void PlayerCharacter::clearBufferCheck() {
+  if (buf_timer_started == false) {
+    return;
+  }
+
+  float time_elapsed = GetTime() - buf_input_timestamp;
+  if (time_elapsed >= buf_clear_time) {
+    input_buffer.clear();
+    buf_timer_started = false;
   }
 }
 
