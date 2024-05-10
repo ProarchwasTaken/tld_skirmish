@@ -17,9 +17,18 @@ PlayerCharacter::PlayerCharacter():
 }
 
 void PlayerCharacter::update(double &delta_time) {
-  if (state != NEUTRAL) {
-    moving = isMoving();
-    movement(delta_time);
+  switch (state) {
+    case NEUTRAL: {
+      moving = isMoving();
+      movement(delta_time);
+      break;
+    }
+    case HIT_STUN: {
+      break;
+    }
+    default: {
+      commandSequence();
+    }
   }
 }
 
