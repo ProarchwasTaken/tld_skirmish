@@ -16,7 +16,6 @@ PlayerCharacter::PlayerCharacter():
 {
   PLOGI << "Initializing the player character.";
   movement_speed = 1.5;
-  direction = RIGHT;
 
   buf_clear_time = 0.025;
   PLOGI << "Player initialization complete.";

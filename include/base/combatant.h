@@ -10,6 +10,9 @@
 #define TYPE_PLAYER 0
 #define TYPE_ENEMY 1
 
+#define RIGHT 1
+#define LEFT -1
+
 #define NEUTRAL 0
 #define CHARGING 1
 #define ACT 2
@@ -48,7 +51,7 @@ public:
 
   uint16_t health;
   uint8_t state;
+  int8_t direction;
 
   std::unique_ptr<ActionCommand> current_command;
-
 };

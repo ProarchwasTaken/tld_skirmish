@@ -5,9 +5,6 @@
 #include <raylib.h>
 #include "base/combatant.h"
 
-#define RIGHT 1
-#define LEFT -1
-
 #define PLAYER_BOUNDS 384
 
 #define BTN_LIGHT_ATK 0
@@ -74,7 +71,6 @@ public:
 
   bool moving;
   float movement_speed;
-  int8_t direction;
 private:
   std::vector<uint8_t> input_buffer;
 

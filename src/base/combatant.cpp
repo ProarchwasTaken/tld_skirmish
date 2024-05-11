@@ -21,7 +21,9 @@ Actor(position, hitbox_scale, tex_scale)
 
   this->max_health = max_health;
   health = max_health;
+
   state = NEUTRAL;
+  direction = RIGHT;
 }
 
 void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
