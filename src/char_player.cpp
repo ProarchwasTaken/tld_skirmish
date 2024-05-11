@@ -226,6 +226,12 @@ void PlayerCharacter::draw() {
   if (DEBUG_MODE) {
     debugDraw();
   }
+
+  bool using_command = state != NEUTRAL && state != HIT_STUN;
+  if (using_command) {
+    current_command->draw();
+    if (DEBUG_MODE) current_command->drawDebug();
+  }
 }
 
 void PlayerCharacter::debugDraw() {
