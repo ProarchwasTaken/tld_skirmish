@@ -8,3 +8,11 @@ LightAttack::LightAttack(Combatant &user) :
 {
 
 }
+
+void LightAttack::draw() {
+
+}
+
+void LightAttack::drawDebug() {
+
+}
