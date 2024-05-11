@@ -7,4 +7,7 @@
 class LightAttack : public ActionCommand {
 public:
   LightAttack(Combatant &user);
+
+  void draw();
+  void drawDebug();
 };

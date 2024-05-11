@@ -27,6 +27,9 @@ public:
 
   virtual void recoverySequence(float time_elapsed);
 
+  virtual void draw() {};
+  virtual void drawDebug() {};
+
   float sequence_timestamp;
 private:
   std::string command_name;
