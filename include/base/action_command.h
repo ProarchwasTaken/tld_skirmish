@@ -31,7 +31,7 @@ public:
   virtual void drawDebug() {};
 
   float sequence_timestamp;
-private:
+protected:
   std::string command_name;
   Combatant *user;
 
