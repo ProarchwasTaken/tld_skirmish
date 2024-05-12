@@ -1,7 +1,6 @@
 // enemy_dummy.cpp
 #include <raylib.h>
 #include "globals.h"
-#include "base/actor.h"
 #include "base/combatant.h"
 #include "char_player.h"
 #include "enemy_dummy.h"
@@ -28,6 +27,6 @@ void DummyEnemy::draw() {
   }
 
   if (DEBUG_MODE) {
-    Actor::drawDebug();
+    drawDebug();
   }
 }

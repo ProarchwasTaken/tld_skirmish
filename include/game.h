@@ -2,6 +2,7 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
+#include "base/generics.h"
 #include "char_player.h"
 
 #define CAMERA_BOUNDS 512
@@ -52,5 +53,6 @@ private:
   Texture test_room;
   Camera2D camera;
 
+  combatant_list enemies;
   std::shared_ptr<PlayerCharacter> player;
 };

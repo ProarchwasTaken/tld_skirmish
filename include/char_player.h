@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 #include <raylib.h>
+#include "base/generics.h"
 #include "base/combatant.h"
 
 #define PLAYER_BOUNDS 384
@@ -28,13 +29,13 @@
  * decide what action command to use from there.*/
 class PlayerCharacter : public Combatant {
 public:
-  PlayerCharacter();
+  PlayerCharacter(combatant_list &enemies);
   ~PlayerCharacter();
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
-  void update(double &delta_time);
-  void draw();
+  void update(double &delta_time) override;
+  void draw() override;
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
@@ -71,6 +72,8 @@ public:
   bool moving;
   float movement_speed;
 private:
+  combatant_list *enemies;
+
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;

@@ -6,6 +6,7 @@
 #include "game.h"
 #include "globals.h"
 #include "char_player.h"
+#include "enemy_dummy.h"
 #include <plog/Log.h>
 
 using std::make_shared;
@@ -17,7 +18,9 @@ Game::Game() {
 
   test_room = LoadTexture("concept_art/test_room2.png");
 
-  player = make_shared<PlayerCharacter>();
+  player = make_shared<PlayerCharacter>(enemies);
+  enemies.push_back(make_shared<DummyEnemy>(*player, (Vector2){64, 208}));
+
   camera.target = {player->position.x, 120};
   camera.offset = {CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0};
   camera.zoom = 1;
@@ -125,12 +128,21 @@ void Game::refresh() {
   player->update(delta_time);
   cameraFollowPlayer();
 
+  for (auto enemy : enemies) {
+    enemy->update(delta_time);
+  }
+
   BeginTextureMode(canvas);
   {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
     DrawTexture(test_room, -512, 0, WHITE);
+
+    for (auto enemy : enemies) {
+      enemy->draw();
+    }
+
     player->draw();
 
     EndMode2D();

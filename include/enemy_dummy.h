@@ -8,8 +8,8 @@ class DummyEnemy : public Combatant{
 public:
   DummyEnemy(PlayerCharacter &player, Vector2 position);
 
-  void update(double &delta_time);
-  void draw();
+  void update(double &delta_time) override;
+  void draw() override;
 private:
   PlayerCharacter *player;
 };

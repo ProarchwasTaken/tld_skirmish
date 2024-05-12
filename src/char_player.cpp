@@ -1,10 +1,10 @@
 // char_player.cpp
 #include <memory>
 #include <raylib.h>
-#include "base/action_command.h"
 #include "globals.h"
-#include "base/actor.h"
+#include "base/generics.h"
 #include "base/combatant.h"
+#include "base/action_command.h"
 #include "cmd_light_atk.h"
 #include "char_player.h"
 #include <plog/Log.h>
@@ -12,13 +12,16 @@
 using std::make_unique, std::unique_ptr;
 
 
-PlayerCharacter::PlayerCharacter():
+PlayerCharacter::PlayerCharacter(combatant_list &enemies):
   Combatant("Player", TYPE_PLAYER, 100, {0, 208})
 {
   PLOGI << "Initializing the player character.";
   movement_speed = 1.5;
 
   buf_clear_time = 0.025;
+
+  PLOGI << "Assigning address to enemy list to pointer.";
+  this->enemies = &enemies;
   PLOGI << "Player initialization complete.";
 }
 
@@ -230,7 +233,7 @@ void PlayerCharacter::draw() {
   }
 
   if (DEBUG_MODE) {
-    Actor::drawDebug();
+    drawDebug();
   }
 
   bool using_command = state != NEUTRAL && state != HIT_STUN;
