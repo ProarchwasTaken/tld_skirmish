@@ -34,6 +34,12 @@ Game::~Game() {
 
   UnloadTexture(test_room);
   player.reset();
+
+  PLOGI << "Deleting all leftover enemies from memory.";
+  for (auto enemy : enemies) {
+    enemy.reset();
+  }
+  enemies.clear();
   PLOGV << "Thanks for playing!";
 }
 
