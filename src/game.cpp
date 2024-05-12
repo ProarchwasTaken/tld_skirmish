@@ -143,10 +143,14 @@ void Game::refresh() {
                    {0, 0}, 0, WHITE);
 
     if (DEBUG_MODE) {
-      DrawText(TextFormat("FPS: %i", GetFPS()), 16, 16, 32, GREEN);
+      DrawText(TextFormat("FPS: %i", GetFPS()), 16, 16, 32, PURPLE);
       DrawText(TextFormat("Player Position: (%02.02f, %02.02f)",
                           player->position.x, player->position.y), 
-               16, 48, 32, GREEN);
+               16, 48, 32, PURPLE);
+      DrawText(TextFormat("Player Health: %i", player->health), 
+               16, 80, 32, PURPLE);
+      DrawText(TextFormat("Player State: %i", player->state), 
+               16, 112, 32, PURPLE);
     }
   }
   EndDrawing();

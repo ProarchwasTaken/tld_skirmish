@@ -50,10 +50,9 @@ void Combatant::cancelCommand() {
 
 void Combatant::commandSequence() {
   if (current_command == nullptr) {
-    PLOGE << name << "Combatant has attempted to go though command"
+    PLOGF << name << "Combatant has attempted to go through command"
       << " sequence when no command is assigned to them!";
-    state = NEUTRAL;
-    return;
+    throw;
   }
 
   float time_elapsed = GetTime() - current_command->sequence_timestamp;
@@ -71,5 +70,36 @@ void Combatant::commandSequence() {
       current_command->recoverySequence(time_elapsed);
       break;
     }
+  }
+}
+
+void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
+  PLOGD << dmg_magnitude << " points of damage is being inflicted to "
+    "combatant: " << name;
+  int destined_health = health - dmg_magnitude;
+  if (destined_health < 0) {
+    destined_health = 0;
+  }
+
+  PLOGI << "Setting the combatant's health from " << health << " to " <<
+    destined_health;
+  health = destined_health;
+
+  this->stun_time = stun_time;
+  state = HIT_STUN;
+  stun_timestamp = GetTime();
+}
+
+void Combatant::stunSequence() {
+  if (state != HIT_STUN) {
+    PLOGF << "{Combatant: " << name << "} entered stun sequence when it"
+      " wasn't supposed to!";
+    throw;
+  }
+
+  float time_elapsed = GetTime() - stun_timestamp;
+  if (time_elapsed >= stun_time) {
+    PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
+    state = NEUTRAL;
   }
 }

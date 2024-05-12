@@ -38,6 +38,7 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     case HIT_STUN: {
+      stunSequence();
       break;
     }
     default: {
@@ -183,6 +184,11 @@ void PlayerCharacter::inputPressed() {
   }
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
+  }
+
+  // TODO: Remove this later!
+  if (IsKeyPressed(KEY_E)) {
+    takeDamage(5, 1);
   }
 }
 

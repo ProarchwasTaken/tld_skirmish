@@ -45,6 +45,17 @@ public:
    * hit stun, they will be set back to neutral.*/
   void cancelCommand();
 
+  /* For decrementing a combatant's health by a set amount while also
+   * putting them in hit stun. Also makes sure the combatant's health will
+   * not be below 0.*/
+  void takeDamage(uint16_t damage_magnitude, float stun_time);
+
+  /* Called once every frame of which the combatant is in hit stun. If a
+   * certain amount of time as passed and the combatant didn't take 
+   * damage during that time, then their state will be set back to 
+   * neutral.*/
+  void stunSequence();
+
   std::string name;
   uint16_t max_health;
   uint8_t type;
@@ -54,4 +65,7 @@ public:
   int8_t direction;
 
   std::unique_ptr<ActionCommand> current_command;
+protected:
+  float stun_time = 0;
+  float stun_timestamp = 0;
 };
