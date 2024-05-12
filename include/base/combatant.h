@@ -31,6 +31,8 @@ public:
             Vector2 position, Vector2 hitbox_scale = {32, 64},
             Vector2 tex_scale = {64, 64});
 
+  void update(double &delta_time);
+
   /* Takes a action command as a parameter, and assigns it to the 
    * combatant. Acts as a streamlined way to assign any class that derives
    * from ActionCommand.*/

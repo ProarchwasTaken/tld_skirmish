@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include "base/action_command.h"
 #include "globals.h"
+#include "base/actor.h"
 #include "base/combatant.h"
 #include "cmd_light_atk.h"
 #include "char_player.h"
@@ -229,7 +230,7 @@ void PlayerCharacter::draw() {
   }
 
   if (DEBUG_MODE) {
-    debugDraw();
+    Actor::drawDebug();
   }
 
   bool using_command = state != NEUTRAL && state != HIT_STUN;
@@ -237,9 +238,4 @@ void PlayerCharacter::draw() {
     current_command->draw();
     if (DEBUG_MODE) current_command->drawDebug();
   }
-}
-
-void PlayerCharacter::debugDraw() {
-  DrawRectangleLinesEx(tex_rect, 1, YELLOW);
-  DrawRectangleLinesEx(hitbox, 1, RED);
 }

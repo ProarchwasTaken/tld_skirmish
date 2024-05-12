@@ -27,3 +27,8 @@ void Actor::texRectCorrection() {
   tex_position = {x, y};
   tex_rect = {x, y, tex_scale.x, tex_scale.y};
 }
+
+void Actor::drawDebug() { 
+  DrawRectangleLinesEx(tex_rect, 1, YELLOW);
+  DrawRectangleLinesEx(hitbox, 1, RED);
+}

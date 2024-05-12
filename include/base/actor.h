@@ -23,6 +23,9 @@ public:
    * any way.*/
   void texRectCorrection();
 
+  void draw();
+  virtual void drawDebug();
+
   Vector2 position;
 protected:
   Rectangle hitbox;
