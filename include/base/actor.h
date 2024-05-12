@@ -27,8 +27,8 @@ public:
   virtual void drawDebug();
 
   Vector2 position;
-protected:
   Rectangle hitbox;
+protected:
   Vector2 hitbox_position;
   Vector2 hitbox_scale;
 
