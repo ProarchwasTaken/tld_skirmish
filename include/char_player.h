@@ -69,10 +69,11 @@ public:
    * possibly the simplest of the 3 methods.*/
   void clearBufferCheck();
 
+  combatant_list *enemies;
+
   bool moving;
   float movement_speed;
 private:
-  combatant_list *enemies;
 
   std::vector<uint8_t> input_buffer;
 
