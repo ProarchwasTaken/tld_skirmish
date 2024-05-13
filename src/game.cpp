@@ -93,6 +93,7 @@ void Game::cameraFollowPlayer() {
   }
 
   float x_difference = player->position.x - camera.target.x;
+  float next_x = x_difference / 8;
   int direction;
 
   if (x_difference > 0) {
@@ -111,7 +112,7 @@ void Game::cameraFollowPlayer() {
     return;
   }
 
-  float offset = screen_side + x_difference;
+  float offset = screen_side + next_x;
 
   bool hit_left_bounds = offset <= -CAMERA_BOUNDS;
   bool hit_right_bounds = offset >= CAMERA_BOUNDS;
@@ -122,7 +123,10 @@ void Game::cameraFollowPlayer() {
     camera.target.x = CAMERA_BOUNDS - half_width;
   }
   else {
-    camera.target.x += x_difference;
+    camera.target.x += next_x;
+    if (FloatEquals(camera.target.x, player->position.x)) {
+      camera.target.x = player->position.x;
+    }
   }
 }
 
@@ -169,6 +173,9 @@ void Game::refresh() {
                16, 80, 32, PURPLE);
       DrawText(TextFormat("Player State: %i", player->state), 
                16, 112, 32, PURPLE);
+      DrawText(TextFormat("Camera X Difference: %f", 
+                          player->position.x - camera.target.x), 
+               16, 144, 32, PURPLE);
     }
   }
   EndDrawing();
