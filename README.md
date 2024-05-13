@@ -40,6 +40,25 @@ sure it would work with other controllers.
 * **X/L Button** - Special/Sub-Weapon
 
 
+# Credits and Contacts
+
+## Tyler Dillard
+Role: Programmer, Designer, Pixel Artist, Sound and Music Designer, pretty
+much everything.
+
+**Contact Email** - lorenarcdev@gmail.com
+
+**Discord** - proarch. (With the period)
+
+**Itch.io** - https://lorenarc.itch.io
+
+**Gamejolt** - https://gamejolt.com/@LorenArc
+
+**Twitter** - https://twitter.com/Tyler37961642
+
+**Dev Channel** - https://www.youtube.com/channel/UCzR-5I3KE2YAV-Ilndl8Y9w
+
+
 # Known Issues
 This is the list of known issues about the game.
 
