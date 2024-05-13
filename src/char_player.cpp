@@ -16,7 +16,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies):
   Combatant("Player", TYPE_PLAYER, 100, {0, 208})
 {
   PLOGI << "Initializing the player character.";
-  movement_speed = 1.5;
+  movement_speed = 1.75;
 
   buf_clear_time = 0.025;
 
@@ -54,10 +54,7 @@ void PlayerCharacter::update(double &delta_time) {
 }
 
 bool PlayerCharacter::isMoving() {
-  if (moving_left && moving_right) {
-    return false;
-  }
-  else if (!moving_left && !moving_right) {
+  if (moving_left == moving_right) {
     return false;
   }
   else {
