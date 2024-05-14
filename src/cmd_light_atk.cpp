@@ -6,10 +6,10 @@
 #include "cmd_light_atk.h"
 
 LightAttack::LightAttack(Combatant &user) : 
-  ActionCommand(user, "Light Attack", 0.1, 0.1, 0.2)
+  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.2)
 {
   damage = 10;
-  stun_time = 0.2;
+  stun_time = 0.1;
   setupHurtbox();
 }
 
