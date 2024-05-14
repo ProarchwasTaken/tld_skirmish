@@ -31,6 +31,8 @@ public:
             Vector2 position, Vector2 hitbox_scale = {32, 64},
             Vector2 tex_scale = {64, 64});
 
+  /* Called once every frame. Holds code for a combatant's unique logic,
+   * and checks. So expect this to be overridded by derived classes.*/
   virtual void update(double &delta_time) {};
 
   /* Takes a action command as a parameter, and assigns it to the 
