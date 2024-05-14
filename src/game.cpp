@@ -86,7 +86,7 @@ void Game::defineColorPalette() {
   UnloadImage(palette);
 }
 
-void Game::cameraFollowPlayer() {
+void Game::cameraFollowPlayer(double &delta_time) {
   bool player_offCenter = camera.target.x != player->position.x;
   if (player_offCenter == false) {
     return;
@@ -123,7 +123,7 @@ void Game::cameraFollowPlayer() {
     camera.target.x = CAMERA_BOUNDS - half_width;
   }
   else {
-    camera.target.x += next_x;
+    camera.target.x += next_x * delta_time;
     if (FloatEquals(camera.target.x, player->position.x)) {
       camera.target.x = player->position.x;
     }
@@ -136,7 +136,7 @@ void Game::refresh() {
   player->inputReleased();
 
   player->update(delta_time);
-  cameraFollowPlayer();
+  cameraFollowPlayer(delta_time);
 
   for (auto enemy : enemies) {
     enemy->update(delta_time);

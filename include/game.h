@@ -37,7 +37,7 @@ public:
   /* For keeping the player at the center of the screen at all times.
    * Unless the camera has hit a boundary. Called once every frame of
    * which the player is off-center.*/
-  void cameraFollowPlayer();
+  void cameraFollowPlayer(double &delta_time);
 
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
