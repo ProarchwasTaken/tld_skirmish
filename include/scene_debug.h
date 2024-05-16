@@ -12,11 +12,12 @@
 class DebugScene : public Scene {
 public:
   DebugScene();
-  ~DebugScene();
+  ~DebugScene() override;
 
   void checkInput() override;
   void updateScene(double &delta_time) override;
   void drawScene() override;
+  void drawDebugInfo() override;
 
   void cameraFollowPlayer(double &delta_time);
 private:
