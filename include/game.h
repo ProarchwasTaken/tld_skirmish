@@ -2,10 +2,8 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "base/generics.h"
-#include "char_player.h"
+#include "base/scene.h"
 
-#define CAMERA_BOUNDS 512
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties
@@ -34,11 +32,6 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
-  /* For having the camera follow the player whenever they are off center.
-   * This process only stops when the player is at the center of the 
-   * screen again, or the camera has hit a boundary.*/
-  void cameraFollowPlayer(double &delta_time);
-
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
    * gamestate.*/
@@ -48,11 +41,7 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
+  std::unique_ptr<Scene> scene;
+
   double delta_time;
-
-  Texture test_room;
-  Camera2D camera;
-
-  combatant_list enemies;
-  std::shared_ptr<PlayerCharacter> player;
 };
