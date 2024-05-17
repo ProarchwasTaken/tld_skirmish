@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
              "True Human Tribulation: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
 
-  Game game;
+  Game game(SCENE_DEBUG);
 
   PLOGV << "Everything seems good to go!";
   while (WindowShouldClose() == false) {
