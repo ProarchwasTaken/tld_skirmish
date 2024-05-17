@@ -11,11 +11,10 @@
 using std::make_unique;
 
 
-Game::Game() {
+Game::Game(int start_scene) {
   setupCanvas();
   defineColorPalette();
-
-  scene = make_unique<DebugScene>();
+  loadScene(start_scene);
 }
 
 Game::~Game() {
@@ -69,6 +68,30 @@ void Game::defineColorPalette() {
   PLOGI << "Successfully loaded palette!";
   PLOGI << "Color Count: " << color_count;
   UnloadImage(palette);
+}
+
+void Game::loadScene(int scene_id) {
+  if (scene != nullptr) {
+    scene.reset();
+  }
+
+  PLOGI << "Attempting to load scene correlated with id: " << scene_id;
+  switch (scene_id) {
+    case SCENE_DEBUG: {
+      scene = make_unique<DebugScene>();
+      break;
+    }
+    case SCENE_MENU: 
+    case SCENE_GAMEPLAY: {
+      PLOGE << "Scene is not implemented yet!";
+      throw SCENE_NOT_IMPLEMENTED;
+    }
+    default: {
+      PLOGE << "The scene correlated with ID: " << scene_id << " doesn't"
+        " exist!";
+      throw SCENE_NOT_FOUND;
+    }
+  }
 }
 
 void Game::refresh() {
