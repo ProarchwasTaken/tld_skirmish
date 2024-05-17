@@ -39,7 +39,15 @@ int main(int argc, char *argv[]) {
              "True Human Tribulation: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
 
-  Game game(SCENE_DEBUG);
+  int start_scene;
+  if (DEBUG_MODE) {
+    start_scene = SCENE_DEBUG;
+  }
+  else {
+    start_scene = SCENE_MENU;
+  }
+
+  Game game(start_scene);
 
   PLOGV << "Everything seems good to go!";
   while (WindowShouldClose() == false) {
@@ -61,7 +69,7 @@ int main(int argc, char *argv[]) {
 
 void setupCustomLogger() {
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
-                                                           1000000, 10);
+                                                           100000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;
   plog::init(plog::verbose, &file_appender)
     .addAppender(&console_appender);
