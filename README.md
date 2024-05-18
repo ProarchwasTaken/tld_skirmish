@@ -128,7 +128,12 @@ probably be added later, and some rules may be subject to change.
 * The project's naming pattern is as follows: snake_case for variables,
   MACRO_CASE for constants and preprocessor macros, camelCase for 
   functions/methods (Pretty much anything that's callable), and PascalCase
-  for classes.
+  for classes/namespaces.
+
+* All lines of code must not be longer than 74 characters. The reason for
+  this is my monitor only has enough width for 2 vertical splits of 74
+  characters each. Because this is more of a personal convenience thing,
+  this rule is not as strongly enforced as the other ones.
 
 * The way you should write code for this project is about making it more 
   human and readable. Avoid writing too many comments. Docstrings should
