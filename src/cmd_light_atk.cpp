@@ -6,10 +6,10 @@
 
 
 LightAttack::LightAttack(PlayerCharacter *player) : 
-  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.2)
+  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.3)
 {
   damage = 10;
-  stun_time = 0.1;
+  stun_time = 0.5;
   setupHurtbox();
 }
 
