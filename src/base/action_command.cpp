@@ -8,19 +8,19 @@
 using std::string;
 
 
-ActionCommand::ActionCommand(Combatant &user, string command_name,
+ActionCommand::ActionCommand(Combatant *user, string command_name,
                              float charge_time, float act_time, 
                              float recovery_time)
 {
   this->command_name = command_name;
-  this->user = &user;
-  user.state = CHARGING;
+  this->user = user;
+  user->state = CHARGING;
 
   this->charge_time = charge_time;
   this->act_time = act_time;
   this->recovery_time = recovery_time;
 
-  PLOGD << "{Combatant: " << user.name << "} is now attempting to use "
+  PLOGD << "{Combatant: " << user->name << "} is now attempting to use "
     << "{Command: "<< command_name << "}";
   sequence_timestamp = GetTime();
 }

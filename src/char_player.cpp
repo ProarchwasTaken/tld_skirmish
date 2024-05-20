@@ -93,9 +93,7 @@ void PlayerCharacter::interpretBuffer() {
   switch (first_input) {
     case BTN_LIGHT_ATK: {
       PLOGI << "Attempting to assign LightAttack";
-      // Oh my god, what kind of black magic did I just do?
-      Combatant *user = this;
-      command = make_unique<LightAttack>(*user);
+      command = make_unique<LightAttack>(this);
       useCommand(command);
       break;
     }
