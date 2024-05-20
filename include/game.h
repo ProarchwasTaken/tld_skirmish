@@ -39,6 +39,10 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
+  /* Loads a specific scene into memory. A integer is used to specify what
+   * scene will be loaded and every scene is identified by a number.
+   * Throws an error when the scene the function tries to load doesn't
+   * exist, or it hasn't been implemented yet.*/
   void loadScene(int scene_id);
 
   /* The root function for checking for inputs, updating all active game
