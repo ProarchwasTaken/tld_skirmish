@@ -30,9 +30,9 @@ public:
   virtual void draw() {};
   virtual void drawDebug() {};
 
+  std::string command_name;
   float sequence_timestamp;
 protected:
-  std::string command_name;
   Combatant *user;
 
   float charge_time;
