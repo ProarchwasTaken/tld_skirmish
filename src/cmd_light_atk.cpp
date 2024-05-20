@@ -1,9 +1,9 @@
-// cmd_light_attack.cpp
+// cmd_light_atk.cpp
 #include <raylib.h>
-#include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_light_atk.h"
+
 
 LightAttack::LightAttack(PlayerCharacter *player) : 
   ActionCommand(player, "Light Attack", 0.2, 0.1, 0.2)
