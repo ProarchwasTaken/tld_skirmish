@@ -65,6 +65,10 @@ public:
    * the timer has started, and in the frame of which the buffer is about
    * to be cleared.*/
   void interpretBuffer();
+  void normalInterpretLogic();
+  void specialInterpretLogic();
+
+  void lightAttackHandling();
 
   /* For clearing the buffer onces the timer runs out. That's it.
    * possibly the simplest of the 3 methods.*/
