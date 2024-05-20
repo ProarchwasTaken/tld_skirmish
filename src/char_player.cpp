@@ -19,7 +19,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies):
   PLOGI << "Initializing the player character.";
   movement_speed = 1.75;
 
-  buf_clear_time = 0.025;
+  buf_clear_time = 0.010;
 
   PLOGI << "Assigning address to enemy list to pointer.";
   this->enemies = &enemies;
@@ -48,6 +48,7 @@ void PlayerCharacter::update(double &delta_time) {
     }
     default: {
       commandSequence();
+      interpretBuffer();
     }
   }
 
@@ -86,8 +87,21 @@ void PlayerCharacter::interpretBuffer() {
     return;
   }
 
-  PLOGD << "Interpreting input buffer...";
-  int8_t first_input = input_buffer.front();
+  if (state == NEUTRAL) {
+    PLOGI << "The player is in the NEUTRAL state. Using normal interpret" 
+    " logic.";
+    normalInterpretLogic();
+  }
+  else {
+    PLOGI << "The player is not in the NEUTRAL state. Using special"
+    " interpret logic based on the assumption that the player is using"
+    " an action command.";
+    specialInterpretLogic();
+  }
+}
+
+void PlayerCharacter::normalInterpretLogic() {
+  uint8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command;
 
   PLOGI << "Deciding what commands to use depending on input buffer.";
@@ -108,6 +122,35 @@ void PlayerCharacter::interpretBuffer() {
       PLOGI << "No valid commands found!";
       break;
     }
+  }
+}
+
+void PlayerCharacter::specialInterpretLogic() {
+  if (current_command == nullptr) {
+    PLOGE << "Player doesn't have an command assigned to them!";
+    throw;
+  }
+
+  PLOGI << "The player is using: " << current_command->command_name;
+  if (current_command->command_name == "Light Attack") {
+    lightAttackHandling();
+    return;
+  }
+}
+
+void PlayerCharacter::lightAttackHandling() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  auto light_atk = reinterpret_cast<LightAttack*>(current_command.get());
+
+  PLOGI << "Deciding if the recovery phase should be canceled depending"
+    " specific conditions.";
+  if (light_atk->attack_connected && first_input == BTN_HEAVY_ATK) {
+    PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
+    command = make_unique<HeavyAttack>(this);
+    useCommand(command);
+    return;
   }
 }
 
@@ -235,11 +278,18 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  if (state == NEUTRAL) {
-    DrawRectangleRec(hitbox, BLUE);
-  }
-  else {
-    DrawRectangleRec(hitbox, ORANGE);
+  switch (state) {
+    case NEUTRAL: {
+      DrawRectangleRec(hitbox, BLUE);
+      break;
+    }
+    case RECOVER: {
+      DrawRectangleRec(hitbox, GREEN);
+      break;
+    }
+    default: {
+      DrawRectangleRec(hitbox, ORANGE);
+    }
   }
 
   if (DEBUG_MODE) {
