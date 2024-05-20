@@ -15,7 +15,7 @@
  * onto by the derived class.*/
 class ActionCommand {
 public:
-  ActionCommand(Combatant &user, std::string command_name, 
+  ActionCommand(Combatant *user, std::string command_name, 
                 float charge_time, float act_time, float recovery_time);
 
   virtual void chargeSequence(float time_elapsed);
