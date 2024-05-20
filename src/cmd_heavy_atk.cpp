@@ -6,10 +6,10 @@
 
 
 HeavyAttack::HeavyAttack(PlayerCharacter *player):
-  ActionCommand(player, "Heavy Attack", 0.4, 0.2, 0.4)
+  ActionCommand(player, "Heavy Attack", 0.3, 0.2, 0.6)
 {
   damage = 20;
-  stun_time = 0.2;
+  stun_time = 0.5;
   setupHurtbox();
 }
 
