@@ -9,6 +9,7 @@
 #define PLAYER_BOUNDS 384
 
 #define BTN_LIGHT_ATK 0
+#define BTN_HEAVY_ATK 1
 
 
 /* The playable character, the controllable avatar for the user. The most

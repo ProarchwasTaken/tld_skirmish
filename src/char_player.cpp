@@ -6,6 +6,7 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_light_atk.h"
+#include "cmd_heavy_atk.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -97,6 +98,12 @@ void PlayerCharacter::interpretBuffer() {
       useCommand(command);
       break;
     }
+    case BTN_HEAVY_ATK: {
+      PLOGI << "Attempting to assign HeavyAttack";
+      command = make_unique<HeavyAttack>(this);
+      useCommand(command);
+      break;
+    }
     default: {
       PLOGI << "No valid commands found!";
       break;
@@ -151,12 +158,14 @@ void PlayerCharacter::inputPressed() {
   bool key_left = IsKeyPressed(KEY_LEFT);
 
   bool key_c = IsKeyPressed(KEY_C);
+  bool key_v = IsKeyPressed(KEY_V);
 
   bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
   bool gamepad_left = false;
 
   bool gamepad_face_right = false;
+  bool gamepad_face_down = false;
 
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonPressed(
@@ -168,26 +177,32 @@ void PlayerCharacter::inputPressed() {
     gamepad_face_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
     );
+    gamepad_face_down = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
+    );
   }
 
-  bool input_right = key_right || (gamepad_available && gamepad_right);
-  bool input_left = key_left || (gamepad_available && gamepad_left);
-  bool input_light_attack = key_c || (gamepad_available && 
-    gamepad_face_right);
 
+  bool input_right = key_right || (gamepad_available && gamepad_right);
   if (input_right && moving_right == false) {
     moving_right = true;
   }
+  
+  bool input_left = key_left || (gamepad_available && gamepad_left);
   if (input_left && moving_left == false) {
     moving_left = true;
   }
+
+  bool input_light_attack = key_c || (gamepad_available && 
+  gamepad_face_down);
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  // TODO: Remove this later!
-  if (IsKeyPressed(KEY_E)) {
-    takeDamage(5, 1);
+  bool input_heavy_attack = key_v || (gamepad_available && 
+    gamepad_face_right);
+  if (input_heavy_attack) {
+    input_buffer.push_back(BTN_HEAVY_ATK);
   }
 }
 
