@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <vector>
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -11,9 +12,10 @@
 #include "globals.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender;
+plog::ColorConsoleAppender, std::vector;
 
 Color *COLORS::PALETTE;
+vector<Texture*> sprites::player; 
 bool DEBUG_MODE = false;
 
 void setupCustomLogger();
