@@ -1,5 +1,7 @@
 [player]
-sheet = "graphics/spritesheets/player.png"
+path = "graphics/spritesheets/player.png"
+sprites = [
+  # Idle - 0
+  {x = 0, y = 0, width = 64, height = 64}
+]
 
-[player.sprites]
-idle = {x = 0, y = 0, width = 64, height = 64}
