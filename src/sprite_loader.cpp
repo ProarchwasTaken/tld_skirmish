@@ -67,6 +67,7 @@ void SpriteLoader::parseSprites(string sheet_name, Image *spritesheet) {
     
     Image final_image = ImageCopy(*spritesheet);
     ImageCrop(&final_image, area); 
+    ImageColorReplace(&final_image, COLORS::PALETTE[0], {0, 0, 0, 0});
 
     sprites.push_back(LoadTextureFromImage(final_image));
     UnloadImage(final_image);
