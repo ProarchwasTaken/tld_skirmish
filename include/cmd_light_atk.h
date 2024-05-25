@@ -12,10 +12,9 @@
  * would be out of hit stun by the time the player recovers from the using
  * the attack.
  *
- * NOT IMPLEMENTED: When the player hits a light attack, they could
+ * When the player hits a light attack, they could
  * immediantly cancel the attack into a heavy attack. Thus keeping the 
- * enemy in hit stun for a little bit longer. Some may call this a 
- * "Combo".*/
+ * enemy in hit stun for a little bit longer.*/
 class LightAttack : public ActionCommand {
 public:
   LightAttack(PlayerCharacter *player);
