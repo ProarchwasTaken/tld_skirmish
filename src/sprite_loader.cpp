@@ -36,7 +36,7 @@ void SpriteLoader::loadSpritesheet(vector<string> name_list) {
 
     PLOGI << sheet_name << " spritesheet path: " << file_path;
     Image spritesheet = LoadImage(file_path.c_str());
-    parseSprites(sheet_name, &spritesheet);
+    parseSprites(sheet_name, spritesheet);
 
     UnloadImage(spritesheet);
     PLOGV << "Spritesheet successfully parsed!";
@@ -53,7 +53,7 @@ Rectangle SpriteLoader::getSpriteArea(toml::value &sprite_data) {
   return sprite_area;
 }
 
-void SpriteLoader::parseSprites(string sheet_name, Image *spritesheet) {
+void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
@@ -65,7 +65,7 @@ void SpriteLoader::parseSprites(string sheet_name, Image *spritesheet) {
     
     Rectangle area = getSpriteArea(sprite_data);
     
-    Image final_image = ImageCopy(*spritesheet);
+    Image final_image = ImageCopy(spritesheet);
     ImageCrop(&final_image, area); 
     ImageColorReplace(&final_image, COLORS::PALETTE[0], {0, 0, 0, 0});
 

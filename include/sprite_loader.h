@@ -19,7 +19,7 @@ public:
   ~SpriteLoader();
 
   void loadSpritesheet(std::vector<std::string> name_list);
-  void parseSprites(std::string sheet_name, Image *spritesheet);
+  void parseSprites(std::string sheet_name, Image &spritesheet);
 
   Rectangle getSpriteArea(toml::value &sprite_data);
   void allocateSprites(std::string sheet_name, int sprite);
