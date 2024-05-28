@@ -29,10 +29,13 @@ public:
   Vector2 position;
   Rectangle hitbox;
 protected:
-  Vector2 hitbox_position;
-  Vector2 hitbox_scale;
+  Texture *current_sprite;
 
   Rectangle tex_rect;
   Vector2 tex_position;
   Vector2 tex_scale;
+
+  Vector2 hitbox_position;
+  Vector2 hitbox_scale;
+
 };
