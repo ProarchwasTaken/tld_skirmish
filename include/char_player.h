@@ -100,6 +100,9 @@ private:
   float buf_clear_time;
   float buf_input_timestamp;
 
+  std::vector<int> anim_walk;
+  float walk_frametime;
+
   bool moving_right = false;
   bool moving_left = false;
 };
