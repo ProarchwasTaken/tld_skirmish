@@ -38,8 +38,8 @@ namespace Animation {
    * next frame in the animation.*/
   void updateSprite(Actor *actor, std::vector<Texture*> &sprite_list);
 
-  /* The root function for playing any animation for Actors and classes 
-   * that derive from them.*/
+  /* The root function for playing any looping animation for Actors and 
+   * classes that derive from them.*/
   void play(Actor *actor, std::vector<Texture*> &sprite_list,
             std::vector<int> &frame_order, float frame_time);
 }
