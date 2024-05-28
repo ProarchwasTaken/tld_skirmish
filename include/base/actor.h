@@ -28,6 +28,9 @@ public:
   virtual void drawDebug();
 
   Texture *current_sprite;
+  std::vector<int> *current_anim;
+  float frame_timestamp;
+
   std::vector<int>::iterator current_frame;
 
   Vector2 position;
