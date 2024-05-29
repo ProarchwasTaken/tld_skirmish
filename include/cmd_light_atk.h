@@ -22,6 +22,7 @@ public:
   /* For defining the hurtbox and positioning it just in front of the
    * the player. Using called on initialization*/
   void setupHurtbox();
+  void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
 
   void enemyHitCheck();
