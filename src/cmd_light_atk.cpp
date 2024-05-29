@@ -17,7 +17,7 @@ LightAttack::LightAttack(PlayerCharacter *player) :
 }
 
 void LightAttack::setupHurtbox() {
-  float width = 48;
+  float width = 24;
   float half_width = width / 2;
 
   float height = 16;
@@ -42,6 +42,10 @@ void LightAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
   enemyHitCheck(); 
+
+  if (finished_action) {
+    user->current_sprite = sprites::player[4];
+  }
 }
 
 void LightAttack::enemyHitCheck() {
