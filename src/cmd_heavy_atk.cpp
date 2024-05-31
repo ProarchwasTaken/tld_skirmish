@@ -1,20 +1,23 @@
 // cmd_heavy_atk.cpp
 #include <raylib.h>
+#include "globals.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_heavy_atk.h"
 
 
 HeavyAttack::HeavyAttack(PlayerCharacter *player):
-  ActionCommand(player, "Heavy Attack", 0.3, 0.2, 0.6)
+  ActionCommand(player, "Heavy Attack", 0.3, 0.1, 0.6)
 {
   damage = 20;
   stun_time = 0.5;
+
+  user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
 
 void HeavyAttack::setupHurtbox() {
-  float width = 48;
+  float width = 26;
   float half_width = width / 2;
 
   float height = 16;
@@ -22,15 +25,27 @@ void HeavyAttack::setupHurtbox() {
   float x_offset = half_width * user->direction;
 
   float x = (user->position.x - half_width) + x_offset;
-  float y = user->position.y - 48;
+  float y = user->position.y - 54;
 
   hurtbox = {x, y, width, height};
+}
+
+void HeavyAttack::chargeSequence(float time_elapsed) {
+  ActionCommand::chargeSequence(time_elapsed);
+
+  if (finished_charge) {
+    user->current_sprite = sprites::player[6];
+  }
 }
 
 void HeavyAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
   enemyHitCheck();
+
+  if (finished_action) {
+    user->current_sprite = sprites::player[4];
+  }
 }
 
 void HeavyAttack::enemyHitCheck() {
@@ -48,7 +63,7 @@ void HeavyAttack::enemyHitCheck() {
 
 void HeavyAttack::draw() {
   if (user->state == ACT) {
-    DrawRectangleRec(hurtbox, MAROON);
+    DrawRectangleLinesEx(hurtbox, 1, MAROON);
   } 
 }
 

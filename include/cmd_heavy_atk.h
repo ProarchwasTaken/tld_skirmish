@@ -17,6 +17,7 @@ public:
   HeavyAttack(PlayerCharacter *player);
 
   void setupHurtbox();
+  void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
 
   void enemyHitCheck();
