@@ -61,12 +61,8 @@ void HeavyAttack::enemyHitCheck() {
   }
 }
 
-void HeavyAttack::draw() {
+void HeavyAttack::drawDebug() {
   if (user->state == ACT) {
     DrawRectangleLinesEx(hurtbox, 1, MAROON);
   } 
-}
-
-void HeavyAttack::drawDebug() {
-
 }
