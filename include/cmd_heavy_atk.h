@@ -22,7 +22,6 @@ public:
 
   void enemyHitCheck();
 
-  void draw() override;
   void drawDebug() override;
 
   bool attack_connected = false;

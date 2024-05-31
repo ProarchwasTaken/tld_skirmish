@@ -61,12 +61,8 @@ void LightAttack::enemyHitCheck() {
   }
 }
 
-void LightAttack::draw() {
+void LightAttack::drawDebug() {
   if (user->state == ACT) {
     DrawRectangleLinesEx(hurtbox, 1, MAROON);
   } 
-}
-
-void LightAttack::drawDebug() {
-
 }
