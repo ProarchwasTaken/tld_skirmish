@@ -12,6 +12,8 @@ sprites = [
   # normal_charge - 4
   {x = 256, y = 0, width = 64, height = 64},
   # light_atk - 5
-  {x = 0, y = 64, width = 64, height = 64}
+  {x = 0, y = 64, width = 64, height = 64},
+  # heavy_atk - 6
+  {x = 64, y = 64, width = 64, height = 64}
 ]
 
