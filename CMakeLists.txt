@@ -24,7 +24,6 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 set(SOURCE_FILES 
 "src/main.cpp"
 "src/game.cpp"
-"src/scene_debug.cpp"
 "src/char_player.cpp"
 "src/enemy_dummy.cpp"
 "src/cmd_light_atk.cpp"
@@ -35,14 +34,12 @@ set(SOURCE_FILES
 
 set(HEADER_FILES
 "include/defaults.h"
-"include/globals.h"
 "include/game.h"
-"include/scene_debug.h"
+"include/globals.h"
 "include/char_player.h"
 "include/enemy_dummy.h"
 "include/cmd_light_atk.h"
 "include/base/generics.h"
-"include/base/scene.h"
 "include/base/actor.h"
 "include/base/combatant.h"
 "include/base/action_command.h"
