@@ -26,7 +26,7 @@ ActionCommand::ActionCommand(Combatant *user, string command_name,
 }
 
 void ActionCommand::chargeSequence(float time_elapsed) {
-  finished_charge = time_elapsed >= charge_time;
+  bool finished_charge = time_elapsed >= charge_time;
 
   if (finished_charge) {
     user->state = ACT;
@@ -35,7 +35,7 @@ void ActionCommand::chargeSequence(float time_elapsed) {
 }
 
 void ActionCommand::actSequence(float time_elapsed) {
-  finished_action = time_elapsed >= act_time;
+  bool finished_action = time_elapsed >= act_time;
 
   if (finished_action) {
     user->state = RECOVER;
@@ -44,7 +44,7 @@ void ActionCommand::actSequence(float time_elapsed) {
 }
 
 void ActionCommand::recoverySequence(float time_elapsed) {
-  finished_recovering = time_elapsed >= recovery_time;
+  bool finished_recovering = time_elapsed >= recovery_time;
 
   if (finished_recovering) {
     user->state = NEUTRAL;

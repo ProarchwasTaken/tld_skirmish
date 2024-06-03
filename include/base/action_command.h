@@ -36,11 +36,6 @@ protected:
   Combatant *user;
 
   float charge_time;
-  bool finished_charge = false;
-
   float act_time;
-  bool finished_action = false;
-
   float recovery_time;
-  bool finished_recovering = false;
 };
