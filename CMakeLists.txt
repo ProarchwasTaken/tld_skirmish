@@ -24,7 +24,6 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 set(SOURCE_FILES 
 "src/main.cpp"
 "src/game.cpp"
-"src/utils.cpp"
 "src/scene_debug.cpp"
 "src/char_player.cpp"
 "src/enemy_dummy.cpp"
@@ -38,7 +37,6 @@ set(HEADER_FILES
 "include/defaults.h"
 "include/globals.h"
 "include/game.h"
-"include/utils.h"
 "include/scene_debug.h"
 "include/char_player.h"
 "include/enemy_dummy.h"

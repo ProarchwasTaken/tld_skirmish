@@ -18,6 +18,8 @@ public:
   void updateScene(double &delta_time) override;
   void drawScene() override;
   void drawDebugInfo() override;
+
+  void cameraFollowPlayer(double &delta_time);
 private:
   Texture test_room;
   Camera2D camera;
