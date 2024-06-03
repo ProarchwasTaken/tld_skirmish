@@ -38,8 +38,6 @@ void HeavyAttack::enemyHitCheck() {
   for (auto enemy : *player->enemies) {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
       enemy->takeDamage(damage, stun_time);
-      attack_connected = true;
-
       player->state = RECOVER;
       return;
     }

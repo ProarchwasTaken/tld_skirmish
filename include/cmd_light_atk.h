@@ -29,8 +29,6 @@ public:
 
   void draw() override;
   void drawDebug() override;
-
-  bool attack_connected = false;
 private:
   Rectangle hurtbox;
 
