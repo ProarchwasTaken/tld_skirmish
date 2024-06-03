@@ -3,5 +3,6 @@ build/
 build_linux/
 build_win32/
 logs/
+doc/.$system_flowchart.html.bkp
 game.exe
 game
