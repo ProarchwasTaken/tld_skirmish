@@ -2,7 +2,6 @@
 #include <memory>
 #include <raylib.h>
 #include "globals.h"
-#include "utils.h"
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
@@ -19,10 +18,6 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies):
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
-
-  anim_walk = {1, 2, 3, 2};
-  walk_frametime = 0.15;
-
   movement_speed = 1.75;
 
   buf_clear_time = 0.010;
@@ -63,11 +58,9 @@ void PlayerCharacter::update(double &delta_time) {
 
 bool PlayerCharacter::isMoving() {
   if (moving_left == moving_right) {
-    current_sprite = sprites::player[1];
     return false;
   }
   else {
-    Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
 }
