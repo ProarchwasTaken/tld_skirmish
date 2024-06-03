@@ -1,14 +1,9 @@
 // utils.cpp
-#include <cstddef>
 #include <raylib.h>
 #include <raymath.h>
-#include <vector>
 #include "defaults.h"
 #include "char_player.h"
 #include "utils.h"
-
-using std::vector;
-
 
 Camera2D CameraUtils::setupCamera() {
   Camera2D camera;
@@ -21,8 +16,7 @@ Camera2D CameraUtils::setupCamera() {
 }
 
 void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player,
-                            double &delta_time) 
-{
+                            double &delta_time) {
   bool player_offCenter = camera.target.x != player.position.x;
   if (player_offCenter == false) {
     return;
@@ -64,47 +58,6 @@ void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player,
       camera.target.x = player.position.x;
     }
   }
-}
 
 
-void Animation::check(Actor *actor, vector<Texture*> &sprite_list, 
-                      vector<int> &frame_order)
-{
-  bool no_animation = actor->current_anim == NULL;
-
-  if (no_animation || *actor->current_anim != frame_order) {
-    actor->current_anim = &frame_order;
-    actor->current_frame = frame_order.begin();
-
-    int first_frame = *actor->current_frame;
-    actor->current_sprite = sprite_list[first_frame];
-    actor->frame_timestamp = GetTime();
-  }
-}
-
-void Animation::updateSprite(Actor *actor, vector<Texture*> &sprite_list){
-  int sprite_index = *actor->current_frame;
-  actor->current_sprite = sprite_list[sprite_index];
-
-  actor->frame_timestamp = GetTime();
-}
-
-void Animation::play(Actor *actor, vector<Texture*> &sprite_list, 
-                     vector<int> &frame_order, float frame_time) 
-{
-  Animation::check(actor, sprite_list, frame_order);
-
-  float time_elapsed = GetTime() - actor->frame_timestamp;
-  if (time_elapsed < frame_time) {
-    return;
-  }
-
-  actor->current_frame++;
-  
-  bool end_of_animation = actor->current_frame == frame_order.end();
-  if (end_of_animation) {
-    actor->current_frame = frame_order.begin();
-  }
-
-  Animation::updateSprite(actor, sprite_list);
 }
