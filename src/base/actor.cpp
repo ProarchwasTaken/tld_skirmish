@@ -30,5 +30,5 @@ void Actor::texRectCorrection() {
 
 void Actor::drawDebug() { 
   DrawRectangleLinesEx(tex_rect, 1, YELLOW);
-  DrawRectangleLinesEx(hitbox, 1, BLUE);
+  DrawRectangleLinesEx(hitbox, 1, RED);
 }
