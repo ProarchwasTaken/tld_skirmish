@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     PLOGV << "Operating System: Windows";
   }
   else if (PLATFORM == LINUX) {
-    PLOGV << "Operating System: Linux";
+    PLOGV << "Operating System: LINUX";
   }
 
   if (argc > 1) {
