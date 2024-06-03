@@ -1,6 +1,5 @@
 // cmd_light_atk.cpp
 #include <raylib.h>
-#include "globals.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_light_atk.h"
@@ -11,8 +10,6 @@ LightAttack::LightAttack(PlayerCharacter *player) :
 {
   damage = 10;
   stun_time = 0.5;
-
-  user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
 
@@ -28,14 +25,6 @@ void LightAttack::setupHurtbox() {
   float y = user->position.y - 56;
 
   hurtbox = {x, y, width, height};
-}
-
-void LightAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
-
-  if (finished_charge) {
-    user->current_sprite = sprites::player[5];
-  }
 }
 
 void LightAttack::actSequence(float time_elapsed) {
@@ -59,7 +48,7 @@ void LightAttack::enemyHitCheck() {
 
 void LightAttack::draw() {
   if (user->state == ACT) {
-    DrawRectangleLinesEx(hurtbox, 1, MAROON);
+    DrawRectangleRec(hurtbox, MAROON);
   } 
 }
 
