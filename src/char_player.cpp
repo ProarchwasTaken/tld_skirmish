@@ -17,7 +17,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies):
   Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 58})
 {
   PLOGI << "Initializing the player character.";
-  current_sprite = sprites::player[1];
+  current_sprite = sprites::player[0];
   movement_speed = 1.75;
 
   buf_clear_time = 0.010;
