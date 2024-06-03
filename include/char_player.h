@@ -9,7 +9,6 @@
 #define PLAYER_BOUNDS 384
 
 #define BTN_LIGHT_ATK 0
-#define BTN_HEAVY_ATK 1
 
 
 /* The playable character, the controllable avatar for the user. The most
@@ -59,29 +58,12 @@ public:
    * the timer will start, beginning the whole sequence.*/
   void bufferTimerCheck();
 
-  /* The root method for interpreting the input buffer and decided what 
-   * command should assigned to the player basing on the number of
-   * circumstances. It's full functionality is triggered once the buffer
-   * is about to clear, it may use normal or special logic depending
-   * on what state the player is in.*/
+  /* Possibly the only way action commands would be assigned to the 
+   * player. Reads the input buffer and decides what action command to
+   * assign to the player based on that. This process is only done when
+   * the timer has started, and in the frame of which the buffer is about
+   * to be cleared.*/
   void interpretBuffer();
-
-  /* This method is only called when the player is in the neutral state.
-   * It checks the first to second inputs in the buffer, and decides what
-   * command to assign to the player based on that.*/
-  void normalInterpretLogic();
-
-  /* Special interpret logic is quite special as it's only used when the
-   * player is currently performing an action command. Different 
-   * logic may be also used depending on what action command is being
-   * used as well.*/
-  void specialInterpretLogic();
-
-  /* Only called during special interpret logic, and the player is using
-   * the LightAttack. For checking if the player should cancel the
-   * recovery phase of the attack and immediately perform a heavy attack.
-   * That's only if certain conditions are met.*/
-  void lightAttackHandling();
 
   /* For clearing the buffer onces the timer runs out. That's it.
    * possibly the simplest of the 3 methods.*/
@@ -92,6 +74,7 @@ public:
   bool moving;
   float movement_speed;
 private:
+
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;
@@ -99,9 +82,6 @@ private:
 
   float buf_clear_time;
   float buf_input_timestamp;
-
-  std::vector<int> anim_walk;
-  float walk_frametime;
 
   bool moving_right = false;
   bool moving_left = false;

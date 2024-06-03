@@ -2,6 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
+#include "base/combatant.h"
 #include "char_player.h"
 #include "base/action_command.h"
 
@@ -12,24 +13,23 @@
  * would be out of hit stun by the time the player recovers from the using
  * the attack.
  *
- * When the player hits a light attack, they could
+ * NOT IMPLEMENTED: When the player hits a light attack, they could
  * immediantly cancel the attack into a heavy attack. Thus keeping the 
- * enemy in hit stun for a little bit longer.*/
+ * enemy in hit stun for a little bit longer. Some may call this a 
+ * "Combo".*/
 class LightAttack : public ActionCommand {
 public:
-  LightAttack(PlayerCharacter *player);
+  LightAttack(Combatant &user);
 
   /* For defining the hurtbox and positioning it just in front of the
    * the player. Using called on initialization*/
   void setupHurtbox();
-  void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
 
-  void enemyHitCheck();
+  void enemyHitCheck(PlayerCharacter &player);
 
+  void draw() override;
   void drawDebug() override;
-
-  bool attack_connected = false;
 private:
   Rectangle hurtbox;
 

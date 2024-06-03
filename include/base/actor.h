@@ -1,8 +1,6 @@
 // actor.h
 #pragma once
-#include <cstddef>
 #include <raylib.h>
-#include <vector>
 
 
 /* The Actor Base class is the root of pretty much every game object that
@@ -28,21 +26,13 @@ public:
   virtual void draw() {};
   virtual void drawDebug();
 
-  Texture *current_sprite;
-  std::vector<int> *current_anim = NULL;
-  float frame_timestamp;
-
-  std::vector<int>::iterator current_frame;
-
   Vector2 position;
   Rectangle hitbox;
 protected:
+  Vector2 hitbox_position;
+  Vector2 hitbox_scale;
 
   Rectangle tex_rect;
   Vector2 tex_position;
   Vector2 tex_scale;
-
-  Vector2 hitbox_position;
-  Vector2 hitbox_scale;
-
 };

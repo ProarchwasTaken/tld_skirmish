@@ -1,23 +1,20 @@
-// cmd_light_atk.cpp
+// cmd_light_attack.cpp
 #include <raylib.h>
-#include "globals.h"
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_light_atk.h"
 
-
-LightAttack::LightAttack(PlayerCharacter *player) : 
-  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.3)
+LightAttack::LightAttack(Combatant &user) : 
+  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.2)
 {
   damage = 10;
-  stun_time = 0.5;
-
-  user->current_sprite = sprites::player[4];
+  stun_time = 0.1;
   setupHurtbox();
 }
 
 void LightAttack::setupHurtbox() {
-  float width = 24;
+  float width = 48;
   float half_width = width / 2;
 
   float height = 16;
@@ -30,39 +27,31 @@ void LightAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void LightAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
-
-  if (finished_charge) {
-    user->current_sprite = sprites::player[5];
-  }
-}
-
 void LightAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
-  enemyHitCheck(); 
-
-  if (finished_action) {
-    user->current_sprite = sprites::player[4];
+  if (user->type == TYPE_PLAYER) {
+    auto player = reinterpret_cast<PlayerCharacter*>(user); 
+    enemyHitCheck(*player);
   }
 }
 
-void LightAttack::enemyHitCheck() {
-  auto player = reinterpret_cast<PlayerCharacter*>(user);
-  for (auto enemy : *player->enemies) {
+void LightAttack::enemyHitCheck(PlayerCharacter &player) {
+  for (auto enemy : *player.enemies) {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
       enemy->takeDamage(damage, stun_time);
-      attack_connected = true;
-
-      player->state = RECOVER;
+      player.state = RECOVER;
       return;
     }
   }
 }
 
-void LightAttack::drawDebug() {
+void LightAttack::draw() {
   if (user->state == ACT) {
-    DrawRectangleLinesEx(hurtbox, 1, MAROON);
+    DrawRectangleRec(hurtbox, MAROON);
   } 
+}
+
+void LightAttack::drawDebug() {
+
 }
