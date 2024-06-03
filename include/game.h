@@ -4,13 +4,6 @@
 #include <raylib.h>
 #include "base/scene.h"
 
-#define SCENE_DEBUG 0
-#define SCENE_MENU 1
-#define SCENE_GAMEPLAY 2
-
-
-#define SCENE_NOT_FOUND 4205
-#define SCENE_NOT_IMPLEMENTED 9537
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties
@@ -18,7 +11,7 @@
  * and pointers to other important systems, and game objects.*/
 class Game {
 public:
-  Game(int start_scene);
+  Game();
   ~Game();
 
   /* For correcting the dimensions of the canvas to the correct window
@@ -38,8 +31,6 @@ public:
    * used. This should only be called once, and only before the
    * color palette is actually used.*/
   void defineColorPalette();
-
-  void loadScene(int scene_id);
 
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
