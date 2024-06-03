@@ -1,9 +1,7 @@
 [player]
 path = "graphics/spritesheets/player.png"
 sprites = [
-  # Idle Rest - 0
-  {x = 0, y = 0, width = 64, height = 64},
-  # Idle Action - 1
-  {x = 64, y = 0, width = 64, height = 64}
+  # Idle - 0
+  {x = 0, y = 0, width = 64, height = 64}
 ]
 
