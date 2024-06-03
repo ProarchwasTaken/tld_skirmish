@@ -4,5 +4,6 @@ build_linux/
 build_win32/
 logs/
 doc/.$system_flowchart.html.bkp
+doc/.$system_flowchart.html.dtmp
 game.exe
 game
