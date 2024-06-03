@@ -2,7 +2,6 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "sprite_loader.h"
 #include "base/scene.h"
 
 #define SCENE_DEBUG 0
@@ -55,7 +54,6 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
-  SpriteLoader sprite_loader;
   std::unique_ptr<Scene> scene;
 
   double delta_time;
