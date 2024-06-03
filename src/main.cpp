@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 
 void setupCustomLogger() {
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
-                                                           1000000, 10);
+                                                           100000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;
   plog::init(plog::verbose, &file_appender)
     .addAppender(&console_appender);
