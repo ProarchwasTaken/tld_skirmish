@@ -92,6 +92,8 @@ public:
   bool moving;
   float movement_speed;
 private:
+
+  Texture *current_sprite;
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;
