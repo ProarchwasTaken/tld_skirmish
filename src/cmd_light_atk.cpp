@@ -5,8 +5,8 @@
 #include "char_player.h"
 #include "cmd_light_atk.h"
 
-LightAttack::LightAttack(PlayerCharacter *player) : 
-  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.2)
+LightAttack::LightAttack(Combatant &user) : 
+  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.2)
 {
   damage = 10;
   stun_time = 0.1;
@@ -30,15 +30,17 @@ void LightAttack::setupHurtbox() {
 void LightAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
-  enemyHitCheck(); 
+  if (user->type == TYPE_PLAYER) {
+    auto player = reinterpret_cast<PlayerCharacter*>(user); 
+    enemyHitCheck(*player);
+  }
 }
 
-void LightAttack::enemyHitCheck() {
-  auto player = reinterpret_cast<PlayerCharacter*>(user);
-  for (auto enemy : *player->enemies) {
+void LightAttack::enemyHitCheck(PlayerCharacter &player) {
+  for (auto enemy : *player.enemies) {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
       enemy->takeDamage(damage, stun_time);
-      player->state = RECOVER;
+      player.state = RECOVER;
       return;
     }
   }

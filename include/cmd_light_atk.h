@@ -2,6 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
+#include "base/combatant.h"
 #include "char_player.h"
 #include "base/action_command.h"
 
@@ -18,14 +19,14 @@
  * "Combo".*/
 class LightAttack : public ActionCommand {
 public:
-  LightAttack(PlayerCharacter *player);
+  LightAttack(Combatant &user);
 
   /* For defining the hurtbox and positioning it just in front of the
    * the player. Using called on initialization*/
   void setupHurtbox();
   void actSequence(float time_elapsed) override;
 
-  void enemyHitCheck();
+  void enemyHitCheck(PlayerCharacter &player);
 
   void draw() override;
   void drawDebug() override;
