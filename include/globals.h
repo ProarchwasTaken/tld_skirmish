@@ -5,7 +5,6 @@
  * platform the game is running on.*/
 #pragma once
 #include <raylib.h>
-#include <vector>
 
 #define WINDOWS 0
 #define LINUX 1
@@ -20,10 +19,6 @@
 
 namespace COLORS {
   extern Color *PALETTE;
-}
-
-namespace sprites {
-  extern std::vector<Texture*> player;
 }
 
 extern bool DEBUG_MODE;
