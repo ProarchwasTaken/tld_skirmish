@@ -14,10 +14,9 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 58})
+  Combatant("Player", TYPE_PLAYER, 100, {0, 208})
 {
   PLOGI << "Initializing the player character.";
-  current_sprite = sprites::player[0];
   movement_speed = 1.75;
 
   buf_clear_time = 0.010;
@@ -279,14 +278,19 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
-  Rectangle dest = {tex_position.x, tex_position.y, 
-    tex_scale.x, tex_scale.y};
-  if (direction == LEFT) {
-    source.width *= -1;
+  switch (state) {
+    case NEUTRAL: {
+      DrawRectangleRec(hitbox, BLUE);
+      break;
+    }
+    case RECOVER: {
+      DrawRectangleRec(hitbox, GREEN);
+      break;
+    }
+    default: {
+      DrawRectangleRec(hitbox, ORANGE);
+    }
   }
-
-  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE) {
     drawDebug();
