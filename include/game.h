@@ -2,10 +2,16 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "base/generics.h"
-#include "char_player.h"
+#include "sprite_loader.h"
+#include "base/scene.h"
 
-#define CAMERA_BOUNDS 512
+#define SCENE_DEBUG 0
+#define SCENE_MENU 1
+#define SCENE_GAMEPLAY 2
+
+
+#define SCENE_NOT_FOUND 4205
+#define SCENE_NOT_IMPLEMENTED 9537
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties
@@ -13,7 +19,7 @@
  * and pointers to other important systems, and game objects.*/
 class Game {
 public:
-  Game();
+  Game(int start_scene);
   ~Game();
 
   /* For correcting the dimensions of the canvas to the correct window
@@ -34,10 +40,11 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
-  /* For having the camera follow the player whenever they are off center.
-   * This process only stops when the player is at the center of the 
-   * screen again, or the camera has hit a boundary.*/
-  void cameraFollowPlayer(double &delta_time);
+  /* Loads a specific scene into memory. A integer is used to specify what
+   * scene will be loaded and every scene is identified by a number.
+   * Throws an error when the scene the function tries to load doesn't
+   * exist, or it hasn't been implemented yet.*/
+  void loadScene(int scene_id);
 
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
@@ -48,11 +55,8 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
+  SpriteLoader sprite_loader;
+  std::unique_ptr<Scene> scene;
+
   double delta_time;
-
-  Texture test_room;
-  Camera2D camera;
-
-  combatant_list enemies;
-  std::shared_ptr<PlayerCharacter> player;
 };

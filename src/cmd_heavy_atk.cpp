@@ -1,23 +1,23 @@
-// cmd_light_atk.cpp
+// cmd_heavy_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/action_command.h"
 #include "char_player.h"
-#include "cmd_light_atk.h"
+#include "cmd_heavy_atk.h"
 
 
-LightAttack::LightAttack(PlayerCharacter *player) : 
-  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.3)
+HeavyAttack::HeavyAttack(PlayerCharacter *player):
+  ActionCommand(player, "Heavy Attack", 0.3, 0.1, 0.6)
 {
-  damage = 10;
+  damage = 20;
   stun_time = 0.5;
 
   user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
 
-void LightAttack::setupHurtbox() {
-  float width = 24;
+void HeavyAttack::setupHurtbox() {
+  float width = 26;
   float half_width = width / 2;
 
   float height = 16;
@@ -25,30 +25,30 @@ void LightAttack::setupHurtbox() {
   float x_offset = half_width * user->direction;
 
   float x = (user->position.x - half_width) + x_offset;
-  float y = user->position.y - 56;
+  float y = user->position.y - 54;
 
   hurtbox = {x, y, width, height};
 }
 
-void LightAttack::chargeSequence(float time_elapsed) {
+void HeavyAttack::chargeSequence(float time_elapsed) {
   ActionCommand::chargeSequence(time_elapsed);
 
   if (finished_charge) {
-    user->current_sprite = sprites::player[5];
+    user->current_sprite = sprites::player[6];
   }
 }
 
-void LightAttack::actSequence(float time_elapsed) {
+void HeavyAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
-  enemyHitCheck(); 
+  enemyHitCheck();
 
   if (finished_action) {
     user->current_sprite = sprites::player[4];
   }
 }
 
-void LightAttack::enemyHitCheck() {
+void HeavyAttack::enemyHitCheck() {
   auto player = reinterpret_cast<PlayerCharacter*>(user);
   for (auto enemy : *player->enemies) {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
@@ -61,7 +61,7 @@ void LightAttack::enemyHitCheck() {
   }
 }
 
-void LightAttack::drawDebug() {
+void HeavyAttack::drawDebug() {
   if (user->state == ACT) {
     DrawRectangleLinesEx(hurtbox, 1, MAROON);
   } 

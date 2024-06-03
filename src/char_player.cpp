@@ -2,10 +2,12 @@
 #include <memory>
 #include <raylib.h>
 #include "globals.h"
+#include "utils.h"
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_light_atk.h"
+#include "cmd_heavy_atk.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -13,12 +15,17 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, 100, {0, 208})
+  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 58})
 {
   PLOGI << "Initializing the player character.";
+  current_sprite = sprites::player[1];
+
+  anim_walk = {1, 2, 3, 2};
+  walk_frametime = 0.15;
+
   movement_speed = 1.75;
 
-  buf_clear_time = 0.025;
+  buf_clear_time = 0.010;
 
   PLOGI << "Assigning address to enemy list to pointer.";
   this->enemies = &enemies;
@@ -47,6 +54,7 @@ void PlayerCharacter::update(double &delta_time) {
     }
     default: {
       commandSequence();
+      interpretBuffer();
     }
   }
 
@@ -55,9 +63,11 @@ void PlayerCharacter::update(double &delta_time) {
 
 bool PlayerCharacter::isMoving() {
   if (moving_left == moving_right) {
+    current_sprite = sprites::player[1];
     return false;
   }
   else {
+    Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
 }
@@ -85,17 +95,34 @@ void PlayerCharacter::interpretBuffer() {
     return;
   }
 
-  PLOGD << "Interpreting input buffer...";
-  int8_t first_input = input_buffer.front();
+  if (state == NEUTRAL) {
+    PLOGI << "The player is in the NEUTRAL state. Using normal interpret" 
+    " logic.";
+    normalInterpretLogic();
+  }
+  else {
+    PLOGI << "The player is not in the NEUTRAL state. Using special"
+    " interpret logic based on the assumption that the player is using"
+    " an action command.";
+    specialInterpretLogic();
+  }
+}
+
+void PlayerCharacter::normalInterpretLogic() {
+  uint8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command;
 
   PLOGI << "Deciding what commands to use depending on input buffer.";
   switch (first_input) {
     case BTN_LIGHT_ATK: {
       PLOGI << "Attempting to assign LightAttack";
-      // Oh my god, what kind of black magic did I just do?
-      Combatant *user = this;
-      command = make_unique<LightAttack>(*user);
+      command = make_unique<LightAttack>(this);
+      useCommand(command);
+      break;
+    }
+    case BTN_HEAVY_ATK: {
+      PLOGI << "Attempting to assign HeavyAttack";
+      command = make_unique<HeavyAttack>(this);
       useCommand(command);
       break;
     }
@@ -103,6 +130,35 @@ void PlayerCharacter::interpretBuffer() {
       PLOGI << "No valid commands found!";
       break;
     }
+  }
+}
+
+void PlayerCharacter::specialInterpretLogic() {
+  if (current_command == nullptr) {
+    PLOGE << "Player doesn't have an command assigned to them!";
+    throw;
+  }
+
+  PLOGI << "The player is using: " << current_command->command_name;
+  if (current_command->command_name == "Light Attack") {
+    lightAttackHandling();
+    return;
+  }
+}
+
+void PlayerCharacter::lightAttackHandling() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  auto light_atk = reinterpret_cast<LightAttack*>(current_command.get());
+
+  PLOGI << "Deciding if the recovery phase should be canceled depending"
+    " specific conditions.";
+  if (light_atk->attack_connected && first_input == BTN_HEAVY_ATK) {
+    PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
+    command = make_unique<HeavyAttack>(this);
+    useCommand(command);
+    return;
   }
 }
 
@@ -153,12 +209,14 @@ void PlayerCharacter::inputPressed() {
   bool key_left = IsKeyPressed(KEY_LEFT);
 
   bool key_c = IsKeyPressed(KEY_C);
+  bool key_v = IsKeyPressed(KEY_V);
 
   bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
   bool gamepad_left = false;
 
   bool gamepad_face_right = false;
+  bool gamepad_face_down = false;
 
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonPressed(
@@ -170,26 +228,32 @@ void PlayerCharacter::inputPressed() {
     gamepad_face_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
     );
+    gamepad_face_down = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
+    );
   }
 
-  bool input_right = key_right || (gamepad_available && gamepad_right);
-  bool input_left = key_left || (gamepad_available && gamepad_left);
-  bool input_light_attack = key_c || (gamepad_available && 
-    gamepad_face_right);
 
+  bool input_right = key_right || (gamepad_available && gamepad_right);
   if (input_right && moving_right == false) {
     moving_right = true;
   }
+  
+  bool input_left = key_left || (gamepad_available && gamepad_left);
   if (input_left && moving_left == false) {
     moving_left = true;
   }
+
+  bool input_light_attack = key_c || (gamepad_available && 
+  gamepad_face_down);
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  // TODO: Remove this later!
-  if (IsKeyPressed(KEY_E)) {
-    takeDamage(5, 1);
+  bool input_heavy_attack = key_v || (gamepad_available && 
+    gamepad_face_right);
+  if (input_heavy_attack) {
+    input_buffer.push_back(BTN_HEAVY_ATK);
   }
 }
 
@@ -222,12 +286,14 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
-  if (state == NEUTRAL) {
-    DrawRectangleRec(hitbox, BLUE);
+  Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
+  Rectangle dest = {tex_position.x, tex_position.y, 
+    tex_scale.x, tex_scale.y};
+  if (direction == LEFT) {
+    source.width *= -1;
   }
-  else {
-    DrawRectangleRec(hitbox, ORANGE);
-  }
+
+  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE) {
     drawDebug();

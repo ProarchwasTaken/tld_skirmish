@@ -15,7 +15,7 @@
  * onto by the derived class.*/
 class ActionCommand {
 public:
-  ActionCommand(Combatant &user, std::string command_name, 
+  ActionCommand(Combatant *user, std::string command_name, 
                 float charge_time, float act_time, float recovery_time);
 
   virtual void chargeSequence(float time_elapsed);
@@ -30,12 +30,17 @@ public:
   virtual void draw() {};
   virtual void drawDebug() {};
 
+  std::string command_name;
   float sequence_timestamp;
 protected:
-  std::string command_name;
   Combatant *user;
 
   float charge_time;
+  bool finished_charge = false;
+
   float act_time;
+  bool finished_action = false;
+
   float recovery_time;
+  bool finished_recovering = false;
 };

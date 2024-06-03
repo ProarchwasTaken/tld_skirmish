@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <vector>
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -11,9 +12,10 @@
 #include "globals.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender;
+plog::ColorConsoleAppender, std::vector;
 
 Color *COLORS::PALETTE;
+vector<Texture*> sprites::player; 
 bool DEBUG_MODE = false;
 
 void setupCustomLogger();
@@ -26,7 +28,7 @@ int main(int argc, char *argv[]) {
     PLOGV << "Operating System: Windows";
   }
   else if (PLATFORM == LINUX) {
-    PLOGV << "Operating System: LINUX";
+    PLOGV << "Operating System: Linux";
   }
 
   if (argc > 1) {
@@ -39,7 +41,15 @@ int main(int argc, char *argv[]) {
              "True Human Tribulation: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
 
-  Game game;
+  int start_scene;
+  if (DEBUG_MODE) {
+    start_scene = SCENE_DEBUG;
+  }
+  else {
+    start_scene = SCENE_MENU;
+  }
+
+  Game game(start_scene);
 
   PLOGV << "Everything seems good to go!";
   while (WindowShouldClose() == false) {
