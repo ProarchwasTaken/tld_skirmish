@@ -1,6 +1,5 @@
 // actor.h
 #pragma once
-#include <cstddef>
 #include <raylib.h>
 #include <vector>
 
@@ -29,7 +28,7 @@ public:
   virtual void drawDebug();
 
   Texture *current_sprite;
-  std::vector<int> *current_anim = NULL;
+  std::vector<int> *current_anim;
   float frame_timestamp;
 
   std::vector<int>::iterator current_frame;
