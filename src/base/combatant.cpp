@@ -13,8 +13,9 @@ using std::string, std::unique_ptr;
 
 Combatant::Combatant(string name, uint8_t type, uint16_t max_health,
                      Vector2 position, Vector2 hitbox_scale,
-                     Vector2 tex_scale):
-Actor(position, hitbox_scale, tex_scale) 
+                     Vector2 tex_scale, Vector2 hitbox_offset,
+                     Vector2 tex_offset):
+Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset) 
 {
   this->name = name;
   this->type = type;

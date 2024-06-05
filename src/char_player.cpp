@@ -15,7 +15,8 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 58})
+  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 56}, {64, 64}, 
+            {-12, -58})
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];

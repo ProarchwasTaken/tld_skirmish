@@ -29,7 +29,9 @@ class Combatant : public Actor {
 public:
   Combatant(std::string name, uint8_t type, uint16_t max_health,
             Vector2 position, Vector2 hitbox_scale = {32, 64},
-            Vector2 tex_scale = {64, 64});
+            Vector2 tex_scale = {64, 64}, 
+            Vector2 hitbox_offset = {-16, -64}, 
+            Vector2 tex_offset = {-32, -64});
 
   /* Called once every frame. Holds code for a combatant's unique logic,
    * and checks. So expect this to be overridded by derived classes.*/

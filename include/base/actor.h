@@ -11,7 +11,8 @@
  * other base classes.*/
 class Actor {
 public:
-  Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale);
+  Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale, 
+        Vector2 hitbox_offset, Vector2 tex_offset);
 
   /* The hitbox is used for checking for collision with the level's 
    * boundaries, etc. Whenever an actors position changes, this method 
@@ -36,13 +37,14 @@ public:
 
   Vector2 position;
   Rectangle hitbox;
+private:
+  Vector2 tex_offset;
+  Vector2 hitbox_offset;
 protected:
-
   Rectangle tex_rect;
   Vector2 tex_position;
   Vector2 tex_scale;
 
   Vector2 hitbox_position;
   Vector2 hitbox_scale;
-
 };
