@@ -1,6 +1,7 @@
 // cmd_light_atk.cpp
 #include <raylib.h>
 #include "globals.h"
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_light_atk.h"
@@ -51,6 +52,10 @@ void LightAttack::actSequence(float time_elapsed) {
 void LightAttack::enemyHitCheck() {
   auto player = reinterpret_cast<PlayerCharacter*>(user);
   for (auto enemy : *player->enemies) {
+    if (enemy->state == DEAD) {
+      continue;
+    }
+
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
       enemy->takeDamage(damage, stun_time);
       attack_connected = true;
