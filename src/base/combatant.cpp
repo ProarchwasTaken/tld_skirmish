@@ -93,7 +93,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
     return;
   }
 
-  if (health <= 0) {
+  if (health <= 0 && state != HIT_STUN) {
     death();
   }
 }
