@@ -13,8 +13,14 @@ DummyEnemy::DummyEnemy(PlayerCharacter &player, Vector2 position):
 }
 
 void DummyEnemy::update(double &delta_time) {
-  if (state == HIT_STUN) {
-    stunSequence();
+  switch (state) {
+    case HIT_STUN: {
+      stunSequence();
+      return;
+    }
+    case DEAD: {
+      awaiting_deletion = true;
+    }
   }
 }
 

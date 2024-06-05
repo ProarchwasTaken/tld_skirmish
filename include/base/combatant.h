@@ -54,20 +54,28 @@ public:
 
   /* For decrementing a combatant's health by a set amount while also
    * putting them in hit stun. Also makes sure the combatant's health will
-   * not be below 0.*/
+   * not be below 0. If the stun_time parameter is 0, the combatant
+   * will not be put into hit stun, and a death check will be made.*/
   void takeDamage(uint16_t damage_magnitude, float stun_time);
 
+  /* If a combatant's HP reaches 0, and the appropriate check is made,
+   * they are legally considered dead. When that happens, this method is 
+   * called. The death check is usually made after the combatant exits 
+   * HIT_STUN, or right after they received damaged to inflicts no hit 
+   * stun. What happens after the combatant dies is completely up to the 
+   * class that inherits from it.*/
   void death();
 
   /* Called once every frame of which the combatant is in hit stun. If a
    * certain amount of time as passed and the combatant didn't take 
-   * damage during that time, then their state will be set back to 
-   * neutral.*/
+   * damage during that time, a death check will be made. If the check 
+   * returns false, the combatant's state will be set back to neutral.*/
   void stunSequence();
 
   std::string name;
   uint16_t max_health;
   uint8_t type;
+  bool awaiting_deletion = false;
 
   uint16_t health;
   uint8_t state;
