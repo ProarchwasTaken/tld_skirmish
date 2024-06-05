@@ -15,8 +15,8 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 56}, {64, 64}, 
-            {-12, -58})
+  Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_START, PLR_HITBOX_SCALE, 
+            {64, 64}, PLR_HITBOX_OFFSET)
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
@@ -191,11 +191,11 @@ void PlayerCharacter::movement(double &delta_time) {
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
-  if (offset <= -PLAYER_BOUNDS) {
-    position.x = -PLAYER_BOUNDS + half_scaleX;
+  if (offset <= -PLR_BOUNDS) {
+    position.x = -PLR_BOUNDS + half_scaleX;
   }
-  else if (offset >= PLAYER_BOUNDS) {
-    position.x = PLAYER_BOUNDS - half_scaleX;
+  else if (offset >= PLR_BOUNDS) {
+    position.x = PLR_BOUNDS - half_scaleX;
   }
   else {
     position.x += magnitude;

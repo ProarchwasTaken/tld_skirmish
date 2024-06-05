@@ -6,7 +6,12 @@
 #include "base/generics.h"
 #include "base/combatant.h"
 
-#define PLAYER_BOUNDS 384
+#define PLR_BOUNDS 384
+
+#define PLR_HP 100
+#define PLR_START (Vector2){0, 208}
+#define PLR_HITBOX_SCALE (Vector2){24, 56}
+#define PLR_HITBOX_OFFSET (Vector2){-12, -58}
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
