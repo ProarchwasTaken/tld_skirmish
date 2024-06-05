@@ -86,6 +86,8 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
     destined_health;
   health = destined_health;
 
+  cancelCommand();
+
   this->stun_time = stun_time;
   if (stun_time != 0) {
     state = HIT_STUN;
