@@ -53,6 +53,10 @@ void PlayerCharacter::update(double &delta_time) {
       stunSequence();
       break;
     }
+    case DEAD: {
+      PLOGE << "The death sequence not implemented yet!";
+      throw;
+    }
     default: {
       commandSequence();
       interpretBuffer();
