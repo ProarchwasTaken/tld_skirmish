@@ -18,6 +18,7 @@
 #define ACT 2
 #define RECOVER 3
 #define HIT_STUN 4
+#define DEAD 5
 
 
 /* Everything, including the player, enemies, and bosses derive from this
@@ -56,6 +57,8 @@ public:
    * not be below 0.*/
   void takeDamage(uint16_t damage_magnitude, float stun_time);
 
+  void death();
+
   /* Called once every frame of which the combatant is in hit stun. If a
    * certain amount of time as passed and the combatant didn't take 
    * damage during that time, then their state will be set back to 
@@ -74,4 +77,6 @@ public:
 protected:
   float stun_time = 0;
   float stun_timestamp = 0;
+
+  float death_timestamp;
 };

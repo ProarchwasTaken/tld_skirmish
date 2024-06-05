@@ -87,8 +87,21 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
   health = destined_health;
 
   this->stun_time = stun_time;
-  state = HIT_STUN;
-  stun_timestamp = GetTime();
+  if (stun_time != 0) {
+    state = HIT_STUN;
+    stun_timestamp = GetTime();
+    return;
+  }
+
+  if (health <= 0) {
+    death();
+  }
+}
+
+void Combatant::death() {
+  PLOGV << "{Combatant: " << name << "} is now dead!";
+  state = DEAD;
+  death_timestamp = GetTime();
 }
 
 void Combatant::stunSequence() {
@@ -99,8 +112,15 @@ void Combatant::stunSequence() {
   }
 
   float time_elapsed = GetTime() - stun_timestamp;
-  if (time_elapsed >= stun_time) {
-    PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
+  if (time_elapsed < stun_time) {
+    return;
+  }
+
+  PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
+  if (health > 0) {
     state = NEUTRAL;
+  } 
+  else {
+    death();
   }
 }
