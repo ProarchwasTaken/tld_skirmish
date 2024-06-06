@@ -2,6 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
+#include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"
 
@@ -43,3 +44,8 @@ namespace Animation {
   void play(Actor *actor, std::vector<Texture*> &sprite_list,
             std::vector<int> &frame_order, float frame_time);
 }
+
+/* Does exactly what is says on the tin. Automatically deletes enemies
+ * within that are awaiting deletion, and creates a new list with the
+ * deleted enemy excluded. Should be called once every frame.*/
+void deleteDeadEnemies(combatant_list &enemies);
