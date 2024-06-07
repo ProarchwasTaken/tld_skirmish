@@ -38,7 +38,7 @@ void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
 
 void Combatant::cancelCommand() {
   if (current_command == nullptr) {
-    PLOGE << name << "Combatant doesn't have a action command assigned!";
+    PLOGI << name << "Combatant doesn't have a action command assigned!";
     return;
   }
 
