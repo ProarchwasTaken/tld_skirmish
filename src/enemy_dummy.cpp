@@ -16,7 +16,7 @@ void DummyEnemy::update(double &delta_time) {
   switch (state) {
     case HIT_STUN: {
       stunSequence();
-      return;
+      break;
     }
     case DEAD: {
       awaiting_deletion = true;
