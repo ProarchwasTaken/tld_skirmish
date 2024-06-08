@@ -38,10 +38,11 @@ void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
 
 void Combatant::cancelCommand() {
   if (current_command == nullptr) {
-    PLOGI << name << "Combatant doesn't have a action command assigned!";
+    PLOGI << name << " Combatant doesn't have a action command assigned!";
     return;
   }
 
+  PLOGI << name << " Combatant's action command has been canceled!";
   current_command.reset();
 
   if (state != HIT_STUN) {
