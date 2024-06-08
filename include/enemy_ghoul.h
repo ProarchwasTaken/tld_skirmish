@@ -25,8 +25,9 @@ public:
    * hitbox and tex_rect. Called one every frame of which the player is 
    * outside their preferred distance.*/
   void movement(double &delta_time);
-private:
+
   PlayerCharacter *player;
+private:
 
   float movement_speed;
 
