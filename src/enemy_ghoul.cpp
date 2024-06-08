@@ -1,11 +1,16 @@
 // enemy_ghoul.cpp
 #include <cstdlib>
+#include <memory>
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
 #include "base/combatant.h"
+#include "base/action_command.h"
+#include "cmd_ghoul_atk.h"
 #include "char_player.h"
 #include "enemy_ghoul.h"
+
+using std::make_unique, std::unique_ptr;
 
 
 GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
@@ -45,6 +50,11 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
   if (player_dist > preferred_dist) {
     movement(delta_time);
   }
+  else { 
+    unique_ptr<ActionCommand> command;
+    command = make_unique<GhoulAttack>(this);
+    useCommand(command);
+  }
 }
 
 void GhoulEnemy::movement(double &delta_time) {
@@ -63,5 +73,10 @@ void GhoulEnemy::draw() {
 
   if (DEBUG_MODE) {
     drawDebug();
+  }
+  bool using_command = state != NEUTRAL && state != HIT_STUN;
+  if (using_command) {
+    current_command->draw();
+    if (DEBUG_MODE) current_command->drawDebug();
   }
 }
