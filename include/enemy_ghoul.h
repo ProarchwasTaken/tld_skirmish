@@ -1,4 +1,5 @@
 // enemy_ghoul.h
+#pragma once
 #include <raylib.h>
 #include <cstdint>
 #include "base/combatant.h"
