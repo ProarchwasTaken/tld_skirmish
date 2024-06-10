@@ -50,6 +50,7 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     case HIT_STUN: {
+      current_sprite = sprites::player[7];
       stunSequence();
       break;
     }

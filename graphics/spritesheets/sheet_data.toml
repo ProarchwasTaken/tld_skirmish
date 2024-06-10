@@ -14,6 +14,8 @@ sprites = [
   # light_atk - 5
   {x = 0, y = 64, width = 64, height = 64},
   # heavy_atk - 6
-  {x = 64, y = 64, width = 64, height = 64}
+  {x = 64, y = 64, width = 64, height = 64},
+  # hit_stun - 7
+  {x = 128, y = 64, width = 64, height = 64}
 ]
 
