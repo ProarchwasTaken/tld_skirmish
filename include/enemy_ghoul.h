@@ -16,6 +16,7 @@ public:
 
   void update(double &delta_time) override;
   void draw() override;
+  void drawDebug() override;
 
   /* For the ghoul's neutral behavior, the direction they're facing
    * would automatically be updated to face the player. Only performing
@@ -29,7 +30,6 @@ public:
 
   PlayerCharacter *player;
 private:
-
   float movement_speed;
 
   uint16_t player_dist;

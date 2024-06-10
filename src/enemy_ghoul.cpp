@@ -71,12 +71,28 @@ void GhoulEnemy::draw() {
     DrawRectangleRec(hitbox, ORANGE);
   }
 
-  if (DEBUG_MODE) {
+  if (DEBUG_MODE == true) {
     drawDebug();
   }
-  bool using_command = state != NEUTRAL && state != HIT_STUN;
+}
+
+void GhoulEnemy::drawDebug() {
+  Actor::drawDebug();
+
+  bool using_command;
+  switch (state) {
+    case NEUTRAL:
+    case HIT_STUN:
+    case DEAD: {
+      using_command = false;
+      break;
+    }
+    default: {
+      using_command = true;
+    }
+  }
+
   if (using_command) {
-    current_command->draw();
-    if (DEBUG_MODE) current_command->drawDebug();
+    current_command->drawDebug();
   }
 }
