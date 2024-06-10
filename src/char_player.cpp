@@ -156,7 +156,7 @@ void PlayerCharacter::lightAttackHandling() {
   uint8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command;
 
-  auto light_atk = reinterpret_cast<LightAttack*>(current_command.get());
+  auto light_atk = static_cast<LightAttack*>(current_command.get());
 
   PLOGI << "Deciding if the recovery phase should be canceled depending"
     " specific conditions.";
