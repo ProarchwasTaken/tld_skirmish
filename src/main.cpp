@@ -16,6 +16,7 @@ plog::ColorConsoleAppender, std::vector;
 
 Color *COLORS::PALETTE;
 vector<Texture*> sprites::player; 
+vector<Texture*> sprites::ghoul;
 bool DEBUG_MODE = false;
 
 void setupCustomLogger();

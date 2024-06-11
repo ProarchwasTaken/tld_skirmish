@@ -81,8 +81,16 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
 }
 
 void SpriteLoader::allocateSprites(string sheet_name, int sprite) {
+  Texture *sprite_ptr = &sprites[sprite];
+
   if (sheet_name == "player") {
-    Texture *sprite_ptr = &sprites[sprite];
     sprites::player.push_back(sprite_ptr);
+  }
+  else if (sheet_name == "ghoul") {
+    sprites::ghoul.push_back(sprite_ptr);
+  }
+  else {
+    PLOGW << "There isn't a global pointer list for " << sheet_name <<
+    "sprite!" << " Index: " << sprite;
   }
 }

@@ -14,7 +14,7 @@ using std::make_unique;
 Game::Game(int start_scene) {
   setupCanvas();
   defineColorPalette();
-  sprite_loader.loadSpritesheet({"player"});
+  sprite_loader.loadSpritesheet({"player", "ghoul"});
 
   loadScene(start_scene);
 }
