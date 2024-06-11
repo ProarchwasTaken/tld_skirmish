@@ -16,6 +16,7 @@ using std::string, std::vector;
 SpriteLoader::SpriteLoader() {
   PLOGV << "Loading spritesheet meta data.";
   meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");
+  sprites.reserve(16);
 }
 
 SpriteLoader::~SpriteLoader() {
@@ -74,23 +75,21 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
     latest_index++;
   }
 
-  for (int sprite = old_index; sprite <= latest_index; sprite++) {
+  for (int sprite = old_index; sprite < latest_index; sprite++) {
     allocateSprites(sheet_name, sprite);
   }
-
 }
 
 void SpriteLoader::allocateSprites(string sheet_name, int sprite) {
-  Texture *sprite_ptr = &sprites[sprite];
-
   if (sheet_name == "player") {
-    sprites::player.push_back(sprite_ptr);
+    sprites::player.push_back(&sprites[sprite]);
   }
   else if (sheet_name == "ghoul") {
-    sprites::ghoul.push_back(sprite_ptr);
+    sprites::ghoul.push_back(&sprites[sprite]);
   }
   else {
     PLOGW << "There isn't a global pointer list for " << sheet_name <<
-    "sprite!" << " Index: " << sprite;
+    " sprite! Index: " << sprite;
+    return;
   }
 }
