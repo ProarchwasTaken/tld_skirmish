@@ -18,6 +18,8 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
             {64, 64}, GOL_HITBOX_OFFSET) 
 {
   this->player = &player;
+  current_sprite = sprites::ghoul[0];
+
   preferred_dist = 32;
   movement_speed = 1.25;
 }
@@ -64,12 +66,14 @@ void GhoulEnemy::movement(double &delta_time) {
 }
 
 void GhoulEnemy::draw() {
-  if (state == NEUTRAL) {
-    DrawRectangleRec(hitbox, MAGENTA);
+  Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
+  Rectangle dest = {tex_position.x, tex_position.y, 
+    tex_scale.x, tex_scale.y};
+  if (direction == LEFT) {
+    source.width *= -1;
   }
-  else {
-    DrawRectangleRec(hitbox, ORANGE);
-  }
+
+  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE == true) {
     drawDebug();
