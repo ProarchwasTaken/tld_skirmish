@@ -2,6 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
+#include <vector>
 #include "base/combatant.h"
 #include "char_player.h"
 
@@ -31,6 +32,9 @@ public:
   PlayerCharacter *player;
 private:
   float movement_speed;
+
+  std::vector<int> anim_walk;
+  float walk_frametime;
 
   uint16_t player_dist;
   uint16_t preferred_dist;

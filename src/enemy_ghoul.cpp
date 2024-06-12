@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
+#include "utils.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_ghoul_atk.h"
@@ -19,6 +20,9 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
 {
   this->player = &player;
   current_sprite = sprites::ghoul[0];
+
+  anim_walk =  {0, 1, 2, 1};
+  walk_frametime = 0.125;
 
   preferred_dist = 32;
   movement_speed = 1.25;
@@ -51,6 +55,7 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
 
   if (player_dist > preferred_dist) {
     movement(delta_time);
+    Animation::play(this, sprites::ghoul, anim_walk, walk_frametime);
   }
   else { 
     unique_ptr<ActionCommand> command;
