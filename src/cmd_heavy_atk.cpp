@@ -20,7 +20,7 @@ HeavyAttack::HeavyAttack(PlayerCharacter *user):
 }
 
 void HeavyAttack::setupHurtbox() {
-  float width = 26;
+  float width = 24;
   float half_width = width / 2;
 
   float height = 16;

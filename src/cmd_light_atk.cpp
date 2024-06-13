@@ -20,7 +20,7 @@ LightAttack::LightAttack(PlayerCharacter *user):
 }
 
 void LightAttack::setupHurtbox() {
-  float width = 24;
+  float width = 22;
   float half_width = width / 2;
 
   float height = 16;
