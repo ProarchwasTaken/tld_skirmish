@@ -24,7 +24,7 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
   anim_walk =  {0, 1, 2, 1};
   walk_frametime = 0.125;
 
-  preferred_dist = 32;
+  preferred_dist = 28;
   movement_speed = 1.25;
 }
 
