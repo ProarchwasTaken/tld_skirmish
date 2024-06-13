@@ -12,6 +12,7 @@ public:
   GhoulAttack(GhoulEnemy *user);
 
   void setupHurtbox();
+  void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
 
   void playerHitCheck();
@@ -22,4 +23,5 @@ private:
 
   uint16_t damage;
   float stun_time;
+  bool attack_connected = false;
 };
