@@ -35,6 +35,7 @@ void GhoulEnemy::update(double &delta_time) {
       break;
     }
     case HIT_STUN: {
+      current_sprite = sprites::ghoul[3];
       stunSequence();
       break;
     }

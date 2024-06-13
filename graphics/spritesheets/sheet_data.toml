@@ -16,6 +16,7 @@ path = "graphics/spritesheets/ghoul.png"
 sprites = [
   {x = 0, y = 0, width = 64, height = 64}, # idle - 0 
   {x = 64, y = 0, width = 64, height = 64}, # walk_1 - 1
-  {x = 128, y = 0, width = 64, height = 64} # walk_2 - 2
+  {x = 128, y = 0, width = 64, height = 64}, # walk_2 - 2
+  {x = 192, y = 0, width = 64, height = 64}, # hit_stun - 3
 ]
 
