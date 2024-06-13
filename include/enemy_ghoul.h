@@ -7,8 +7,8 @@
 #include "char_player.h"
 
 #define GOL_HP 50
-#define GOL_HITBOX_SCALE (Vector2){24, 56} 
-#define GOL_HITBOX_OFFSET (Vector2){-12, -58}
+#define GOL_HITBOX_SCALE (Vector2){18, 56} 
+#define GOL_HITBOX_OFFSET (Vector2){-9, -58}
 
 
 class GhoulEnemy : public Combatant {
