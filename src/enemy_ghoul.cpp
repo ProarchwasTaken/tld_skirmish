@@ -21,8 +21,13 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
   this->player = &player;
   current_sprite = sprites::ghoul[0];
 
-  anim_walk =  {0, 1, 2, 1};
+  anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.125;
+
+  anim_death = {7, 8};
+  death_frametime = 0.5;
+
+  death_time = 1.0;
 
   preferred_dist = 28;
   movement_speed = 1.25;
@@ -40,7 +45,7 @@ void GhoulEnemy::update(double &delta_time) {
       break;
     }
     case DEAD: {
-      awaiting_deletion = true;
+      deathSequence();
       break;
     }
     default: {
@@ -69,6 +74,18 @@ void GhoulEnemy::movement(double &delta_time) {
   position.x += (movement_speed * direction) * delta_time;
   hitboxCorrection();
   texRectCorrection();
+}
+
+void GhoulEnemy::deathSequence() {
+  Animation::play(this, sprites::ghoul, anim_death, death_frametime,
+                  false);
+
+  float time_elapsed = GetTime() - death_timestamp;
+  bool end_of_animation = current_frame == current_anim->end();
+
+  if (end_of_animation && time_elapsed >= death_time) {
+    awaiting_deletion = true;
+  }
 }
 
 void GhoulEnemy::draw() {
