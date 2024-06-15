@@ -107,19 +107,19 @@ void Animation::play(Actor *actor, vector<Texture*> &sprite_list,
 
   bool end_of_animation = actor->current_frame == frame_order.end();
   if (end_of_animation == false) {
+    Animation::updateSprite(actor, sprite_list);
     actor->current_frame++;
+
     end_of_animation = actor->current_frame == frame_order.end();
   }
  
-  if (looping == false && end_of_animation) {
+  if (looping == false) {
     return;
   }
 
   if (end_of_animation) {
     actor->current_frame = frame_order.begin();
   }
-
-  Animation::updateSprite(actor, sprite_list);
 }
 
 void deleteDeadEnemies(combatant_list &enemies) {
