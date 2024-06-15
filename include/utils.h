@@ -39,10 +39,14 @@ namespace Animation {
    * next frame in the animation.*/
   void updateSprite(Actor *actor, std::vector<Texture*> &sprite_list);
 
-  /* The root function for playing any looping animation for Actors and 
-   * classes that derive from them.*/
+  /* The root function for playing any animation for Actors and 
+   * classes that derive from them. Please take caution when setting
+   * looping to false. It causes the actor to just not go to it's first
+   * frame on the animation. This could cause segfaults when not careful.
+   * */
   void play(Actor *actor, std::vector<Texture*> &sprite_list,
-            std::vector<int> &frame_order, float frame_time);
+            std::vector<int> &frame_order, float frame_time, 
+            bool looping = true);
 }
 
 /* Does exactly what is says on the tin. Automatically deletes enemies

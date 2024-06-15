@@ -95,18 +95,22 @@ void Animation::updateSprite(Actor *actor, vector<Texture*> &sprite_list){
 }
 
 void Animation::play(Actor *actor, vector<Texture*> &sprite_list, 
-                     vector<int> &frame_order, float frame_time) 
+                     vector<int> &frame_order, float frame_time, 
+                     bool looping) 
 {
-  Animation::check(actor, sprite_list, frame_order);
-
   float time_elapsed = GetTime() - actor->frame_timestamp;
   if (time_elapsed < frame_time) {
     return;
   }
 
+  Animation::check(actor, sprite_list, frame_order);
   actor->current_frame++;
   
   bool end_of_animation = actor->current_frame == frame_order.end();
+  if (looping == false && end_of_animation) {
+    return;
+  }
+
   if (end_of_animation) {
     actor->current_frame = frame_order.begin();
   }
