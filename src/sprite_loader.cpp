@@ -16,7 +16,7 @@ using std::string, std::vector;
 SpriteLoader::SpriteLoader() {
   PLOGV << "Loading spritesheet meta data.";
   meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");
-  sprites.reserve(16);
+  sprites.reserve(32);
 }
 
 SpriteLoader::~SpriteLoader() {
