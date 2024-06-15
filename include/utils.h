@@ -40,10 +40,9 @@ namespace Animation {
   void updateSprite(Actor *actor, std::vector<Texture*> &sprite_list);
 
   /* The root function for playing any animation for Actors and 
-   * classes that derive from them. Please take caution when setting
-   * looping to false. It causes the actor to just not go to it's first
-   * frame on the animation. This could cause segfaults when not careful.
-   * */
+   * classes that derive from them. Setting looping to false will cause
+   * actor to be left on the last frame of a animation unless they switch
+   * to a new one.*/
   void play(Actor *actor, std::vector<Texture*> &sprite_list,
             std::vector<int> &frame_order, float frame_time, 
             bool looping = true);

@@ -104,9 +104,13 @@ void Animation::play(Actor *actor, vector<Texture*> &sprite_list,
   }
 
   Animation::check(actor, sprite_list, frame_order);
-  actor->current_frame++;
-  
+
   bool end_of_animation = actor->current_frame == frame_order.end();
+  if (end_of_animation == false) {
+    actor->current_frame++;
+    end_of_animation = actor->current_frame == frame_order.end();
+  }
+ 
   if (looping == false && end_of_animation) {
     return;
   }
