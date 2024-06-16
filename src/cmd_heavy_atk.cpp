@@ -60,10 +60,11 @@ void HeavyAttack::enemyHitCheck() {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
       enemy->takeDamage(damage, stun_time);
       attack_connected = true;
-
-      user->state = RECOVER;
-      return;
     }
+  }
+
+  if (attack_connected) {
+    user->state = RECOVER;
   }
 }
 
