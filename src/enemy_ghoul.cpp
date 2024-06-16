@@ -30,7 +30,7 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
   death_time = 1.0;
 
   preferred_dist = 28;
-  movement_speed = 1.25;
+  movement_speed = 0.5;
 }
 
 void GhoulEnemy::update(double &delta_time) {
@@ -62,8 +62,13 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
   if (player_dist > preferred_dist) {
     movement(delta_time);
     Animation::play(this, sprites::ghoul, anim_walk, walk_frametime);
+    return;
   }
-  else { 
+  else {
+    current_sprite = sprites::ghoul[0];
+  }
+
+  if (player->state != DEAD) {
     unique_ptr<ActionCommand> command;
     command = make_unique<GhoulAttack>(this);
     useCommand(command);
