@@ -20,7 +20,6 @@ DebugScene::DebugScene() {
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 208}),
-    make_shared<GhoulEnemy>(*player, (Vector2){128, 208})
   };
   
   camera = CameraUtils::setupCamera();
@@ -47,6 +46,17 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::updateScene(double &delta_time) {
+  if (IsKeyPressed(KEY_E)) {
+    enemies.push_back(
+      make_shared<GhoulEnemy>(*player, (Vector2){450, 208})
+    );
+  }
+  if (IsKeyPressed(KEY_Q)) {
+    enemies.push_back(
+      make_shared<GhoulEnemy>(*player, (Vector2){-450, 208})
+    );
+  }
+
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
 
