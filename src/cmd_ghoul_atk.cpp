@@ -12,7 +12,7 @@ GhoulAttack::GhoulAttack(GhoulEnemy *user):
   ActionCommand(user, "Ghoul Attack", 0.3, 0.1, 0.4)
 {
   damage = 30;
-  stun_time = 0.5;
+  stun_time = 0.2;
 
   this->player = user->player;
   user->current_sprite = sprites::ghoul[4];
