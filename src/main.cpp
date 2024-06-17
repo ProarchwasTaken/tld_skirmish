@@ -47,6 +47,11 @@ int main(int argc, char *argv[]) {
       game.correctWindow();
     }
 
+    if (IsKeyPressed(KEY_F3)) {
+      PLOGI << "Toggling Debug Mode";
+      DEBUG_MODE = !DEBUG_MODE;
+    }
+
     game.refresh();
   }
 
@@ -77,11 +82,8 @@ int parseArguments(int argc, char *argv[]) {
 
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];
-    if (arg == "-d") {
-      PLOGV << "Starting the game in debug mode.";
-      DEBUG_MODE = true;
-    }
-    else if (arg == "--debug_scene") {
+    if (arg == "--debug_scene") {
+      PLOGV << "Starting the game in the debug scene.";
       start_scene = SCENE_DEBUG;
     }
   }
