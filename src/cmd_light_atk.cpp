@@ -58,7 +58,7 @@ void LightAttack::enemyHitCheck() {
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time);
+      enemy->takeDamage(damage, stun_time, 0.15f, user->direction);
       attack_connected = true;
 
       user->state = RECOVER;

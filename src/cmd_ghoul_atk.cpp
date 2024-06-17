@@ -12,7 +12,7 @@ GhoulAttack::GhoulAttack(GhoulEnemy *user):
   ActionCommand(user, "Ghoul Attack", 0.3, 0.1, 0.4)
 {
   damage = 30;
-  stun_time = 0.2;
+  stun_time = 0.5;
 
   this->player = user->player;
   user->current_sprite = sprites::ghoul[4];
@@ -56,7 +56,7 @@ void GhoulAttack::playerHitCheck() {
   }
 
   if (CheckCollisionRecs(hurtbox, player->hitbox)) {
-    player->takeDamage(damage, stun_time);
+    player->takeDamage(damage, stun_time, 1, user->direction);
 
     attack_connected = true;
     user->state = RECOVER;
