@@ -84,8 +84,8 @@ public:
   uint8_t state;
   int8_t direction;
 
-  int8_t kb_direction;
-  float kb_velocity;
+  int8_t kb_direction = 0;
+  float kb_velocity = 0;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:
