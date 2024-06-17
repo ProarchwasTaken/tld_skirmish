@@ -31,7 +31,7 @@ public:
 
   Texture *current_sprite;
   std::vector<int> *current_anim = NULL;
-  float frame_timestamp;
+  float frame_timestamp = 0;
 
   std::vector<int>::iterator current_frame;
 
