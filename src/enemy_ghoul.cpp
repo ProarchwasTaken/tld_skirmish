@@ -29,8 +29,7 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
 
   death_time = 1.0;
 
-  patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
-  tick_time = 0.05;
+  attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
 
   preferred_dist = 28;
   movement_speed = 0.5;
@@ -71,25 +70,15 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
     current_sprite = sprites::ghoul[0];
   }
 
-  tickPatience();
+  AIBehavior::tickPatience(attack_patience, tick_timestamp);
 
-  bool should_attack = patience == 0 && player->state != DEAD;
+  bool should_attack = attack_patience == 0 && player->state != DEAD;
   if (should_attack) {
     unique_ptr<ActionCommand> command;
     command = make_unique<GhoulAttack>(this);
     useCommand(command);
 
-    patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
-  }
-}
-
-void GhoulEnemy::tickPatience() {
-  float time_elapsed = GetTime() - tick_timestamp;
-
-  bool should_tick = patience != 0 && time_elapsed >= tick_time;
-  if (should_tick) {
-    patience--;
-    time_elapsed = GetTime();
+    attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
   }
 }
 

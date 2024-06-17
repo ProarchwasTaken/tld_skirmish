@@ -1,6 +1,7 @@
 // utils.h
 #pragma once
 #include <raylib.h>
+#include <cstdint>
 #include <vector>
 #include "base/generics.h"
 #include "base/actor.h"
@@ -19,11 +20,11 @@ namespace CameraUtils {
                     double &delta_time);
 }
 
+
 /* Functions that have everything to do with sprite animations. These
  * set of functions are compatible with the Actor class and anything other
  * class that derive from it.*/
 namespace Animation {
-
   /* For checking if the animation should continue. Depending on a number
    * of conditions, this function may change the actor's current animation
    * and set their sprite to the first frame of said animation. This
@@ -47,6 +48,19 @@ namespace Animation {
             std::vector<int> &frame_order, float frame_time, 
             bool looping = true);
 }
+
+
+/* Functions that are related to common AI behavior for enemies, bosses,
+ * and any character that's not directly controlled by the player.*/
+namespace AIBehavior {
+  /* Patience is a common variable used by enemies and the like to 
+   * determine whether or not they should act depending on it's value.
+   * By default, this function is for automatically decrementing that 
+   * value 20 times per second. Stopping at 0.*/
+  void tickPatience(uint8_t &patience, float tick_timestamp, 
+                    float tick_rate = 0.05);
+}
+
 
 /* Does exactly what is says on the tin. Automatically deletes enemies
  * within that are awaiting deletion, and creates a new list with the

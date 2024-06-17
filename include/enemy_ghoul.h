@@ -27,12 +27,6 @@ public:
    * an attack once the player is within their preferred distance.*/
   void neutralBehavior(double &delta_time);
 
-  /* Patience is a value that the enemy uses to judge whether it should
-   * act or not. This method is called once every frame of which certain
-   * conditions are met, as it's resposible for ticking that counter down
-   * 20 times per second.*/
-  void tickPatience();
-
   /* The ghoul will play an animation upon death. When that animation is
    * over and a certain amount of time as passed, the enemy will await
    * deletion.*/
@@ -57,8 +51,6 @@ private:
   uint16_t player_dist;
   uint16_t preferred_dist;
 
-  uint8_t patience;
-
-  float tick_time;
+  uint8_t attack_patience;
   float tick_timestamp = 0;
 };
