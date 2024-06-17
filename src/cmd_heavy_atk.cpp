@@ -1,23 +1,26 @@
 // cmd_heavy_atk.cpp
 #include <raylib.h>
 #include "globals.h"
+#include "base/generics.h"
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_heavy_atk.h"
 
 
-HeavyAttack::HeavyAttack(PlayerCharacter *player):
-  ActionCommand(player, "Heavy Attack", 0.3, 0.1, 0.6)
+HeavyAttack::HeavyAttack(PlayerCharacter *user):
+  ActionCommand(user, "Heavy Attack", 0.3, 0.1, 0.6)
 {
   damage = 20;
   stun_time = 0.5;
 
+  this->enemies = user->enemies;
   user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
 
 void HeavyAttack::setupHurtbox() {
-  float width = 26;
+  float width = 24;
   float half_width = width / 2;
 
   float height = 16;
@@ -49,15 +52,19 @@ void HeavyAttack::actSequence(float time_elapsed) {
 }
 
 void HeavyAttack::enemyHitCheck() {
-  auto player = reinterpret_cast<PlayerCharacter*>(user);
-  for (auto enemy : *player->enemies) {
-    if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time);
-      attack_connected = true;
-
-      player->state = RECOVER;
-      return;
+  for (auto enemy : *enemies) {
+    if (enemy->state == DEAD) {
+      continue;
     }
+
+    if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
+      enemy->takeDamage(damage, stun_time, 0.5f, user->direction);
+      attack_connected = true;
+    }
+  }
+
+  if (attack_connected) {
+    user->state = RECOVER;
   }
 }
 

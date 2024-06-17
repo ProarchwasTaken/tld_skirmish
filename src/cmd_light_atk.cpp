@@ -1,23 +1,26 @@
 // cmd_light_atk.cpp
 #include <raylib.h>
 #include "globals.h"
+#include "base/generics.h"
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"
 #include "cmd_light_atk.h"
 
 
-LightAttack::LightAttack(PlayerCharacter *player) : 
-  ActionCommand(player, "Light Attack", 0.2, 0.1, 0.3)
+LightAttack::LightAttack(PlayerCharacter *user): 
+  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.3)
 {
   damage = 10;
   stun_time = 0.5;
 
+  this->enemies = user->enemies;
   user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
 
 void LightAttack::setupHurtbox() {
-  float width = 24;
+  float width = 22;
   float half_width = width / 2;
 
   float height = 16;
@@ -49,13 +52,16 @@ void LightAttack::actSequence(float time_elapsed) {
 }
 
 void LightAttack::enemyHitCheck() {
-  auto player = reinterpret_cast<PlayerCharacter*>(user);
-  for (auto enemy : *player->enemies) {
+  for (auto enemy : *enemies) {
+    if (enemy->state == DEAD) {
+      continue;
+    }
+
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time);
+      enemy->takeDamage(damage, stun_time, 0.15f, user->direction);
       attack_connected = true;
 
-      player->state = RECOVER;
+      user->state = RECOVER;
       return;
     }
   }

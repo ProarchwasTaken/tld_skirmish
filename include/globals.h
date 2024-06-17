@@ -24,6 +24,7 @@ namespace COLORS {
 
 namespace sprites {
   extern std::vector<Texture*> player;
+  extern std::vector<Texture*> ghoul;
 }
 
 extern bool DEBUG_MODE;

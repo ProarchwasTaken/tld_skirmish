@@ -1,19 +1,27 @@
 [player]
 path = "graphics/spritesheets/player.png"
 sprites = [
-  # idle_rest - 0
-  {x = 0, y = 0, width = 64, height = 64},
-  # idle_action - 1
-  {x = 64, y = 0, width = 64, height = 64},
-  # walk_1 - 2
-  {x = 128, y = 0, width = 64, height = 64},
-  # walk_2 - 3
-  {x = 192, y = 0, width = 64, height = 64},
-  # normal_charge - 4
-  {x = 256, y = 0, width = 64, height = 64},
-  # light_atk - 5
-  {x = 0, y = 64, width = 64, height = 64},
-  # heavy_atk - 6
-  {x = 64, y = 64, width = 64, height = 64}
+  {x = 0, y = 0, width = 64, height = 64}, # idle_rest - 0
+  {x = 64, y = 0, width = 64, height = 64}, # idle_action - 1
+  {x = 128, y = 0, width = 64, height = 64}, # walk_1 - 2
+  {x = 192, y = 0, width = 64, height = 64}, # walk_2 - 3
+  {x = 256, y = 0, width = 64, height = 64}, # normal_charge - 4
+  {x = 0, y = 64, width = 64, height = 64}, # light_atk - 5
+  {x = 64, y = 64, width = 64, height = 64}, # heavy_atk - 6
+  {x = 128, y = 64, width = 64, height = 64} # hit_stun - 7
+]
+
+[ghoul]
+path = "graphics/spritesheets/ghoul.png"
+sprites = [
+  {x = 0, y = 0, width = 64, height = 64}, # idle - 0 
+  {x = 64, y = 0, width = 64, height = 64}, # walk_1 - 1
+  {x = 128, y = 0, width = 64, height = 64}, # walk_2 - 2
+  {x = 192, y = 0, width = 64, height = 64}, # hit_stun - 3
+  {x = 256, y = 0, width = 64, height = 64}, # attack_1 - 4
+  {x = 0, y = 64, width = 64, height = 64}, # attack_2 - 5
+  {x = 64, y = 64, width = 64, height = 64}, # attack_3 - 6
+  {x = 128, y = 64, width = 64, height = 64}, # death_1 - 7
+  {x = 192, y = 64, width = 64, height = 64}, # death_2 - 8
 ]
 

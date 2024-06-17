@@ -2,6 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
+#include "base/generics.h"
 #include "char_player.h"
 #include "base/action_command.h"
 
@@ -17,7 +18,7 @@
  * enemy in hit stun for a little bit longer.*/
 class LightAttack : public ActionCommand {
 public:
-  LightAttack(PlayerCharacter *player);
+  LightAttack(PlayerCharacter *user);
 
   /* For defining the hurtbox and positioning it just in front of the
    * the player. Using called on initialization*/
@@ -32,6 +33,7 @@ public:
   bool attack_connected = false;
 private:
   Rectangle hurtbox;
+  combatant_list *enemies;
 
   uint16_t damage;
   float stun_time;

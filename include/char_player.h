@@ -6,7 +6,12 @@
 #include "base/generics.h"
 #include "base/combatant.h"
 
-#define PLAYER_BOUNDS 384
+#define PLR_BOUNDS 384
+
+#define PLR_HP 100
+#define PLR_START (Vector2){0, 208}
+#define PLR_HITBOX_SCALE (Vector2){16, 56}
+#define PLR_HITBOX_OFFSET (Vector2){-8, -58}
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
@@ -37,6 +42,7 @@ public:
    * in here.*/
   void update(double &delta_time) override;
   void draw() override;
+  void drawDebug() override;
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.

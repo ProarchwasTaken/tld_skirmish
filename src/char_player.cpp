@@ -15,7 +15,8 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, 100, {0, 208}, {24, 58})
+  Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_START, PLR_HITBOX_SCALE, 
+            {64, 64}, PLR_HITBOX_OFFSET)
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
@@ -49,8 +50,15 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     case HIT_STUN: {
+      current_sprite = sprites::player[7];
+
+      applyKnockback(delta_time, PLR_BOUNDS);
       stunSequence();
       break;
+    }
+    case DEAD: {
+      PLOGE << "The death sequence not implemented yet!";
+      throw;
     }
     default: {
       commandSequence();
@@ -150,7 +158,7 @@ void PlayerCharacter::lightAttackHandling() {
   uint8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command;
 
-  auto light_atk = reinterpret_cast<LightAttack*>(current_command.get());
+  auto light_atk = static_cast<LightAttack*>(current_command.get());
 
   PLOGI << "Deciding if the recovery phase should be canceled depending"
     " specific conditions.";
@@ -190,11 +198,11 @@ void PlayerCharacter::movement(double &delta_time) {
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
-  if (offset <= -PLAYER_BOUNDS) {
-    position.x = -PLAYER_BOUNDS + half_scaleX;
+  if (offset < -PLR_BOUNDS) {
+    position.x = -PLR_BOUNDS + half_scaleX;
   }
-  else if (offset >= PLAYER_BOUNDS) {
-    position.x = PLAYER_BOUNDS - half_scaleX;
+  else if (offset > PLR_BOUNDS) {
+    position.x = PLR_BOUNDS - half_scaleX;
   }
   else {
     position.x += magnitude;
@@ -295,13 +303,28 @@ void PlayerCharacter::draw() {
 
   DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
 
-  if (DEBUG_MODE) {
+  if (DEBUG_MODE == true) {
     drawDebug();
   }
+}
 
-  bool using_command = state != NEUTRAL && state != HIT_STUN;
+void PlayerCharacter::drawDebug() {
+  Actor::drawDebug();
+
+  bool using_command;
+  switch (state) {
+    case NEUTRAL:
+    case HIT_STUN:
+    case DEAD: {
+      using_command = false;
+      break;
+    }
+    default: {
+      using_command = true;
+    }
+  }
+
   if (using_command) {
-    current_command->draw();
-    if (DEBUG_MODE) current_command->drawDebug();
+    current_command->drawDebug();
   }
 }

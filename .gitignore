@@ -3,5 +3,7 @@ build/
 build_linux/
 build_win32/
 logs/
+doc/.$game_structure.html.bkp
+doc/.$game_structure.html.dtmp
 game.exe
 game

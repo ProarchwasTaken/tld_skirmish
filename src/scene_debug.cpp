@@ -6,6 +6,7 @@
 #include "scene_debug.h"
 #include "char_player.h"
 #include "enemy_dummy.h"
+#include "enemy_ghoul.h"
 #include <plog/Log.h>
 
 using std::make_shared;
@@ -16,8 +17,11 @@ DebugScene::DebugScene() {
   test_room = LoadTexture("concept_art/test_room2.png");
 
   player = make_shared<PlayerCharacter>(enemies);
-  enemies.push_back(make_shared<DummyEnemy>(*player, (Vector2){64, 208}));
 
+  enemies = {
+    make_shared<DummyEnemy>(*player, (Vector2){-96, 208}),
+  };
+  
   camera = CameraUtils::setupCamera();
   PLOGV << "Debug scene has loaded successfully!";
 }
@@ -42,12 +46,25 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::updateScene(double &delta_time) {
+  if (IsKeyPressed(KEY_E)) {
+    enemies.push_back(
+      make_shared<GhoulEnemy>(*player, (Vector2){450, 208})
+    );
+  }
+  if (IsKeyPressed(KEY_Q)) {
+    enemies.push_back(
+      make_shared<GhoulEnemy>(*player, (Vector2){-450, 208})
+    );
+  }
+
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
 
   for (auto enemy : enemies) {
     enemy->update(delta_time);
   }
+
+  deleteDeadEnemies(enemies);
 }
 
 void DebugScene::drawScene() {
