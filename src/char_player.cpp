@@ -51,6 +51,8 @@ void PlayerCharacter::update(double &delta_time) {
     }
     case HIT_STUN: {
       current_sprite = sprites::player[7];
+
+      applyKnockback(delta_time, PLR_BOUNDS);
       stunSequence();
       break;
     }
@@ -196,10 +198,10 @@ void PlayerCharacter::movement(double &delta_time) {
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
-  if (offset <= -PLR_BOUNDS) {
+  if (offset < -PLR_BOUNDS) {
     position.x = -PLR_BOUNDS + half_scaleX;
   }
-  else if (offset >= PLR_BOUNDS) {
+  else if (offset > PLR_BOUNDS) {
     position.x = PLR_BOUNDS - half_scaleX;
   }
   else {

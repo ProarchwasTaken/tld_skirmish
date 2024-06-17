@@ -56,7 +56,10 @@ public:
    * putting them in hit stun. Also makes sure the combatant's health will
    * not be below 0. If the stun_time parameter is 0, the combatant
    * will not be put into hit stun, and a death check will be made.*/
-  void takeDamage(uint16_t damage_magnitude, float stun_time);
+  void takeDamage(uint16_t dmg_magnitude, float stun_time, 
+                  float kb_velocity = 0, uint8_t kb_direction = 0);
+
+  void applyKnockback(double &delta_time, uint16_t boundary);
 
   /* If a combatant's HP reaches 0, and the appropriate check is made,
    * they are legally considered dead. When that happens, this method is 
@@ -80,6 +83,9 @@ public:
   uint16_t health;
   uint8_t state;
   int8_t direction;
+
+  int8_t kb_direction;
+  float kb_velocity;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:

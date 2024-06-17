@@ -75,9 +75,12 @@ void Combatant::commandSequence() {
   }
 }
 
-void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
+void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
+                           float kb_velocity, uint8_t kb_direction) {
   PLOGD << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
+  cancelCommand();
+
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
     destined_health = 0;
@@ -87,10 +90,19 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
     destined_health;
   health = destined_health;
 
-  cancelCommand();
+  bool different_direction = this->kb_direction == kb_direction;
+  bool greater_velocity = this->kb_velocity < kb_velocity;
+
+  if (greater_velocity || different_direction) {
+    PLOGI << "Updating knockback velocity to: " << kb_velocity;
+    this->kb_velocity = kb_velocity;
+  }
+  
+  this->kb_direction = kb_direction;
 
   this->stun_time = stun_time;
   if (stun_time != 0) {
+
     state = HIT_STUN;
     stun_timestamp = GetTime();
     return;
@@ -99,6 +111,30 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time) {
   if (health <= 0 && state != HIT_STUN) {
     death();
   }
+}
+
+void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
+  float magnitude = (kb_velocity * kb_direction) * delta_time;
+
+  if (magnitude == 0) {
+    return;
+  }
+  
+  float half_scaleX = hitbox_scale.x / 2;
+  float offset = position.x + magnitude + (half_scaleX * direction);
+
+  if (offset < -boundary) {
+    position.x = -boundary + half_scaleX;
+  }
+  else if (offset > boundary) {
+    position.x = boundary - half_scaleX;
+  }
+  else {
+    position.x += magnitude;
+  }
+
+  hitboxCorrection();
+  texRectCorrection();
 }
 
 void Combatant::death() {
@@ -122,6 +158,7 @@ void Combatant::stunSequence() {
   PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
+    kb_velocity = 0;
   } 
   else {
     death();

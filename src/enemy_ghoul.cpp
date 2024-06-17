@@ -43,6 +43,8 @@ void GhoulEnemy::update(double &delta_time) {
     }
     case HIT_STUN: {
       current_sprite = sprites::ghoul[3];
+
+      applyKnockback(delta_time, 512);
       stunSequence();
       break;
     }
