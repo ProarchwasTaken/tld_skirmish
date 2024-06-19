@@ -1,7 +1,6 @@
 // sprite_loader.cpp
 #include <raylib.h>
 #include <cstdint>
-#include <toml.hpp>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
 #include <string>

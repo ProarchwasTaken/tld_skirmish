@@ -1,7 +1,7 @@
 // sprite_loader.h
 #pragma once
 #include <raylib.h>
-#include <toml.hpp>
+#include <toml/value.hpp>
 #include <vector>
 #include <string>
 #include <cstdint>
