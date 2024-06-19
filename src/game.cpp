@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "game.h"
 #include "sprite_loader.h"
+#include "audio.h"
 #include "scene_debug.h"
 #include <plog/Log.h>
 
@@ -19,6 +20,8 @@ Game::Game(int start_scene) {
   sprite_loader = make_unique<SpriteLoader>();
   sprite_loader->loadSpritesheet({"player", "ghoul"});
 
+  audio_manager = make_unique<AudioManager>();
+
   loadScene(start_scene);
 }
 
@@ -29,6 +32,7 @@ Game::~Game() {
 
   scene.reset();
   sprite_loader.reset();
+  audio_manager.reset();
 
   PLOGV << "Thanks for playing!";
 }
