@@ -55,7 +55,7 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
-  SpriteLoader sprite_loader;
+  std::unique_ptr<SpriteLoader> sprite_loader;
   std::unique_ptr<Scene> scene;
 
   double delta_time;

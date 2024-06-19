@@ -5,6 +5,7 @@
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
+#include "sprite_loader.h"
 #include "scene_debug.h"
 #include <plog/Log.h>
 
@@ -14,7 +15,9 @@ using std::make_unique;
 Game::Game(int start_scene) {
   setupCanvas();
   defineColorPalette();
-  sprite_loader.loadSpritesheet({"player", "ghoul"});
+
+  sprite_loader = make_unique<SpriteLoader>();
+  sprite_loader->loadSpritesheet({"player", "ghoul"});
 
   loadScene(start_scene);
 }
@@ -25,6 +28,7 @@ Game::~Game() {
   UnloadImagePalette(COLORS::PALETTE);
 
   scene.reset();
+  sprite_loader.reset();
 
   PLOGV << "Thanks for playing!";
 }
