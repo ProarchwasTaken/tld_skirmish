@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
              "True Human Tribulation: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
+  InitAudioDevice();
 
   Game game(start_scene);
 
