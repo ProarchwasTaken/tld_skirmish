@@ -10,7 +10,7 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
-#include "audio_data.h"
+#include "audio.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender, std::vector;

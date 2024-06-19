@@ -1,4 +1,4 @@
-// audio_data.h
+// audio.h
 #pragma once
 #include <cstdint>
 #include <raylib.h>
