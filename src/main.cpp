@@ -10,13 +10,18 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
+#include "audio_data.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender, std::vector;
 
 Color *COLORS::PALETTE;
+
+vector<SoundData> audio::sfx_metadata;
+
 vector<Texture*> sprites::player; 
 vector<Texture*> sprites::ghoul;
+
 bool DEBUG_MODE = false;
 
 void setupCustomLogger();

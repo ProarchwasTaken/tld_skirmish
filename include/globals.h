@@ -6,6 +6,7 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
+#include "audio_data.h"
 
 #define WINDOWS 0
 #define LINUX 1
@@ -20,6 +21,10 @@
 
 namespace COLORS {
   extern Color *PALETTE;
+}
+
+namespace audio {
+  extern std::vector<SoundData> sfx_metadata;
 }
 
 namespace sprites {
