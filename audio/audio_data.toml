@@ -1,0 +1,10 @@
+sfx = [
+  {
+    name = "damage"
+    path = "audio/sfx/damage.wav"
+  }
+]
+
+bgm = [
+
+]
