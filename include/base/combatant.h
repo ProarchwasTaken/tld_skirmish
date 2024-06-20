@@ -59,6 +59,8 @@ public:
   void takeDamage(uint16_t dmg_magnitude, float stun_time, 
                   float kb_velocity = 0, uint8_t kb_direction = 0);
 
+  /* For applying knockback primarily, during the stun sequence. Also
+   * makes sure that the combatant won't move past any boundaries.*/
   void applyKnockback(double &delta_time, uint16_t boundary);
 
   /* If a combatant's HP reaches 0, and the appropriate check is made,

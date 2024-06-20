@@ -9,6 +9,10 @@
 #define CAMERA_BOUNDS 512
 
 
+/* The debug scene is meant to be a sandbox used for the testing of 
+ * different game elements. It's not meant to be seen in normal play, and
+ * it could only be accessed through the usage of a command line 
+ * argument.*/
 class DebugScene : public Scene {
 public:
   DebugScene();

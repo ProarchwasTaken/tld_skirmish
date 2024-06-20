@@ -14,6 +14,9 @@
 #define GOL_HITBOX_OFFSET (Vector2){-9, -58}
 
 
+/* The Ghoul enemy is supposed to set the baseline for every other enemy
+ * in the game. It will move towards the player at a slow speed and 
+ * performs an attack when close enough.*/
 class GhoulEnemy : public Combatant {
 public:
   GhoulEnemy(PlayerCharacter &player, Vector2 position);

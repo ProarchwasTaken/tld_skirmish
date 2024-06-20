@@ -24,7 +24,7 @@ namespace COLORS {
 }
 
 namespace audio {
-  extern std::vector<SoundData> sfx_metadata;
+  extern std::vector<SoundMetaData> sfx_metadata;
 }
 
 namespace sprites {

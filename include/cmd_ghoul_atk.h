@@ -7,6 +7,8 @@
 #include "base/action_command.h"
 
 
+/* ActionCommand exclusive to the Ghoul enemy. Deals a moderate amount of 
+ * damage, knockback, hit stun.*/
 class GhoulAttack : public ActionCommand {
 public:
   GhoulAttack(GhoulEnemy *user);

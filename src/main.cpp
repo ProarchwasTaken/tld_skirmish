@@ -17,7 +17,7 @@ plog::ColorConsoleAppender, std::vector;
 
 Color *COLORS::PALETTE;
 
-vector<SoundData> audio::sfx_metadata;
+vector<SoundMetaData> audio::sfx_metadata;
 
 vector<Texture*> sprites::player; 
 vector<Texture*> sprites::ghoul;

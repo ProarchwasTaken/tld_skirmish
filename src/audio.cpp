@@ -11,7 +11,7 @@
 using std::string;
 
 
-SoundData::SoundData(string name, uint8_t id, AudioManager *manager) {
+SoundMetaData::SoundMetaData(string name, uint8_t id, AudioManager *manager) {
   this->name = name;
   this->id = id;
 
@@ -50,7 +50,7 @@ void AudioManager::loadSoundEffects() {
     Sound sound = LoadSound(sound_path.c_str());
     sound_effects.push_back(sound);
 
-    audio::sfx_metadata.push_back(SoundData(sound_name, index, this));
+    audio::sfx_metadata.push_back(SoundMetaData(sound_name, index, this));
   }
 
   PLOGI << "Loaded all sound effects!";
