@@ -1,4 +1,4 @@
-// cmd_heavy_atk.cpp
+// action_command/cmd_heavy_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/generics.h"

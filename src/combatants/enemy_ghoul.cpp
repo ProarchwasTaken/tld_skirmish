@@ -1,4 +1,4 @@
-// enemy_ghoul.cpp
+// combatants/enemy_ghoul.cpp
 #include <cstdlib>
 #include <memory>
 #include <raylib.h>

@@ -1,4 +1,4 @@
-// cmd_light_atk.cpp
+// action_command/cmd_light_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/generics.h"

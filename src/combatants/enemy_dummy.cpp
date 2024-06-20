@@ -1,4 +1,4 @@
-// enemy_dummy.cpp
+// combatants/enemy_dummy.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/combatant.h"

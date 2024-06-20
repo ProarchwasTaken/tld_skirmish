@@ -1,4 +1,4 @@
-// scene_debug.cpp
+// scenes/scene_debug.cpp
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
