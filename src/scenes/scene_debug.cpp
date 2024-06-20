@@ -64,7 +64,7 @@ void DebugScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
-  deleteDeadEnemies(enemies);
+  Enemies::deleteDeadEnemies(enemies);
 }
 
 void DebugScene::drawScene() {

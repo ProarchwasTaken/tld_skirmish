@@ -24,9 +24,15 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 set(SOURCE_FILES 
 "src/main.cpp"
 "src/game.cpp"
-"src/utils.cpp"
 "src/sprite_loader.cpp"
 "src/audio.cpp"
+"src/base/actor.cpp"
+"src/base/combatant.cpp"
+"src/base/action_command.cpp"
+"src/utils/camera.cpp"
+"src/utils/animation.cpp"
+"src/utils/enemies.cpp"
+"src/utils/ai_behavior.cpp"
 "src/scenes/scene_debug.cpp"
 "src/combatants/char_player.cpp"
 "src/combatants/enemy_dummy.cpp"
@@ -34,9 +40,6 @@ set(SOURCE_FILES
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/action_command/cmd_light_atk.cpp"
 "src/action_command/cmd_heavy_atk.cpp"
-"src/base/actor.cpp"
-"src/base/combatant.cpp"
-"src/base/action_command.cpp"
 )
 
 set(HEADER_FILES

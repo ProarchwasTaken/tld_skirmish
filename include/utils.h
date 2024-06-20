@@ -7,9 +7,6 @@
 #include "base/actor.h"
 #include "char_player.h"
 
-#define CAMERA_BOUNDS 512
-
-
 namespace CameraUtils {
   Camera2D setupCamera();
 
@@ -62,7 +59,10 @@ namespace AIBehavior {
 }
 
 
-/* Does exactly what is says on the tin. Automatically deletes enemies
- * within that are awaiting deletion, and creates a new list with the
- * deleted enemy excluded. Should be called once every frame.*/
-void deleteDeadEnemies(combatant_list &enemies);
+namespace Enemies {
+  /* Does exactly what is says on the tin. Automatically deletes enemies
+   * within that are awaiting deletion, and creates a new list with the
+   * deleted enemy excluded. Should be called once every frame.*/
+  void deleteDeadEnemies(combatant_list &enemies);
+}
+
