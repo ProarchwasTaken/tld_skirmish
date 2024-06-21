@@ -33,6 +33,7 @@ set(SOURCE_FILES
 "src/utils/animation.cpp"
 "src/utils/enemies.cpp"
 "src/utils/ai_behavior.cpp"
+"src/utils/sound.cpp"
 "src/scenes/scene_debug.cpp"
 "src/combatants/char_player.cpp"
 "src/combatants/enemy_dummy.cpp"

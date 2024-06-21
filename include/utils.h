@@ -2,7 +2,9 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
+#include <string>
 #include <vector>
+#include "audio.h"
 #include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"
@@ -15,6 +17,21 @@ namespace CameraUtils {
    * screen again, or the camera has hit a boundary.*/
   void followPlayer(Camera2D &camera, PlayerCharacter &player, 
                     double &delta_time);
+}
+
+
+/* Functions that have everything to do with sounds. In a way, they
+ * are pretty much wrappers and helpers for the titular Raylib sound
+ * functions. Written in a way to make my job much easier.*/
+namespace SoundUtils {
+  /* For playing a given sound by it's name. Prints an error when the
+   * sound metadata associated with the given name is not found.*/
+  void play(std::string sound_name);
+
+  /* This is a helper function written for retrieving metadata associated
+   * with a specific sound name. Returns a NULL pointer if no metadata
+   * associated with the string given is found.*/
+  SoundMetaData *getMetaData(std::string &sound_name);
 }
 
 
