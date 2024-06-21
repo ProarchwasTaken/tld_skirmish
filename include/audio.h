@@ -33,7 +33,7 @@ public:
 
   void loadSoundEffects();
 
+  std::vector<Sound> sound_effects;
 private:
   toml::value meta_data;
-  std::vector<Sound> sound_effects;
 };
