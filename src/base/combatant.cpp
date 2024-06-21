@@ -6,6 +6,7 @@
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils.h"
 #include <plog/Log.h>
 
 using std::string, std::unique_ptr;
@@ -79,6 +80,8 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
                            float kb_velocity, uint8_t kb_direction) {
   PLOGD << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
+
+  SoundUtils::play("damage");
   cancelCommand();
 
   int destined_health = health - dmg_magnitude;
