@@ -78,6 +78,9 @@ or maybe you found the solution to fix it!
 * Problems with resizing the window. Most notably with trying to change
   the height.
 
+* The Audio Device failing to initialize. Which causes the game to have
+  no audio.
+
 * Borderless fullscreen is broken. Every time I try to go fullscreen, the
   game throws an warning along the lines of: "Wayland: The platform does 
   not provide the window position". The only reason I could assume this 
