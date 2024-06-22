@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <random>
 #include <vector>
 #include <string>
 #include <plog/Log.h>
@@ -13,7 +14,7 @@
 #include "audio.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender, std::vector;
+plog::ColorConsoleAppender, std::vector, std::mt19937, std::random_device;
 
 Color *COLORS::PALETTE;
 
@@ -22,7 +23,10 @@ vector<SoundMetaData> audio::sfx_metadata;
 vector<Texture*> sprites::player; 
 vector<Texture*> sprites::ghoul;
 
+mt19937 RNG::generator(random_device{}());
+
 bool DEBUG_MODE = false;
+
 
 void setupCustomLogger();
 int parseArguments(int argc, char *argv[]);

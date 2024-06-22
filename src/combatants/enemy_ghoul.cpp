@@ -1,6 +1,7 @@
 // combatants/enemy_ghoul.cpp
 #include <cstdlib>
 #include <memory>
+#include <random>
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
@@ -11,7 +12,10 @@
 #include "char_player.h"
 #include "enemy_ghoul.h"
 
-using std::make_unique, std::unique_ptr;
+using std::make_unique, std::unique_ptr, std::uniform_int_distribution;
+
+uniform_int_distribution<int> patience_range(
+  GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
 
 
 GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
@@ -29,10 +33,10 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
 
   death_time = 1.0;
 
-  attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
-
   preferred_dist = 28;
   movement_speed = 0.5;
+
+  attack_patience = patience_range(RNG::generator);
 }
 
 void GhoulEnemy::update(double &delta_time) {
@@ -80,7 +84,7 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
     command = make_unique<GhoulAttack>(this);
     useCommand(command);
 
-    attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
+    attack_patience = patience_range(RNG::generator);
   }
 }
 

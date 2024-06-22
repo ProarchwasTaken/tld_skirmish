@@ -6,6 +6,7 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
+#include <random>
 #include "audio.h"
 
 #define WINDOWS 0
@@ -32,4 +33,9 @@ namespace sprites {
   extern std::vector<Texture*> ghoul;
 }
 
+namespace RNG {
+  extern std::mt19937 generator;
+}
+
 extern bool DEBUG_MODE;
+
