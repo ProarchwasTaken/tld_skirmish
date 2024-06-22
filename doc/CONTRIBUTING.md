@@ -21,6 +21,7 @@ code.
 * CMake to generate the MakeFile. Anything above version 3.10 should be
   fine
 * The Raylib 5 library.
+* The toml11 library
 * plog v1.1.10, which is a logging library.
 
 ## Setting up the Build System 
