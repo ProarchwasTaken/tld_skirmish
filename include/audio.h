@@ -5,6 +5,7 @@
 #include <string>
 #include <toml/value.hpp>
 #include <vector>
+#include <tuple>
 
 class AudioManager;
 
@@ -15,11 +16,16 @@ class AudioManager;
  * functions.*/
 class SoundMetaData {
 public:
-  SoundMetaData(std::string name, uint8_t id, AudioManager *manager);
+  SoundMetaData(std::string name, uint8_t id, AudioManager *manager, 
+                bool random_pitch, float min_pitch, float max_pitch);
 
   std::string name;
   uint8_t id;
   AudioManager *manager;
+
+  bool random_pitch;
+  float min_pitch;
+  float max_pitch;
 };
 
 
@@ -32,6 +38,7 @@ public:
   ~AudioManager();
 
   void loadSoundEffects();
+  std::tuple<float, float> getPitchValues(toml::value sound_data);
 
   std::vector<Sound> sound_effects;
 private:

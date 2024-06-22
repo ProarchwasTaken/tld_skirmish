@@ -1,3 +1,7 @@
 [[sfx]]
 name = "damage" 
 path = "audio/sfx/damage.wav"
+
+pitch_random = true
+pitch_min = 0.75
+pitch_max = 1.25
