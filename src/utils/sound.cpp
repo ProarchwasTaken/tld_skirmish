@@ -27,8 +27,8 @@ void SoundUtils::play(std::string sound_name) {
     float min_pitch = meta_data->min_pitch;
     float max_pitch = meta_data->max_pitch;
 
-    uniform_real_distribution<float> range(min_pitch, max_pitch);
-    pitch = range(RNG::generator);
+    uniform_real_distribution<float> pitch_range(min_pitch, max_pitch);
+    pitch = pitch_range(RNG::generator);
   }
 
   SetSoundPitch(*sound, pitch);
