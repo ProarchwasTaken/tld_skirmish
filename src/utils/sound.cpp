@@ -1,17 +1,18 @@
 // utils/sound.cpp
 #include <cstddef>
-#include <random>
 #include <cstdint>
+#include <random>
 #include <raylib.h>
 #include "globals.h"
 #include "audio.h"
 #include "utils.h"
 #include <plog/Log.h>
 
-using std::uniform_real_distribution;
+using std::uniform_real_distribution, std::string;
 
 
-void SoundUtils::play(std::string sound_name) {
+void SoundUtils::play(string sound_name) {
+  PLOGD << "Attempting to play sound: " << sound_name;
   SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {
@@ -36,12 +37,13 @@ void SoundUtils::play(std::string sound_name) {
 }
 
 
-SoundMetaData *SoundUtils::getMetaData(std::string &sound_name) {
+SoundMetaData *SoundUtils::getMetaData(string &sound_name) {
   SoundMetaData *meta_data = NULL;
 
   for (SoundMetaData data : audio::sfx_metadata) {
     if (sound_name == data.name) {
       meta_data = &data;
+      break;
     }
   }
 
