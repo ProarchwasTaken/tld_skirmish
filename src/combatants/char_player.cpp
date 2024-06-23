@@ -166,6 +166,8 @@ void PlayerCharacter::lightAttackHandling() {
     PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
     command = make_unique<HeavyAttack>(this);
     useCommand(command);
+
+    SoundUtils::play("cmd_cancel");
     return;
   }
 }
