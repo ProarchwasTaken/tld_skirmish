@@ -39,7 +39,6 @@ void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
 
 void Combatant::cancelCommand() {
   if (current_command == nullptr) {
-    PLOGI << name << " Combatant doesn't have a action command assigned!";
     return;
   }
 
@@ -77,43 +76,53 @@ void Combatant::commandSequence() {
 }
 
 void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
-                           float kb_velocity, uint8_t kb_direction) {
+                           float kb_velocity, uint8_t kb_direction) 
+{
   PLOGD << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
-
-  SoundUtils::play("damage");
-  cancelCommand();
 
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
     destined_health = 0;
   }
 
-  PLOGI << "Setting the combatant's health from " << health << " to " <<
-    destined_health;
   health = destined_health;
+  PLOGI << "Combatant's health is now at: " << health;
 
-  bool different_direction = this->kb_direction == kb_direction;
-  bool greater_velocity = this->kb_velocity < kb_velocity;
-
-  if (greater_velocity || different_direction) {
-    PLOGI << "Updating knockback velocity to: " << kb_velocity;
-    this->kb_velocity = kb_velocity;
-  }
+  SoundUtils::play("damage");
   
-  this->kb_direction = kb_direction;
-
-  this->stun_time = stun_time;
   if (stun_time != 0) {
-
-    state = HIT_STUN;
-    stun_timestamp = GetTime();
+    setKnockback(kb_velocity, kb_direction);
+    enterHitStun(stun_time);
     return;
   }
 
   if (health <= 0 && state != HIT_STUN) {
     death();
   }
+}
+
+void Combatant::enterHitStun(float stun_time) 
+{
+  state = HIT_STUN;
+  this->stun_time = stun_time;
+
+  cancelCommand();
+
+  stun_timestamp = GetTime();
+}
+
+void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
+  bool different_direction = this->kb_direction == kb_direction;
+  bool greater_velocity = this->kb_velocity < kb_velocity;
+
+  if (greater_velocity || different_direction) {
+    PLOGI << "Updating knockback velocity to: " << kb_velocity;
+    // I hope the decision of having both lines within this if statement 
+    // won't come back to bite me later.
+    this->kb_velocity = kb_velocity;
+    this->kb_direction = kb_direction;
+  } 
 }
 
 void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
@@ -142,6 +151,7 @@ void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
 
 void Combatant::death() {
   PLOGV << "{Combatant: " << name << "} is now dead!";
+  cancelCommand();
   state = DEAD;
 
   SoundUtils::play("death");

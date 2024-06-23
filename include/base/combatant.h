@@ -59,6 +59,16 @@ public:
   void takeDamage(uint16_t dmg_magnitude, float stun_time, 
                   float kb_velocity = 0, uint8_t kb_direction = 0);
 
+  /* Causes the combatant to enter the hit stun sequence. Automatically
+   * cancelling any action command the combatant was performing at the
+   * time the method was called.*/
+  void enterHitStun(float stun_time);
+
+  /* What a function named "setKnockback" would do is beyond me. An 
+   * absolute mystery. To be real, this function only updates the
+   * knockback variables when certain conditions apply.*/
+  void setKnockback(float kb_velocity, uint8_t kb_direction);
+
   /* For applying knockback primarily, during the stun sequence. Also
    * makes sure that the combatant won't move past any boundaries.*/
   void applyKnockback(double &delta_time, uint16_t boundary);
