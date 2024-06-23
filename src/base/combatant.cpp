@@ -102,8 +102,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
   }
 }
 
-void Combatant::enterHitStun(float stun_time) 
-{
+void Combatant::enterHitStun(float stun_time) {
   state = HIT_STUN;
   this->stun_time = stun_time;
 
