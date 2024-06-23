@@ -5,3 +5,7 @@ path = "audio/sfx/damage.wav"
 pitch_random = true
 pitch_min = 0.75
 pitch_max = 1.25
+
+[[sfx]]
+name = "cmd_cancel"
+path = "audio/sfx/cmd_cancel.wav"
