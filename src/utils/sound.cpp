@@ -12,7 +12,6 @@ using std::uniform_real_distribution, std::string;
 
 
 void SoundUtils::play(string sound_name) {
-  PLOGD << "Attempting to play sound: " << sound_name;
   SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {

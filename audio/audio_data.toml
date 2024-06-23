@@ -9,3 +9,7 @@ pitch_max = 1.25
 [[sfx]]
 name = "cmd_cancel"
 path = "audio/sfx/cmd_cancel.wav"
+
+[[sfx]]
+name = "death"
+path = "audio/sfx/death.wav"

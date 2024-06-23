@@ -143,6 +143,8 @@ void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
 void Combatant::death() {
   PLOGV << "{Combatant: " << name << "} is now dead!";
   state = DEAD;
+
+  SoundUtils::play("death");
   death_timestamp = GetTime();
 }
 
