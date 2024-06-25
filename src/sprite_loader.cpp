@@ -44,10 +44,12 @@ void SpriteLoader::loadSpritesheet(vector<string> name_list) {
 }
 
 Rectangle SpriteLoader::getSpriteArea(toml::value &sprite_data) {
-  float x = sprite_data["x"].as_integer();
-  float y = sprite_data["y"].as_integer();
-  float width = sprite_data["width"].as_integer();
-  float height = sprite_data["height"].as_integer();
+  toml::value area_data = sprite_data["area"];
+
+  float x = area_data["x"].as_integer();
+  float y = area_data["y"].as_integer();
+  float width = area_data["width"].as_integer();
+  float height = area_data["height"].as_integer();
 
   Rectangle sprite_area = {x, y, width, height};
   return sprite_area;
