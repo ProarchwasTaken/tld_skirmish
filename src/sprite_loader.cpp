@@ -1,6 +1,5 @@
 // sprite_loader.cpp
 #include <raylib.h>
-#include <cstdint>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
 #include <string>
@@ -21,7 +20,6 @@ SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
 SpriteLoader::SpriteLoader() {
   PLOGV << "Loading spritesheet meta data.";
   meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");
-  sprites.reserve(32);
 }
 
 SpriteLoader::~SpriteLoader() {
@@ -36,6 +34,8 @@ SpriteLoader::~SpriteLoader() {
 }
 
 void SpriteLoader::loadSpritesheet(vector<string> name_list) {
+  setInitialCapacity(name_list);
+
   for (string sheet_name : name_list) {
     PLOGV << "Attempting to parse spritesheet: " << sheet_name;
     string file_path = meta_data[sheet_name]["path"].as_string();
@@ -47,6 +47,18 @@ void SpriteLoader::loadSpritesheet(vector<string> name_list) {
     UnloadImage(spritesheet);
     PLOGV << "Spritesheet successfully parsed!";
   }
+}
+
+void SpriteLoader::setInitialCapacity(vector<string> &name_list) {
+  int sprite_total = 0;
+
+  for (string sheet_name : name_list) {  
+    int sprite_count = meta_data[sheet_name]["sprites"].size();
+    sprite_total += sprite_count;
+  }
+
+  PLOGI << "Sprite Total: " << sprite_total;
+  sprites.reserve(sprite_total);
 }
 
 Rectangle SpriteLoader::getSpriteArea(toml::value &sprite_data) {
@@ -106,6 +118,6 @@ void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
     SpriteMetaData(sprite_name, &sprites[latest_index])
   );
   
-  PLOGI << "Successfully Allocated " << sheet_name << " sprite: " << 
+  PLOGI << "Successfully Allocated '" << sheet_name << "' sprite: " << 
     sprite_name << ", and it's data.";
 }

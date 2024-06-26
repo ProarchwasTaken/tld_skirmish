@@ -29,9 +29,18 @@ public:
   SpriteLoader();
   ~SpriteLoader();
 
-  /* The root function. Everything else are helpers to get the job of
-   * loading the game's sprites.*/
+  /* The root method. Everything else are helpers to get the job of
+   * loading the game's sprites. This only meant to be called once.
+   * Any more, and it would obviously cause problems.*/
   void loadSpritesheet(std::vector<std::string> name_list);
+
+  /* Whenever a vector increases in capacity, the addresses to every item
+   * in the container will chance. Given how things work with how every
+   * sprite will have a pointer assigned to them, this could be very 
+   * problematic. This method is programmed to avoid this issue by 
+   * counting the total number of sprites that will be loaded, and 
+   * that as the capacity ahead of time.*/
+  void setInitialCapacity(std::vector<std::string> &name_list);
 
   /* This could be seen as the second level. Parses and allocates every
    * sprite within a spritesheet using the data from the toml file.*/
