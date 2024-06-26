@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "audio.h"
+#include "sprite_loader.h"
 #include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"
@@ -32,6 +33,15 @@ namespace SoundUtils {
    * with a specific sound name. Returns a NULL pointer if no metadata
    * associated with the string given is found.*/
   SoundMetaData *getMetaData(std::string &sound_name);
+}
+
+
+namespace Sprite {
+  /* This is for getting a specific sprite by name rather than using an
+   * index. This is typically used by action commands that are meant to
+   * to used by multiple different combatants.*/
+  Texture *getSprite(std::string sprite_name, 
+                     std::vector<SpriteMetaData> &data_list);
 }
 
 

@@ -12,9 +12,9 @@
 using std::string, std::vector;
 
 
-SpriteMetaData::SpriteMetaData(string name, uint16_t id) {
+SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
   this->name = name;
-  this->id = id;
+  this->sprite = sprite;
 }
 
 
@@ -79,14 +79,12 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
     sprites.push_back(LoadTextureFromImage(final_image));
     UnloadImage(final_image);
 
-    allocateSprite(sheet_name, sprite_name, sprite);
+    allocateSprite(sheet_name, sprite_name);
     latest_index++;
   }
 }
 
-void SpriteLoader::allocateSprite(string sheet_name, string sprite_name,
-                                  uint16_t sprite_id) 
-{
+void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
   vector<Texture*> *sprite_list;
   vector<SpriteMetaData> *data_list;
 
@@ -104,7 +102,10 @@ void SpriteLoader::allocateSprite(string sheet_name, string sprite_name,
   }
 
   sprite_list->push_back(&sprites[latest_index]);
-  data_list->push_back(SpriteMetaData(sprite_name, sprite_id));
+  data_list->push_back(
+    SpriteMetaData(sprite_name, &sprites[latest_index])
+  );
+  
   PLOGI << "Successfully Allocated " << sheet_name << " sprite: " << 
     sprite_name << ", and it's data.";
 }

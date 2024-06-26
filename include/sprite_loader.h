@@ -11,10 +11,10 @@
  * search for them by name rather than just remembering the index.*/
 class SpriteMetaData {
 public:
-  SpriteMetaData(std::string name, uint16_t id);
+  SpriteMetaData(std::string name, Texture *sprite);
 
   std::string name;
-  uint16_t id;
+  Texture *sprite;
 };
 
 
@@ -45,9 +45,7 @@ public:
   /* Allocates a sprite and it's data to one of the many global sprite
    * lists. This makes it so the sprite is accessible from any part of
    * the program.*/
-  void allocateSprite(std::string sheet_name, std::string sprite_name, 
-                      uint16_t sprite_id);
-
+  void allocateSprite(std::string sheet_name, std::string sprite_name);
 private:  
   toml::value meta_data;
   std::vector<Texture> sprites; 
