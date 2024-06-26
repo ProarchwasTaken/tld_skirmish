@@ -18,6 +18,7 @@ Texture *Sprite::getSprite(string sprite_name,
   for (auto data : data_list) {
     if (data.name == sprite_name) {
       sprite = data.sprite;
+      break;
     }
   }
 
