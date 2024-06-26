@@ -1,13 +1,10 @@
 // audio.h
 #pragma once
-#include <cstdint>
 #include <raylib.h>
 #include <string>
 #include <toml/value.hpp>
 #include <vector>
 #include <tuple>
-
-class AudioManager;
 
 
 /* Sound meta data is meant to store infomation about a specific sound
@@ -16,12 +13,11 @@ class AudioManager;
  * functions.*/
 class SoundMetaData {
 public:
-  SoundMetaData(std::string name, uint8_t id, AudioManager *manager, 
-                bool random_pitch, float min_pitch, float max_pitch);
+  SoundMetaData(std::string name, Sound *sound, bool random_pitch, 
+                float min_pitch, float max_pitch);
 
   std::string name;
-  uint8_t id;
-  AudioManager *manager;
+  Sound *sound;
 
   bool random_pitch;
   float min_pitch;
@@ -40,7 +36,7 @@ public:
   void loadSoundEffects();
   std::tuple<float, float> getPitchValues(toml::value sound_data);
 
-  std::vector<Sound> sound_effects;
 private:
   toml::value meta_data;
+  std::vector<Sound> sound_effects;
 };

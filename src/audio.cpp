@@ -1,5 +1,4 @@
 // audio.h
-#include <cstdint>
 #include <raylib.h>
 #include <string>
 #include <toml/get.hpp>
@@ -13,18 +12,16 @@
 using std::string, std::tuple, std::make_tuple, std::tie;
 
 
-SoundMetaData::SoundMetaData(string name, uint8_t id, 
-                             AudioManager *manager, bool random_pitch,
+SoundMetaData::SoundMetaData(string name, Sound *sound, bool random_pitch,
                              float min_pitch, float max_pitch) 
 {
   this->name = name;
-  this->id = id;
+  this->sound = sound;
 
   this->random_pitch = random_pitch;
   this->min_pitch = min_pitch;
   this->max_pitch = max_pitch;
 
-  this->manager = manager;
   PLOGI << "Saved sound data for: " << name;
 }
 
@@ -48,7 +45,9 @@ AudioManager::~AudioManager() {
 void AudioManager::loadSoundEffects() {
   PLOGV << "Loading sound effects.";
   int count = meta_data["sfx"].size();
+
   PLOGI << "Sound effect detected: " << count;
+  sound_effects.reserve(count);
 
   for (int index = 0; index < count; index++) {
     toml::value data = meta_data["sfx"][index];
@@ -68,9 +67,11 @@ void AudioManager::loadSoundEffects() {
     Sound sound = LoadSound(sound_path.c_str());
     sound_effects.push_back(sound);
 
+    Sound *sound_ptr = &sound_effects[index];
+
     audio::sfx_metadata.push_back(
-      SoundMetaData(sound_name, index, this, use_random_pitch, min_pitch,
-                    max_pitch)
+      SoundMetaData(sound_name, sound_ptr, use_random_pitch, 
+                    min_pitch, max_pitch)
     );
   }
 

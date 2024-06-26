@@ -1,6 +1,5 @@
 // utils/sound.cpp
 #include <cstddef>
-#include <cstdint>
 #include <random>
 #include <raylib.h>
 #include "globals.h"
@@ -19,8 +18,7 @@ void SoundUtils::play(string sound_name) {
     return;
   }
 
-  uint8_t sound_id = meta_data->id;
-  Sound *sound = &meta_data->manager->sound_effects[sound_id];
+  Sound *sound = meta_data->sound;
   float pitch = 1.0;
 
   if (meta_data->random_pitch) {
