@@ -29,11 +29,24 @@ public:
   SpriteLoader();
   ~SpriteLoader();
 
+  /* The root function. Everything else are helpers to get the job of
+   * loading the game's sprites.*/
   void loadSpritesheet(std::vector<std::string> name_list);
+
+  /* This could be seen as the second level. Parses and allocates every
+   * sprite within a spritesheet using the data from the toml file.*/
   void parseSprites(std::string sheet_name, Image &spritesheet);
 
+  /* Returns the dimensions and area of the sprite as a raylib Rectangle.
+   * This is one of the necessary functions needed in the process of 
+   * sprite parsing.*/
   Rectangle getSpriteArea(toml::value &sprite_data);
-  void allocateSprites(std::string sheet_name, int sprite);
+
+  /* Allocates a sprite and it's data to one of the many global sprite
+   * lists. This makes it so the sprite is accessible from any part of
+   * the program.*/
+  void allocateSprite(std::string sheet_name, std::string sprite_name, 
+                      uint16_t sprite_id);
 
 private:  
   toml::value meta_data;

@@ -65,12 +65,11 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
-  uint16_t old_index = latest_index;
-
   PLOGI << "Now proceeding to parse and allocate sprites.";
   for (int sprite = 0; sprite < sprite_count; sprite++) {
     toml::value sprite_data = meta_data[sheet_name]["sprites"][sprite];
-    
+
+    string sprite_name = sprite_data["name"].as_string(); 
     Rectangle area = getSpriteArea(sprite_data);
     
     Image final_image = ImageCopy(spritesheet);
@@ -79,24 +78,33 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
 
     sprites.push_back(LoadTextureFromImage(final_image));
     UnloadImage(final_image);
-    latest_index++;
-  }
 
-  for (int sprite = old_index; sprite < latest_index; sprite++) {
-    allocateSprites(sheet_name, sprite);
+    allocateSprite(sheet_name, sprite_name, sprite);
+    latest_index++;
   }
 }
 
-void SpriteLoader::allocateSprites(string sheet_name, int sprite) {
+void SpriteLoader::allocateSprite(string sheet_name, string sprite_name,
+                                  uint16_t sprite_id) 
+{
+  vector<Texture*> *sprite_list;
+  vector<SpriteMetaData> *data_list;
+
   if (sheet_name == "player") {
-    sprites::player.push_back(&sprites[sprite]);
+    sprite_list = &sprites::player;
+    data_list = &sprites::plr_metadata;
   }
   else if (sheet_name == "ghoul") {
-    sprites::ghoul.push_back(&sprites[sprite]);
+    sprite_list = &sprites::ghoul;
+    data_list = &sprites::gol_metadata;
   }
   else {
-    PLOGW << "There isn't a global pointer list for " << sheet_name <<
-    " sprite! Index: " << sprite;
+    PLOGE << "Sprite pointer list not found!";
     return;
   }
+
+  sprite_list->push_back(&sprites[latest_index]);
+  data_list->push_back(SpriteMetaData(sprite_name, sprite_id));
+  PLOGI << "Successfully Allocated " << sheet_name << " sprite: " << 
+    sprite_name << ", and it's data.";
 }
