@@ -12,7 +12,7 @@ else()
 endif()
 
 project("game" 
-VERSION 0.0.1
+VERSION 0.0.3
 DESCRIPTION "A short wave based fighter."
 LANGUAGES CXX
 )
