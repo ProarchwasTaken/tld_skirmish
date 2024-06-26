@@ -12,6 +12,7 @@
 #include "game.h"
 #include "globals.h"
 #include "audio.h"
+#include "sprite_loader.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender, std::vector, std::mt19937, std::random_device;
@@ -21,7 +22,10 @@ Color *COLORS::PALETTE;
 vector<SoundMetaData> audio::sfx_metadata;
 
 vector<Texture*> sprites::player; 
+vector<SpriteMetaData> sprites::plr_metadata;
+
 vector<Texture*> sprites::ghoul;
+vector<SpriteMetaData> sprites::gol_metadata;
 
 mt19937 RNG::generator(random_device{}());
 

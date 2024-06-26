@@ -12,6 +12,12 @@
 using std::string, std::vector;
 
 
+SpriteMetaData::SpriteMetaData(string name, uint16_t id) {
+  this->name = name;
+  this->id = id;
+}
+
+
 SpriteLoader::SpriteLoader() {
   PLOGV << "Loading spritesheet meta data.";
   meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");

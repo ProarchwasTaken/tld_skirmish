@@ -8,6 +8,7 @@
 #include <vector>
 #include <random>
 #include "audio.h"
+#include "sprite_loader.h"
 
 #define WINDOWS 0
 #define LINUX 1
@@ -30,7 +31,10 @@ namespace audio {
 
 namespace sprites {
   extern std::vector<Texture*> player;
+  extern std::vector<SpriteMetaData> plr_metadata;
+
   extern std::vector<Texture*> ghoul;
+  extern std::vector<SpriteMetaData> gol_metadata;
 }
 
 namespace RNG {

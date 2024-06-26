@@ -7,6 +7,17 @@
 #include <cstdint>
 
 
+/* For storing information about a specific sprite. Making it possible to
+ * search for them by name rather than just remembering the index.*/
+class SpriteMetaData {
+public:
+  SpriteMetaData(std::string name, uint16_t id);
+
+  std::string name;
+  uint16_t id;
+};
+
+
 /* The sprite loader is responsible for loading all the game's sprites
  * for use. This process is usually done by taking a spritesheet, and
  * parsing every individual sprite within it into it's own texture.
