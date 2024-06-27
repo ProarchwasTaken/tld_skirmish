@@ -13,3 +13,15 @@ path = "audio/sfx/cmd_cancel.wav"
 [[sfx]]
 name = "death"
 path = "audio/sfx/death.wav"
+
+[[sfx]]
+name = "guard_success"
+path = "audio/sfx/guard_success.wav"
+
+[[sfx]]
+name = "guard_fail"
+path = "audio/sfx/guard_fail.wav"
+
+[[sfx]]
+name = "parry"
+path = "audio/sfx/parry.wav"
