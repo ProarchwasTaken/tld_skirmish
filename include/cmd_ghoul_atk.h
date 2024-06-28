@@ -25,5 +25,7 @@ private:
 
   uint16_t damage;
   float stun_time;
+  float guard_pierce;
+
   bool attack_connected = false;
 };

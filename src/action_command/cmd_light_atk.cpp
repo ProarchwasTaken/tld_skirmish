@@ -12,6 +12,8 @@ LightAttack::LightAttack(PlayerCharacter *user):
   ActionCommand(user, "Light Attack", 0.2, 0.1, 0.3)
 {
   damage = 10;
+  guard_pierce = 0.2;
+
   stun_time = 0.5;
 
   this->enemies = user->enemies;

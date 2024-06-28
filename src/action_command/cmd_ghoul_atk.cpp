@@ -12,6 +12,8 @@ GhoulAttack::GhoulAttack(GhoulEnemy *user):
   ActionCommand(user, "Ghoul Attack", 0.3, 0.1, 0.4)
 {
   damage = 30;
+  guard_pierce = 0.3;
+
   stun_time = 0.5;
 
   this->player = user->player;

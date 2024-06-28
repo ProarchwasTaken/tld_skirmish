@@ -36,5 +36,6 @@ private:
   combatant_list *enemies;
 
   uint16_t damage;
+  float guard_pierce;
   float stun_time;
 };

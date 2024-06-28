@@ -12,6 +12,8 @@ HeavyAttack::HeavyAttack(PlayerCharacter *user):
   ActionCommand(user, "Heavy Attack", 0.3, 0.1, 0.6)
 {
   damage = 20;
+  guard_pierce = 0.25;
+
   stun_time = 0.5;
 
   this->enemies = user->enemies;
