@@ -7,6 +7,7 @@
 #include "char_player.h"
 
 #define GOL_HP 50
+#define GOL_STABILITY 0.35
 #define GOL_MIN_PATIENCE 1
 #define GOL_MAX_PATIENCE 15
 

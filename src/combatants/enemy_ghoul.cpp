@@ -19,8 +19,8 @@ uniform_int_distribution<int> patience_range(
 
 
 GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
-  Combatant("Ghoul", TYPE_ENEMY, GOL_HP, position, GOL_HITBOX_SCALE,
-            {64, 64}, GOL_HITBOX_OFFSET) 
+  Combatant("Ghoul", TYPE_ENEMY, GOL_HP, GOL_STABILITY, position, 
+            GOL_HITBOX_SCALE, {64, 64}, GOL_HITBOX_OFFSET) 
 {
   this->player = &player;
   current_sprite = sprites::ghoul[0];

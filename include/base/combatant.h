@@ -29,8 +29,8 @@
 class Combatant : public Actor {
 public:
   Combatant(std::string name, uint8_t type, uint16_t max_health,
-            Vector2 position, Vector2 hitbox_scale = {32, 64},
-            Vector2 tex_scale = {64, 64}, 
+            float stability, Vector2 position, 
+            Vector2 hitbox_scale = {32, 64}, Vector2 tex_scale = {64, 64}, 
             Vector2 hitbox_offset = {-16, -64}, 
             Vector2 tex_offset = {-32, -64});
 
@@ -95,6 +95,7 @@ public:
   bool invulnerable = false;
 
   uint16_t health;
+  float stability;
   uint8_t state;
 
   int8_t direction;

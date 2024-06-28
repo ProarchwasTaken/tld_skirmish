@@ -9,7 +9,8 @@
 #define PLR_BOUNDS 384
 
 #define PLR_HP 100
-#define PLR_START (Vector2){0, 208}
+#define PLR_STABILITY 0.5
+#define PLR_START_POS (Vector2){0, 208}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
 #define PLR_HITBOX_OFFSET (Vector2){-8, -58}
 

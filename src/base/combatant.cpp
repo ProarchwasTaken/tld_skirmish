@@ -13,9 +13,9 @@ using std::string, std::unique_ptr;
 
 
 Combatant::Combatant(string name, uint8_t type, uint16_t max_health,
-                     Vector2 position, Vector2 hitbox_scale,
-                     Vector2 tex_scale, Vector2 hitbox_offset,
-                     Vector2 tex_offset):
+                     float stability, Vector2 position, 
+                     Vector2 hitbox_scale, Vector2 tex_scale, 
+                     Vector2 hitbox_offset, Vector2 tex_offset):
 Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset) 
 {
   this->name = name;
@@ -23,6 +23,8 @@ Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset)
 
   this->max_health = max_health;
   health = max_health;
+
+  this->stability = stability;
 
   state = NEUTRAL;
   direction = RIGHT;
