@@ -90,12 +90,14 @@ public:
   std::string name;
   uint16_t max_health;
   uint8_t type;
+
   bool awaiting_deletion = false;
+  bool invulnerable = false;
 
   uint16_t health;
   uint8_t state;
-  int8_t direction;
 
+  int8_t direction;
   int8_t kb_direction = 0;
   float kb_velocity = 0;
 

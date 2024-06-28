@@ -78,8 +78,13 @@ void Combatant::commandSequence() {
 void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
                            float kb_velocity, uint8_t kb_direction) 
 {
+  if (invulnerable) {
+    return;
+  }
+
   PLOGD << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
+  SoundUtils::play("damage");
 
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
@@ -88,9 +93,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
 
   health = destined_health;
   PLOGI << "Combatant's health is now at: " << health;
-
-  SoundUtils::play("damage");
-  
+ 
   if (stun_time != 0) {
     setKnockback(kb_velocity, kb_direction);
     enterHitStun(stun_time);
