@@ -42,6 +42,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/action_command/cmd_light_atk.cpp"
 "src/action_command/cmd_heavy_atk.cpp"
+"src/action_command/cmd_guard.cpp"
 )
 
 set(HEADER_FILES
@@ -58,6 +59,7 @@ set(HEADER_FILES
 "include/cmd_ghoul_atk.h"
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
+"include/cmd_guard.h"
 "include/base/generics.h"
 "include/base/scene.h"
 "include/base/actor.h"

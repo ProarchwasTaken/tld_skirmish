@@ -16,6 +16,7 @@
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
+#define BTN_GUARD 2
 
 
 /* The playable character, the controllable avatar for the user. The most
