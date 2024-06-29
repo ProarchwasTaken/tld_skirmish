@@ -73,12 +73,11 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
   dmg_magnitude = static_cast<int>(reduced_damage);
   PLOGI << "Reduced incoming damage to: " << dmg_magnitude;
 
-  PLOGI << "Comparing the attack's guard_pierce with the stability of: "
-    << user->name;
   bool guard_failed = guard_pierce > user->stability;
   if (guard_failed) {
     PLOGI << "Guard failed because the guard_pierce of the attack is " 
       "greater than user's stability.";
+
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
 
@@ -87,6 +86,15 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
   }
 
   PLOGI << "Guard Successful! Now applying bonuses.";
+  bool death_protection = dmg_magnitude < 10;
+  bool death_imminent = user->health - dmg_magnitude <= 0;
+
+  if (death_protection && death_imminent) {
+    PLOGV << user->name << " survives fatal damage due to being eligible"
+      " for death protection";
+    dmg_magnitude = 0;
+    user->health = 1;
+  }
 
   guard_success = true;
   user->invulnerable = true;
