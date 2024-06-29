@@ -48,6 +48,10 @@ public:
    * the combatant is in a state other than Neutral or Hit Stun.*/
   void commandSequence();
 
+  /* Returns true if combatant is currently using an action command if 
+   * haven't already figured it out.*/
+  bool isUsingCommand();
+
   /* Usually called after the combatant takes damage. Unless they are in
    * hit stun, they will be set back to neutral.*/
   void cancelCommand();

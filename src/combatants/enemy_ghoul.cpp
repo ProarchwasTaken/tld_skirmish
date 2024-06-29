@@ -124,20 +124,7 @@ void GhoulEnemy::draw() {
 void GhoulEnemy::drawDebug() {
   Actor::drawDebug();
 
-  bool using_command;
-  switch (state) {
-    case NEUTRAL:
-    case HIT_STUN:
-    case DEAD: {
-      using_command = false;
-      break;
-    }
-    default: {
-      using_command = true;
-    }
-  }
-
-  if (using_command) {
+  if (isUsingCommand()) {
     current_command->drawDebug();
   }
 }
