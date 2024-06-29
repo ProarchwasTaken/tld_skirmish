@@ -60,7 +60,8 @@ void HeavyAttack::enemyHitCheck() {
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time, 0.5f, user->direction);
+      enemy->takeDamage(damage, guard_pierce, stun_time, 0.5f, 
+                        user->direction);
       attack_connected = true;
     }
   }

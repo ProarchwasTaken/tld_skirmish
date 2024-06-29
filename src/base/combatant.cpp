@@ -77,8 +77,9 @@ void Combatant::commandSequence() {
   }
 }
 
-void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
-                           float kb_velocity, uint8_t kb_direction) 
+void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
+                           float stun_time, float kb_velocity, 
+                           uint8_t kb_direction) 
 {
   if (invulnerable) {
     return;

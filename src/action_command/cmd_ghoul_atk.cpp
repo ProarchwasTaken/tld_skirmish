@@ -58,7 +58,8 @@ void GhoulAttack::playerHitCheck() {
   }
 
   if (CheckCollisionRecs(hurtbox, player->hitbox)) {
-    player->takeDamage(damage, stun_time, 1, user->direction);
+    player->takeDamage(damage, guard_pierce, stun_time, 1, 
+                       user->direction);
 
     attack_connected = true;
     user->state = RECOVER;

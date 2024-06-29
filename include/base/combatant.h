@@ -56,8 +56,9 @@ public:
    * putting them in hit stun. Also makes sure the combatant's health will
    * not be below 0. If the stun_time parameter is 0, the combatant
    * will not be put into hit stun, and a death check will be made.*/
-  void takeDamage(uint16_t dmg_magnitude, float stun_time, 
-                  float kb_velocity = 0, uint8_t kb_direction = 0);
+  void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
+                  float stun_time, float kb_velocity = 0, 
+                  uint8_t kb_direction = 0);
 
   /* Causes the combatant to enter the hit stun sequence. Automatically
    * cancelling any action command the combatant was performing at the
