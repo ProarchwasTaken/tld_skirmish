@@ -11,7 +11,7 @@
 class Guard : public ActionCommand {
 public:
   Guard(Combatant *user, std::vector<SpriteMetaData> &data_list,
-        bool can_parry = false);
+        uint16_t boundary, bool can_parry = false);
 
   void chargeSequence(float time_elapsed, double &delta_time) override;
   void actSequence(float time_elapsed, double &delta_time) override;
@@ -24,6 +24,7 @@ public:
   bool guard_success = false;
 private:
   bool can_parry;
+  uint16_t boundary;
 
   Texture* charge_sprite;
   Texture* guard_sprite;

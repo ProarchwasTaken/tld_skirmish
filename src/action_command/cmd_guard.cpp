@@ -1,4 +1,5 @@
 // action_command/cmd_guard.cpp
+#include <cstdint>
 #include <raylib.h>
 #include <vector>
 #include "base/combatant.h"
@@ -12,9 +13,11 @@ using std::vector;
 
 
 Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
-             bool can_parry):
+             uint16_t boundary, bool can_parry):
   ActionCommand(user, "Guard", 0.15, 0.5, 0.25) 
 {
+  this->boundary = boundary;
+
   charge_sprite = Sprite::getSprite("charge", data_list);
   guard_sprite = Sprite::getSprite("guard", data_list);
 
@@ -45,6 +48,10 @@ void Guard::actSequence(float time_elapsed, double &delta_time) {
 void Guard::recoverySequence(float time_elapsed, double &delta_time) {
   ActionCommand::recoverySequence(time_elapsed, delta_time);
 
+  if (guard_success) {
+    user->applyKnockback(delta_time, boundary);
+  }
+
   if (finished_recovering && guard_success) {
     user->invulnerable = false;
   }
@@ -56,6 +63,7 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
 {
   // TODO: this will do until it's time to implement parrying
   if (user->state != ACT) {
+    PLOGI << "Guard failed due to the user not being in the active phase";
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
     return;
@@ -65,9 +73,12 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
   dmg_magnitude = static_cast<int>(reduced_damage);
   PLOGI << "Reduced incoming damage to: " << dmg_magnitude;
 
+  PLOGI << "Comparing the attack's guard_pierce with the stability of: "
+    << user->name;
   bool guard_failed = guard_pierce > user->stability;
   if (guard_failed) {
-    PLOGI << "The attack has pierced the guard of: " << user->name;
+    PLOGI << "Guard failed because the guard_pierce of the attack is " 
+      "greater than user's stability.";
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
 
@@ -75,16 +86,18 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
     return;
   }
 
-  PLOGI << "Guard Successful! Now applying bonuses to: " << user->name;
+  PLOGI << "Guard Successful! Now applying bonuses.";
 
   guard_success = true;
   user->invulnerable = true;
 
   stun_time = stun_time * 0.75;
-  kb_velocity = kb_velocity * 0.75;
+  kb_velocity = kb_velocity * 1.25;
 
-  recovery_time = stun_time;
   user->setKnockback(kb_velocity, kb_direction);
+  recovery_time = stun_time;
 
   SoundUtils::play("guard_success");
+  user->state = RECOVER;
+  sequence_timestamp = GetTime();
 }

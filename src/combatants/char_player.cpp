@@ -137,7 +137,8 @@ void PlayerCharacter::normalInterpretLogic() {
     }
     case BTN_GUARD: {
       PLOGI << "Attempting to assign Guard";
-      command = make_unique<Guard>(this, sprites::plr_metadata, true);
+      command = make_unique<Guard>(this, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
       useCommand(command);
       break;
     }
