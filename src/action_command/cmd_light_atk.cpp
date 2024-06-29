@@ -65,6 +65,7 @@ void LightAttack::enemyHitCheck() {
       attack_connected = true;
 
       user->state = RECOVER;
+      sequence_timestamp = GetTime();
       return;
     }
   }
