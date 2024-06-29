@@ -18,10 +18,11 @@ out the rest.
 
 ### Gameplay
 * **Arrow Keys** - Movement
-* **C Key** - Light Attack
-* **V Key** - Heavy Attack
-* **X Key** - Guard
-* **Z Key** - Special/Sub-Weapon
+* **Z Key** - Light Attack
+* **X Key** - Heavy Attack
+* **A Key** - Light Weapon Technique
+* **S Key** - Heavy Weapon Technique
+* **Space Bar** - Guard
 
 ## Gamepad
 The controls detailed here are based on the SNES button layout, but I'm
@@ -34,10 +35,11 @@ sure it would work with other controllers.
 
 ### Gameplay
 * **D-Pad** - Movement
-* **A Button** - Light Attack
-* **B Button** - Heavy Attack
-* **Y/R Button** - Guard
-* **X/L Button** - Special/Sub-Weapon
+* **B Button** - Light Attack
+* **A Button** - Heavy Attack
+* **Y Button** - Light Weapon Technique
+* **X Button** - Heavy Weapon Technique
+* **L/R Button** - Guard
 
 
 # Credits and Contacts

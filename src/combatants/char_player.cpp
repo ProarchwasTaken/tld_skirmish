@@ -218,8 +218,8 @@ void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
-  bool key_c = IsKeyPressed(KEY_C);
-  bool key_v = IsKeyPressed(KEY_V);
+  bool key_z = IsKeyPressed(KEY_Z);
+  bool key_x = IsKeyPressed(KEY_X);
 
   bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
@@ -254,13 +254,13 @@ void PlayerCharacter::inputPressed() {
     moving_left = true;
   }
 
-  bool input_light_attack = key_c || (gamepad_available && 
+  bool input_light_attack = key_z || (gamepad_available && 
   gamepad_face_down);
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  bool input_heavy_attack = key_v || (gamepad_available && 
+  bool input_heavy_attack = key_x || (gamepad_available && 
     gamepad_face_right);
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
