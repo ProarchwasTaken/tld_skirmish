@@ -14,8 +14,8 @@ public:
   GhoulAttack(GhoulEnemy *user);
 
   void setupHurtbox();
-  void chargeSequence(float time_elapsed) override;
-  void actSequence(float time_elapsed) override;
+  void chargeSequence(float time_elapsed, double &delta_time) override;
+  void actSequence(float time_elapsed, double &delta_time) override;
 
   void playerHitCheck();
   void drawDebug() override;

@@ -62,7 +62,7 @@ void PlayerCharacter::update(double &delta_time) {
       throw;
     }
     default: {
-      commandSequence();
+      commandSequence(delta_time);
       interpretBuffer();
     }
   }

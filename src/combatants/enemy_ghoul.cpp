@@ -57,7 +57,7 @@ void GhoulEnemy::update(double &delta_time) {
       break;
     }
     default: {
-      commandSequence();
+      commandSequence(delta_time);
     }
   }
 }

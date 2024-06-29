@@ -35,16 +35,16 @@ void GhoulAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void GhoulAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void GhoulAttack::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = sprites::ghoul[5];
   }
 }
 
-void GhoulAttack::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void GhoulAttack::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
   playerHitCheck();
 
   if (finished_action || attack_connected) {

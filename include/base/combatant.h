@@ -46,7 +46,7 @@ public:
   /* For handling the all of the stages of using a command, like the 
    * charge up, action, and recovery. Is called once every frame of which
    * the combatant is in a state other than Neutral or Hit Stun.*/
-  void commandSequence();
+  void commandSequence(double &delta_time);
 
   /* Returns true if combatant is currently using an action command if 
    * haven't already figured it out.*/

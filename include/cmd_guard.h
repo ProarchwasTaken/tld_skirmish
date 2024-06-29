@@ -13,9 +13,9 @@ public:
   Guard(Combatant *user, std::vector<SpriteMetaData> &data_list,
         bool can_parry = false);
 
-  void chargeSequence(float time_elapsed) override;
-  void actSequence(float time_elapsed) override;
-  void recoverySequence(float time_elapsed) override;
+  void chargeSequence(float time_elapsed, double &delta_time) override;
+  void actSequence(float time_elapsed, double &delta_time) override;
+  void recoverySequence(float time_elapsed, double &delta_time) override;
 
   void guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                   float stun_time, float kb_velocity, 

@@ -35,16 +35,16 @@ void HeavyAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void HeavyAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void HeavyAttack::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[6];
   }
 }
 
-void HeavyAttack::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void HeavyAttack::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
 
   enemyHitCheck();
 

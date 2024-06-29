@@ -53,7 +53,7 @@ void Combatant::cancelCommand() {
   }
 }
 
-void Combatant::commandSequence() {
+void Combatant::commandSequence(double &delta_time) {
   if (current_command == nullptr) {
     PLOGF << name << "Combatant has attempted to go through command"
       << " sequence when no command is assigned to them!";
@@ -64,15 +64,15 @@ void Combatant::commandSequence() {
 
   switch (state) {
     case CHARGING: {
-      current_command->chargeSequence(time_elapsed);
+      current_command->chargeSequence(time_elapsed, delta_time);
       break;
     }
     case ACT: {
-      current_command->actSequence(time_elapsed);
+      current_command->actSequence(time_elapsed, delta_time);
       break;
     }
     case RECOVER: {
-      current_command->recoverySequence(time_elapsed);
+      current_command->recoverySequence(time_elapsed, delta_time);
       break;
     }
   }

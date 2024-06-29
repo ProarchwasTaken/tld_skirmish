@@ -26,24 +26,24 @@ Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
   user->current_sprite = charge_sprite;
 }
 
-void Guard::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void Guard::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = guard_sprite;
   }
 }
 
-void Guard::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void Guard::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
 
   if (finished_action) {
     user->current_sprite = charge_sprite;
   }
 }
 
-void Guard::recoverySequence(float time_elapsed) {
-  ActionCommand::recoverySequence(time_elapsed);
+void Guard::recoverySequence(float time_elapsed, double &delta_time) {
+  ActionCommand::recoverySequence(time_elapsed, delta_time);
 
   if (finished_recovering && guard_success) {
     user->invulnerable = false;
