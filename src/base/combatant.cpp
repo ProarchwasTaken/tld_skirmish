@@ -6,6 +6,7 @@
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "cmd_guard.h"
 #include "utils.h"
 #include <plog/Log.h>
 
@@ -77,6 +78,19 @@ void Combatant::commandSequence() {
   }
 }
 
+bool Combatant::isUsingCommand() {
+  switch (state) {
+    case CHARGING:
+    case ACT:
+    case RECOVER: {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
+}
+
 void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
                            float stun_time, float kb_velocity, 
                            uint8_t kb_direction) 
@@ -89,6 +103,20 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
     "combatant: " << name;
   SoundUtils::play("damage");
 
+  
+  bool using_command = isUsingCommand();
+  if (using_command && current_command->command_name == "Guard") {
+    PLOGI << "Detected that {Combatant: " << name << "} is guarding."
+      " performing guard logic.";
+    Guard *command = dynamic_cast<Guard*>(current_command.get());
+    command->guardLogic(dmg_magnitude, guard_pierce, stun_time, 
+                        kb_velocity, kb_direction);
+  }
+  else if (stun_time != 0) {
+    setKnockback(kb_velocity, kb_direction);
+    enterHitStun(stun_time);
+  }
+
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
     destined_health = 0;
@@ -96,14 +124,8 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
 
   health = destined_health;
   PLOGI << "Combatant's health is now at: " << health;
- 
-  if (stun_time != 0) {
-    setKnockback(kb_velocity, kb_direction);
-    enterHitStun(stun_time);
-    return;
-  }
 
-  if (health <= 0 && state != HIT_STUN) {
+  if (state != HIT_STUN && health <= 0) {
     death();
   }
 }
@@ -111,7 +133,6 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
 void Combatant::enterHitStun(float stun_time) {
   state = HIT_STUN;
   this->stun_time = stun_time;
-
   cancelCommand();
 
   stun_timestamp = GetTime();

@@ -7,10 +7,6 @@
 #include "base/action_command.h"
 #include "sprite_loader.h"
 
-#define GUARD_MISS 0
-#define GUARD_SUCCESS 1
-#define GUARD_FAIL 2
-
 
 class Guard : public ActionCommand {
 public:
@@ -21,7 +17,11 @@ public:
   void actSequence(float time_elapsed) override;
   void recoverySequence(float time_elapsed) override;
 
-  uint8_t guard_result = GUARD_MISS;
+  void guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
+                  float stun_time, float kb_velocity, 
+                  uint8_t kb_direction);
+
+  bool guard_success = false;
 private:
   bool can_parry;
 
