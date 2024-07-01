@@ -268,8 +268,10 @@ void PlayerCharacter::inputPressed() {
     );
 
     gamepad_shoulder_down = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1
-    ) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2);
+      0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
   }
 
 
