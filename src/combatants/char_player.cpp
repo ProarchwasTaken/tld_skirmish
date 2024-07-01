@@ -160,6 +160,8 @@ void PlayerCharacter::specialInterpretLogic() {
     PLOGI << "Player is parrying an attack. Switching back to normal "
       "interpret logic.";
     SoundUtils::play("cmd_cancel");
+    
+    // Best part is that I didn't need to do much to implement this. :)
     normalInterpretLogic();
 
     invulnerable = false;
