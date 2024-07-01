@@ -7,6 +7,8 @@
 #include "base/action_command.h"
 #include "sprite_loader.h"
 
+#define DEF_PARRY_WINDOW 0.25
+
 
 class Guard : public ActionCommand {
 public:
@@ -20,6 +22,16 @@ public:
   void guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                   float stun_time, float kb_velocity, 
                   uint8_t kb_direction);
+
+  bool guardFailed(float guard_pierce, float stun_time, float kb_velocity,
+                   uint8_t kb_direction);
+
+  void applyGuardBonus(float stun_time, float kb_velocity = 0, 
+                       uint8_t kb_direction = 0);
+
+  bool parriedAttack(float guard_pierce, float stun_time);
+
+  void deathProtection(uint16_t &dmg_magnitude);
 
   bool guard_success = false;
 private:

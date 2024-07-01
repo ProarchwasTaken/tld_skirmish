@@ -117,6 +117,10 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
     enterHitStun(stun_time);
   }
 
+  if (parried_attack) {
+    return;
+  }
+
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
     destined_health = 0;

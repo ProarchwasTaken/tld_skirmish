@@ -100,8 +100,10 @@ public:
   bool invulnerable = false;
 
   uint16_t health;
-  float stability;
   uint8_t state;
+
+  float stability;
+  bool parried_attack = false;
 
   int8_t direction;
   int8_t kb_direction = 0;
