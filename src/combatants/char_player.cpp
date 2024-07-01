@@ -156,6 +156,17 @@ void PlayerCharacter::specialInterpretLogic() {
   }
 
   PLOGI << "The player is using: " << current_command->command_name;
+  if (parried_attack) {
+    PLOGI << "Player is parrying an attack. Switching back to normal "
+      "interpret logic.";
+    SoundUtils::play("cmd_cancel");
+    normalInterpretLogic();
+
+    invulnerable = false;
+    parried_attack = false;
+    return;
+  }
+
   if (current_command->command_name == "Light Attack") {
     lightAttackHandling();
     return;
