@@ -7,7 +7,7 @@
 #include "base/action_command.h"
 #include "sprite_loader.h"
 
-#define DEF_PARRY_WINDOW 0.25
+#define DEF_PARRY_WINDOW 0.20
 
 
 class Guard : public ActionCommand {
