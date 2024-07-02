@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include "globals.h"
 #include "utils.h"
 #include "scene_debug.h"
 #include "char_player.h"
@@ -82,15 +83,22 @@ void DebugScene::drawScene() {
 }
 
 void DebugScene::drawDebugInfo() {
-  DrawText(TextFormat("FPS: %i", GetFPS()), 16, 16, 32, PURPLE);
-  DrawText(TextFormat("Player Position: (%02.02f, %02.02f)",
-                      player->position.x, player->position.y), 
-           16, 48, 32, PURPLE);
-  DrawText(TextFormat("Player Health: %i", player->health), 
-           16, 80, 32, PURPLE);
-  DrawText(TextFormat("Player State: %i", player->state), 
-           16, 112, 32, PURPLE);
-  DrawText(TextFormat("Camera X Difference: %f", 
-                      player->position.x - camera.target.x), 
-           16, 144, 32, PURPLE);
+  int text_size = fonts::skirmish->baseSize;
+  DrawTextEx(*fonts::skirmish, TextFormat("FPS: %i", GetFPS()), {0, 0}, 
+             text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("HP: %i/%i", player->health, 
+                                          player->max_health), 
+             {0, 8}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("STATE: %i", player->state), 
+             {0, 16}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("POSITION: (%03.02f, %03.02f)", 
+                                          player->position.x, 
+                                          player->position.y), 
+             {0, 24}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("INVULNERABLE: %i", 
+                                          player->invulnerable), 
+             {0, 32}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("PARRY: %i",
+                                          player->parried_attack), 
+             {0, 40}, text_size, -3, GREEN);
 }
