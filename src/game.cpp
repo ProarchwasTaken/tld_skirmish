@@ -122,6 +122,8 @@ void Game::refresh() {
   {
     ClearBackground(BLACK);
     scene->drawScene();
+
+    if (DEBUG_MODE) scene->drawDebugInfo();
   }
   EndTextureMode();
 
@@ -129,10 +131,6 @@ void Game::refresh() {
   {
     DrawTexturePro(canvas.texture, canvas_source, canvas_dest, 
                    {0, 0}, 0, WHITE);
-
-    if (DEBUG_MODE) {
-      scene->drawDebugInfo();
-    }
   }
   EndDrawing();
 }
