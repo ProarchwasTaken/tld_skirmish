@@ -16,6 +16,7 @@ using std::make_unique;
 Game::Game(int start_scene) {
   setupCanvas();
   defineColorPalette();
+  loadGameFonts();
 
   sprite_loader = make_unique<SpriteLoader>();
   sprite_loader->loadSpritesheet({"player", "ghoul"});
@@ -29,6 +30,8 @@ Game::~Game() {
   PLOGV << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
+
+  UnloadFont(skirmish_font);
 
   scene.reset();
   sprite_loader.reset();
@@ -78,6 +81,11 @@ void Game::defineColorPalette() {
   PLOGI << "Successfully loaded palette!";
   PLOGI << "Color Count: " << color_count;
   UnloadImage(palette);
+}
+
+void Game::loadGameFonts() {
+  skirmish_font = LoadFont("graphics/fonts/skirmish_font.png");
+  fonts::skirmish = &skirmish_font;
 }
 
 void Game::loadScene(int scene_id) {

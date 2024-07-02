@@ -25,6 +25,10 @@ namespace COLORS {
   extern Color *PALETTE;
 }
 
+namespace fonts {
+  extern Font *skirmish;
+}
+
 namespace audio {
   extern std::vector<SoundMetaData> sfx_metadata;
 }

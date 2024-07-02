@@ -18,6 +18,7 @@ using plog::RollingFileAppender, plog::TxtFormatter, std::string,
 plog::ColorConsoleAppender, std::vector, std::mt19937, std::random_device;
 
 Color *COLORS::PALETTE;
+Font *fonts::skirmish;
 
 vector<SoundMetaData> audio::sfx_metadata;
 
