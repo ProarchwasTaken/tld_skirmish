@@ -101,18 +101,18 @@ public:
 
   uint16_t health;
   uint8_t state;
+  int8_t direction;
 
   float stability;
   bool parried_attack = false;
-
-  int8_t direction;
-  int8_t kb_direction = 0;
-  float kb_velocity = 0;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:
   float stun_time = 0;
   float stun_timestamp = 0;
+
+  int8_t kb_direction = 0;
+  float kb_velocity = 0;
 
   float death_timestamp;
 };
