@@ -1,8 +1,10 @@
 // utils/enemies.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include <algorithm>
 #include <memory>
 #include <vector>
+#include "globals.h"
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "utils.h"
@@ -54,4 +56,21 @@ void Enemies::deleteDeadEnemies(combatant_list &enemies) {
   // one is gonna cause a memory leak or not.
   enemies.clear();
   enemies = new_enemy_list;
+}
+
+void Enemies::drawPatience(Combatant *enemy, uint8_t patience, 
+                           Color color, int y_offset)
+{
+  Vector2 scale, position, offset;
+  const char *text = TextFormat("%02i", patience);
+
+  int size = fonts::skirmish->baseSize;
+
+  scale = MeasureTextEx(*fonts::skirmish, text, size, -3);
+
+  offset.x = -scale.x / 2;
+  offset.y = enemy->tex_offset.y - scale.y - y_offset;
+  position = Vector2Add(enemy->position, offset);
+
+  DrawTextEx(*fonts::skirmish, text, position, size, -3, color);
 }

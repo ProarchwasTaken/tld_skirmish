@@ -124,6 +124,8 @@ void GhoulEnemy::draw() {
 void GhoulEnemy::drawDebug() {
   Actor::drawDebug();
 
+  Enemies::drawPatience(this, attack_patience, RED, 0);
+
   if (isUsingCommand()) {
     current_command->drawDebug();
   }
