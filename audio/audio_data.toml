@@ -25,3 +25,7 @@ path = "audio/sfx/guard_fail.wav"
 [[sfx]]
 name = "parry"
 path = "audio/sfx/parry.wav"
+
+[[sfx]]
+name = "gol_warning"
+path = "audio/sfx/gol_warning.wav"

@@ -80,11 +80,12 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
 
   bool should_attack = attack_patience == 0 && player->state != DEAD;
   if (should_attack) {
+    attack_patience = patience_range(RNG::generator);
+    SoundUtils::play("gol_warning");
+
     unique_ptr<ActionCommand> command;
     command = make_unique<GhoulAttack>(this);
     useCommand(command);
-
-    attack_patience = patience_range(RNG::generator);
   }
 }
 
