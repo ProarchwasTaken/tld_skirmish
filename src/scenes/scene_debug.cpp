@@ -6,11 +6,12 @@
 #include "utils.h"
 #include "scene_debug.h"
 #include "char_player.h"
+#include "hud_life.h"
 #include "enemy_dummy.h"
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
 
-using std::make_shared;
+using std::make_shared, std::make_unique;
 
 
 DebugScene::DebugScene() {
@@ -18,6 +19,7 @@ DebugScene::DebugScene() {
   test_room = LoadTexture("concept_art/test_room2.png");
 
   player = make_shared<PlayerCharacter>(enemies);
+  life_hud = make_unique<LifeHud>(player.get());
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 208}),
@@ -32,6 +34,8 @@ DebugScene::~DebugScene() {
 
   UnloadTexture(test_room);
   player.reset();
+
+  life_hud.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -80,6 +84,8 @@ void DebugScene::drawScene() {
     player->draw();
   }
   EndMode2D();
+
+  life_hud->draw();
 }
 
 void DebugScene::drawDebugInfo() {

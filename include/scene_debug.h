@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include "base/scene.h"
 #include "base/generics.h"
+#include "hud_life.h"
 #include "char_player.h"
 
 #define CAMERA_BOUNDS 512
@@ -27,5 +28,6 @@ private:
   Camera2D camera;
 
   std::shared_ptr<PlayerCharacter> player;
+  std::unique_ptr<LifeHud> life_hud;
   combatant_list enemies;
 };
