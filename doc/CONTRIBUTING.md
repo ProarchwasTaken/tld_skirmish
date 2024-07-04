@@ -85,6 +85,11 @@ probably be added later, and some rules may be subject to change.
   characters each. Because this is more of a personal convenience thing,
   this rule is not as strongly enforced as the other ones.
 
+* Most if not all global variables must be declared and defined within
+  namespaces to avoid name mangling. Only declare global variables when
+  you absolutely have to, and only when you intend for that variable to
+  be used all across the program.
+
 * The way you should write code for this project is about making it more 
   human and readable. Avoid writing too many comments. Docstrings should
   only be written in header files and should be used for explaining WHY 
