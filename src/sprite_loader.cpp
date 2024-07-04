@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
+#include <toml/get.hpp>
 #include <string>
 #include <vector>
 #include "globals.h"
@@ -77,6 +78,7 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
+  int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
   PLOGI << "Now proceeding to parse and allocate sprites.";
   for (int sprite = 0; sprite < sprite_count; sprite++) {
     toml::value sprite_data = meta_data[sheet_name]["sprites"][sprite];
@@ -91,30 +93,35 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
     sprites.push_back(LoadTextureFromImage(final_image));
     UnloadImage(final_image);
 
-    allocateSprite(sheet_name, sprite_name);
+    allocateSprite(sheet_id, sprite_name);
     latest_index++;
   }
 }
 
-void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
+void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
   vector<Texture*> *sprite_list;
   vector<SpriteMetaData> *data_list;
 
-  if (sheet_name == "hud_life") {
-    sprite_list = &sprites::hud_life;
-    data_list = &sprites::plr_metadata;
-  }
-  else if (sheet_name == "player") {
-    sprite_list = &sprites::player;
-    data_list = &sprites::plr_metadata;
-  }
-  else if (sheet_name == "ghoul") {
-    sprite_list = &sprites::ghoul;
-    data_list = &sprites::gol_metadata;
-  }
-  else {
-    PLOGE << "Sprite pointer list not found!";
-    return;
+  switch (sheet_id) {
+    case SHEET_PLAYER: {
+      sprite_list = &sprites::player;
+      data_list = &sprites::plr_metadata;
+      break;
+    }
+    case SHEET_GHOUL: {
+      sprite_list = &sprites::ghoul;
+      data_list = &sprites::gol_metadata;
+      break;
+    }
+    case SHEET_LIFE: {
+      sprite_list = &sprites::hud_life;
+      data_list = &sprites::hud_life_metadata;
+      break;
+    }
+    default: {
+      PLOGE << "Unable to find sprite list associated with sheet id!";
+      return;
+    }
   }
 
   sprite_list->push_back(&sprites[latest_index]);
@@ -122,6 +129,5 @@ void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
     SpriteMetaData(sprite_name, &sprites[latest_index])
   );
   
-  PLOGI << "Successfully Allocated '" << sheet_name << "' sprite: '" << 
-    sprite_name << "'.";
+  PLOGI << "Allocated sprite: '" << sprite_name << "'.";
 }

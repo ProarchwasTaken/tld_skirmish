@@ -1,16 +1,6 @@
-[hud_life]
-path = "graphics/spritesheets/hud_life.png"
-
-[[hud_life.sprites]] # ID: 0
-name = "frame"
-area = {x = 0, y = 0, width = 80, height = 21}
-
-[[hud_life.sprites]] # ID: 1
-name = "bar"
-area = {x = 8, y = 22, width = 69, height = 9}
-
 [player]
 path = "graphics/spritesheets/player.png"
+id = 0
 
 [[player.sprites]] # ID: 0
 name = "idle_rest"
@@ -55,6 +45,7 @@ area = {x = 256, y = 64, width = 64, height = 64}
 
 [ghoul]
 path = "graphics/spritesheets/ghoul.png"
+id = 1
 
 [[ghoul.sprites]] # ID: 0
 name = "idle"
@@ -91,3 +82,16 @@ area = {x = 128, y = 64, width = 64, height = 64}
 [[ghoul.sprites]]
 name = "death_2"
 area = {x = 192, y = 64, width = 64, height = 64}
+
+
+[hud_life]
+path = "graphics/spritesheets/hud_life.png"
+id = 2
+
+[[hud_life.sprites]] # ID: 0
+name = "frame"
+area = {x = 0, y = 0, width = 80, height = 21}
+
+[[hud_life.sprites]] # ID: 1
+name = "bar"
+area = {x = 8, y = 22, width = 69, height = 9}

@@ -6,6 +6,10 @@
 #include <string>
 #include <cstdint>
 
+#define SHEET_PLAYER 0
+#define SHEET_GHOUL 1
+#define SHEET_LIFE 2
+
 
 /* For storing information about a specific sprite. Making it possible to
  * search for them by name rather than just remembering the index.*/
@@ -54,7 +58,7 @@ public:
   /* Allocates a sprite and it's data to one of the many global sprite
    * lists. This makes it so the sprite is accessible from any part of
    * the program.*/
-  void allocateSprite(std::string sheet_name, std::string sprite_name);
+  void allocateSprite(int sheet_id, std::string sprite_name);
 private:  
   toml::value meta_data;
   std::vector<Texture> sprites; 
