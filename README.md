@@ -5,8 +5,9 @@ controls simple enough that you could play with just an SNES controller.
 
 
 # Controls
-This section details the game's controls. I trust that you could figure
-out the rest.
+This section gives a basic rundown the game's controls with a keyboard and
+a controller.The controls are simple. I trust that you could figure it out
+with a bit of experimenting.
 
 ## Keyboard
 
@@ -17,15 +18,14 @@ out the rest.
 
 ### Gameplay
 * **Arrow Keys** - Movement
-* **Z Key** - Light Attack
-* **X Key** - Heavy Attack
-* **A Key** - Light Weapon Technique
-* **S Key** - Heavy Weapon Technique
+* **Z & X Keys** - Normal Attacks
+* **A & S Keys** - Weapon Techniques
 * **Space Bar** - Guard
 
 ## Gamepad
-The controls detailed here are based on the SNES button layout, but I'm
-sure it would work with other controllers.
+The controls detailed here are based on the SNES button layout, so it
+maybe different on other layouts. So try experimenting and see what the
+buttons do.
 
 ### Menu
 * **D-Pad** - Menu Navigation
@@ -34,11 +34,9 @@ sure it would work with other controllers.
 
 ### Gameplay
 * **D-Pad** - Movement
-* **B Button** - Light Attack
-* **A Button** - Heavy Attack
-* **Y Button** - Light Weapon Technique
-* **X Button** - Heavy Weapon Technique
-* **L/R Button** - Guard
+* **B & A Buttons** - Normal Attacks
+* **Y & X Buttons** - Weapon Techniques
+* **L or R Button** - Guard
 
 
 # Credits and Contacts
