@@ -23,6 +23,7 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 
 set(SOURCE_FILES 
 "src/main.cpp"
+"src/globals.cpp"
 "src/game.cpp"
 "src/sprite_loader.cpp"
 "src/audio.cpp"

@@ -10,16 +10,8 @@
 #include "audio.h"
 #include "sprite_loader.h"
 
-#define WINDOWS 0
-#define LINUX 1
 
-#if defined(_WIN32)
-  #define PLATFORM WINDOWS
-#elif defined(__linux__)
-  #define PLATFORM LINUX
-#elif defined(__unix__)
-  #define PLATFORM LINUX
-#endif
+extern bool DEBUG_MODE;
 
 namespace COLORS {
   extern Color *PALETTE;
@@ -47,6 +39,4 @@ namespace sprites {
 namespace RNG {
   extern std::mt19937 generator;
 }
-
-extern bool DEBUG_MODE;
 

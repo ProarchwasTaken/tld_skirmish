@@ -1,7 +1,5 @@
 // main.cpp
 #include <raylib.h>
-#include <random>
-#include <vector>
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -11,30 +9,9 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
-#include "audio.h"
-#include "sprite_loader.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender, std::vector, std::mt19937, std::random_device;
-
-Color *COLORS::PALETTE;
-Font *fonts::skirmish;
-
-vector<SoundMetaData> audio::sfx_metadata;
-
-vector<Texture*> sprites::hud_life;
-vector<SpriteMetaData> sprites::hud_life_metadata;
-
-vector<Texture*> sprites::player; 
-vector<SpriteMetaData> sprites::plr_metadata;
-
-vector<Texture*> sprites::ghoul;
-vector<SpriteMetaData> sprites::gol_metadata;
-
-mt19937 RNG::generator(random_device{}());
-
-bool DEBUG_MODE = false;
-
+plog::ColorConsoleAppender;
 
 void setupCustomLogger();
 int parseArguments(int argc, char *argv[]);
@@ -46,8 +23,7 @@ int main(int argc, char *argv[]) {
 
   PLOGV << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
-             "True Human Tribulation: Skirmish");
+  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
   InitAudioDevice();
 
@@ -83,14 +59,7 @@ void setupCustomLogger() {
   static ColorConsoleAppender<TxtFormatter> console_appender;
   plog::init(plog::verbose, &file_appender)
     .addAppender(&console_appender);
-  PLOGV << "Logger initialized.";
-
-  if (PLATFORM == WINDOWS) {
-    PLOGV << "Operating System: Windows";
-  }
-  else if (PLATFORM == LINUX) {
-    PLOGV << "Operating System: Linux";
-  }
+  PLOGV << "Logger initialized."; 
 }
 
 
