@@ -34,6 +34,9 @@ namespace audio {
 }
 
 namespace sprites {
+  extern std::vector<Texture*> hud_life;
+  extern std::vector<SpriteMetaData> hud_life_metadata;
+
   extern std::vector<Texture*> player;
   extern std::vector<SpriteMetaData> plr_metadata;
 

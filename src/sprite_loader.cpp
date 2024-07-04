@@ -100,7 +100,11 @@ void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
   vector<Texture*> *sprite_list;
   vector<SpriteMetaData> *data_list;
 
-  if (sheet_name == "player") {
+  if (sheet_name == "hud_life") {
+    sprite_list = &sprites::hud_life;
+    data_list = &sprites::plr_metadata;
+  }
+  else if (sheet_name == "player") {
     sprite_list = &sprites::player;
     data_list = &sprites::plr_metadata;
   }
@@ -118,6 +122,6 @@ void SpriteLoader::allocateSprite(string sheet_name, string sprite_name) {
     SpriteMetaData(sprite_name, &sprites[latest_index])
   );
   
-  PLOGI << "Successfully Allocated '" << sheet_name << "' sprite: " << 
-    sprite_name << ", and it's data.";
+  PLOGI << "Successfully Allocated '" << sheet_name << "' sprite: '" << 
+    sprite_name << "'.";
 }

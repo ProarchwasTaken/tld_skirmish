@@ -22,6 +22,9 @@ Font *fonts::skirmish;
 
 vector<SoundMetaData> audio::sfx_metadata;
 
+vector<Texture*> sprites::hud_life;
+vector<SpriteMetaData> sprites::hud_life_metadata;
+
 vector<Texture*> sprites::player; 
 vector<SpriteMetaData> sprites::plr_metadata;
 

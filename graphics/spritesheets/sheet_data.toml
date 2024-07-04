@@ -1,3 +1,14 @@
+[hud_life]
+path = "graphics/spritesheets/hud_life.png"
+
+[[hud_life.sprites]] # ID: 0
+name = "frame"
+area = {x = 0, y = 0, width = 80, height = 21}
+
+[[hud_life.sprites]] # ID: 1
+name = "bar"
+area = {x = 8, y = 22, width = 69, height = 9}
+
 [player]
 path = "graphics/spritesheets/player.png"
 
