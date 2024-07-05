@@ -2,6 +2,7 @@
 #include <cmath>
 #include <raylib.h>
 #include "globals.h"
+#include "base/combatant.h"
 #include "char_player.h"
 #include "hud_life.h"
 #include <plog/Log.h>
@@ -24,6 +25,23 @@ LifeHud::LifeHud(PlayerCharacter *player) {
 void LifeHud::update() {
   updateGauge();
   segmentBlinkInterval();
+  determineHudColor();
+}
+
+void LifeHud::determineHudColor() {
+  switch (player->state) {
+    case HIT_STUN: {
+      hud_color = COLORS::PALETTE[22];
+      return;
+    }
+    case DEAD: {
+      hud_color = COLORS::PALETTE[32];
+      return;
+    } 
+    default: {
+      hud_color = WHITE;
+    }
+  }
 }
 
 void LifeHud::segmentBlinkInterval() {
@@ -41,7 +59,7 @@ void LifeHud::segmentBlinkInterval() {
 
 void LifeHud::updateGauge() {
   float health = player->health;
-  float life_percentage = health / player->max_health;
+  life_percentage = health / player->max_health;
 
   int base_value = floor(life_percentage * 10);
   blink_interval = (life_percentage * 10) - base_value;
@@ -65,16 +83,21 @@ void LifeHud::alignText(const char* health_text) {
 void LifeHud::draw() {
   DrawTextureV(*sprites::hud_life[0], hud_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
-                 WHITE);
+                 hud_color);
 
   if (display_segment) {
     DrawTextureRec(*sprites::hud_life[1], segment_source, 
-                   segment_position, WHITE);
+                   segment_position, hud_color);
   }
 
+  drawLifeText();
+}
+
+void LifeHud::drawLifeText() {
   auto *txt_hp = TextFormat("%i/%i", player->health, player->max_health);
   alignText(txt_hp);
 
   int size = fonts::skirmish->baseSize;
-  DrawTextEx(*fonts::skirmish, txt_hp, text_position, size, -3, WHITE);
+  DrawTextEx(*fonts::skirmish, txt_hp, text_position, size, -3, 
+             hud_color);
 }

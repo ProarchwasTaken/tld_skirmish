@@ -9,15 +9,20 @@ public:
   LifeHud(PlayerCharacter *player);
   void update();
 
+  void determineHudColor();
   void segmentBlinkInterval();
   void updateGauge();
   void alignText(const char* health_text);
+
   void draw();
+  void drawLifeText();
 
 private:
   PlayerCharacter *player;
+  float life_percentage;
   
   Vector2 hud_position;
+  Color hud_color;
   Vector2 text_position;
 
   Vector2 gauge_position;

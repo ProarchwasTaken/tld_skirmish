@@ -61,9 +61,6 @@ void DebugScene::updateScene(double &delta_time) {
       make_shared<GhoulEnemy>(*player, (Vector2){-450, 208})
     );
   }
-  if (IsKeyPressed(KEY_F)) {
-    player->takeDamage(1, 0.0, 0);
-  }
 
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
