@@ -21,12 +21,38 @@ LifeHud::LifeHud(PlayerCharacter *player) {
   PLOGI << "Initialized LifeHud.";
 }
 
+void LifeHud::update() {
+  updateGauge();
+  segmentBlinkInterval();
+}
+
+void LifeHud::segmentBlinkInterval() {
+  if (blink_interval == 0.0) {
+    display_segment = false;
+    return;
+  }
+
+  float time_elasped = GetTime() - blink_timestamp;
+  if (time_elasped >= blink_interval) {
+    display_segment = !display_segment;
+    blink_timestamp = GetTime();
+  }
+}
+
 void LifeHud::updateGauge() {
   float health = player->health;
   float life_percentage = health / player->max_health;
 
-  int segments = ceil(life_percentage * 10);
+  int base_value = floor(life_percentage * 10);
+  blink_interval = (life_percentage * 10) - base_value;
+
+  int segments = base_value;
   gauge_source.width = segment_width * segments;
+
+  segment_source = {segment_width * segments, 0, segment_width, 9};
+  segment_position = {
+    gauge_position.x + (segment_width * segments), gauge_position.y
+  };
 }
 
 void LifeHud::alignText(const char* health_text) {
@@ -40,6 +66,11 @@ void LifeHud::draw() {
   DrawTextureV(*sprites::hud_life[0], hud_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
                  WHITE);
+
+  if (display_segment) {
+    DrawTextureRec(*sprites::hud_life[1], segment_source, 
+                   segment_position, WHITE);
+  }
 
   auto *txt_hp = TextFormat("%i/%i", player->health, player->max_health);
   alignText(txt_hp);
