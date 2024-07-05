@@ -23,8 +23,8 @@ public:
   /* For defining the hurtbox and positioning it just in front of the
    * the player. Using called on initialization*/
   void setupHurtbox();
-  void chargeSequence(float time_elapsed) override;
-  void actSequence(float time_elapsed) override;
+  void chargeSequence(float time_elapsed, double &delta_time) override;
+  void actSequence(float time_elapsed, double &delta_time) override;
 
   void enemyHitCheck();
 
@@ -36,5 +36,6 @@ private:
   combatant_list *enemies;
 
   uint16_t damage;
+  float guard_pierce;
   float stun_time;
 };

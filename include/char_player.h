@@ -9,12 +9,14 @@
 #define PLR_BOUNDS 384
 
 #define PLR_HP 100
-#define PLR_START (Vector2){0, 208}
+#define PLR_STABILITY 0.5
+#define PLR_START_POS (Vector2){0, 208}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
 #define PLR_HITBOX_OFFSET (Vector2){-8, -58}
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
+#define BTN_GUARD 2
 
 
 /* The playable character, the controllable avatar for the user. The most

@@ -1,4 +1,4 @@
-// char_player.cpp
+// combatants/char_player.cpp
 #include <memory>
 #include <raylib.h>
 #include "globals.h"
@@ -8,6 +8,7 @@
 #include "base/action_command.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
+#include "cmd_guard.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -15,8 +16,8 @@ using std::make_unique, std::unique_ptr;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies):
-  Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_START, PLR_HITBOX_SCALE, 
-            {64, 64}, PLR_HITBOX_OFFSET)
+  Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_STABILITY, PLR_START_POS, 
+            PLR_HITBOX_SCALE, {64, 64}, PLR_HITBOX_OFFSET)
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
@@ -61,7 +62,7 @@ void PlayerCharacter::update(double &delta_time) {
       throw;
     }
     default: {
-      commandSequence();
+      commandSequence(delta_time);
       interpretBuffer();
     }
   }
@@ -134,6 +135,13 @@ void PlayerCharacter::normalInterpretLogic() {
       useCommand(command);
       break;
     }
+    case BTN_GUARD: {
+      PLOGI << "Attempting to assign Guard";
+      command = make_unique<Guard>(this, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
+      useCommand(command);
+      break;
+    }
     default: {
       PLOGI << "No valid commands found!";
       break;
@@ -148,6 +156,19 @@ void PlayerCharacter::specialInterpretLogic() {
   }
 
   PLOGI << "The player is using: " << current_command->command_name;
+  if (parried_attack) {
+    PLOGI << "Player is parrying an attack. Switching back to normal "
+      "interpret logic.";
+    SoundUtils::play("cmd_cancel");
+    
+    // Best part is that I didn't need to do much to implement this. :)
+    normalInterpretLogic();
+
+    invulnerable = false;
+    parried_attack = false;
+    return;
+  }
+
   if (current_command->command_name == "Light Attack") {
     lightAttackHandling();
     return;
@@ -166,6 +187,8 @@ void PlayerCharacter::lightAttackHandling() {
     PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
     command = make_unique<HeavyAttack>(this);
     useCommand(command);
+
+    SoundUtils::play("cmd_cancel");
     return;
   }
 }
@@ -216,8 +239,9 @@ void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
-  bool key_c = IsKeyPressed(KEY_C);
-  bool key_v = IsKeyPressed(KEY_V);
+  bool key_z = IsKeyPressed(KEY_Z);
+  bool key_x = IsKeyPressed(KEY_X);
+  bool key_space = IsKeyPressed(KEY_SPACE);
 
   bool gamepad_available = IsGamepadAvailable(0);
   bool gamepad_right = false;
@@ -226,6 +250,8 @@ void PlayerCharacter::inputPressed() {
   bool gamepad_face_right = false;
   bool gamepad_face_down = false;
 
+  bool gamepad_shoulder_down = false;
+
   if (gamepad_available) {
     gamepad_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
@@ -233,35 +259,45 @@ void PlayerCharacter::inputPressed() {
     gamepad_left = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     );
+
     gamepad_face_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
     );
     gamepad_face_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
     );
+
+    gamepad_shoulder_down = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
+      || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
   }
 
 
-  bool input_right = key_right || (gamepad_available && gamepad_right);
+  bool input_right = key_right || gamepad_right;
   if (input_right && moving_right == false) {
     moving_right = true;
   }
   
-  bool input_left = key_left || (gamepad_available && gamepad_left);
+  bool input_left = key_left || gamepad_left;
   if (input_left && moving_left == false) {
     moving_left = true;
   }
 
-  bool input_light_attack = key_c || (gamepad_available && 
-  gamepad_face_down);
+  bool input_light_attack = key_z || gamepad_face_down;
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  bool input_heavy_attack = key_v || (gamepad_available && 
-    gamepad_face_right);
+  bool input_heavy_attack = key_x || gamepad_face_right;
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
+  }
+
+  bool input_guard = key_space || gamepad_shoulder_down;
+  if (input_guard) {
+    input_buffer.push_back(BTN_GUARD);
   }
 }
 
@@ -311,20 +347,7 @@ void PlayerCharacter::draw() {
 void PlayerCharacter::drawDebug() {
   Actor::drawDebug();
 
-  bool using_command;
-  switch (state) {
-    case NEUTRAL:
-    case HIT_STUN:
-    case DEAD: {
-      using_command = false;
-      break;
-    }
-    default: {
-      using_command = true;
-    }
-  }
-
-  if (using_command) {
+  if (isUsingCommand()) {
     current_command->drawDebug();
   }
 }

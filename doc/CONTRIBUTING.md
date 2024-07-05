@@ -12,7 +12,8 @@ and fits what I have in mind for the game, I'll most likely accept it.
 What rest of this section details the code conventions of the project, and
 how to compile the project yourself.
 
-## Dependencies
+
+# Dependencies
 You're gonna need these installed if you want to compile the game's source
 code.
 
@@ -21,9 +22,11 @@ code.
 * CMake to generate the MakeFile. Anything above version 3.10 should be
   fine
 * The Raylib 5 library.
+* The toml11 library
 * plog v1.1.10, which is a logging library.
 
-## Setting up the Build System 
+
+# Setting up the Build System 
 Once you have forked and cloned the project. The first step would be to
 create a folder for CMake to use as the build directory. You should
 name it something like "build", but if you coding for multiple platforms,
@@ -50,9 +53,17 @@ source code and run the outputted executable without leaving the root
 directory. It's what I use all the time to quickly compile and test the
 game. Although it may have to be edited slightly if you work on linux.
 
-`make -C build\ && .\game.exe --debug`
+`make -C build\ && .\game.exe`
 
-## Coding Conventions
+There may be times during the game's development where the game would not
+be able to ran normal due to the starting scene not being implemented yet. 
+To circumvent this, you can start the game into the debug scene using
+the following command line argument.
+
+`--debug_scene`
+
+
+# Coding Conventions
 List of guidelines when it comes to programming for the project. More will
 probably be added later, and some rules may be subject to change.
 
@@ -74,6 +85,11 @@ probably be added later, and some rules may be subject to change.
   characters each. Because this is more of a personal convenience thing,
   this rule is not as strongly enforced as the other ones.
 
+* Most if not all global variables must be declared and defined within
+  namespaces to avoid name mangling. Only declare global variables when
+  you absolutely have to, and only when you intend for that variable to
+  be used all across the program.
+
 * The way you should write code for this project is about making it more 
   human and readable. Avoid writing too many comments. Docstrings should
   only be written in header files and should be used for explaining WHY 
@@ -86,3 +102,53 @@ probably be added later, and some rules may be subject to change.
   also just, y'know... read the code itself to understand how I 
   programmed everything.
 
+
+# Commits Guidelines.
+Obviously, commit messages should be detailed and helpful. Commit messages
+should detail what you just changed, and why you did it. Non-descriptive
+commit messages are generally not accepted.
+
+
+# About the Linux version.
+As of July 3rd of 2024, I will be putting most of my focus into making
+the game for Windows. The Linux version simply has too many issues that I
+just not comfortable releasing this version of the game at it's current
+state. I'd rather not waste time bashing my head against something that's
+essentially a black box with my current knowledge.
+
+It's not like I completely abandoned it. I will still make sure the game
+at least runs on Linux. However, that's just the bare minimum.
+
+## Linux Issues
+Please note that I use the WSL to test the game on linux, so it could
+possible that these issues aren't present in actual distros. If you're 
+using an proper distro, I would really appreciate it if you tried the game
+on linux, and let me know how it turns out. Like if there are more issues,
+or maybe you found the solution to fix it!
+
+* Controller support not working.
+
+* Problems with resizing the window. Most notably with trying to change
+  the height.
+
+* The Audio Device failing to initialize. Which causes the game to have
+  no audio. This was the issue the caused me to stop maintaining the
+  linux version once I discovered it.
+
+* Borderless fullscreen is broken. Every time I try to go fullscreen, the
+  game throws an warning along the lines of: "Wayland: The platform does 
+  not provide the window position". The only reason I could assume this 
+  warning could be thrown is due to the calling of "correctWindow()", 
+  which is a method of the game class. 
+
+  When the method is called, it first gets the current width and height of 
+  the window. Which I assume is what caused the warning. The method is 
+  supposed to be called whenever the window gets resized or enters
+  borderless fullscreen. It seems like for some reason the game doesn't
+  detect when the window is resized on linux.
+
+  EDIT: After some more testing it seems the warning is because 
+  ToggleBorderlessWindowed is called, not because of correctWindow().
+
+Again, I would like to state that this could all be attributed to me using
+WSL, and most of these issues are present on actual distros.

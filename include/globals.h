@@ -6,25 +6,37 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
+#include <random>
+#include "audio.h"
+#include "sprite_loader.h"
 
-#define WINDOWS 0
-#define LINUX 1
 
-#if defined(_WIN32)
-  #define PLATFORM WINDOWS
-#elif defined(__linux__)
-  #define PLATFORM LINUX
-#elif defined(__unix__)
-  #define PLATFORM LINUX
-#endif
+extern bool DEBUG_MODE;
 
 namespace COLORS {
   extern Color *PALETTE;
 }
 
-namespace sprites {
-  extern std::vector<Texture*> player;
-  extern std::vector<Texture*> ghoul;
+namespace fonts {
+  extern Font *skirmish;
 }
 
-extern bool DEBUG_MODE;
+namespace audio {
+  extern std::vector<SoundMetaData> sfx_metadata;
+}
+
+namespace sprites {
+  extern std::vector<Texture*> hud_life;
+  extern std::vector<SpriteMetaData> hud_life_metadata;
+
+  extern std::vector<Texture*> player;
+  extern std::vector<SpriteMetaData> plr_metadata;
+
+  extern std::vector<Texture*> ghoul;
+  extern std::vector<SpriteMetaData> gol_metadata;
+}
+
+namespace RNG {
+  extern std::mt19937 generator;
+}
+

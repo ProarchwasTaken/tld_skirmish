@@ -3,6 +3,7 @@
 #include <memory>
 #include <raylib.h>
 #include "sprite_loader.h"
+#include "audio.h"
 #include "base/scene.h"
 
 #define SCENE_DEBUG 0
@@ -40,6 +41,10 @@ public:
    * color palette is actually used.*/
   void defineColorPalette();
 
+  /* What this method does is an absolute mystery, and it could not be
+   * discern by just reading it's name.*/
+  void loadGameFonts();
+
   /* Loads a specific scene into memory. A integer is used to specify what
    * scene will be loaded and every scene is identified by a number.
    * Throws an error when the scene the function tries to load doesn't
@@ -55,7 +60,10 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
-  SpriteLoader sprite_loader;
+  Font skirmish_font;
+
+  std::unique_ptr<SpriteLoader> sprite_loader;
+  std::unique_ptr<AudioManager> audio_manager;
   std::unique_ptr<Scene> scene;
 
   double delta_time;

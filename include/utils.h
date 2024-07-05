@@ -2,13 +2,13 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
+#include <string>
 #include <vector>
+#include "audio.h"
+#include "sprite_loader.h"
 #include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"
-
-#define CAMERA_BOUNDS 512
-
 
 namespace CameraUtils {
   Camera2D setupCamera();
@@ -18,6 +18,30 @@ namespace CameraUtils {
    * screen again, or the camera has hit a boundary.*/
   void followPlayer(Camera2D &camera, PlayerCharacter &player, 
                     double &delta_time);
+}
+
+
+/* Functions that have everything to do with sounds. In a way, they
+ * are pretty much wrappers and helpers for the titular Raylib sound
+ * functions. Written in a way to make my job much easier.*/
+namespace SoundUtils {
+  /* For playing a given sound by it's name. Prints an error when the
+   * sound metadata associated with the given name is not found.*/
+  void play(std::string sound_name);
+
+  /* This is a helper function written for retrieving metadata associated
+   * with a specific sound name. Returns a NULL pointer if no metadata
+   * associated with the string given is found.*/
+  SoundMetaData *getMetaData(std::string &sound_name);
+}
+
+
+namespace Sprite {
+  /* This is for getting a specific sprite by name rather than using an
+   * index. This is typically used by action commands that are meant to
+   * to used by multiple different combatants.*/
+  Texture *getSprite(std::string sprite_name, 
+                     std::vector<SpriteMetaData> &data_list);
 }
 
 
@@ -62,7 +86,15 @@ namespace AIBehavior {
 }
 
 
-/* Does exactly what is says on the tin. Automatically deletes enemies
- * within that are awaiting deletion, and creates a new list with the
- * deleted enemy excluded. Should be called once every frame.*/
-void deleteDeadEnemies(combatant_list &enemies);
+namespace Enemies {
+  /* Does exactly what is says on the tin. Automatically deletes enemies
+   * within that are awaiting deletion, and creates a new list with the
+   * deleted enemy excluded. Should be called once every frame.*/
+  void deleteDeadEnemies(combatant_list &enemies);
+
+  /* This function is meant to be used for debug purposes. It draws an
+   * enemy's patience value some distance above their bounding box.*/
+  void drawPatience(Combatant *enemy, uint8_t patience, Color color, 
+                    int y_offset);
+}
+

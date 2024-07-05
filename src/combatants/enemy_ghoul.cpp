@@ -1,6 +1,7 @@
-// enemy_ghoul.cpp
+// combatants/enemy_ghoul.cpp
 #include <cstdlib>
 #include <memory>
+#include <random>
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
@@ -11,12 +12,15 @@
 #include "char_player.h"
 #include "enemy_ghoul.h"
 
-using std::make_unique, std::unique_ptr;
+using std::make_unique, std::unique_ptr, std::uniform_int_distribution;
+
+uniform_int_distribution<int> patience_range(
+  GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
 
 
 GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
-  Combatant("Ghoul", TYPE_ENEMY, GOL_HP, position, GOL_HITBOX_SCALE,
-            {64, 64}, GOL_HITBOX_OFFSET) 
+  Combatant("Ghoul", TYPE_ENEMY, GOL_HP, GOL_STABILITY, position, 
+            GOL_HITBOX_SCALE, {64, 64}, GOL_HITBOX_OFFSET) 
 {
   this->player = &player;
   current_sprite = sprites::ghoul[0];
@@ -29,10 +33,10 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
 
   death_time = 1.0;
 
-  attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
-
   preferred_dist = 28;
   movement_speed = 0.5;
+
+  attack_patience = patience_range(RNG::generator);
 }
 
 void GhoulEnemy::update(double &delta_time) {
@@ -53,7 +57,7 @@ void GhoulEnemy::update(double &delta_time) {
       break;
     }
     default: {
-      commandSequence();
+      commandSequence(delta_time);
     }
   }
 }
@@ -76,11 +80,12 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
 
   bool should_attack = attack_patience == 0 && player->state != DEAD;
   if (should_attack) {
+    attack_patience = patience_range(RNG::generator);
+    SoundUtils::play("gol_warning");
+
     unique_ptr<ActionCommand> command;
     command = make_unique<GhoulAttack>(this);
     useCommand(command);
-
-    attack_patience = GetRandomValue(GOL_MIN_PATIENCE, GOL_MAX_PATIENCE);
   }
 }
 
@@ -120,20 +125,9 @@ void GhoulEnemy::draw() {
 void GhoulEnemy::drawDebug() {
   Actor::drawDebug();
 
-  bool using_command;
-  switch (state) {
-    case NEUTRAL:
-    case HIT_STUN:
-    case DEAD: {
-      using_command = false;
-      break;
-    }
-    default: {
-      using_command = true;
-    }
-  }
+  Enemies::drawPatience(this, attack_patience, RED, 0);
 
-  if (using_command) {
+  if (isUsingCommand()) {
     current_command->drawDebug();
   }
 }

@@ -5,6 +5,8 @@
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
+#include "sprite_loader.h"
+#include "audio.h"
 #include "scene_debug.h"
 #include <plog/Log.h>
 
@@ -14,7 +16,12 @@ using std::make_unique;
 Game::Game(int start_scene) {
   setupCanvas();
   defineColorPalette();
-  sprite_loader.loadSpritesheet({"player", "ghoul"});
+  loadGameFonts();
+
+  sprite_loader = make_unique<SpriteLoader>();
+  sprite_loader->loadSpritesheet({"hud_life","player", "ghoul"});
+
+  audio_manager = make_unique<AudioManager>();
 
   loadScene(start_scene);
 }
@@ -24,7 +31,11 @@ Game::~Game() {
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
 
+  UnloadFont(skirmish_font);
+
   scene.reset();
+  sprite_loader.reset();
+  audio_manager.reset();
 
   PLOGV << "Thanks for playing!";
 }
@@ -72,6 +83,11 @@ void Game::defineColorPalette() {
   UnloadImage(palette);
 }
 
+void Game::loadGameFonts() {
+  skirmish_font = LoadFont("graphics/fonts/skirmish_font.png");
+  fonts::skirmish = &skirmish_font;
+}
+
 void Game::loadScene(int scene_id) {
   if (scene != nullptr) {
     scene.reset();
@@ -106,6 +122,8 @@ void Game::refresh() {
   {
     ClearBackground(BLACK);
     scene->drawScene();
+
+    if (DEBUG_MODE) scene->drawDebugInfo();
   }
   EndTextureMode();
 
@@ -113,10 +131,6 @@ void Game::refresh() {
   {
     DrawTexturePro(canvas.texture, canvas_source, canvas_dest, 
                    {0, 0}, 0, WHITE);
-
-    if (DEBUG_MODE) {
-      scene->drawDebugInfo();
-    }
   }
   EndDrawing();
 }

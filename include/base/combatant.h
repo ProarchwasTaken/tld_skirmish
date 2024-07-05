@@ -29,8 +29,8 @@
 class Combatant : public Actor {
 public:
   Combatant(std::string name, uint8_t type, uint16_t max_health,
-            Vector2 position, Vector2 hitbox_scale = {32, 64},
-            Vector2 tex_scale = {64, 64}, 
+            float stability, Vector2 position, 
+            Vector2 hitbox_scale = {32, 64}, Vector2 tex_scale = {64, 64}, 
             Vector2 hitbox_offset = {-16, -64}, 
             Vector2 tex_offset = {-32, -64});
 
@@ -46,7 +46,11 @@ public:
   /* For handling the all of the stages of using a command, like the 
    * charge up, action, and recovery. Is called once every frame of which
    * the combatant is in a state other than Neutral or Hit Stun.*/
-  void commandSequence();
+  void commandSequence(double &delta_time);
+
+  /* Returns true if combatant is currently using an action command if 
+   * haven't already figured it out.*/
+  bool isUsingCommand();
 
   /* Usually called after the combatant takes damage. Unless they are in
    * hit stun, they will be set back to neutral.*/
@@ -56,9 +60,22 @@ public:
    * putting them in hit stun. Also makes sure the combatant's health will
    * not be below 0. If the stun_time parameter is 0, the combatant
    * will not be put into hit stun, and a death check will be made.*/
-  void takeDamage(uint16_t dmg_magnitude, float stun_time, 
-                  float kb_velocity = 0, uint8_t kb_direction = 0);
+  void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
+                  float stun_time, float kb_velocity = 0, 
+                  uint8_t kb_direction = 0);
 
+  /* Causes the combatant to enter the hit stun sequence. Automatically
+   * cancelling any action command the combatant was performing at the
+   * time the method was called.*/
+  void enterHitStun(float stun_time);
+
+  /* What a function named "setKnockback" would do is beyond me. An 
+   * absolute mystery. To be real, this function only updates the
+   * knockback variables when certain conditions apply.*/
+  void setKnockback(float kb_velocity, uint8_t kb_direction);
+
+  /* For applying knockback primarily, during the stun sequence. Also
+   * makes sure that the combatant won't move past any boundaries.*/
   void applyKnockback(double &delta_time, uint16_t boundary);
 
   /* If a combatant's HP reaches 0, and the appropriate check is made,
@@ -78,19 +95,24 @@ public:
   std::string name;
   uint16_t max_health;
   uint8_t type;
+
   bool awaiting_deletion = false;
+  bool invulnerable = false;
 
   uint16_t health;
   uint8_t state;
   int8_t direction;
 
-  int8_t kb_direction = 0;
-  float kb_velocity = 0;
+  float stability;
+  bool parried_attack = false;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:
   float stun_time = 0;
   float stun_timestamp = 0;
+
+  int8_t kb_direction = 0;
+  float kb_velocity = 0;
 
   float death_timestamp;
 };

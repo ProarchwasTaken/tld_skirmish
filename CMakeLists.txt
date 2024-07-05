@@ -12,7 +12,7 @@ else()
 endif()
 
 project("game" 
-VERSION 0.0.1
+VERSION 0.0.3
 DESCRIPTION "A short wave based fighter."
 LANGUAGES CXX
 )
@@ -23,19 +23,28 @@ set(EXECUTABLE_OUTPUT_PATH "../")
 
 set(SOURCE_FILES 
 "src/main.cpp"
+"src/globals.cpp"
 "src/game.cpp"
-"src/utils.cpp"
 "src/sprite_loader.cpp"
-"src/scene_debug.cpp"
-"src/char_player.cpp"
-"src/enemy_dummy.cpp"
-"src/enemy_ghoul.cpp"
-"src/cmd_ghoul_atk.cpp"
-"src/cmd_light_atk.cpp"
-"src/cmd_heavy_atk.cpp"
+"src/audio.cpp"
 "src/base/actor.cpp"
 "src/base/combatant.cpp"
 "src/base/action_command.cpp"
+"src/utils/camera.cpp"
+"src/utils/animation.cpp"
+"src/utils/enemies.cpp"
+"src/utils/ai_behavior.cpp"
+"src/utils/sound.cpp"
+"src/utils/sprite.cpp"
+"src/scenes/scene_debug.cpp"
+"src/hud/hud_life.cpp"
+"src/combatants/char_player.cpp"
+"src/combatants/enemy_dummy.cpp"
+"src/combatants/enemy_ghoul.cpp"
+"src/action_command/cmd_ghoul_atk.cpp"
+"src/action_command/cmd_light_atk.cpp"
+"src/action_command/cmd_heavy_atk.cpp"
+"src/action_command/cmd_guard.cpp"
 )
 
 set(HEADER_FILES
@@ -44,13 +53,16 @@ set(HEADER_FILES
 "include/game.h"
 "include/utils.h"
 "include/sprite_loader.h"
+"include/audio.h"
 "include/scene_debug.h"
+"include/hud_life.h"
 "include/char_player.h"
 "include/enemy_dummy.h"
 "include/enemy_ghoul.h"
 "include/cmd_ghoul_atk.h"
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
+"include/cmd_guard.h"
 "include/base/generics.h"
 "include/base/scene.h"
 "include/base/actor.h"

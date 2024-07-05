@@ -1,4 +1,4 @@
-// cmd_ghoul_atk.cpp
+// action_command/cmd_ghoul_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/generics.h"
@@ -12,6 +12,8 @@ GhoulAttack::GhoulAttack(GhoulEnemy *user):
   ActionCommand(user, "Ghoul Attack", 0.3, 0.1, 0.4)
 {
   damage = 30;
+  guard_pierce = 0.3;
+
   stun_time = 0.5;
 
   this->player = user->player;
@@ -33,16 +35,16 @@ void GhoulAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void GhoulAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void GhoulAttack::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = sprites::ghoul[5];
   }
 }
 
-void GhoulAttack::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void GhoulAttack::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
   playerHitCheck();
 
   if (finished_action || attack_connected) {
@@ -56,10 +58,12 @@ void GhoulAttack::playerHitCheck() {
   }
 
   if (CheckCollisionRecs(hurtbox, player->hitbox)) {
-    player->takeDamage(damage, stun_time, 1, user->direction);
+    player->takeDamage(damage, guard_pierce, stun_time, 1, 
+                       user->direction);
 
     attack_connected = true;
     user->state = RECOVER;
+    sequence_timestamp = GetTime();
   }
 }
 

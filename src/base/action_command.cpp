@@ -25,7 +25,8 @@ ActionCommand::ActionCommand(Combatant *user, string command_name,
   sequence_timestamp = GetTime();
 }
 
-void ActionCommand::chargeSequence(float time_elapsed) {
+void ActionCommand::chargeSequence(float time_elapsed, double &delta_time) 
+{
   finished_charge = time_elapsed >= charge_time;
 
   if (finished_charge) {
@@ -34,7 +35,7 @@ void ActionCommand::chargeSequence(float time_elapsed) {
   }
 }
 
-void ActionCommand::actSequence(float time_elapsed) {
+void ActionCommand::actSequence(float time_elapsed, double &delta_time) {
   finished_action = time_elapsed >= act_time;
 
   if (finished_action) {
@@ -43,7 +44,9 @@ void ActionCommand::actSequence(float time_elapsed) {
   }
 }
 
-void ActionCommand::recoverySequence(float time_elapsed) {
+void ActionCommand::recoverySequence(float time_elapsed, 
+                                     double &delta_time) 
+{
   finished_recovering = time_elapsed >= recovery_time;
 
   if (finished_recovering) {

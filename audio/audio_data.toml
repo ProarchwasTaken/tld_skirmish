@@ -1,0 +1,31 @@
+[[sfx]]
+name = "damage" 
+path = "audio/sfx/damage.wav"
+
+pitch_random = true
+pitch_min = 0.75
+pitch_max = 1.25
+
+[[sfx]]
+name = "cmd_cancel"
+path = "audio/sfx/cmd_cancel.wav"
+
+[[sfx]]
+name = "death"
+path = "audio/sfx/death.wav"
+
+[[sfx]]
+name = "guard_success"
+path = "audio/sfx/guard_success.wav"
+
+[[sfx]]
+name = "guard_fail"
+path = "audio/sfx/guard_fail.wav"
+
+[[sfx]]
+name = "parry"
+path = "audio/sfx/parry.wav"
+
+[[sfx]]
+name = "gol_warning"
+path = "audio/sfx/gol_warning.wav"

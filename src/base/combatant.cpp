@@ -6,15 +6,17 @@
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "cmd_guard.h"
+#include "utils.h"
 #include <plog/Log.h>
 
 using std::string, std::unique_ptr;
 
 
 Combatant::Combatant(string name, uint8_t type, uint16_t max_health,
-                     Vector2 position, Vector2 hitbox_scale,
-                     Vector2 tex_scale, Vector2 hitbox_offset,
-                     Vector2 tex_offset):
+                     float stability, Vector2 position, 
+                     Vector2 hitbox_scale, Vector2 tex_scale, 
+                     Vector2 hitbox_offset, Vector2 tex_offset):
 Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset) 
 {
   this->name = name;
@@ -22,6 +24,8 @@ Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset)
 
   this->max_health = max_health;
   health = max_health;
+
+  this->stability = stability;
 
   state = NEUTRAL;
   direction = RIGHT;
@@ -38,7 +42,6 @@ void Combatant::useCommand(unique_ptr<ActionCommand> &command) {
 
 void Combatant::cancelCommand() {
   if (current_command == nullptr) {
-    PLOGI << name << " Combatant doesn't have a action command assigned!";
     return;
   }
 
@@ -50,7 +53,7 @@ void Combatant::cancelCommand() {
   }
 }
 
-void Combatant::commandSequence() {
+void Combatant::commandSequence(double &delta_time) {
   if (current_command == nullptr) {
     PLOGF << name << "Combatant has attempted to go through command"
       << " sequence when no command is assigned to them!";
@@ -61,56 +64,95 @@ void Combatant::commandSequence() {
 
   switch (state) {
     case CHARGING: {
-      current_command->chargeSequence(time_elapsed);
+      current_command->chargeSequence(time_elapsed, delta_time);
       break;
     }
     case ACT: {
-      current_command->actSequence(time_elapsed);
+      current_command->actSequence(time_elapsed, delta_time);
       break;
     }
     case RECOVER: {
-      current_command->recoverySequence(time_elapsed);
+      current_command->recoverySequence(time_elapsed, delta_time);
       break;
     }
   }
 }
 
-void Combatant::takeDamage(uint16_t dmg_magnitude, float stun_time,
-                           float kb_velocity, uint8_t kb_direction) {
+bool Combatant::isUsingCommand() {
+  switch (state) {
+    case CHARGING:
+    case ACT:
+    case RECOVER: {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
+}
+
+void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
+                           float stun_time, float kb_velocity, 
+                           uint8_t kb_direction) 
+{
+  if (invulnerable) {
+    return;
+  }
+
   PLOGD << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
-  cancelCommand();
+  SoundUtils::play("damage");
+
+  
+  bool using_command = isUsingCommand();
+  if (using_command && current_command->command_name == "Guard") {
+    PLOGI << "Detected that {Combatant: " << name << "} is guarding."
+      " performing guard logic.";
+    Guard *command = dynamic_cast<Guard*>(current_command.get());
+    command->guardLogic(dmg_magnitude, guard_pierce, stun_time, 
+                        kb_velocity, kb_direction);
+  }
+  else if (stun_time != 0) {
+    setKnockback(kb_velocity, kb_direction);
+    enterHitStun(stun_time);
+  }
+
+  if (parried_attack) {
+    return;
+  }
 
   int destined_health = health - dmg_magnitude;
   if (destined_health < 0) {
     destined_health = 0;
   }
 
-  PLOGI << "Setting the combatant's health from " << health << " to " <<
-    destined_health;
   health = destined_health;
+  PLOGI << "Combatant's health is now at: " << health;
 
+  if (state != HIT_STUN && health <= 0) {
+    death();
+  }
+}
+
+void Combatant::enterHitStun(float stun_time) {
+  state = HIT_STUN;
+  this->stun_time = stun_time;
+  cancelCommand();
+
+  stun_timestamp = GetTime();
+}
+
+void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
   bool different_direction = this->kb_direction == kb_direction;
   bool greater_velocity = this->kb_velocity < kb_velocity;
 
   if (greater_velocity || different_direction) {
     PLOGI << "Updating knockback velocity to: " << kb_velocity;
+    // I hope the decision of having both lines within this if statement 
+    // won't come back to bite me later.
     this->kb_velocity = kb_velocity;
-  }
-  
-  this->kb_direction = kb_direction;
-
-  this->stun_time = stun_time;
-  if (stun_time != 0) {
-
-    state = HIT_STUN;
-    stun_timestamp = GetTime();
-    return;
-  }
-
-  if (health <= 0 && state != HIT_STUN) {
-    death();
-  }
+    this->kb_direction = kb_direction;
+  } 
 }
 
 void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
@@ -139,7 +181,10 @@ void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
 
 void Combatant::death() {
   PLOGV << "{Combatant: " << name << "} is now dead!";
+  cancelCommand();
   state = DEAD;
+
+  SoundUtils::play("death");
   death_timestamp = GetTime();
 }
 

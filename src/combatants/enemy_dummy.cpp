@@ -1,4 +1,4 @@
-// enemy_dummy.cpp
+// combatants/enemy_dummy.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/combatant.h"
@@ -7,7 +7,7 @@
 
 
 DummyEnemy::DummyEnemy(PlayerCharacter &player, Vector2 position):
-  Combatant("Dummy", TYPE_ENEMY, 9999, position)
+  Combatant("Dummy", TYPE_ENEMY, 9999, 1.0,position)
 {
   this->player = &player;
 }

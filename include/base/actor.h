@@ -37,7 +37,7 @@ public:
 
   Vector2 position;
   Rectangle hitbox;
-private:
+
   Vector2 tex_offset;
   Vector2 hitbox_offset;
 protected:

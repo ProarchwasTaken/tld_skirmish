@@ -1,4 +1,4 @@
-// cmd_light_atk.cpp
+// action_command/cmd_light_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/generics.h"
@@ -12,6 +12,8 @@ LightAttack::LightAttack(PlayerCharacter *user):
   ActionCommand(user, "Light Attack", 0.2, 0.1, 0.3)
 {
   damage = 10;
+  guard_pierce = 0.2;
+
   stun_time = 0.5;
 
   this->enemies = user->enemies;
@@ -33,16 +35,16 @@ void LightAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void LightAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void LightAttack::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[5];
   }
 }
 
-void LightAttack::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void LightAttack::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
 
   enemyHitCheck(); 
 
@@ -58,10 +60,12 @@ void LightAttack::enemyHitCheck() {
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time, 0.15f, user->direction);
+      enemy->takeDamage(damage, guard_pierce, stun_time, 0.15f, 
+                        user->direction);
       attack_connected = true;
 
       user->state = RECOVER;
+      sequence_timestamp = GetTime();
       return;
     }
   }

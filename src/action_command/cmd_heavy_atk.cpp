@@ -1,4 +1,4 @@
-// cmd_heavy_atk.cpp
+// action_command/cmd_heavy_atk.cpp
 #include <raylib.h>
 #include "globals.h"
 #include "base/generics.h"
@@ -12,6 +12,8 @@ HeavyAttack::HeavyAttack(PlayerCharacter *user):
   ActionCommand(user, "Heavy Attack", 0.3, 0.1, 0.6)
 {
   damage = 20;
+  guard_pierce = 0.25;
+
   stun_time = 0.5;
 
   this->enemies = user->enemies;
@@ -33,16 +35,16 @@ void HeavyAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void HeavyAttack::chargeSequence(float time_elapsed) {
-  ActionCommand::chargeSequence(time_elapsed);
+void HeavyAttack::chargeSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::chargeSequence(time_elapsed, delta_time);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[6];
   }
 }
 
-void HeavyAttack::actSequence(float time_elapsed) {
-  ActionCommand::actSequence(time_elapsed);
+void HeavyAttack::actSequence(float time_elapsed, double &delta_time) {
+  ActionCommand::actSequence(time_elapsed, delta_time);
 
   enemyHitCheck();
 
@@ -58,13 +60,15 @@ void HeavyAttack::enemyHitCheck() {
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
-      enemy->takeDamage(damage, stun_time, 0.5f, user->direction);
+      enemy->takeDamage(damage, guard_pierce, stun_time, 0.5f, 
+                        user->direction);
       attack_connected = true;
     }
   }
 
   if (attack_connected) {
     user->state = RECOVER;
+    sequence_timestamp = GetTime();
   }
 }
 

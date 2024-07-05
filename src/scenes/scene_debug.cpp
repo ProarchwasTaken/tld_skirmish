@@ -1,15 +1,17 @@
-// scene_debug.cpp
+// scenes/scene_debug.cpp
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include "globals.h"
 #include "utils.h"
 #include "scene_debug.h"
 #include "char_player.h"
+#include "hud_life.h"
 #include "enemy_dummy.h"
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
 
-using std::make_shared;
+using std::make_shared, std::make_unique;
 
 
 DebugScene::DebugScene() {
@@ -17,6 +19,7 @@ DebugScene::DebugScene() {
   test_room = LoadTexture("concept_art/test_room2.png");
 
   player = make_shared<PlayerCharacter>(enemies);
+  life_hud = make_unique<LifeHud>(player.get());
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 208}),
@@ -31,6 +34,8 @@ DebugScene::~DebugScene() {
 
   UnloadTexture(test_room);
   player.reset();
+
+  life_hud.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -64,7 +69,8 @@ void DebugScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
-  deleteDeadEnemies(enemies);
+  life_hud->update();
+  Enemies::deleteDeadEnemies(enemies);
 }
 
 void DebugScene::drawScene() {
@@ -79,18 +85,24 @@ void DebugScene::drawScene() {
     player->draw();
   }
   EndMode2D();
+
+  life_hud->draw();
 }
 
 void DebugScene::drawDebugInfo() {
-  DrawText(TextFormat("FPS: %i", GetFPS()), 16, 16, 32, PURPLE);
-  DrawText(TextFormat("Player Position: (%02.02f, %02.02f)",
-                      player->position.x, player->position.y), 
-           16, 48, 32, PURPLE);
-  DrawText(TextFormat("Player Health: %i", player->health), 
-           16, 80, 32, PURPLE);
-  DrawText(TextFormat("Player State: %i", player->state), 
-           16, 112, 32, PURPLE);
-  DrawText(TextFormat("Camera X Difference: %f", 
-                      player->position.x - camera.target.x), 
-           16, 144, 32, PURPLE);
+  int text_size = fonts::skirmish->baseSize;
+  DrawTextEx(*fonts::skirmish, TextFormat("FPS: %i", GetFPS()), {0, 0}, 
+             text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("STATE: %i", player->state), 
+             {0, 8}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("POSITION: (%03.02f, %03.02f)", 
+                                          player->position.x, 
+                                          player->position.y), 
+             {0, 16}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("INVULNERABLE: %i", 
+                                          player->invulnerable), 
+             {0, 24}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, TextFormat("PARRY: %i",
+                                          player->parried_attack), 
+             {0, 32}, text_size, -3, GREEN);
 }
