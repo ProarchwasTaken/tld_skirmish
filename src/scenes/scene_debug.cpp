@@ -69,6 +69,7 @@ void DebugScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
+  life_hud->updateGauge();
   Enemies::deleteDeadEnemies(enemies);
 }
 
