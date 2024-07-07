@@ -45,9 +45,9 @@ namespace Sprite {
 }
 
 
-/* Functions that have everything to do with sprite animations. These
- * set of functions are compatible with the Actor class and anything other
- * class that derive from it.*/
+/* Functions that have everything to do with sprite animations. This
+ * set of functions are compatible with the Actor class, and all other
+ * classes that derive from it.*/
 namespace Animation {
   /* For checking if the animation should continue. Depending on a number
    * of conditions, this function may change the actor's current animation
@@ -86,6 +86,8 @@ namespace AIBehavior {
 }
 
 
+/* Consists of functions specifically for the game's enemies. Including
+ * but not limited to: functions for manipulating a list of enemies.*/
 namespace Enemies {
   /* Does exactly what is says on the tin. Automatically deletes enemies
    * within that are awaiting deletion, and creates a new list with the
