@@ -1,9 +1,11 @@
 // scenes/scene_debug.cpp
 #include <raylib.h>
+#include <functional>
 #include <raymath.h>
 #include <memory>
 #include "globals.h"
 #include "utils.h"
+#include "base/scene.h"
 #include "scene_debug.h"
 #include "char_player.h"
 #include "hud_life.h"
@@ -11,10 +13,11 @@
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::make_unique;
+using std::make_shared, std::make_unique, std::function;
 
 
-DebugScene::DebugScene() {
+DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
+{
   PLOGV << "Loading Debug scene.";
   test_room = LoadTexture("concept_art/test_room2.png");
 

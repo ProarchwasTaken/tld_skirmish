@@ -1,6 +1,7 @@
 // scene_debug.h
 #pragma once
 #include <memory>
+#include <functional>
 #include <raylib.h>
 #include "base/scene.h"
 #include "base/generics.h"
@@ -16,7 +17,7 @@
  * argument.*/
 class DebugScene : public Scene {
 public:
-  DebugScene();
+  DebugScene(std::function<void(int)> load_scene);
   ~DebugScene() override;
 
   void checkInput() override;

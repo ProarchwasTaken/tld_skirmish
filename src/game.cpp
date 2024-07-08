@@ -96,7 +96,9 @@ void Game::loadScene(int scene_id) {
   PLOGI << "Attempting to load scene correlated with id: " << scene_id;
   switch (scene_id) {
     case SCENE_DEBUG: {
-      scene = make_unique<DebugScene>();
+      scene = make_unique<DebugScene>(
+        [this](int scene_id){this->loadScene(scene_id);}
+      );
       break;
     }
     case SCENE_MENU: 
