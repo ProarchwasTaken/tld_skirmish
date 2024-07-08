@@ -101,7 +101,12 @@ void Game::loadScene(int scene_id) {
       );
       break;
     }
-    case SCENE_MENU: 
+    case SCENE_STARTUP: 
+    case SCENE_TITLE:
+    case SCENE_MAINMENU:
+    case SCENE_SETTINGS:
+    case SCENE_CONTROLS:
+    case SCENE_PREGAME:
     case SCENE_GAMEPLAY: {
       PLOGE << "Scene is not implemented yet!";
       throw SCENE_NOT_IMPLEMENTED;

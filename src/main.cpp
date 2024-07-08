@@ -65,7 +65,7 @@ void setupCustomLogger() {
 
 int parseArguments(int argc, char *argv[]) {
   PLOGI << "Parsing command line arguments.";
-  int start_scene = SCENE_MENU;
+  int start_scene = SCENE_STARTUP;
 
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];

@@ -54,6 +54,11 @@ set(HEADER_FILES
 "include/utils.h"
 "include/sprite_loader.h"
 "include/audio.h"
+"include/base/generics.h"
+"include/base/scene.h"
+"include/base/actor.h"
+"include/base/combatant.h"
+"include/base/action_command.h"
 "include/scene_debug.h"
 "include/hud_life.h"
 "include/char_player.h"
@@ -63,11 +68,6 @@ set(HEADER_FILES
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
-"include/base/generics.h"
-"include/base/scene.h"
-"include/base/actor.h"
-"include/base/combatant.h"
-"include/base/action_command.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
