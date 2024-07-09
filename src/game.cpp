@@ -8,6 +8,7 @@
 #include "sprite_loader.h"
 #include "audio.h"
 #include "scene_debug.h"
+#include "scene_title.h"
 #include <plog/Log.h>
 
 using std::make_unique;
@@ -101,8 +102,13 @@ void Game::loadScene(int scene_id) {
       );
       break;
     }
+    case SCENE_TITLE: {
+      scene = make_unique<TitleScene>(
+        [this](int scene_id){this->loadScene(scene_id);}
+      );
+      break;
+    }
     case SCENE_STARTUP: 
-    case SCENE_TITLE:
     case SCENE_MAINMENU:
     case SCENE_SETTINGS:
     case SCENE_CONTROLS:
