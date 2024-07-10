@@ -36,6 +36,7 @@ set(SOURCE_FILES
 "src/utils/ai_behavior.cpp"
 "src/utils/sound.cpp"
 "src/utils/sprite.cpp"
+"src/utils/text.cpp"
 "src/scenes/scene_title.cpp"
 "src/scenes/scene_debug.cpp"
 "src/hud/hud_life.cpp"

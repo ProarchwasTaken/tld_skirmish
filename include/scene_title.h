@@ -17,11 +17,9 @@ public:
   void drawScene() override;
 private:
   std::string txt_title;
-  int title_size;
   Vector2 title_position;
 
   std::string txt_copyright;
-  int cpr_size;
   Vector2 cpr_position;
 
   std::string txt_enter;

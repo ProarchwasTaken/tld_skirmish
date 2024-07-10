@@ -100,3 +100,12 @@ namespace Enemies {
                     int y_offset);
 }
 
+
+namespace Text {
+  Vector2 alignCenter(Font *font, std::string text, Vector2 position, 
+                      int size_multiplier, int spacing);
+
+  Vector2 alignRight(Font *font, std::string text, Vector2 position,
+                     int size_multiplier, int spacing);
+}
+

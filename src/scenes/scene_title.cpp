@@ -4,6 +4,7 @@
 #include <string>
 #include "defaults.h"
 #include "globals.h"
+#include "utils.h"
 #include "scene_title.h"
 #include <plog/Log.h>
 
@@ -22,23 +23,15 @@ TitleScene::TitleScene(function<void(int)> load_scene) : Scene(load_scene)
 void TitleScene::setupTitle() {
   txt_title = "True Human Tribulation II";
 
-  title_size = fonts::skirmish->baseSize * 2;
-  int title_width = MeasureTextEx(*fonts::skirmish, txt_title.c_str(), 
-                                  title_size, -3).x;
-
-  title_position.x = (CANVAS_WIDTH / 2.0f) - title_width / 2.0;
-  title_position.y = 32;
+  title_position = Text::alignCenter(fonts::skirmish, txt_title, 
+                                     {213, 32}, 2, -3);
 }
 
 void TitleScene::setupCopyright() {
   txt_copyright = "@2024 Tyler Dillard";
 
-  cpr_size = fonts::skirmish->baseSize;
-  int cpr_width = MeasureTextEx(*fonts::skirmish, txt_copyright.c_str(), 
-                                cpr_size, -3).x;
-
-  cpr_position.x = CANVAS_WIDTH - cpr_width;
-  cpr_position.y = 228;
+  cpr_position = Text::alignRight(fonts::skirmish, txt_copyright.c_str(), 
+                                  {CANVAS_WIDTH, 228}, 1, -3);
 }
 
 void TitleScene::setupEnter() {
@@ -49,19 +42,17 @@ void TitleScene::setupEnter() {
     txt_enter = "PRESS ENTER";
   }
 
-  enter_size = fonts::skirmish->baseSize;
-  int enter_width = MeasureTextEx(*fonts::skirmish, txt_enter.c_str(), 
-                                  enter_size, 0).x;
-
-  enter_position.x = (CANVAS_WIDTH / 2.0f) - enter_width / 2.0;
-  enter_position.y = 160;
+  enter_position = Text::alignCenter(fonts::skirmish, txt_enter.c_str(), 
+                                     {213, 160}, 1, 0);
 }
 
 void TitleScene::drawScene() {
+  int size = fonts::skirmish->baseSize;
+  
   DrawTextEx(*fonts::skirmish, txt_title.c_str(), title_position, 
-             title_size, -3, COLORS::PALETTE[42]);
-  DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, 
-             enter_size, 0, WHITE);
-  DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, 
-             cpr_size, -3, WHITE);
+             size * 2, -3, COLORS::PALETTE[42]);
+  DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, size, 0,
+             WHITE);
+  DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
+             -3, WHITE);
 }
