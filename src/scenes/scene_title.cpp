@@ -4,6 +4,7 @@
 #include <string>
 #include "defaults.h"
 #include "globals.h"
+#include "game.h"
 #include "utils.h"
 #include "scene_title.h"
 #include <plog/Log.h>
@@ -18,6 +19,10 @@ TitleScene::TitleScene(function<void(int)> load_scene) : Scene(load_scene)
   setupCopyright();
   setupEnter();
   PLOGV << "Title scene has been successfully loaded.";
+}
+
+TitleScene::~TitleScene() {
+  PLOGV << "Unloading title scene";
 }
 
 void TitleScene::setupTitle() {
@@ -44,6 +49,18 @@ void TitleScene::setupEnter() {
 
   enter_position = Text::alignCenter(fonts::skirmish, txt_enter.c_str(), 
                                      {213, 160}, 1, 0);
+}
+
+void TitleScene::checkInput() {
+  bool key_enter = IsKeyPressed(KEY_ENTER);
+
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+
+  if (key_enter || (gamepad_detected && btn_start)) {
+    load_scene(SCENE_MENU);
+    return;
+  }
 }
 
 void TitleScene::drawScene() {

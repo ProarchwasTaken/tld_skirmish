@@ -9,11 +9,13 @@
 class TitleScene : public Scene {
 public:
   TitleScene(std::function<void(int)> load_scene);
+  ~TitleScene();
 
   void setupTitle();
   void setupCopyright();
   void setupEnter();
 
+  void checkInput() override;
   void drawScene() override;
 private:
   std::string txt_title;

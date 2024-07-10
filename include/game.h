@@ -8,7 +8,7 @@
 
 #define SCENE_STARTUP 0
 #define SCENE_TITLE 1
-#define SCENE_MAINMENU 2
+#define SCENE_MENU 2
 #define SCENE_SETTINGS 3
 #define SCENE_CONTROLS 4
 #define SCENE_PREGAME 5

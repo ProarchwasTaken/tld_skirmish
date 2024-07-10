@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include <functional>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
@@ -9,9 +10,10 @@
 #include "audio.h"
 #include "scene_debug.h"
 #include "scene_title.h"
+#include "scene_menu.h"
 #include <plog/Log.h>
 
-using std::make_unique;
+using std::make_unique, std::function;
 
 
 Game::Game(int start_scene) {
@@ -94,22 +96,25 @@ void Game::loadScene(int scene_id) {
     scene.reset();
   }
 
+  function<void(int)> load_func = [this](int scene_id){
+    this->loadScene(scene_id);
+  };
+
   PLOGI << "Attempting to load scene correlated with id: " << scene_id;
   switch (scene_id) {
     case SCENE_DEBUG: {
-      scene = make_unique<DebugScene>(
-        [this](int scene_id){this->loadScene(scene_id);}
-      );
+      scene = make_unique<DebugScene>(load_func);
       break;
     }
     case SCENE_TITLE: {
-      scene = make_unique<TitleScene>(
-        [this](int scene_id){this->loadScene(scene_id);}
-      );
+      scene = make_unique<TitleScene>(load_func);
+      break;
+    }
+    case SCENE_MENU: {
+      scene = make_unique<MenuScene>(load_func);
       break;
     }
     case SCENE_STARTUP: 
-    case SCENE_MAINMENU:
     case SCENE_SETTINGS:
     case SCENE_CONTROLS:
     case SCENE_PREGAME:
