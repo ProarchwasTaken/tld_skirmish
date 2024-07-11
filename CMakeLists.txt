@@ -37,6 +37,7 @@ set(SOURCE_FILES
 "src/utils/sound.cpp"
 "src/utils/sprite.cpp"
 "src/utils/text.cpp"
+"src/utils/menu.cpp"
 "src/scenes/scene_title.cpp"
 "src/scenes/scene_menu.cpp"
 "src/scenes/scene_debug.cpp"

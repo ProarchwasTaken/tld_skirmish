@@ -109,3 +109,11 @@ namespace Text {
                      int size_multiplier, int spacing);
 }
 
+
+namespace Menu {
+  void nextOption(menu_options &options, 
+                  menu_options::iterator &selected, bool loop);
+  void previousOption(menu_options &options, 
+                      menu_options::iterator &selected, bool loop);
+}
+
