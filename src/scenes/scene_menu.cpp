@@ -42,7 +42,8 @@ void MenuScene::checkInput() {
   bool key_up = IsKeyPressed(KEY_UP);
 
   bool gamepad_detected = IsGamepadAvailable(0);
-  bool btn_down, btn_up = false;
+  bool btn_down = false; 
+  bool btn_up = false;
 
   if (gamepad_detected) {
     btn_down = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
