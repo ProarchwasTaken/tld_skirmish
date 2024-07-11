@@ -1,4 +1,5 @@
 // utils/text.cpp
+#include <cmath>
 #include <raylib.h>
 #include <string>
 #include "utils.h"
@@ -11,7 +12,7 @@ Vector2 Text::alignCenter(Font *font, std::string text, Vector2 position,
   int txt_width = MeasureTextEx(*font, text.c_str(), 
                                 font_size, spacing).x;
 
-  position.x -= txt_width / 2.0;
+  position.x -= round(txt_width / 2.0);
   return position;
 }
 
