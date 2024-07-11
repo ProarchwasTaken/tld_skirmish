@@ -49,7 +49,7 @@ void MenuScene::checkInput() {
   }
 }
 
-void MenuScene::drawScene() {
+void MenuScene::drawMenuOptions() {
   int size = fonts::skirmish->baseSize;
   float current_y = 90;
 
@@ -69,4 +69,41 @@ void MenuScene::drawScene() {
     DrawTextEx(*fonts::skirmish, text->c_str(), position, size, 0, color);
     current_y += size;
   }
+}
+
+void MenuScene::drawOptionDescription() {
+  int size = fonts::skirmish->baseSize;
+  string text;
+
+  switch (*selected_option) {
+    case OPT_PLAY: {
+      text = "Begin the game.";
+      break;
+    }
+    case OPT_SETTINGS: {
+      text = "Tweak the game's settings to your liking.";
+      break;
+    }
+    case OPT_CONTROLS: {
+      text = "Educate yourself on the game's controls.";
+      break;
+    }
+    case OPT_QUIT: {
+      text = "Exit the game and take a break.";
+      break;
+    }
+    default: {
+      text = "DESCRIPTION NOT FOUND!!!";
+    }
+  }
+
+  Vector2 position = Text::alignCenter(fonts::skirmish, text, {213, 208},
+                                       1, -3);
+  DrawTextEx(*fonts::skirmish, text.c_str(), position, size, -3, 
+             COLORS::PALETTE[2]);
+}
+
+void MenuScene::drawScene() {
+  drawMenuOptions();
+  drawOptionDescription();
 }

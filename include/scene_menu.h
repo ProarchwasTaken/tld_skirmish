@@ -15,6 +15,9 @@ class MenuScene : public Scene {
 public:
   MenuScene(std::function<void(int)> load_scene);
 
+  void drawMenuOptions();
+  void drawOptionDescription();
+
   void checkInput() override;
   void drawScene() override;
 
