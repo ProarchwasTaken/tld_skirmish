@@ -51,9 +51,13 @@ void TitleScene::checkInput() {
   bool key_enter = IsKeyPressed(KEY_ENTER);
 
   bool gamepad_detected = IsGamepadAvailable(0);
-  bool btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+  bool btn_start = false;
 
-  if (key_enter || (gamepad_detected && btn_start)) {
+  if (gamepad_detected) {
+    btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+  }
+
+  if (key_enter || btn_start) {
     load_scene(SCENE_MENU);
     return;
   }
