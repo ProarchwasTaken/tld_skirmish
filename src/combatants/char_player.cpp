@@ -243,59 +243,49 @@ void PlayerCharacter::inputPressed() {
   bool key_x = IsKeyPressed(KEY_X);
   bool key_space = IsKeyPressed(KEY_SPACE);
 
-  bool gamepad_available = IsGamepadAvailable(0);
-  bool gamepad_right = false;
-  bool gamepad_left = false;
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_right, btn_left, btn_face_right, btn_face_down = false;
+  bool btn_shoulder_down = false;
 
-  bool gamepad_face_right = false;
-  bool gamepad_face_down = false;
+  if (gamepad_detected) {
+    btn_right = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+    btn_left = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
 
-  bool gamepad_shoulder_down = false;
-
-  if (gamepad_available) {
-    gamepad_right = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
-    );
-    gamepad_left = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
-    );
-
-    gamepad_face_right = IsGamepadButtonPressed(
+    btn_face_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
     );
-    gamepad_face_down = IsGamepadButtonPressed(
+    btn_face_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
     );
 
-    gamepad_shoulder_down = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
+    btn_shoulder_down = 
+      IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
       || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
       || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
       || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
   }
 
-
-  bool input_right = key_right || gamepad_right;
+  bool input_right = key_right || btn_right;
   if (input_right && moving_right == false) {
     moving_right = true;
   }
   
-  bool input_left = key_left || gamepad_left;
+  bool input_left = key_left || btn_left;
   if (input_left && moving_left == false) {
     moving_left = true;
   }
 
-  bool input_light_attack = key_z || gamepad_face_down;
+  bool input_light_attack = key_z || btn_face_down;
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  bool input_heavy_attack = key_x || gamepad_face_right;
+  bool input_heavy_attack = key_x || btn_face_right;
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
   }
 
-  bool input_guard = key_space || gamepad_shoulder_down;
+  bool input_guard = key_space || btn_shoulder_down;
   if (input_guard) {
     input_buffer.push_back(BTN_GUARD);
   }
@@ -305,21 +295,20 @@ void PlayerCharacter::inputReleased() {
   bool key_right = IsKeyReleased(KEY_RIGHT);
   bool key_left = IsKeyReleased(KEY_LEFT);
 
-  bool gamepad_available = IsGamepadAvailable(0);
-  bool gamepad_right = false;
-  bool gamepad_left = false;
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_right, btn_left = false;
 
-  if (gamepad_available) {
-    gamepad_right = IsGamepadButtonReleased(
+  if (gamepad_detected) {
+    btn_right = IsGamepadButtonReleased(
       0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
     );
-    gamepad_left = IsGamepadButtonReleased(
+    btn_left = IsGamepadButtonReleased(
       0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     ); 
   }
 
-  bool input_right = key_right || (gamepad_available && gamepad_right);
-  bool input_left = key_left || (gamepad_available && gamepad_left);
+  bool input_right = key_right || btn_right;
+  bool input_left = key_left || btn_left;
 
   if (input_right && moving_right) {
     moving_right = false;
