@@ -16,6 +16,7 @@ public:
   void setupEnter();
 
   void checkInput() override;
+  void updateScene(double &delta_time) override;
   void drawScene() override;
 private:
   std::string txt_title;
@@ -25,6 +26,10 @@ private:
   Vector2 cpr_position;
 
   std::string txt_enter;
+  bool draw_enter = true;
   int enter_size;
   Vector2 enter_position;
+
+  float blink_interval;
+  float blink_timestamp = 0;
 };

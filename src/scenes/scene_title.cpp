@@ -18,6 +18,8 @@ TitleScene::TitleScene(function<void(int)> load_scene) : Scene(load_scene)
   setupTitle();
   setupCopyright();
   setupEnter();
+
+  blink_interval = 0.5;
   PLOGV << "Title scene has been successfully loaded.";
 }
 
@@ -40,13 +42,7 @@ void TitleScene::setupCopyright() {
 }
 
 void TitleScene::setupEnter() {
-  if (IsGamepadAvailable(0)) {
-    txt_enter = "PRESS START";
-  }
-  else {
-    txt_enter = "PRESS ENTER";
-  }
-
+  txt_enter = "PRESS ENTER";
   enter_position = Text::alignCenter(fonts::skirmish, txt_enter.c_str(), 
                                      {213, 160}, 1, 0);
 }
@@ -63,13 +59,25 @@ void TitleScene::checkInput() {
   }
 }
 
+void TitleScene::updateScene(double &delta_time) {
+  float time_elapsed = GetTime() - blink_timestamp;
+
+  if (time_elapsed >= blink_interval) {
+    draw_enter = !draw_enter;
+    blink_timestamp = GetTime();
+  }
+}
+
 void TitleScene::drawScene() {
   int size = fonts::skirmish->baseSize;
   
   DrawTextEx(*fonts::skirmish, txt_title.c_str(), title_position, 
              size * 2, -3, COLORS::PALETTE[42]);
-  DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, size, 0,
-             WHITE);
   DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
              -3, WHITE);
+
+  if (draw_enter) {
+    DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, size, 
+               0, WHITE);
+  }
 }
