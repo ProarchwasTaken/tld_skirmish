@@ -9,4 +9,12 @@ using std::function;
 
 MenuScene::MenuScene(function<void(int)> load_scene) : Scene(load_scene) {
   PLOGV << "Loading MainMenu scene.";
+  options = {
+    OPT_PLAY,
+    OPT_SETTINGS,
+    OPT_CONTROLS,
+    OPT_QUIT
+  };
+
+  selected_option = options.begin();
 }
