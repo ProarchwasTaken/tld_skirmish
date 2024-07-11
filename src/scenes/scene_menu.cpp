@@ -27,6 +27,14 @@ MenuScene::MenuScene(function<void(int)> load_scene) : Scene(load_scene) {
   };
 
   selected_option = options.begin();
+  PLOGV << "Loaded MainMenu scene.";
+}
+
+MenuScene::~MenuScene() {
+  PLOGV << "Unloading Main Menu scene.";
+  options.clear();
+  options_text.clear();
+  PLOGV << "Main Menu scene unloaded.";
 }
 
 void MenuScene::checkInput() {

@@ -14,6 +14,7 @@
 class MenuScene : public Scene {
 public:
   MenuScene(std::function<void(int)> load_scene);
+  ~MenuScene();
 
   void drawMenuOptions();
   void drawOptionDescription();
