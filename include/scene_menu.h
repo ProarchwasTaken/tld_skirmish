@@ -15,7 +15,10 @@ class MenuScene : public Scene {
 public:
   MenuScene(std::function<void(int)> load_scene);
 
+  void drawScene() override;
+
 private:
   menu_options options;
+  menu_options_txt options_text;
   menu_options::iterator selected_option;
 };
