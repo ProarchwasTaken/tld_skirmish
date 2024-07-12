@@ -101,6 +101,8 @@ namespace Enemies {
 }
 
 
+/* Helper functions for manipulating text, and their positions in a
+ * certain way. Like aligning them to the right or center.*/
 namespace Text {
   Vector2 alignCenter(Font *font, std::string text, Vector2 position, 
                       int size_multiplier, int spacing);
@@ -110,6 +112,9 @@ namespace Text {
 }
 
 
+/* Helper functions for menu navigation. These functions can be very
+ * versatile when used correctly. In fact, it's really funny how simple
+ * these functions are. You should take a look.*/
 namespace Menu {
   void nextOption(menu_options &options, 
                   menu_options::iterator &selected, bool loop);

@@ -11,6 +11,10 @@
 #define OPT_QUIT 3
 
 
+/* The Main Menu is the nexus point for almost every other menu in the
+ * game as all main menus tend to do. This scene makes use of the menu
+ * utility functions, and it would be the 3rd scene loaded under normal
+ * circumstances.*/
 class MenuScene : public Scene {
 public:
   MenuScene(std::function<void(int)> load_scene);
