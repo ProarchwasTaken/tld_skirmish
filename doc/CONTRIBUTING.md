@@ -103,6 +103,24 @@ probably be added later, and some rules may be subject to change.
   programmed everything.
 
 
+# Contributing Art
+There's a couple things you need to know if you wish contribute to the 
+project in the form of art for stages, enemies, effects, etc. More will
+be added as we go.
+
+All art must adhere to the game's color palette. It's basically the NES 
+color palette. You can view the palette in the "graphics" directory. The 
+only exception is art made purely for the purpose of debugging and 
+testing. (Something that not gonna be seen in normal play.) Depending on
+what program you use, you may have to disable anti-aliasing or 
+interpolation to avoid accidentally breaking this rule. 
+
+What program you use is completely up to you. Personally, I use 
+Asesprite for the pixel art, and paint.net/gimp for the more
+complex stuff like the game's stages. Speaking of which, there are 
+multiple templates you could use as a reference for how things are done.
+
+
 # Commits Guidelines.
 Obviously, commit messages should be detailed and helpful. Commit messages
 should detail what you just changed, and why you did it. Non-descriptive
