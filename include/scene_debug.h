@@ -27,6 +27,7 @@ public:
 private:
   Texture background;
   Texture overlay;
+  Texture debug_overlay;
 
   Camera2D camera;
 

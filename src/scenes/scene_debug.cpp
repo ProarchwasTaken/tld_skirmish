@@ -21,6 +21,7 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 {
   PLOGI << "Loading Debug scene.";
   tie(background, overlay) = Stages::loadStage("debug");
+  debug_overlay = LoadTexture("graphics/stages/debug/debug_overlay.png");
 
   player = make_shared<PlayerCharacter>(enemies);
   life_hud = make_unique<LifeHud>(player.get());
@@ -38,6 +39,7 @@ DebugScene::~DebugScene() {
 
   UnloadTexture(background);
   UnloadTexture(overlay);
+  UnloadTexture(debug_overlay);
 
   player.reset();
   life_hud.reset();
@@ -89,6 +91,10 @@ void DebugScene::drawScene() {
 
     player->draw();
     DrawTexture(overlay, -512, 0, WHITE);
+
+    if (DEBUG_MODE) {
+      DrawTexture(debug_overlay, -512, 0, WHITE);
+    }
   }
   EndMode2D();
 
