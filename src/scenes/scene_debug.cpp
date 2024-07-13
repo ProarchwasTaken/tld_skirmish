@@ -26,7 +26,7 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   life_hud = make_unique<LifeHud>(player.get());
 
   enemies = {
-    make_shared<DummyEnemy>(*player, (Vector2){-96, 208}),
+    make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),
   };
   
   camera = CameraUtils::setupCamera();
@@ -58,12 +58,12 @@ void DebugScene::checkInput() {
 void DebugScene::updateScene(double &delta_time) {
   if (IsKeyPressed(KEY_E)) {
     enemies.push_back(
-      make_shared<GhoulEnemy>(*player, (Vector2){450, 208})
+      make_shared<GhoulEnemy>(*player, (Vector2){450, 152})
     );
   }
   if (IsKeyPressed(KEY_Q)) {
     enemies.push_back(
-      make_shared<GhoulEnemy>(*player, (Vector2){-450, 208})
+      make_shared<GhoulEnemy>(*player, (Vector2){-450, 152})
     );
   }
 
