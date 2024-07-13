@@ -99,7 +99,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
     return;
   }
 
-  PLOGD << dmg_magnitude << " points of damage is being inflicted to "
+  PLOGI << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
   SoundUtils::play("damage");
 
@@ -180,7 +180,7 @@ void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
 }
 
 void Combatant::death() {
-  PLOGV << "{Combatant: " << name << "} is now dead!";
+  PLOGI << "{Combatant: " << name << "} is now dead!";
   cancelCommand();
   state = DEAD;
 
@@ -190,7 +190,7 @@ void Combatant::death() {
 
 void Combatant::stunSequence() {
   if (state != HIT_STUN) {
-    PLOGF << "{Combatant: " << name << "} entered stun sequence when it"
+    PLOGE << "{Combatant: " << name << "} entered stun sequence when it"
       " wasn't supposed to!";
     throw;
   }
@@ -200,7 +200,7 @@ void Combatant::stunSequence() {
     return;
   }
 
-  PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
+  PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
     kb_velocity = 0;

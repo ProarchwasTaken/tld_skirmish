@@ -29,7 +29,6 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies):
 
   buf_clear_time = 0.010;
 
-  PLOGI << "Assigning address to enemy list to pointer.";
   this->enemies = &enemies;
   PLOGI << "Player initialization complete.";
 }
@@ -86,7 +85,7 @@ void PlayerCharacter::bufferTimerCheck() {
 
   bool detected_first_input = !buf_empty && buf_timer_started == false;
   if (detected_first_input) {
-    PLOGD << "Detected first input in the buffer. Starting timer.";
+    PLOGI << "Detected first input in the buffer. Starting timer.";
     buf_input_timestamp = GetTime();
     buf_timer_started = true;
   }

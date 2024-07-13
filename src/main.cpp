@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   setupCustomLogger();
   int start_scene = parseArguments(argc, argv);
 
-  PLOGV << "Initializing the game...";
+  PLOGI << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 
   Game game(start_scene);
 
-  PLOGV << "Everything seems good to go!";
+  PLOGI << "Everything seems good to go!";
   while (WindowShouldClose() == false) {
     if (IsWindowResized()) {
       game.correctWindow();
@@ -59,7 +59,7 @@ void setupCustomLogger() {
   static ColorConsoleAppender<TxtFormatter> console_appender;
   plog::init(plog::verbose, &file_appender)
     .addAppender(&console_appender);
-  PLOGV << "Logger initialized."; 
+  PLOGI << "Logger initialized."; 
 }
 
 
@@ -70,7 +70,7 @@ int parseArguments(int argc, char *argv[]) {
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];
     if (arg == "--debug_scene") {
-      PLOGV << "Starting the game in the debug scene.";
+      PLOGI << "Starting the game in the debug scene.";
       start_scene = SCENE_DEBUG;
     }
   }

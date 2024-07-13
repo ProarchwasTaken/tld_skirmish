@@ -18,7 +18,7 @@ using std::make_shared, std::make_unique, std::function;
 
 DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 {
-  PLOGV << "Loading Debug scene.";
+  PLOGI << "Loading Debug scene.";
   test_room = LoadTexture("concept_art/test_room2.png");
 
   player = make_shared<PlayerCharacter>(enemies);
@@ -29,11 +29,11 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   };
   
   camera = CameraUtils::setupCamera();
-  PLOGV << "Debug scene has loaded successfully!";
+  PLOGI << "Debug scene has loaded successfully!";
 }
 
 DebugScene::~DebugScene() {
-  PLOGV << "Unloading Debug scene.";
+  PLOGI << "Unloading Debug scene.";
 
   UnloadTexture(test_room);
   player.reset();
@@ -45,7 +45,7 @@ DebugScene::~DebugScene() {
   }
   enemies.clear();
 
-  PLOGV << "Debug scene has unloaded succesfully.";
+  PLOGI << "Debug scene has unloaded succesfully.";
 }
 
 void DebugScene::checkInput() {

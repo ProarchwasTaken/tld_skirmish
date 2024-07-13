@@ -32,18 +32,18 @@ AudioManager::AudioManager() {
 }
 
 AudioManager::~AudioManager() {
-  PLOGV << "Unloading all sound effects...";
+  PLOGI << "Unloading all sound effects...";
   for (Sound sfx : sound_effects) {
     UnloadSound(sfx);
   }
 
   audio::sfx_metadata.clear();
   sound_effects.clear();
-  PLOGV << "Sound effects have been unloaded.";
+  PLOGI << "Sound effects have been unloaded.";
 }
 
 void AudioManager::loadSoundEffects() {
-  PLOGV << "Loading sound effects.";
+  PLOGI << "Loading sound effects.";
   int count = meta_data["sfx"].size();
 
   PLOGI << "Sound effect detected: " << count;
@@ -54,13 +54,13 @@ void AudioManager::loadSoundEffects() {
 
     string sound_name = data["name"].as_string(); 
     string sound_path = data["path"].as_string();
-    PLOGI << "Attempting to set up sound effect: " << sound_name;
+    PLOGD << "Attempting to set up sound effect: " << sound_name;
 
     bool use_random_pitch = toml::find_or(data, "pitch_random", false);
 
     float min_pitch, max_pitch = 1.0;
     if (use_random_pitch) {
-      PLOGI << "Sound uses random pitch. Attempting to get pitch values.";
+      PLOGD << "Sound uses random pitch. Attempting to get pitch values.";
       tie(min_pitch, max_pitch) = getPitchValues(data);
     }
 

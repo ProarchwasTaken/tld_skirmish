@@ -68,6 +68,7 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
                        uint8_t kb_direction)
 {
   if (user->state == RECOVER) {
+    PLOGI << "Guard failed due to the user being in the recovery phase.";
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
     return;
@@ -149,7 +150,7 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
   PLOGD << "Timeframe for a successful parry is: " << parry_window;
 
   if (time_elapsed <= parry_window) {
-    PLOGV << user->name << " parried the attack! All damage nullified!";
+    PLOGI << user->name << " parried the attack! All damage nullified!";
     user->current_sprite = parry_sprite;
     user->parried_attack = true;
 
@@ -167,7 +168,7 @@ void Guard::deathProtection(uint16_t &dmg_magnitude) {
   bool death_imminent = user->health - dmg_magnitude <= 0;
 
   if (death_protection && death_imminent) {
-    PLOGV << user->name << " survives fatal damage due to being eligible"
+    PLOGI << user->name << " survives fatal damage due to being eligible"
       " for death protection";
     dmg_magnitude = 0;
     user->health = 1;

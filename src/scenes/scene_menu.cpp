@@ -12,7 +12,7 @@ using std::function, std::string;
 
 
 MenuScene::MenuScene(function<void(int)> load_scene) : Scene(load_scene) {
-  PLOGV << "Loading MainMenu scene.";
+  PLOGI << "Loading MainMenu scene.";
   options = {
     OPT_PLAY,
     OPT_SETTINGS,
@@ -27,14 +27,14 @@ MenuScene::MenuScene(function<void(int)> load_scene) : Scene(load_scene) {
   };
 
   selected_option = options.begin();
-  PLOGV << "Loaded MainMenu scene.";
+  PLOGI << "Loaded MainMenu scene.";
 }
 
 MenuScene::~MenuScene() {
-  PLOGV << "Unloading Main Menu scene.";
+  PLOGI << "Unloading Main Menu scene.";
   options.clear();
   options_text.clear();
-  PLOGV << "Main Menu scene unloaded.";
+  PLOGI << "Main Menu scene unloaded.";
 }
 
 void MenuScene::checkInput() {

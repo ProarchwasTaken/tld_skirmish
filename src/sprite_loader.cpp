@@ -19,34 +19,34 @@ SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
 
 
 SpriteLoader::SpriteLoader() {
-  PLOGV << "Loading spritesheet meta data.";
+  PLOGI << "Loading spritesheet meta data.";
   meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");
 }
 
 SpriteLoader::~SpriteLoader() {
-  PLOGV << "Unloading all sprites...";
+  PLOGI << "Unloading all sprites...";
   for (Texture sprite : sprites) {
     UnloadTexture(sprite);
   }
 
   sprites::player.clear();
   sprites.clear();
-  PLOGV << "Sprites have been unloaded.";
+  PLOGI << "Sprites have been unloaded.";
 }
 
 void SpriteLoader::loadSpritesheet(vector<string> name_list) {
   setInitialCapacity(name_list);
 
   for (string sheet_name : name_list) {
-    PLOGV << "Attempting to parse spritesheet: " << sheet_name;
+    PLOGI << "Attempting to parse spritesheet: " << sheet_name;
     string file_path = meta_data[sheet_name]["path"].as_string();
 
-    PLOGI << sheet_name << " spritesheet path: " << file_path;
+    PLOGD << sheet_name << " spritesheet path: " << file_path;
     Image spritesheet = LoadImage(file_path.c_str());
     parseSprites(sheet_name, spritesheet);
 
     UnloadImage(spritesheet);
-    PLOGV << "Spritesheet successfully parsed!";
+    PLOGI << "Spritesheet successfully parsed!";
   }
 }
 
@@ -79,7 +79,7 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
   int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
-  PLOGI << "Now proceeding to parse and allocate sprites.";
+  PLOGD << "Now proceeding to parse and allocate sprites.";
   for (int sprite = 0; sprite < sprite_count; sprite++) {
     toml::value sprite_data = meta_data[sheet_name]["sprites"][sprite];
 
@@ -129,5 +129,5 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
     SpriteMetaData(sprite_name, &sprites[latest_index])
   );
   
-  PLOGI << "Allocated sprite: '" << sprite_name << "'.";
+  PLOGD << "Allocated sprite: '" << sprite_name << "'.";
 }

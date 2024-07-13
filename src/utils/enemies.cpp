@@ -28,7 +28,7 @@ void Enemies::deleteDeadEnemies(combatant_list &enemies) {
       PLOGD << "Deleting enemy: " << enemy->name << " from memory.";
       enemy.reset();
 
-      PLOGI << "Appending enemy index: " << index << 
+      PLOGD << "Appending enemy index: " << index << 
         " to 'deleted' list.";
       deleted.push_back(index);
     }

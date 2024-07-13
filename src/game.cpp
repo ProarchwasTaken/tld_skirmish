@@ -30,7 +30,7 @@ Game::Game(int start_scene) {
 }
 
 Game::~Game() {
-  PLOGV << "Request to terminate program detected.";
+  PLOGI << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
 
@@ -40,7 +40,7 @@ Game::~Game() {
   sprite_loader.reset();
   audio_manager.reset();
 
-  PLOGV << "Thanks for playing!";
+  PLOGI << "Thanks for playing!";
 }
 
 void Game::correctWindow() {

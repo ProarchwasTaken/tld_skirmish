@@ -14,17 +14,17 @@ using std::function, std::string;
 
 TitleScene::TitleScene(function<void(int)> load_scene) : Scene(load_scene) 
 {
-  PLOGV << "Loading Title scene.";
+  PLOGI << "Loading Title scene.";
   setupTitle();
   setupCopyright();
   setupEnter();
 
   blink_interval = 0.5;
-  PLOGV << "Title scene has been successfully loaded.";
+  PLOGI << "Title scene has been successfully loaded.";
 }
 
 TitleScene::~TitleScene() {
-  PLOGV << "Unloading title scene";
+  PLOGI << "Unloading title scene";
 }
 
 void TitleScene::setupTitle() {
