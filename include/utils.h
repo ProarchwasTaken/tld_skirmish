@@ -2,6 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
+#include <tuple>
 #include <string>
 #include <vector>
 #include "audio.h"
@@ -98,6 +99,11 @@ namespace Enemies {
    * enemy's patience value some distance above their bounding box.*/
   void drawPatience(Combatant *enemy, uint8_t patience, Color color, 
                     int y_offset);
+}
+
+
+namespace Stages {
+  std::tuple<Texture, Texture> loadStage(std::string name);
 }
 
 

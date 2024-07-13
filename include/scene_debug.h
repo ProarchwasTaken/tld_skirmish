@@ -25,7 +25,9 @@ public:
   void drawScene() override;
   void drawDebugInfo() override;
 private:
-  Texture test_room;
+  Texture background;
+  Texture overlay;
+
   Camera2D camera;
 
   std::shared_ptr<PlayerCharacter> player;

@@ -1,6 +1,7 @@
 // scenes/scene_debug.cpp
 #include <raylib.h>
 #include <functional>
+#include <tuple>
 #include <raymath.h>
 #include <memory>
 #include "globals.h"
@@ -13,13 +14,13 @@
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::make_unique, std::function;
+using std::make_shared, std::make_unique, std::function, std::tie;
 
 
 DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 {
   PLOGI << "Loading Debug scene.";
-  test_room = LoadTexture("concept_art/test_room2.png");
+  tie(background, overlay) = Stages::loadStage("debug");
 
   player = make_shared<PlayerCharacter>(enemies);
   life_hud = make_unique<LifeHud>(player.get());
@@ -35,9 +36,10 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 DebugScene::~DebugScene() {
   PLOGI << "Unloading Debug scene.";
 
-  UnloadTexture(test_room);
-  player.reset();
+  UnloadTexture(background);
+  UnloadTexture(overlay);
 
+  player.reset();
   life_hud.reset();
 
   for (auto enemy : enemies) {
@@ -79,13 +81,14 @@ void DebugScene::updateScene(double &delta_time) {
 void DebugScene::drawScene() {
   BeginMode2D(camera); 
   {
-    DrawTexture(test_room, -512, 0, WHITE);
+    DrawTexture(background, -512, 0, WHITE);
     
     for (auto enemy : enemies) {
       enemy->draw();
     }
 
     player->draw();
+    DrawTexture(overlay, -512, 0, WHITE);
   }
   EndMode2D();
 
