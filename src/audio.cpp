@@ -22,7 +22,7 @@ SoundMetaData::SoundMetaData(string name, Sound *sound, bool random_pitch,
   this->min_pitch = min_pitch;
   this->max_pitch = max_pitch;
 
-  PLOGI << "Saved sound data for: " << name;
+  PLOGD << "Saved sound data for: " << name;
 }
 
 
