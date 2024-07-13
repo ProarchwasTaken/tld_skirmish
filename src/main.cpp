@@ -3,6 +3,7 @@
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
+#include <plog/Severity.h>
 #include <plog/Formatters/TxtFormatter.h>
 #include <plog/Appenders/RollingFileAppender.h>
 #include <plog/Appenders/ColorConsoleAppender.h>
@@ -57,7 +58,7 @@ void setupCustomLogger() {
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
                                                            1000000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;
-  plog::init(plog::verbose, &file_appender)
+  plog::init(plog::info, &file_appender)
     .addAppender(&console_appender);
   PLOGI << "Logger initialized."; 
 }
@@ -72,6 +73,10 @@ int parseArguments(int argc, char *argv[]) {
     if (arg == "--debug_scene") {
       PLOGI << "Starting the game in the debug scene.";
       start_scene = SCENE_DEBUG;
+    }
+    if (arg == "-v") {
+      plog::get()->setMaxSeverity(plog::verbose); 
+      PLOGV << "Has set logger severity to verbose.";
     }
   }
 
