@@ -2,11 +2,9 @@
 #include <raylib.h>
 #include <functional>
 #include <tuple>
-#include <raymath.h>
 #include <memory>
 #include "globals.h"
 #include "utils.h"
-#include "base/scene.h"
 #include "scene_debug.h"
 #include "char_player.h"
 #include "hud_life.h"
