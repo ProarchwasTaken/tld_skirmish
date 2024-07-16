@@ -21,6 +21,7 @@ public:
   ~MenuScene();
 
   void drawMenuOptions();
+  void selectOption();
   void drawOptionDescription();
 
   void checkInput() override;

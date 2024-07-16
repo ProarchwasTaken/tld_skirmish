@@ -3,6 +3,7 @@
 #include <string>
 #include <functional>
 #include <cstdint>
+#include "game.h"
 #include "globals.h"
 #include "utils.h"
 #include "scene_menu.h"
@@ -40,14 +41,17 @@ MenuScene::~MenuScene() {
 void MenuScene::checkInput() {
   bool key_down = IsKeyPressed(KEY_DOWN);
   bool key_up = IsKeyPressed(KEY_UP);
+  bool key_z = IsKeyPressed(KEY_Z);
 
   bool gamepad_detected = IsGamepadAvailable(0);
   bool btn_down = false; 
   bool btn_up = false;
+  bool btn_a = false;
 
   if (gamepad_detected) {
     btn_down = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
     btn_up = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP);
+    btn_a = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
   }
 
   if (key_down || btn_down) {
@@ -55,6 +59,23 @@ void MenuScene::checkInput() {
   }
   else if (key_up || btn_up) {
     Menu::previousOption(options, selected_option, true);
+  }
+  else if (key_z || btn_a) {
+    SoundUtils::play("opt_confirm");
+    selectOption();
+  }
+}
+
+void MenuScene::selectOption() {
+  switch (*selected_option) {
+    case OPT_PLAY: {
+      load_scene(SCENE_GAMEPLAY);
+      break;
+    }
+    default: {
+      SoundUtils::play("opt_error");
+      PLOGI << "Menu option not fully implemented yet!";
+    } 
   }
 }
 
