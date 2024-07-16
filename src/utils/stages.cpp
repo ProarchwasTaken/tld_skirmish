@@ -12,6 +12,11 @@ tuple<Texture, Texture> Stages::loadStage(std::string name) {
   PLOGI << "Loading stage: '" << name << "'"; 
   string directory = "graphics/stages/" + name;
 
+  if (DirectoryExists(directory.c_str()) == false) {
+    PLOGE << "Stage directory does not exist!";
+    throw;
+  }
+
   string background_path = directory + "/background.png";
   PLOGD << "Background Path: '" << background_path << "'";
 
