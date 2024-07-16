@@ -8,8 +8,6 @@
 #include "hud_life.h"
 #include "char_player.h"
 
-#define CAMERA_BOUNDS 512
-
 
 /* The debug scene is meant to be a sandbox used for the testing of 
  * different game elements. It's not meant to be seen in normal play, and
