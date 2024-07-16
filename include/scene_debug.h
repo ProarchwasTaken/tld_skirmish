@@ -9,7 +9,9 @@
 #include "char_player.h"
 
 
-/* The debug scene is meant to be a sandbox used for the testing of 
+/* The same as the GameplayScene, but with anything related to the 
+ * game loop being excluded, and some stuff that help with debugging The 
+ * debug scene is meant to be a sandbox used for the testing of 
  * different game elements. It's not meant to be seen in normal play, and
  * it could only be accessed through the usage of a command line 
  * argument.*/
