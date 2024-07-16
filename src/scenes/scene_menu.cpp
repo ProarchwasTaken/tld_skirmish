@@ -72,6 +72,11 @@ void MenuScene::selectOption() {
       load_scene(SCENE_GAMEPLAY);
       break;
     }
+    case OPT_QUIT: {
+      PLOGV << "Setting 'EXIT_GAME' to true.";
+      EXIT_GAME = true;
+      break;
+    }
     default: {
       SoundUtils::play("opt_error");
       PLOGI << "Menu option not fully implemented yet!";
