@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   Game game(start_scene);
 
   PLOGI << "Everything seems good to go!";
-  while (WindowShouldClose() == false) {
+  while (EXIT_GAME == false) {
     if (IsWindowResized()) {
       game.correctWindow();
     }
@@ -48,8 +48,10 @@ int main(int argc, char *argv[]) {
     }
 
     game.refresh();
+    EXIT_GAME = WindowShouldClose();
   }
 
+  CloseWindow();
   return 0;
 }
 

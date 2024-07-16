@@ -10,6 +10,7 @@ using std::vector, std::mt19937, std::random_device;
 
 
 bool DEBUG_MODE = false;
+bool EXIT_GAME = false;
 
 namespace COLORS {
   Color *PALETTE;

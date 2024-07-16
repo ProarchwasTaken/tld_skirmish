@@ -12,6 +12,7 @@
 
 
 extern bool DEBUG_MODE;
+extern bool EXIT_GAME;
 
 namespace COLORS {
   extern Color *PALETTE;
