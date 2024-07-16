@@ -11,6 +11,7 @@
 #include "scene_debug.h"
 #include "scene_title.h"
 #include "scene_menu.h"
+#include "scene_gameplay.h"
 #include <plog/Log.h>
 
 using std::make_unique, std::function;
@@ -114,11 +115,14 @@ void Game::loadScene(int scene_id) {
       scene = make_unique<MenuScene>(load_func);
       break;
     }
+    case SCENE_GAMEPLAY: {
+      scene = make_unique<GameplayScene>(load_func);
+      break;
+    }
     case SCENE_STARTUP: 
     case SCENE_SETTINGS:
     case SCENE_CONTROLS:
-    case SCENE_PREGAME:
-    case SCENE_GAMEPLAY: {
+    case SCENE_PREGAME: {
       PLOGE << "Scene is not implemented yet!";
       throw SCENE_NOT_IMPLEMENTED;
     }
