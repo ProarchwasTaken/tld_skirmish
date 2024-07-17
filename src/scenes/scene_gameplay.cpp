@@ -3,6 +3,7 @@
 #include <functional>
 #include <tuple>
 #include <memory>
+#include "globals.h"
 #include "utils.h"
 #include "char_player.h"
 #include "hud_life.h"
@@ -17,6 +18,12 @@ Scene(load_scene)
 {
   PLOGI << "Loading Gameplay scene.";
   tie(background, overlay) = Stages::loadStage("arisen");
+
+  max_wave = 3;
+
+  timer = 30;
+  tick_interval = 1.0;
+  tick_timestamp = GetTime();
 
   player = make_shared<PlayerCharacter>(enemies);
   life_hud = make_unique<LifeHud>(player.get());
@@ -59,6 +66,21 @@ void GameplayScene::updateScene(double &delta_time) {
 }
 
 
+void GameplayScene::drawWaveCount() {
+  const char *text = TextFormat("WAVE - %i/%i", wave, max_wave);
+  int size = fonts::skirmish->baseSize;
+
+  DrawTextEx(*fonts::skirmish, text, {0, 0}, size, 0, WHITE);
+}
+
+void GameplayScene::drawTimer() {
+  const char *text = TextFormat("TIME - %i", timer);
+  int size = fonts::skirmish->baseSize;
+
+  DrawTextEx(*fonts::skirmish, text, {0, 16}, size, 0, WHITE);
+}
+
+
 void GameplayScene::drawScene() {
   BeginMode2D(camera);
   {
@@ -75,4 +97,7 @@ void GameplayScene::drawScene() {
   EndMode2D();
 
   life_hud->draw();
+
+  drawWaveCount();
+  drawTimer();
 }
