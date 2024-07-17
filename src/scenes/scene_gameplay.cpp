@@ -21,8 +21,8 @@ Scene(load_scene)
 
   max_wave = 3;
 
-  timer = 10;
-  tick_interval = 1.0;
+  timer = 30;
+  tick_interval = 0.5;
   tick_timestamp = GetTime();
 
   player = make_shared<PlayerCharacter>(enemies);
@@ -86,7 +86,7 @@ void GameplayScene::tickTimer() {
 
   if (wave != max_wave) {
     // This will probably change later.
-    timer = 10;
+    timer = 30;
   }
 }
 
