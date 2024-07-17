@@ -18,6 +18,8 @@ public:
   GameplayScene(std::function<void(int)> load_scene);
   ~GameplayScene() override;
 
+  void tickTimer();
+
   void drawTimer();
   void drawWaveCount();
 

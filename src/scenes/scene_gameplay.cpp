@@ -21,7 +21,7 @@ Scene(load_scene)
 
   max_wave = 3;
 
-  timer = 30;
+  timer = 10;
   tick_interval = 1.0;
   tick_timestamp = GetTime();
 
@@ -63,8 +63,32 @@ void GameplayScene::updateScene(double &delta_time) {
 
   life_hud->update();
   Enemies::deleteDeadEnemies(enemies);
+
+  tickTimer();
 }
 
+void GameplayScene::tickTimer() {
+  float time_elapsed = GetTime() - tick_timestamp;
+  if (time_elapsed < tick_interval) {
+    return;
+  }
+
+  tick_timestamp = GetTime();
+  
+  if (timer != 0) {
+    timer--;
+    return;
+  }
+  else if (wave < max_wave) {
+    PLOGI << "Proceeding to the next wave.";
+    wave++;
+  }
+
+  if (wave != max_wave) {
+    // This will probably change later.
+    timer = 10;
+  }
+}
 
 void GameplayScene::drawWaveCount() {
   const char *text = TextFormat("WAVE - %i/%i", wave, max_wave);
