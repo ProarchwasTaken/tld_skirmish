@@ -21,8 +21,8 @@ Scene(load_scene)
 
   max_wave = 3;
 
-  timer = 30;
-  tick_interval = 0.5;
+  timer = 20;
+  tick_interval = 1;
   tick_timestamp = GetTime();
 
   player = make_shared<PlayerCharacter>(enemies);
@@ -77,16 +77,18 @@ void GameplayScene::tickTimer() {
   
   if (timer != 0) {
     timer--;
+    if (timer <= 5) SoundUtils::play("timer_low");
     return;
   }
   else if (wave < max_wave) {
     PLOGI << "Proceeding to the next wave.";
+    SoundUtils::play("wave_next");
     wave++;
   }
 
   if (wave != max_wave) {
     // This will probably change later.
-    timer = 30;
+    timer = 20;
   }
 }
 
@@ -101,7 +103,7 @@ void GameplayScene::drawTimer() {
   const char *text = TextFormat("TIME - %i", timer);
   int size = fonts::skirmish->baseSize;
 
-  DrawTextEx(*fonts::skirmish, text, {0, 16}, size, 0, WHITE);
+  DrawTextEx(*fonts::skirmish, text, {0, 10}, size, 0, WHITE);
 }
 
 
