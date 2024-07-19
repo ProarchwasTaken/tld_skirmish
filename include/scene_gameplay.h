@@ -6,6 +6,7 @@
 #include <cstdint>
 #include "base/generics.h"
 #include "base/scene.h"
+#include "wave_manager.h"
 #include "hud_life.h"
 #include "char_player.h"
 
@@ -30,16 +31,19 @@ private:
   Texture background;
   Texture overlay;
 
+  std::shared_ptr<PlayerCharacter> player;
+  combatant_list enemies;
+
+  std::unique_ptr<WaveManager> wave_manager;
+  std::unique_ptr<LifeHud> life_hud;
   Camera2D camera;
 
   uint8_t max_wave;
   uint8_t wave = 0;
+  uint8_t difficulty;
 
   uint16_t timer;
   float tick_interval;
   float tick_timestamp = 0;
 
-  std::shared_ptr<PlayerCharacter> player;
-  std::unique_ptr<LifeHud> life_hud;
-  combatant_list enemies;
 };

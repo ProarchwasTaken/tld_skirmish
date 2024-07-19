@@ -5,6 +5,7 @@
 #include <memory>
 #include "globals.h"
 #include "utils.h"
+#include "wave_manager.h"
 #include "char_player.h"
 #include "hud_life.h"
 #include "scene_gameplay.h"
@@ -20,6 +21,7 @@ Scene(load_scene)
   tie(background, overlay) = Stages::loadStage("arisen");
 
   max_wave = 3;
+  difficulty = 0;
 
   timer = 20;
   tick_interval = 1;
@@ -29,6 +31,7 @@ Scene(load_scene)
   life_hud = make_unique<LifeHud>(player.get());
 
   camera = CameraUtils::setupCamera();
+  wave_manager = make_unique<WaveManager>(*player, enemies);
   PLOGI << "Gameplay scene has loaded successfully!";
 }
 
@@ -39,6 +42,7 @@ GameplayScene::~GameplayScene() {
 
   player.reset();
   life_hud.reset();
+  wave_manager.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -54,6 +58,8 @@ void GameplayScene::checkInput() {
 }
 
 void GameplayScene::updateScene(double &delta_time) {
+  tickTimer();
+
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
 
@@ -62,9 +68,9 @@ void GameplayScene::updateScene(double &delta_time) {
   }
 
   life_hud->update();
-  Enemies::deleteDeadEnemies(enemies);
 
-  tickTimer();
+  wave_manager->waveSequence();
+  Enemies::deleteDeadEnemies(enemies);
 }
 
 void GameplayScene::tickTimer() {
@@ -82,13 +88,15 @@ void GameplayScene::tickTimer() {
   }
   else if (wave < max_wave) {
     PLOGI << "Proceeding to the next wave.";
-    SoundUtils::play("wave_next");
     wave++;
+    difficulty++;
+
+    wave_manager->startWave(difficulty);
+    SoundUtils::play("wave_next");
   }
 
   if (wave != max_wave) {
-    // This will probably change later.
-    timer = 20;
+    timer = wave_manager->wave_timer;
   }
 }
 
