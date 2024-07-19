@@ -30,7 +30,7 @@ Scene(load_scene)
   tick_timestamp = GetTime();
 
   player = make_shared<PlayerCharacter>(enemies, phase);
-  life_hud = make_unique<LifeHud>(player.get());
+  life_hud = make_unique<LifeHud>(*player, phase);
 
   camera = CameraUtils::setupCamera();
   wave_manager = make_unique<WaveManager>(*player, enemies);

@@ -25,7 +25,7 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   phase = PHASE_REST;
 
   player = make_shared<PlayerCharacter>(enemies, phase);
-  life_hud = make_unique<LifeHud>(player.get());
+  life_hud = make_unique<LifeHud>(*player, phase);
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),

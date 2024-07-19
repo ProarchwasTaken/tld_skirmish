@@ -1,6 +1,7 @@
 // hud_life.h
 #pragma once
 #include <raylib.h>
+#include <cstdint>
 #include "char_player.h"
 
 
@@ -10,7 +11,7 @@
  * Pretty standard stuff really.*/
 class LifeHud {
 public:
-  LifeHud(PlayerCharacter *player);
+  LifeHud(PlayerCharacter &player, uint8_t &phase);
   void update();
 
   /* The color of certain element of the LifeHud will change depending
@@ -34,6 +35,9 @@ public:
 
 private:
   PlayerCharacter *player;
+
+  uint8_t *game_phase;
+
   float life_percentage;
   
   Vector2 hud_position;
