@@ -6,13 +6,15 @@
 #include <vector>
 #include <random>
 #include <memory>
+#include <string>
 #include "base/generics.h"
 #include "globals.h"
 #include "enemy_ghoul.h"
 #include "wave_manager.h"
 #include <plog/Log.h>
 
-using std::vector, std::uniform_int_distribution, std::make_shared;
+using std::vector, std::uniform_int_distribution, std::make_shared, 
+std::string;
 
 
 EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
@@ -29,7 +31,7 @@ WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies)
   this->player = &player;
   this->enemies = &enemies;
 
-  wave_metadata = toml::parse("data/enemy_waves")["waves"];
+  wave_metadata = toml::parse("data/enemy_waves.toml")["waves"];
   PLOGI << "Initialized Wave Manager";
 }
 
@@ -38,7 +40,7 @@ void WaveManager::startWave(uint8_t difficulty) {
   bool waves_not_found;
 
   PLOGD << "Getting all waves associated with difficulty: " <<
-    difficulty;
+    int(difficulty);
   do {
     if (difficulty == 0) {
       PLOGE << "Absolutely no valid waves were found!";
@@ -61,8 +63,9 @@ void WaveManager::startWave(uint8_t difficulty) {
 
   int wave_index = range(RNG::generator);
   toml::value chosen_wave = waves_found[wave_index];
+  string wave_name = chosen_wave["name"].as_string();
 
-  PLOGI << "Now starting wave: " << chosen_wave["name"];
+  PLOGI << "Now starting wave: " << wave_name;
   assignWave(chosen_wave);
   wave_timestamp = GetTime();
 }
@@ -97,7 +100,7 @@ void WaveManager::assignWave(toml::value wave) {
 
     uint8_t id = enemy_data["enemy_id"].as_integer();
     int8_t screen_side = enemy_data["screen_side"].as_integer();
-    float spawn_time = enemy_data["spawn_time"].as_integer();
+    float spawn_time = enemy_data["spawn_time"].as_floating();
 
     enemy_queue.push_back(EnemyMetadata(id, screen_side, spawn_time));
   }
@@ -121,7 +124,9 @@ void WaveManager::waveSequence() {
 }
 
 void WaveManager::spawnEnemy(uint8_t enemy_id, int8_t spawn_side) {
-  PLOGI << "Attempting to spawn enemy associated with ID: " << enemy_id;
+  PLOGI << "Attempting to spawn enemy associated with ID: " << 
+    int(enemy_id);
+
   float spawn_x = 512 * spawn_side;
   Vector2 position = {spawn_x, 152};
 

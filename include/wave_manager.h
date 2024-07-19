@@ -31,12 +31,12 @@ public:
   void spawnEnemy(uint8_t enemy_id, int8_t spawn_side);
 
   uint16_t wave_timer = 0;
+  std::list<EnemyMetadata> enemy_queue;
 private:
   PlayerCharacter *player;
   combatant_list *enemies;
 
   toml::value wave_metadata;
-  std::list<EnemyMetadata> enemy_queue;
 
   float wave_timestamp = 0;
 };
