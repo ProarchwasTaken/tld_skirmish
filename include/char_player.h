@@ -37,7 +37,7 @@
  * decide what action command to use from there.*/
 class PlayerCharacter : public Combatant {
 public:
-  PlayerCharacter(combatant_list &enemies);
+  PlayerCharacter(combatant_list &enemies, uint8_t &phase);
   ~PlayerCharacter();
 
   /* Is called once every frame. Typically all of the player logic goes
@@ -100,6 +100,8 @@ public:
   bool moving;
   float movement_speed;
 private:
+  uint8_t *game_phase;
+
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;

@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 #include <raylib.h>
+#include <cstdint>
 #include "base/scene.h"
 #include "base/generics.h"
 #include "hud_life.h"
@@ -30,6 +31,7 @@ private:
   Texture debug_overlay;
 
   Camera2D camera;
+  uint8_t phase;
 
   std::shared_ptr<PlayerCharacter> player;
   std::unique_ptr<LifeHud> life_hud;

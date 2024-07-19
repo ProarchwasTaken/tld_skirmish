@@ -1,4 +1,5 @@
 // combatants/char_player.cpp
+#include <cstdint>
 #include <memory>
 #include <raylib.h>
 #include "globals.h"
@@ -6,6 +7,7 @@
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "scene_gameplay.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
@@ -15,12 +17,13 @@
 using std::make_unique, std::unique_ptr;
 
 
-PlayerCharacter::PlayerCharacter(combatant_list &enemies):
+PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_STABILITY, PLR_START_POS, 
             PLR_HITBOX_SCALE, {64, 64}, PLR_HITBOX_OFFSET)
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
+  game_phase = &phase;
 
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;
@@ -70,14 +73,22 @@ void PlayerCharacter::update(double &delta_time) {
 }
 
 bool PlayerCharacter::isMoving() {
-  if (moving_left == moving_right) {
-    current_sprite = sprites::player[1];
-    return false;
-  }
-  else {
+  if (moving_left != moving_right) {
     Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
+
+  switch (*game_phase) {
+    case PHASE_REST: {
+      current_sprite = sprites::player[0];
+      break;
+    }
+    case PHASE_ACTION: {
+      current_sprite = sprites::player[1];
+      break;
+    }
+  }
+  return false;
 }
 
 void PlayerCharacter::bufferTimerCheck() {

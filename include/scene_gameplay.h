@@ -10,6 +10,9 @@
 #include "hud_life.h"
 #include "char_player.h"
 
+#define PHASE_REST 0
+#define PHASE_ACTION 1
+
 
 /* The most vital scene as it's where everything related to the main
  * gameplay loop will take place. (This is supposed to be a game btw.)
@@ -38,9 +41,11 @@ private:
   std::unique_ptr<LifeHud> life_hud;
   Camera2D camera;
 
+  uint8_t phase;
+  uint8_t difficulty;
+
   uint8_t max_wave;
   uint8_t wave = 0;
-  uint8_t difficulty;
 
   uint16_t timer;
   float tick_interval;

@@ -20,6 +20,8 @@ Scene(load_scene)
   PLOGI << "Loading Gameplay scene.";
   tie(background, overlay) = Stages::loadStage("arisen");
 
+  phase = PHASE_REST;
+
   max_wave = 3;
   difficulty = 0;
 
@@ -27,7 +29,7 @@ Scene(load_scene)
   tick_interval = 1;
   tick_timestamp = GetTime();
 
-  player = make_shared<PlayerCharacter>(enemies);
+  player = make_shared<PlayerCharacter>(enemies, phase);
   life_hud = make_unique<LifeHud>(player.get());
 
   camera = CameraUtils::setupCamera();
