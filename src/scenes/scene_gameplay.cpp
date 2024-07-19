@@ -1,4 +1,5 @@
 // scene/scene_gameplay.cpp
+#include <cstdint>
 #include <raylib.h>
 #include <functional>
 #include <tuple>
@@ -73,6 +74,7 @@ void GameplayScene::updateScene(double &delta_time) {
 
   wave_manager->waveSequence();
   Enemies::deleteDeadEnemies(enemies);
+  phase = determinePhase();
 }
 
 void GameplayScene::tickTimer() {
@@ -99,6 +101,18 @@ void GameplayScene::tickTimer() {
 
   if (wave != max_wave) {
     timer = wave_manager->wave_timer;
+  }
+}
+
+uint8_t GameplayScene::determinePhase() {
+  bool no_enemies = enemies.size() == 0;
+  bool no_awaiting_spawn = wave_manager->enemy_queue.size() == 0;
+
+  if (no_enemies && no_awaiting_spawn) {
+    return PHASE_REST;
+  }
+  else {
+    return PHASE_ACTION;
   }
 }
 

@@ -23,6 +23,7 @@ public:
   ~GameplayScene() override;
 
   void tickTimer();
+  uint8_t determinePhase();
 
   void drawTimer();
   void drawWaveCount();
