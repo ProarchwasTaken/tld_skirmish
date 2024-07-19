@@ -5,12 +5,14 @@
 #include <toml/value.hpp>
 #include <vector>
 #include <random>
+#include <memory>
 #include "base/generics.h"
 #include "globals.h"
+#include "enemy_ghoul.h"
 #include "wave_manager.h"
 #include <plog/Log.h>
 
-using std::vector, std::uniform_int_distribution;
+using std::vector, std::uniform_int_distribution, std::make_shared;
 
 
 EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
@@ -22,10 +24,12 @@ EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side,
 }
 
 
-WaveManager::WaveManager(combatant_list &enemies) {
+WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies) 
+{
+  this->player = &player;
   this->enemies = &enemies;
-  wave_metadata = toml::parse("data/enemy_waves")["waves"];
 
+  wave_metadata = toml::parse("data/enemy_waves")["waves"];
   PLOGI << "Initialized Wave Manager";
 }
 
@@ -88,7 +92,6 @@ void WaveManager::assignWave(toml::value wave) {
     return;
   }
 
-
   for (int index = 0; index < enemy_count; index++) {
     toml::value enemy_data = wave["enemies"][index];
 
@@ -97,5 +100,38 @@ void WaveManager::assignWave(toml::value wave) {
     float spawn_time = enemy_data["spawn_time"].as_integer();
 
     enemy_queue.push_back(EnemyMetadata(id, screen_side, spawn_time));
+  }
+}
+
+void WaveManager::waveSequence() {
+  if (enemy_queue.size() == 0) {
+    return;
+  }
+
+  EnemyMetadata *enemy = &enemy_queue.front();
+  float time_elapsed = GetTime() - wave_timestamp;
+
+  if (time_elapsed >= enemy->spawn_time) {
+    uint8_t enemy_id = enemy->enemy_id;
+    int8_t spawn_side = enemy->screen_side;
+
+    spawnEnemy(enemy_id, spawn_side);
+    enemy_queue.pop_front();
+  }
+}
+
+void WaveManager::spawnEnemy(uint8_t enemy_id, int8_t spawn_side) {
+  PLOGI << "Attempting to spawn enemy associated with ID: " << enemy_id;
+  float spawn_x = 512 * spawn_side;
+  Vector2 position = {spawn_x, 152};
+
+  switch (enemy_id) {
+    case ENEMY_GHOUL: {
+      enemies->push_back(make_shared<GhoulEnemy>(*player, position));
+      break;
+    }
+    default: {
+      PLOGE << "There is no enemy associated with specified ID!";
+    }
   }
 }
