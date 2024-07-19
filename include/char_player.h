@@ -51,6 +51,11 @@ public:
    * Prevents the player from moving out of bounds when needed.*/
   void movement(double &delta_time);
 
+  /* For regenerating the player's health during the rest phase. Typically
+   * increments the player's health by 1 at a set rate. Only stopping when
+   * the player reaches max health.*/
+  void regeneration();
+
   /* Returns true if the player character should be moving. The outcome is
    * determined by user input.*/
   bool isMoving();
@@ -112,6 +117,9 @@ private:
 
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  float regen_time;
+  float regen_timestamp = 0;
 
   bool moving_right = false;
   bool moving_left = false;

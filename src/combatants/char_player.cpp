@@ -29,6 +29,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   walk_frametime = 0.15;
 
   movement_speed = 1.75;
+  regen_time = 0.6;
 
   buf_clear_time = 0.010;
 
@@ -43,6 +44,10 @@ PlayerCharacter::~PlayerCharacter() {
 
 void PlayerCharacter::update(double &delta_time) {
   bufferTimerCheck();
+
+  if (*game_phase == PHASE_REST) {
+    regeneration();
+  }
 
   switch (state) {
     case NEUTRAL: {
@@ -243,6 +248,18 @@ void PlayerCharacter::movement(double &delta_time) {
 
   hitboxCorrection();
   texRectCorrection();
+}
+
+void PlayerCharacter::regeneration() {
+  if (health == max_health) {
+    return;
+  }
+
+  float time_elapsed = GetTime() - regen_timestamp;
+  if (time_elapsed >= regen_time) {
+    health++;
+    regen_timestamp = GetTime();
+  }
 }
 
 void PlayerCharacter::inputPressed() {
