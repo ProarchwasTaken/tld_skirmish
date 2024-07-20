@@ -25,10 +25,14 @@ public:
   void tickTimer();
   uint8_t determinePhase();
 
+  void pauseGame();
+  void resumeGame();
+
   void drawTimer();
   void drawWaveCount();
 
   void checkInput() override;
+  void checkPauseInput();
   void updateScene(double &delta_time) override;
   void drawScene() override;
 private:
@@ -41,6 +45,9 @@ private:
   std::unique_ptr<WaveManager> wave_manager;
   std::unique_ptr<LifeHud> life_hud;
   Camera2D camera;
+
+  bool paused = false;
+  bool pause_timestamp = 0;
 
   uint8_t phase;
   uint8_t difficulty;

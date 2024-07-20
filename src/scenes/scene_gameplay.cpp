@@ -4,6 +4,7 @@
 #include <functional>
 #include <tuple>
 #include <memory>
+#include "base/combatant.h"
 #include "globals.h"
 #include "utils.h"
 #include "wave_manager.h"
@@ -56,11 +57,42 @@ GameplayScene::~GameplayScene() {
 }
 
 void GameplayScene::checkInput() {
-  player->inputPressed();
+  bool valid_state = player->state != HIT_STUN && player->state != DEAD;
+  bool valid_phase = phase == PHASE_REST || phase == PHASE_ACTION;
+
+  bool can_pause = valid_state && valid_phase;
+  if (can_pause) {
+    checkPauseInput();
+  }
+
+  if (paused == false) {
+    player->inputPressed();
+  }
+
   player->inputReleased();
 }
 
+void GameplayScene::checkPauseInput() {
+  bool key_tab = IsKeyPressed(KEY_TAB);
+
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_start = false;
+
+  if (gamepad_detected) {
+    btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+  }
+
+  if (key_tab || btn_start) {
+    if (paused == false) pauseGame();
+    else resumeGame();
+  }
+}
+
 void GameplayScene::updateScene(double &delta_time) {
+  if (paused) {
+    return;
+  }
+
   tickTimer();
 
   player->update(delta_time);
@@ -75,6 +107,23 @@ void GameplayScene::updateScene(double &delta_time) {
   wave_manager->waveSequence();
   Enemies::deleteDeadEnemies(enemies);
   phase = determinePhase();
+}
+
+void GameplayScene::pauseGame() {
+  PLOGI << "Pausing the game.";
+  paused = true;
+  pause_timestamp = GetTime();
+}
+
+void GameplayScene::resumeGame() {
+  PLOGI << "Resuming the game.";
+  paused = false;
+
+  double time_paused = GetTime() - pause_timestamp;
+  PLOGD << "Time Paused: " << time_paused;
+
+  PAUSE_PENALTY += time_paused;
+  PLOGD << "Pause Penalty: " << PAUSE_PENALTY;
 }
 
 void GameplayScene::tickTimer() {
