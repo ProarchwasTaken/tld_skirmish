@@ -33,8 +33,11 @@ public:
 
   void checkInput() override;
   void checkPauseInput();
+
   void updateScene(double &delta_time) override;
+
   void drawScene() override;
+  void drawPauseMenu();
 private:
   Texture background;
   Texture overlay;

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <raylib.h>
 #include <functional>
+#include <string>
 #include <tuple>
 #include <memory>
 #include "base/combatant.h"
@@ -13,7 +14,8 @@
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::make_unique, std::tie, std::function;
+using std::make_shared, std::make_unique, std::tie, std::function, 
+std::string;
 
 
 GameplayScene::GameplayScene(function<void(int)> load_scene):
@@ -201,4 +203,19 @@ void GameplayScene::drawScene() {
 
   drawWaveCount();
   drawTimer();
+
+  if (paused) {
+    drawPauseMenu();
+  }
+}
+
+// Placeholder
+void GameplayScene::drawPauseMenu() {
+  int size = fonts::skirmish->baseSize;
+  std::string text = "PAUSED";
+
+  Vector2 position = Text::alignCenter(fonts::skirmish, text, {213, 0}, 
+                                       1, 0);
+
+  DrawTextEx(*fonts::skirmish, text.c_str(), position, size, 0, WHITE);
 }
