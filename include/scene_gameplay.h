@@ -47,7 +47,7 @@ private:
   Camera2D camera;
 
   bool paused = false;
-  bool pause_timestamp = 0;
+  float pause_timestamp = 0;
 
   uint8_t phase;
   uint8_t difficulty;
