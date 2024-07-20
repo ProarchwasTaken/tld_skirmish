@@ -27,6 +27,8 @@ struct EnemyMetadata {
 class WaveManager {
 public:
   WaveManager(PlayerCharacter &player, combatant_list &enemies);
+  ~WaveManager();
+
   void startWave(uint8_t difficulty);
 
   std::vector<toml::value> waveSearch(uint8_t difficulty);

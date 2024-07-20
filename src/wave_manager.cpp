@@ -35,6 +35,10 @@ WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies)
   PLOGI << "Initialized Wave Manager";
 }
 
+WaveManager::~WaveManager() {
+  enemy_queue.clear();
+}
+
 void WaveManager::startWave(uint8_t difficulty) {
   vector<toml::value> waves_found;
   bool waves_not_found;
