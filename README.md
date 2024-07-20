@@ -22,6 +22,8 @@ with a bit of experimenting.
 * **A & S Keys** - Weapon Techniques
 * **Space Bar** - Guard
 
+* **Tab Key** - Pause/Resume
+
 ## Gamepad
 The controls detailed here are based on the SNES button layout, so it
 maybe different on other layouts. So try experimenting and see what the
@@ -37,6 +39,8 @@ buttons do.
 * **B & A Buttons** - Normal Attacks
 * **Y & X Buttons** - Weapon Techniques
 * **L or R Button** - Guard
+
+* **Start Button** - Pause/Resume
 
 
 # Credits and Contacts

@@ -11,7 +11,7 @@ else()
   set(CMAKE_CXX_COMPILER g++)
 endif()
 
-project("game" 
+project("skirmish" 
 VERSION 0.0.4
 DESCRIPTION "A short wave based fighter."
 LANGUAGES CXX
@@ -91,17 +91,17 @@ elseif(LINUX OR UNIX)
   set(RAYLIB -lraylib -lGL -lm -lpthread -ldl -lrt -lX11)
 endif()
 
-add_executable("game" ${SOURCE_FILES} ${HEADER_FILES})
+add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 
 if(${BUILD_DEBUG})
-  target_compile_options("game" PRIVATE --debug -O0)
-  target_link_libraries("game" PRIVATE ${RAYLIB})
+  target_compile_options("skirmish" PRIVATE --debug -O0)
+  target_link_libraries("skirmish" PRIVATE ${RAYLIB})
 else()
-    target_compile_options("game" PRIVATE -O3)
+    target_compile_options("skirmish" PRIVATE -O3)
   if(WIN32)
-    target_link_options("game" PRIVATE -mwindows)
-    target_link_libraries("game" PRIVATE ${STANDARD} ${RAYLIB})
+    target_link_options("skirmish" PRIVATE -mwindows)
+    target_link_libraries("skirmish" PRIVATE ${STANDARD} ${RAYLIB})
   elseif(LINUX OR UNIX)
-    target_link_libraries("game" PRIVATE ${RAYLIB})
+    target_link_libraries("skirmish" PRIVATE ${RAYLIB})
   endif()
 endif()
