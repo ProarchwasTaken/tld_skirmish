@@ -8,6 +8,7 @@
 #include "base/combatant.h"
 #include "globals.h"
 #include "utils.h"
+#include "game.h"
 #include "wave_manager.h"
 #include "char_player.h"
 #include "hud_life.h"
@@ -109,6 +110,13 @@ void GameplayScene::updateScene(double &delta_time) {
   wave_manager->waveSequence();
   Enemies::deleteDeadEnemies(enemies);
   phase = determinePhase();
+
+  // PLACEHOLDER
+  if (player->awaiting_deletion) {
+    PLOGW << "A proper fail state hasn't been implemented yet!";
+    PLOGI << "Resorting to go back to the title screen for now.";
+    load_scene(SCENE_TITLE);
+  }
 }
 
 void GameplayScene::pauseGame() {

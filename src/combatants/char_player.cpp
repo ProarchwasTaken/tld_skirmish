@@ -65,8 +65,8 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     case DEAD: {
-      PLOGE << "The death sequence not implemented yet!";
-      throw;
+      awaiting_deletion = true;
+      break;
     }
     default: {
       commandSequence(delta_time);
