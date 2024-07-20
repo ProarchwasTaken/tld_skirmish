@@ -29,7 +29,7 @@ Scene(load_scene)
 
   timer = 20;
   tick_interval = 1;
-  tick_timestamp = GetTime();
+  tick_timestamp = CURRENT_TIME;
 
   player = make_shared<PlayerCharacter>(enemies, phase);
   life_hud = make_unique<LifeHud>(*player, phase);
@@ -119,7 +119,9 @@ void GameplayScene::resumeGame() {
   PLOGI << "Resuming the game.";
   paused = false;
 
-  double time_paused = GetTime() - pause_timestamp;
+  PLOGD << "Current Time: " << GetTime();
+  PLOGD << "Pause Timestamp: " << pause_timestamp;
+  float time_paused = GetTime() - pause_timestamp;
   PLOGD << "Time Paused: " << time_paused;
 
   PAUSE_PENALTY += time_paused;
@@ -127,12 +129,12 @@ void GameplayScene::resumeGame() {
 }
 
 void GameplayScene::tickTimer() {
-  float time_elapsed = GetTime() - tick_timestamp;
+  float time_elapsed = CURRENT_TIME - tick_timestamp;
   if (time_elapsed < tick_interval) {
     return;
   }
 
-  tick_timestamp = GetTime();
+  tick_timestamp = CURRENT_TIME;
   
   if (timer != 0) {
     timer--;

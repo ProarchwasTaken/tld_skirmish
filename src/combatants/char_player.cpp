@@ -102,7 +102,7 @@ void PlayerCharacter::bufferTimerCheck() {
   bool detected_first_input = !buf_empty && buf_timer_started == false;
   if (detected_first_input) {
     PLOGI << "Detected first input in the buffer. Starting timer.";
-    buf_input_timestamp = GetTime();
+    buf_input_timestamp = CURRENT_TIME;
     buf_timer_started = true;
   }
 }
@@ -112,7 +112,7 @@ void PlayerCharacter::interpretBuffer() {
     return;
   }
 
-  float time_elapsed = GetTime() - buf_input_timestamp;
+  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
   bool about_to_clear = time_elapsed >= buf_clear_time;
 
   if (about_to_clear == false) {
@@ -213,7 +213,7 @@ void PlayerCharacter::clearBufferCheck() {
     return;
   }
 
-  float time_elapsed = GetTime() - buf_input_timestamp;
+  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
   if (time_elapsed >= buf_clear_time) {
     PLOGD << "Clearing input buffer.";
     input_buffer.clear();
@@ -255,10 +255,10 @@ void PlayerCharacter::regeneration() {
     return;
   }
 
-  float time_elapsed = GetTime() - regen_timestamp;
+  float time_elapsed = CURRENT_TIME - regen_timestamp;
   if (time_elapsed >= regen_time) {
     health++;
-    regen_timestamp = GetTime();
+    regen_timestamp = CURRENT_TIME;
   }
 }
 

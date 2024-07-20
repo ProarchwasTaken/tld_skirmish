@@ -68,7 +68,7 @@ void HeavyAttack::enemyHitCheck() {
 
   if (attack_connected) {
     user->state = RECOVER;
-    sequence_timestamp = GetTime();
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 

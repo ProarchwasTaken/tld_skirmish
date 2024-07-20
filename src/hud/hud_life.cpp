@@ -61,10 +61,10 @@ void LifeHud::segmentBlinkInterval() {
     return;
   }
 
-  float time_elasped = GetTime() - blink_timestamp;
+  float time_elasped = CURRENT_TIME - blink_timestamp;
   if (time_elasped >= blink_interval) {
     display_segment = !display_segment;
-    blink_timestamp = GetTime();
+    blink_timestamp = CURRENT_TIME;
   }
 }
 

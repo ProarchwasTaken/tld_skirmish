@@ -63,7 +63,7 @@ void GhoulAttack::playerHitCheck() {
 
     attack_connected = true;
     user->state = RECOVER;
-    sequence_timestamp = GetTime();
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 

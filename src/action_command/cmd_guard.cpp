@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
+#include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "sprite_loader.h"
@@ -78,7 +79,7 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
     SoundUtils::play("parry");
 
     user->state = RECOVER;
-    sequence_timestamp = GetTime();
+    sequence_timestamp = CURRENT_TIME;
     return;
   }
   else if (user->state == CHARGING) { 
@@ -102,7 +103,7 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
 
   SoundUtils::play("guard_success");
   user->state = RECOVER;
-  sequence_timestamp = GetTime();
+  sequence_timestamp = CURRENT_TIME;
 }
 
 bool Guard::guardFailed(float guard_pierce, float stun_time,
@@ -141,7 +142,7 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
     return false;
   }
 
-  float time_elapsed = GetTime() - sequence_timestamp;
+  float time_elapsed = CURRENT_TIME - sequence_timestamp;
 
   float subtrahend = (2 * pow(guard_pierce, 2)) / 5;
   float parry_window = DEF_PARRY_WINDOW - subtrahend;

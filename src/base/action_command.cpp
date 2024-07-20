@@ -1,6 +1,7 @@
 // action_command.cpp
 #include <string>
 #include <raylib.h>
+#include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include <plog/Log.h>
@@ -22,7 +23,7 @@ ActionCommand::ActionCommand(Combatant *user, string command_name,
 
   PLOGD << "{Combatant: " << user->name << "} is now attempting to use "
     << "{Command: "<< command_name << "}";
-  sequence_timestamp = GetTime();
+  sequence_timestamp = CURRENT_TIME;
 }
 
 void ActionCommand::chargeSequence(float time_elapsed, double &delta_time) 
@@ -31,7 +32,7 @@ void ActionCommand::chargeSequence(float time_elapsed, double &delta_time)
 
   if (finished_charge) {
     user->state = ACT;
-    sequence_timestamp = GetTime();
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 
@@ -40,7 +41,7 @@ void ActionCommand::actSequence(float time_elapsed, double &delta_time) {
 
   if (finished_action) {
     user->state = RECOVER;
-    sequence_timestamp = GetTime();
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 
