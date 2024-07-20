@@ -1,3 +1,29 @@
+# Menu Sound Effects
+[[sfx]]
+name = "opt_change"
+path = "audio/sfx/opt_change.wav"
+
+[[sfx]]
+name = "opt_confirm"
+path = "audio/sfx/opt_confirm.wav"
+
+[[sfx]]
+name = "opt_cancel"
+path = "audio/sfx/opt_cancel.wav"
+
+[[sfx]]
+name = "opt_error"
+path = "audio/sfx/opt_error.wav"
+
+# Gameplay Sound Effects
+[[sfx]]
+name = "timer_low"
+path = "audio/sfx/timer_low.wav"
+
+[[sfx]]
+name = "wave_next"
+path = "audio/sfx/wave_next.wav"
+
 [[sfx]]
 name = "damage" 
 path = "audio/sfx/damage.wav"

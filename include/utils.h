@@ -2,6 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
+#include <tuple>
 #include <string>
 #include <vector>
 #include "audio.h"
@@ -45,9 +46,9 @@ namespace Sprite {
 }
 
 
-/* Functions that have everything to do with sprite animations. These
- * set of functions are compatible with the Actor class and anything other
- * class that derive from it.*/
+/* Functions that have everything to do with sprite animations. This
+ * set of functions are compatible with the Actor class, and all other
+ * classes that derive from it.*/
 namespace Animation {
   /* For checking if the animation should continue. Depending on a number
    * of conditions, this function may change the actor's current animation
@@ -86,6 +87,8 @@ namespace AIBehavior {
 }
 
 
+/* Consists of functions specifically for the game's enemies. Including
+ * but not limited to: functions for manipulating a list of enemies.*/
 namespace Enemies {
   /* Does exactly what is says on the tin. Automatically deletes enemies
    * within that are awaiting deletion, and creates a new list with the
@@ -96,5 +99,39 @@ namespace Enemies {
    * enemy's patience value some distance above their bounding box.*/
   void drawPatience(Combatant *enemy, uint8_t patience, Color color, 
                     int y_offset);
+}
+
+
+/* Stages are the space of which all combatants will fight on. They are
+ * not meant to physically affect the game, but instead for cosmetic
+ * flavor. Stages are not exactly a class, they're represented by a set
+ * of textures, and these functions are for loading and returning them.*/
+namespace Stages {
+  /* For getting the textures associated with a stage and returning them
+   * as a tuple that could be unpacked. Each stage is defined by a 
+   * directory of which their files are located.*/
+  std::tuple<Texture, Texture> loadStage(std::string name);
+}
+
+
+/* Helper functions for manipulating text, and their positions in a
+ * certain way. Like aligning them to the right or center.*/
+namespace Text {
+  Vector2 alignCenter(Font *font, std::string text, Vector2 position, 
+                      int size_multiplier, int spacing);
+
+  Vector2 alignRight(Font *font, std::string text, Vector2 position,
+                     int size_multiplier, int spacing);
+}
+
+
+/* Helper functions for menu navigation. These functions can be very
+ * versatile when used correctly. In fact, it's really funny how simple
+ * these functions are. You should take a look.*/
+namespace Menu {
+  void nextOption(menu_options &options, 
+                  menu_options::iterator &selected, bool loop);
+  void previousOption(menu_options &options, 
+                      menu_options::iterator &selected, bool loop);
 }
 

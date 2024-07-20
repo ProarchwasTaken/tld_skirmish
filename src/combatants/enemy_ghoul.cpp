@@ -99,7 +99,7 @@ void GhoulEnemy::deathSequence() {
   Animation::play(this, sprites::ghoul, anim_death, death_frametime,
                   false);
 
-  float time_elapsed = GetTime() - death_timestamp;
+  float time_elapsed = CURRENT_TIME - death_timestamp;
   bool end_of_animation = current_frame == current_anim->end();
 
   if (end_of_animation && time_elapsed >= death_time) {

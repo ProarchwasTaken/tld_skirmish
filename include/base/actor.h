@@ -5,10 +5,10 @@
 #include <vector>
 
 
-/* The Actor Base class is the root of pretty much every game object that
- * serves a purpose that's more than just being decoration. Some may
- * refer to this as an abstract class, only meant to be expanded upon by
- * other base classes.*/
+/* The Actor Base class is the root of pretty much every game 
+ * object/character. It's only meant to function as the core for other 
+ * classes. Instances of this base class and all classes that derive from 
+ * it are capable of using sprites and animations.*/
 class Actor {
 public:
   Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale, 

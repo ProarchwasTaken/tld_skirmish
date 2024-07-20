@@ -1,18 +1,24 @@
 // hud/hud_life.h
 #include <cmath>
+#include <cstdint>
 #include <raylib.h>
+#include <string>
 #include "globals.h"
 #include "base/combatant.h"
+#include "utils.h"
+#include "scene_gameplay.h"
 #include "char_player.h"
 #include "hud_life.h"
 #include <plog/Log.h>
 
+using std::string;
 
-LifeHud::LifeHud(PlayerCharacter *player) {
-  this->player = player;
+
+LifeHud::LifeHud(PlayerCharacter &player, uint8_t &phase) {
+  this->player = &player;
+  game_phase = &phase;
 
   hud_position = {16, 212};
-  text_position = {0, hud_position.y - 2};
 
   gauge_position = {hud_position.x + 8, hud_position.y + 9};
   gauge_width = 69;
@@ -29,6 +35,11 @@ void LifeHud::update() {
 }
 
 void LifeHud::determineHudColor() {
+  if (player->health != player->max_health && *game_phase == PHASE_REST) {
+    hud_color = COLORS::PALETTE[14];
+    return;
+  }
+
   switch (player->state) {
     case HIT_STUN: {
       hud_color = COLORS::PALETTE[22];
@@ -50,10 +61,10 @@ void LifeHud::segmentBlinkInterval() {
     return;
   }
 
-  float time_elasped = GetTime() - blink_timestamp;
+  float time_elasped = CURRENT_TIME - blink_timestamp;
   if (time_elasped >= blink_interval) {
     display_segment = !display_segment;
-    blink_timestamp = GetTime();
+    blink_timestamp = CURRENT_TIME;
   }
 }
 
@@ -73,13 +84,6 @@ void LifeHud::updateGauge() {
   };
 }
 
-void LifeHud::alignText(const char* health_text) {
-  int size = fonts::skirmish->baseSize;
-  int width = MeasureTextEx(*fonts::skirmish, health_text, size, -3).x;
-
-  text_position.x = (hud_position.x + 79) - width;
-}
-
 void LifeHud::draw() {
   DrawTextureV(*sprites::hud_life[0], hud_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
@@ -94,10 +98,12 @@ void LifeHud::draw() {
 }
 
 void LifeHud::drawLifeText() {
-  auto *txt_hp = TextFormat("%i/%i", player->health, player->max_health);
-  alignText(txt_hp);
-
+  string txt_hp = TextFormat("%i/%i", player->health, player->max_health);
+  Vector2 base_position = {hud_position.x + 79, hud_position.y - 2};
+  txt_position = Text::alignRight(fonts::skirmish, txt_hp, base_position, 
+                                  1, -3);
+  
   int size = fonts::skirmish->baseSize;
-  DrawTextEx(*fonts::skirmish, txt_hp, text_position, size, -3, 
+  DrawTextEx(*fonts::skirmish, txt_hp.c_str(), txt_position, size, -3, 
              hud_color);
 }

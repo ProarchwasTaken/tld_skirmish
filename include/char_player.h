@@ -10,7 +10,7 @@
 
 #define PLR_HP 100
 #define PLR_STABILITY 0.5
-#define PLR_START_POS (Vector2){0, 208}
+#define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
 #define PLR_HITBOX_OFFSET (Vector2){-8, -58}
 
@@ -37,7 +37,7 @@
  * decide what action command to use from there.*/
 class PlayerCharacter : public Combatant {
 public:
-  PlayerCharacter(combatant_list &enemies);
+  PlayerCharacter(combatant_list &enemies, uint8_t &phase);
   ~PlayerCharacter();
 
   /* Is called once every frame. Typically all of the player logic goes
@@ -50,6 +50,11 @@ public:
    * in is determined by two booleans which can be altered by user input.
    * Prevents the player from moving out of bounds when needed.*/
   void movement(double &delta_time);
+
+  /* For regenerating the player's health during the rest phase. Typically
+   * increments the player's health by 1 at a set rate. Only stopping when
+   * the player reaches max health.*/
+  void regeneration();
 
   /* Returns true if the player character should be moving. The outcome is
    * determined by user input.*/
@@ -100,6 +105,8 @@ public:
   bool moving;
   float movement_speed;
 private:
+  uint8_t *game_phase;
+
   std::vector<uint8_t> input_buffer;
 
   bool buf_empty = false;
@@ -110,6 +117,9 @@ private:
 
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  float regen_time;
+  float regen_timestamp = 0;
 
   bool moving_right = false;
   bool moving_left = false;

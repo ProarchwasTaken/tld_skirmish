@@ -1,0 +1,50 @@
+# Difficulty - 1
+[[waves]]
+name = "First Born"
+difficulty = 1
+time_limit = 60
+
+enemies = [
+  {enemy_id = 0, screen_side = 1, spawn_time = 0.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 5.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 10.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 15.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 20.0},
+]
+
+
+# Difficulty - 2
+[[waves]]
+name = "Pace Increase"
+difficulty = 2
+time_limit = 80
+
+enemies = [
+  {enemy_id = 0, screen_side = 1, spawn_time = 0.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 1.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 8.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 12.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 18.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 22.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 28.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 30.0},
+]
+
+# Difficulty - 3
+[[waves]]
+name = "Only the Beginning"
+difficulty = 3
+time_limit = 120
+
+enemies = [
+  {enemy_id = 0, screen_side = -1, spawn_time = 1.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 2.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 3.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 20.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 21.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 22.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 40.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 40.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 42.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 42.0},
+]

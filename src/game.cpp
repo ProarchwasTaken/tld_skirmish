@@ -2,15 +2,19 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include <functional>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
 #include "sprite_loader.h"
 #include "audio.h"
 #include "scene_debug.h"
+#include "scene_title.h"
+#include "scene_menu.h"
+#include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::make_unique;
+using std::make_unique, std::function;
 
 
 Game::Game(int start_scene) {
@@ -27,7 +31,7 @@ Game::Game(int start_scene) {
 }
 
 Game::~Game() {
-  PLOGV << "Request to terminate program detected.";
+  PLOGI << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
 
@@ -37,7 +41,7 @@ Game::~Game() {
   sprite_loader.reset();
   audio_manager.reset();
 
-  PLOGV << "Thanks for playing!";
+  PLOGI << "Thanks for playing!";
 }
 
 void Game::correctWindow() {
@@ -93,14 +97,32 @@ void Game::loadScene(int scene_id) {
     scene.reset();
   }
 
+  function<void(int)> load_func = [this](int scene_id){
+    this->loadScene(scene_id);
+  };
+
   PLOGI << "Attempting to load scene correlated with id: " << scene_id;
   switch (scene_id) {
     case SCENE_DEBUG: {
-      scene = make_unique<DebugScene>();
+      scene = make_unique<DebugScene>(load_func);
       break;
     }
-    case SCENE_MENU: 
+    case SCENE_TITLE: {
+      scene = make_unique<TitleScene>(load_func);
+      break;
+    }
+    case SCENE_MENU: {
+      scene = make_unique<MenuScene>(load_func);
+      break;
+    }
     case SCENE_GAMEPLAY: {
+      scene = make_unique<GameplayScene>(load_func);
+      break;
+    }
+    case SCENE_STARTUP: 
+    case SCENE_SETTINGS:
+    case SCENE_CONTROLS:
+    case SCENE_PREGAME: {
       PLOGE << "Scene is not implemented yet!";
       throw SCENE_NOT_IMPLEMENTED;
     }

@@ -1,6 +1,7 @@
 // hud_life.h
 #pragma once
 #include <raylib.h>
+#include <cstdint>
 #include "char_player.h"
 
 
@@ -10,7 +11,7 @@
  * Pretty standard stuff really.*/
 class LifeHud {
 public:
-  LifeHud(PlayerCharacter *player);
+  LifeHud(PlayerCharacter &player, uint8_t &phase);
   void update();
 
   /* The color of certain element of the LifeHud will change depending
@@ -27,11 +28,6 @@ public:
    * the last segment of the life gauge will "blink" to indicate that.*/
   void segmentBlinkInterval();
 
-  /* Aligns the text so it would be anchored from the right rather than
-   * the left. This will always to called every frame to account for
-   * the possibility of the player's health changing.*/
-  void alignText(const char* health_text);
-
   /* The life text is meant to display the exact amount of health the
    * player has left, relative to their maximum amount of health.*/
   void drawLifeText();
@@ -39,11 +35,14 @@ public:
 
 private:
   PlayerCharacter *player;
+
+  uint8_t *game_phase;
+
   float life_percentage;
   
   Vector2 hud_position;
   Color hud_color;
-  Vector2 text_position;
+  Vector2 txt_position;
 
   Vector2 gauge_position;
   Rectangle gauge_source; 

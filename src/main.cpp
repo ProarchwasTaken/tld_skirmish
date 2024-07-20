@@ -3,6 +3,7 @@
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
+#include <plog/Severity.h>
 #include <plog/Formatters/TxtFormatter.h>
 #include <plog/Appenders/RollingFileAppender.h>
 #include <plog/Appenders/ColorConsoleAppender.h>
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
   setupCustomLogger();
   int start_scene = parseArguments(argc, argv);
 
-  PLOGV << "Initializing the game...";
+  PLOGI << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
@@ -29,8 +30,9 @@ int main(int argc, char *argv[]) {
 
   Game game(start_scene);
 
-  PLOGV << "Everything seems good to go!";
-  while (WindowShouldClose() == false) {
+  PLOGI << "Everything seems good to go!";
+  while (EXIT_GAME == false) {
+    EXIT_GAME = WindowShouldClose();
     if (IsWindowResized()) {
       game.correctWindow();
     }
@@ -49,6 +51,7 @@ int main(int argc, char *argv[]) {
     game.refresh();
   }
 
+  CloseWindow();
   return 0;
 }
 
@@ -57,21 +60,25 @@ void setupCustomLogger() {
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
                                                            1000000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;
-  plog::init(plog::verbose, &file_appender)
+  plog::init(plog::info, &file_appender)
     .addAppender(&console_appender);
-  PLOGV << "Logger initialized."; 
+  PLOGI << "Logger initialized."; 
 }
 
 
 int parseArguments(int argc, char *argv[]) {
   PLOGI << "Parsing command line arguments.";
-  int start_scene = SCENE_MENU;
+  int start_scene = SCENE_TITLE;
 
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];
     if (arg == "--debug_scene") {
-      PLOGV << "Starting the game in the debug scene.";
+      PLOGI << "Starting the game in the debug scene.";
       start_scene = SCENE_DEBUG;
+    }
+    if (arg == "-v") {
+      plog::get()->setMaxSeverity(plog::verbose); 
+      PLOGV << "Has set logger severity to verbose.";
     }
   }
 

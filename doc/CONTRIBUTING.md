@@ -53,7 +53,7 @@ source code and run the outputted executable without leaving the root
 directory. It's what I use all the time to quickly compile and test the
 game. Although it may have to be edited slightly if you work on linux.
 
-`make -C build\ && .\game.exe`
+`make -C build\ && .\skirmish.exe`
 
 There may be times during the game's development where the game would not
 be able to ran normal due to the starting scene not being implemented yet. 
@@ -61,6 +61,8 @@ To circumvent this, you can start the game into the debug scene using
 the following command line argument.
 
 `--debug_scene`
+
+You could also use `-v` to enable verbose logging statements.
 
 
 # Coding Conventions
@@ -101,6 +103,24 @@ probably be added later, and some rules may be subject to change.
   enjoyable to watch, and it's one of my most favorite videos. You could
   also just, y'know... read the code itself to understand how I 
   programmed everything.
+
+
+# Contributing Art
+There's a couple things you need to know if you wish contribute to the 
+project in the form of art for stages, enemies, effects, etc. More will
+be added as we go.
+
+All art must adhere to the game's color palette. It's basically the NES 
+color palette. You can view the palette in the "graphics" directory. The 
+only exception is art made purely for the purpose of debugging and 
+testing. (Something that not gonna be seen in normal play.) Depending on
+what program you use, you may have to disable anti-aliasing or 
+interpolation to avoid accidentally breaking this rule. 
+
+What program you use is completely up to you. Personally, I use 
+Asesprite for the pixel art, and paint.net/gimp for the more
+complex stuff like the game's stages. Speaking of which, there are 
+multiple templates you could use as a reference for how things are done.
 
 
 # Commits Guidelines.

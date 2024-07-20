@@ -1,4 +1,5 @@
 // combatants/char_player.cpp
+#include <cstdint>
 #include <memory>
 #include <raylib.h>
 #include "globals.h"
@@ -6,6 +7,7 @@
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "scene_gameplay.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
@@ -15,21 +17,22 @@
 using std::make_unique, std::unique_ptr;
 
 
-PlayerCharacter::PlayerCharacter(combatant_list &enemies):
+PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   Combatant("Player", TYPE_PLAYER, PLR_HP, PLR_STABILITY, PLR_START_POS, 
             PLR_HITBOX_SCALE, {64, 64}, PLR_HITBOX_OFFSET)
 {
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
+  game_phase = &phase;
 
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;
 
   movement_speed = 1.75;
+  regen_time = 0.6;
 
   buf_clear_time = 0.010;
 
-  PLOGI << "Assigning address to enemy list to pointer.";
   this->enemies = &enemies;
   PLOGI << "Player initialization complete.";
 }
@@ -41,6 +44,10 @@ PlayerCharacter::~PlayerCharacter() {
 
 void PlayerCharacter::update(double &delta_time) {
   bufferTimerCheck();
+
+  if (*game_phase == PHASE_REST) {
+    regeneration();
+  }
 
   switch (state) {
     case NEUTRAL: {
@@ -58,8 +65,8 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     case DEAD: {
-      PLOGE << "The death sequence not implemented yet!";
-      throw;
+      awaiting_deletion = true;
+      break;
     }
     default: {
       commandSequence(delta_time);
@@ -71,14 +78,22 @@ void PlayerCharacter::update(double &delta_time) {
 }
 
 bool PlayerCharacter::isMoving() {
-  if (moving_left == moving_right) {
-    current_sprite = sprites::player[1];
-    return false;
-  }
-  else {
+  if (moving_left != moving_right) {
     Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
+
+  switch (*game_phase) {
+    case PHASE_REST: {
+      current_sprite = sprites::player[0];
+      break;
+    }
+    case PHASE_ACTION: {
+      current_sprite = sprites::player[1];
+      break;
+    }
+  }
+  return false;
 }
 
 void PlayerCharacter::bufferTimerCheck() {
@@ -86,8 +101,8 @@ void PlayerCharacter::bufferTimerCheck() {
 
   bool detected_first_input = !buf_empty && buf_timer_started == false;
   if (detected_first_input) {
-    PLOGD << "Detected first input in the buffer. Starting timer.";
-    buf_input_timestamp = GetTime();
+    PLOGI << "Detected first input in the buffer. Starting timer.";
+    buf_input_timestamp = CURRENT_TIME;
     buf_timer_started = true;
   }
 }
@@ -97,7 +112,7 @@ void PlayerCharacter::interpretBuffer() {
     return;
   }
 
-  float time_elapsed = GetTime() - buf_input_timestamp;
+  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
   bool about_to_clear = time_elapsed >= buf_clear_time;
 
   if (about_to_clear == false) {
@@ -198,7 +213,7 @@ void PlayerCharacter::clearBufferCheck() {
     return;
   }
 
-  float time_elapsed = GetTime() - buf_input_timestamp;
+  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
   if (time_elapsed >= buf_clear_time) {
     PLOGD << "Clearing input buffer.";
     input_buffer.clear();
@@ -235,6 +250,18 @@ void PlayerCharacter::movement(double &delta_time) {
   texRectCorrection();
 }
 
+void PlayerCharacter::regeneration() {
+  if (health == max_health) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - regen_timestamp;
+  if (time_elapsed >= regen_time) {
+    health++;
+    regen_timestamp = CURRENT_TIME;
+  }
+}
+
 void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
@@ -243,31 +270,27 @@ void PlayerCharacter::inputPressed() {
   bool key_x = IsKeyPressed(KEY_X);
   bool key_space = IsKeyPressed(KEY_SPACE);
 
-  bool gamepad_available = IsGamepadAvailable(0);
-  bool gamepad_right = false;
-  bool gamepad_left = false;
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_right = false;
+  bool btn_left = false;
 
-  bool gamepad_face_right = false;
-  bool gamepad_face_down = false;
+  bool btn_face_right = false;
+  bool btn_face_down = false;
 
-  bool gamepad_shoulder_down = false;
+  bool btn_shoulder_down = false;
 
-  if (gamepad_available) {
-    gamepad_right = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
-    );
-    gamepad_left = IsGamepadButtonPressed(
-      0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
-    );
+  if (gamepad_detected) {
+    btn_right = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+    btn_left = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
 
-    gamepad_face_right = IsGamepadButtonPressed(
+    btn_face_right = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
     );
-    gamepad_face_down = IsGamepadButtonPressed(
+    btn_face_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
     );
 
-    gamepad_shoulder_down = IsGamepadButtonPressed(
+    btn_shoulder_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
       || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
       || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
@@ -275,27 +298,27 @@ void PlayerCharacter::inputPressed() {
   }
 
 
-  bool input_right = key_right || gamepad_right;
+  bool input_right = key_right || btn_right;
   if (input_right && moving_right == false) {
     moving_right = true;
   }
   
-  bool input_left = key_left || gamepad_left;
+  bool input_left = key_left || btn_left;
   if (input_left && moving_left == false) {
     moving_left = true;
   }
 
-  bool input_light_attack = key_z || gamepad_face_down;
+  bool input_light_attack = key_z || btn_face_down;
   if (input_light_attack) {
     input_buffer.push_back(BTN_LIGHT_ATK);
   }
 
-  bool input_heavy_attack = key_x || gamepad_face_right;
+  bool input_heavy_attack = key_x || btn_face_right;
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
   }
 
-  bool input_guard = key_space || gamepad_shoulder_down;
+  bool input_guard = key_space || btn_shoulder_down;
   if (input_guard) {
     input_buffer.push_back(BTN_GUARD);
   }
@@ -305,21 +328,21 @@ void PlayerCharacter::inputReleased() {
   bool key_right = IsKeyReleased(KEY_RIGHT);
   bool key_left = IsKeyReleased(KEY_LEFT);
 
-  bool gamepad_available = IsGamepadAvailable(0);
-  bool gamepad_right = false;
-  bool gamepad_left = false;
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_right = false; 
+  bool btn_left = false;
 
-  if (gamepad_available) {
-    gamepad_right = IsGamepadButtonReleased(
+  if (gamepad_detected) {
+    btn_right = IsGamepadButtonReleased(
       0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT
     );
-    gamepad_left = IsGamepadButtonReleased(
+    btn_left = IsGamepadButtonReleased(
       0, GAMEPAD_BUTTON_LEFT_FACE_LEFT
     ); 
   }
 
-  bool input_right = key_right || (gamepad_available && gamepad_right);
-  bool input_left = key_left || (gamepad_available && gamepad_left);
+  bool input_right = key_right || btn_right;
+  bool input_left = key_left || btn_left;
 
   if (input_right && moving_right) {
     moving_right = false;

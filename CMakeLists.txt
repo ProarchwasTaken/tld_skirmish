@@ -11,8 +11,8 @@ else()
   set(CMAKE_CXX_COMPILER g++)
 endif()
 
-project("game" 
-VERSION 0.0.3
+project("skirmish" 
+VERSION 0.0.4
 DESCRIPTION "A short wave based fighter."
 LANGUAGES CXX
 )
@@ -36,6 +36,13 @@ set(SOURCE_FILES
 "src/utils/ai_behavior.cpp"
 "src/utils/sound.cpp"
 "src/utils/sprite.cpp"
+"src/utils/stages.cpp"
+"src/utils/text.cpp"
+"src/utils/menu.cpp"
+"src/wave_manager.cpp"
+"src/scenes/scene_title.cpp"
+"src/scenes/scene_menu.cpp"
+"src/scenes/scene_gameplay.cpp"
 "src/scenes/scene_debug.cpp"
 "src/hud/hud_life.cpp"
 "src/combatants/char_player.cpp"
@@ -54,6 +61,15 @@ set(HEADER_FILES
 "include/utils.h"
 "include/sprite_loader.h"
 "include/audio.h"
+"include/base/generics.h"
+"include/base/scene.h"
+"include/base/actor.h"
+"include/base/combatant.h"
+"include/base/action_command.h"
+"include/wave_manager.h"
+"include/scene_title.h"
+"include/scene_menu.h"
+"include/scene_gameplay.h"
 "include/scene_debug.h"
 "include/hud_life.h"
 "include/char_player.h"
@@ -63,11 +79,6 @@ set(HEADER_FILES
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
-"include/base/generics.h"
-"include/base/scene.h"
-"include/base/actor.h"
-"include/base/combatant.h"
-"include/base/action_command.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
@@ -80,17 +91,17 @@ elseif(LINUX OR UNIX)
   set(RAYLIB -lraylib -lGL -lm -lpthread -ldl -lrt -lX11)
 endif()
 
-add_executable("game" ${SOURCE_FILES} ${HEADER_FILES})
+add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 
 if(${BUILD_DEBUG})
-  target_compile_options("game" PRIVATE --debug -O0)
-  target_link_libraries("game" PRIVATE ${RAYLIB})
+  target_compile_options("skirmish" PRIVATE --debug -O0)
+  target_link_libraries("skirmish" PRIVATE ${RAYLIB})
 else()
-    target_compile_options("game" PRIVATE -O3)
+    target_compile_options("skirmish" PRIVATE -O3)
   if(WIN32)
-    target_link_options("game" PRIVATE -mwindows)
-    target_link_libraries("game" PRIVATE ${STANDARD} ${RAYLIB})
+    target_link_options("skirmish" PRIVATE -mwindows)
+    target_link_libraries("skirmish" PRIVATE ${STANDARD} ${RAYLIB})
   elseif(LINUX OR UNIX)
-    target_link_libraries("game" PRIVATE ${RAYLIB})
+    target_link_libraries("skirmish" PRIVATE ${RAYLIB})
   endif()
 endif()

@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <raylib.h>
+#include "globals.h"
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
@@ -60,7 +61,7 @@ void Combatant::commandSequence(double &delta_time) {
     throw;
   }
 
-  float time_elapsed = GetTime() - current_command->sequence_timestamp;
+  float time_elapsed = CURRENT_TIME - current_command->sequence_timestamp;
 
   switch (state) {
     case CHARGING: {
@@ -99,7 +100,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
     return;
   }
 
-  PLOGD << dmg_magnitude << " points of damage is being inflicted to "
+  PLOGI << dmg_magnitude << " points of damage is being inflicted to "
     "combatant: " << name;
   SoundUtils::play("damage");
 
@@ -139,7 +140,7 @@ void Combatant::enterHitStun(float stun_time) {
   this->stun_time = stun_time;
   cancelCommand();
 
-  stun_timestamp = GetTime();
+  stun_timestamp = CURRENT_TIME;
 }
 
 void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
@@ -180,27 +181,27 @@ void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
 }
 
 void Combatant::death() {
-  PLOGV << "{Combatant: " << name << "} is now dead!";
+  PLOGI << "{Combatant: " << name << "} is now dead!";
   cancelCommand();
   state = DEAD;
 
   SoundUtils::play("death");
-  death_timestamp = GetTime();
+  death_timestamp = CURRENT_TIME;
 }
 
 void Combatant::stunSequence() {
   if (state != HIT_STUN) {
-    PLOGF << "{Combatant: " << name << "} entered stun sequence when it"
+    PLOGE << "{Combatant: " << name << "} entered stun sequence when it"
       " wasn't supposed to!";
     throw;
   }
 
-  float time_elapsed = GetTime() - stun_timestamp;
+  float time_elapsed = CURRENT_TIME - stun_timestamp;
   if (time_elapsed < stun_time) {
     return;
   }
 
-  PLOGD << "{Combatant: " << name << "} has now finished stun sequence";
+  PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
     kb_velocity = 0;

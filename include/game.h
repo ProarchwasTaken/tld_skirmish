@@ -6,9 +6,15 @@
 #include "audio.h"
 #include "base/scene.h"
 
-#define SCENE_DEBUG 0
-#define SCENE_MENU 1
-#define SCENE_GAMEPLAY 2
+#define SCENE_STARTUP 0
+#define SCENE_TITLE 1
+#define SCENE_MENU 2
+#define SCENE_SETTINGS 3
+#define SCENE_CONTROLS 4
+#define SCENE_PREGAME 5
+
+#define SCENE_GAMEPLAY 6
+#define SCENE_DEBUG 7
 
 
 #define SCENE_NOT_FOUND 4205
