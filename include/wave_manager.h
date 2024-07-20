@@ -19,11 +19,16 @@ struct EnemyMetadata {
 };
 
 
+/* The WaveManager is primarily responsible for handling the spawning of
+ * the game's enemies in accordance to the current wave. Data about each
+ * wave of enemies in the game is retrieved from an external toml file
+ * which used often in the majority of the class's methods. If you want to
+ * add addition waves, that's where you'd look.*/
 class WaveManager {
 public:
   WaveManager(PlayerCharacter &player, combatant_list &enemies);
-
   void startWave(uint8_t difficulty);
+
   std::vector<toml::value> waveSearch(uint8_t difficulty);
   void assignWave(toml::value wave);
 
