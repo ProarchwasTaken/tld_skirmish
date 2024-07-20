@@ -6,7 +6,7 @@ controls simple enough that you could play with just an SNES controller.
 
 # Controls
 This section gives a basic rundown the game's controls with a keyboard and
-a controller.The controls are simple. I trust that you could figure it out
+a controller. The controls are simple. I trust that you could figure it out
 with a bit of experimenting.
 
 ## Keyboard
