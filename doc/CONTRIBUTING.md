@@ -53,7 +53,7 @@ source code and run the outputted executable without leaving the root
 directory. It's what I use all the time to quickly compile and test the
 game. Although it may have to be edited slightly if you work on linux.
 
-`make -C build\ && .\game.exe`
+`make -C build\ && .\skirmish.exe`
 
 There may be times during the game's development where the game would not
 be able to ran normal due to the starting scene not being implemented yet. 
@@ -61,6 +61,8 @@ To circumvent this, you can start the game into the debug scene using
 the following command line argument.
 
 `--debug_scene`
+
+You could also use `-v` to enable verbose logging statements.
 
 
 # Coding Conventions
