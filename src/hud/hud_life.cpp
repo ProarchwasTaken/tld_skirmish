@@ -86,7 +86,8 @@ void LifeHud::updateGauge() {
 }
 
 void LifeHud::draw() {
-  DrawTextureV(*sprites::hud_life[0], hud_position, WHITE);
+  DrawTextureV(*sprites::hud_life[0], hud_position, hud_color);
+  DrawTextureV(*sprites::hud_life[2], gauge_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
                  hud_color);
 

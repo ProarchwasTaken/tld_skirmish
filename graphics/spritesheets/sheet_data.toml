@@ -95,3 +95,7 @@ area = {x = 0, y = 0, width = 80, height = 21}
 [[hud_life.sprites]] # ID: 1
 name = "bar"
 area = {x = 8, y = 22, width = 69, height = 9}
+
+[[hud_life.sprites]] # ID: 2
+name = "empty"
+area = {x = 8, y = 32, width = 69, height = 9}
