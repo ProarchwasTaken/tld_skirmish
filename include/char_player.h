@@ -107,8 +107,10 @@ public:
 private:
   uint8_t *game_phase;
 
-  std::vector<uint8_t> input_buffer;
+  uint8_t morale;
+  uint8_t max_morale;
 
+  std::vector<uint8_t> input_buffer;
   bool buf_empty = false;
   bool buf_timer_started = false;
 
