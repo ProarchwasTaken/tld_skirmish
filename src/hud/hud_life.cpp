@@ -18,7 +18,7 @@ LifeHud::LifeHud(PlayerCharacter &player, uint8_t &phase) {
   this->player = &player;
   game_phase = &phase;
 
-  hud_position = {16, 212};
+  hud_position = {16, 208};
 
   gauge_position = {hud_position.x + 8, hud_position.y + 9};
   gauge_width = 69;
@@ -87,16 +87,26 @@ void LifeHud::updateGauge() {
 
 void LifeHud::draw() {
   DrawTextureV(*sprites::hud_life[0], hud_position, hud_color);
-  DrawTextureV(*sprites::hud_life[2], gauge_position, WHITE);
+  DrawTextureV(*sprites::hud_life[3], gauge_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
                  hud_color);
 
-  if (blink_interval != 1.0 && display_segment) {
-    DrawTextureRec(*sprites::hud_life[1], segment_source, 
-                   segment_position, hud_color);
+  drawLifeText();
+
+  if (blink_interval == 1.0) {
+    return;
   }
 
-  drawLifeText();
+  int index;
+  if (display_segment) {
+    index = 1;
+  }
+  else {
+    index = 2;
+  }
+
+  DrawTextureRec(*sprites::hud_life[index], segment_source, 
+                 segment_position, hud_color);
 }
 
 void LifeHud::drawLifeText() {
