@@ -73,7 +73,8 @@ void LifeHud::updateGauge() {
   life_percentage = health / player->max_health;
 
   int base_value = floor(life_percentage * 10);
-  blink_interval = (life_percentage * 10) - base_value;
+  float remainder = (life_percentage * 10) - base_value;
+  blink_interval = 1.0 - remainder;
 
   int segments = base_value;
   gauge_source.width = segment_width * segments;
@@ -89,7 +90,7 @@ void LifeHud::draw() {
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
                  hud_color);
 
-  if (display_segment) {
+  if (blink_interval != 1.0 && display_segment) {
     DrawTextureRec(*sprites::hud_life[1], segment_source, 
                    segment_position, hud_color);
   }
