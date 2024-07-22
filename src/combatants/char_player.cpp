@@ -29,7 +29,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   walk_frametime = 0.15;
 
   movement_speed = 1.75;
-  regen_time = 0.6;
+  regen_time = 2;
 
   buf_clear_time = 0.010;
 

@@ -165,7 +165,7 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
 }
 
 void Guard::deathProtection(uint16_t &dmg_magnitude) {
-  bool death_protection = dmg_magnitude < 10;
+  bool death_protection = dmg_magnitude < 5;
   bool death_imminent = user->health - dmg_magnitude <= 0;
 
   if (death_protection && death_imminent) {
