@@ -23,7 +23,10 @@ public:
   ~DebugScene() override;
 
   void checkInput() override;
+  void debugInputs();
+
   void updateScene(double &delta_time) override;
+
   void drawScene() override;
   void drawDebugInfo() override;
 private:

@@ -56,28 +56,41 @@ DebugScene::~DebugScene() {
 }
 
 void DebugScene::checkInput() {
+  debugInputs();
+
   player->inputPressed();
   player->inputReleased();
 }
 
-void DebugScene::updateScene(double &delta_time) {
+void DebugScene::debugInputs() {
   if (IsKeyPressed(KEY_E)) {
     enemies.push_back(
       make_shared<GhoulEnemy>(*player, (Vector2){450, 152})
     );
-    PLOGI << "Spawned enemy at the right of the stage.";
+    PLOGD << "Spawned enemy at the right of the stage.";
   }
+
   if (IsKeyPressed(KEY_Q)) {
     enemies.push_back(
       make_shared<GhoulEnemy>(*player, (Vector2){-450, 152})
     );
-    PLOGI << "Spawned enemy at the left side of the stage.";
+    PLOGD << "Spawned enemy at the left side of the stage.";
   }
+
   if (IsKeyPressed(KEY_W)) {
-    PLOGI << "Toggling game phase.";
+    PLOGD << "Toggling game phase.";
     phase = !phase;
   }
 
+  if (player->morale != 0 && IsKeyPressed(KEY_R)) {
+    player->morale--;
+  }
+  if (player->morale != player->max_morale && IsKeyPressed(KEY_T)) {
+    player->morale++;
+  }
+}
+
+void DebugScene::updateScene(double &delta_time) {
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
 
