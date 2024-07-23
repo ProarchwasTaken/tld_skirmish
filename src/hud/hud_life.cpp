@@ -56,11 +56,6 @@ void LifeHud::determineHudColor() {
 }
 
 void LifeHud::segmentBlinkInterval() {
-  if (blink_interval == 0.0) {
-    display_segment = false;
-    return;
-  }
-
   float time_elasped = CURRENT_TIME - blink_timestamp;
   if (time_elasped >= blink_interval) {
     display_segment = !display_segment;
@@ -86,12 +81,26 @@ void LifeHud::updateGauge() {
 }
 
 void LifeHud::draw() {
+  drawLifeGauge();
+  drawLifeText();
+}
+
+void LifeHud::drawLifeText() {
+  string txt_hp = TextFormat("%i/%i", player->health, player->max_health);
+  Vector2 base_position = {hud_position.x + 79, hud_position.y - 2};
+  txt_position = Text::alignRight(fonts::skirmish, txt_hp, base_position, 
+                                  1, -3);
+  
+  int size = fonts::skirmish->baseSize;
+  DrawTextEx(*fonts::skirmish, txt_hp.c_str(), txt_position, size, -3, 
+             hud_color);
+}
+
+void LifeHud::drawLifeGauge() {
   DrawTextureV(*sprites::hud_life[0], hud_position, hud_color);
   DrawTextureV(*sprites::hud_life[3], gauge_position, WHITE);
   DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
                  hud_color);
-
-  drawLifeText();
 
   if (blink_interval == 1.0) {
     return;
@@ -107,15 +116,4 @@ void LifeHud::draw() {
 
   DrawTextureRec(*sprites::hud_life[index], segment_source, 
                  segment_position, hud_color);
-}
-
-void LifeHud::drawLifeText() {
-  string txt_hp = TextFormat("%i/%i", player->health, player->max_health);
-  Vector2 base_position = {hud_position.x + 79, hud_position.y - 2};
-  txt_position = Text::alignRight(fonts::skirmish, txt_hp, base_position, 
-                                  1, -3);
-  
-  int size = fonts::skirmish->baseSize;
-  DrawTextEx(*fonts::skirmish, txt_hp.c_str(), txt_position, size, -3, 
-             hud_color);
 }

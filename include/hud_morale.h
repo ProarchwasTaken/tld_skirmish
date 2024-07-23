@@ -4,6 +4,8 @@
 #include "char_player.h"
 
 
+/* The MoraleHud is a hud element similar to the LifeHud. Obvious 
+ * obvious difference being that it measures the player's Morale.*/
 class MoraleHud {
 public:
   MoraleHud(PlayerCharacter &player);
@@ -13,6 +15,7 @@ public:
   void segmentBlinkInterval();
 
   void drawMoraleText();
+  void drawMoraleGauge();
   void draw();
 private:
   PlayerCharacter *player;

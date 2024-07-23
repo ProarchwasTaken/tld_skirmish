@@ -67,11 +67,10 @@ void MoraleHud::drawMoraleText() {
              COLORS::PALETTE[42]);
 }
 
-void MoraleHud::draw() {
+void MoraleHud::drawMoraleGauge() {
   DrawTextureV(*sprites::hud_morale[0], hud_position, WHITE);
   DrawTextureRec(*sprites::hud_morale[2], gauge_source, gauge_position, 
                  WHITE);
-  drawMoraleText();
 
   if (blink_interval == 1.0) {
     return;
@@ -87,4 +86,9 @@ void MoraleHud::draw() {
 
   DrawTextureRec(*sprites::hud_morale[index], segment_source, 
                  segment_position, WHITE);
+}
+
+void MoraleHud::draw() {
+  drawMoraleGauge();
+  drawMoraleText();
 }
