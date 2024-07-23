@@ -20,4 +20,18 @@ private:
 
   Vector2 hud_position;
   Vector2 txt_position;
+
+  Vector2 gauge_position;
+  Rectangle gauge_source;
+
+  float gauge_width;
+  float segment_width;
+
+  Vector2 segment_position;
+  Rectangle segment_source;
+
+  bool display_segment;
+
+  float blink_interval;
+  float blink_timestamp;
 };

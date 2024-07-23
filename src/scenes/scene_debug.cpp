@@ -99,6 +99,7 @@ void DebugScene::updateScene(double &delta_time) {
   }
 
   life_hud->update();
+  morale_hud->update();
   Enemies::deleteDeadEnemies(enemies);
 }
 
