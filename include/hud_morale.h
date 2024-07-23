@@ -19,4 +19,5 @@ private:
   float morale_percentage;
 
   Vector2 hud_position;
+  Vector2 txt_position;
 };

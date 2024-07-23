@@ -102,13 +102,13 @@ public:
 
   combatant_list *enemies;
 
+  uint8_t morale;
+  uint8_t max_morale;
+
   bool moving;
   float movement_speed;
 private:
   uint8_t *game_phase;
-
-  uint8_t morale;
-  uint8_t max_morale;
 
   std::vector<uint8_t> input_buffer;
   bool buf_empty = false;
