@@ -8,6 +8,7 @@
 #include "base/scene.h"
 #include "wave_manager.h"
 #include "hud_life.h"
+#include "hud_morale.h"
 #include "char_player.h"
 
 #define PHASE_REST 0
@@ -47,6 +48,7 @@ private:
 
   std::unique_ptr<WaveManager> wave_manager;
   std::unique_ptr<LifeHud> life_hud;
+  std::unique_ptr<MoraleHud> morale_hud;
   Camera2D camera;
 
   bool paused = false;
