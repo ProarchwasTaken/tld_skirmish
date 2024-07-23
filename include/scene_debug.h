@@ -7,6 +7,7 @@
 #include "base/scene.h"
 #include "base/generics.h"
 #include "hud_life.h"
+#include "hud_morale.h"
 #include "char_player.h"
 
 
@@ -35,5 +36,6 @@ private:
 
   std::shared_ptr<PlayerCharacter> player;
   std::unique_ptr<LifeHud> life_hud;
+  std::unique_ptr<MoraleHud> morale_hud;
   combatant_list enemies;
 };

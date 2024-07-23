@@ -93,7 +93,7 @@ name = "frame"
 area = {x = 0, y = 0, width = 80, height = 21}
 
 [[hud_life.sprites]] # ID: 1
-name = "bar"
+name = "gauge"
 area = {x = 8, y = 22, width = 69, height = 9}
 
 [[hud_life.sprites]] # ID: 2
@@ -103,3 +103,19 @@ area = {x = 8, y = 32, width = 69, height = 9}
 [[hud_life.sprites]] # ID: 3
 name = "empty_red"
 area = {x = 8, y = 42, width = 69, height = 9}
+
+[hud_morale]
+path = "graphics/spritesheets/hud_morale.png"
+id = 3
+
+[[hud_morale.sprites]] # ID: 0
+name = "frame"
+area = {x = 0, y = 0, width = 78, height = 16}
+
+[[hud_morale.sprites]] # ID: 1
+name = "empty"
+area = {x = 7, y = 18, width = 69, height = 5}
+
+[[hud_morale.sprites]] # ID: 2
+name = "gauge"
+area = {x = 7, y = 25, width = 69, height = 5}

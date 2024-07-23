@@ -9,6 +9,7 @@
 #include "scene_gameplay.h"
 #include "char_player.h"
 #include "hud_life.h"
+#include "hud_morale.h"
 #include "enemy_dummy.h"
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
@@ -22,10 +23,11 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   tie(background, overlay) = Stages::loadStage("debug");
   debug_overlay = LoadTexture("graphics/stages/debug/debug_overlay.png");
 
-  phase = PHASE_REST;
+  phase = PHASE_ACTION;
 
   player = make_shared<PlayerCharacter>(enemies, phase);
   life_hud = make_unique<LifeHud>(*player, phase);
+  morale_hud = make_unique<MoraleHud>(*player);
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),
@@ -106,6 +108,7 @@ void DebugScene::drawScene() {
   EndMode2D();
 
   life_hud->draw();
+  morale_hud->draw();
 }
 
 void DebugScene::drawDebugInfo() {

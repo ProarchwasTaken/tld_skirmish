@@ -26,7 +26,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   game_phase = &phase;
 
   morale = 5;
-  max_morale = 99;
+  max_morale = 50;
 
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;

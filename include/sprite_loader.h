@@ -9,6 +9,7 @@
 #define SHEET_PLAYER 0
 #define SHEET_GHOUL 1
 #define SHEET_LIFE 2
+#define SHEET_MORALE 3
 
 
 /* For storing information about a specific sprite. Making it possible to
