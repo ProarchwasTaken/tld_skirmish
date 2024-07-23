@@ -4,6 +4,7 @@
 #include <tuple>
 #include <memory>
 #include "globals.h"
+#include "game.h"
 #include "utils.h"
 #include "scene_debug.h"
 #include "scene_gameplay.h"
@@ -101,6 +102,11 @@ void DebugScene::updateScene(double &delta_time) {
   life_hud->update();
   morale_hud->update();
   Enemies::deleteDeadEnemies(enemies);
+
+  if (player->awaiting_deletion) {
+    PLOGD << "Reloading scene...";
+    load_scene(SCENE_DEBUG);
+  }
 }
 
 void DebugScene::drawScene() {
