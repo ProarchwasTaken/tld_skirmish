@@ -8,6 +8,7 @@
 #include <cstdint>
 
 class Combatant;
+class PlayerCharacter;
 class ActionCommand;
 
 typedef std::vector<std::shared_ptr<Combatant>> combatant_list;
