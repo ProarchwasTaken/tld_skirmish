@@ -18,7 +18,8 @@ with a bit of experimenting.
 
 ### Gameplay
 * **Arrow Keys** - Movement
-* **Z & X Keys** - Normal Attacks
+* **Z Key** - Light Attack
+* **X Key** - Heavy Attack
 * **A & S Keys** - Weapon Techniques
 * **Space Bar** - Guard
 
@@ -36,7 +37,8 @@ buttons do.
 
 ### Gameplay
 * **D-Pad** - Movement
-* **B & A Buttons** - Normal Attacks
+* **A Button** - Light Attack
+* **B Button** - Heavy Attack
 * **Y & X Buttons** - Weapon Techniques
 * **L or R Button** - Guard
 
