@@ -216,16 +216,25 @@ void PlayerCharacter::lightAttackHandling() {
 
   auto light_atk = static_cast<LightAttack*>(current_command.get());
 
-  PLOGI << "Deciding if the recovery phase should be canceled depending"
-    " specific conditions.";
-  if (light_atk->attack_connected && first_input == BTN_HEAVY_ATK) {
-    PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
-    command = make_unique<HeavyAttack>(this);
-    useCommand(command);
-
-    SoundUtils::play("cmd_cancel");
+  if (light_atk->attack_connected == false) {
     return;
   }
+
+  switch (first_input) {
+    case BTN_HEAVY_ATK: {
+      command = make_unique<HeavyAttack>(this);
+      break;
+    } 
+  }
+
+  if (command == nullptr) {
+    return;
+  }
+
+  PLOGI << "Cancelling recovery phase and assigning: " << 
+    command->command_name;
+  useCommand(command);
+  SoundUtils::play("cmd_cancel");
 }
 
 void PlayerCharacter::clearBufferCheck() {
