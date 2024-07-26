@@ -7,7 +7,7 @@
 
 class SubWeapon {
 public:
-  SubWeapon(PlayerCharacter &player, uint8_t mp_cost1, uint8_t mp_cost2);
+  SubWeapon(PlayerCharacter *player, uint8_t mp_cost1, uint8_t mp_cost2);
 
   virtual void update() {}
   
@@ -18,6 +18,6 @@ public:
 
   uint8_t mp_cost1;
   uint8_t mp_cost2;
-private:
+protected:
   PlayerCharacter *player;
 };
