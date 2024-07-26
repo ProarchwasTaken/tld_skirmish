@@ -23,12 +23,12 @@ SubWeapon::SubWeapon(PlayerCharacter *player, string name,
 
 unique_ptr<ActionCommand> SubWeapon::lightTechnique() {
   PLOGE << "This Method from: '" << name << "' is not overridden!";
-  throw;
+  return nullptr;
 }
 
 unique_ptr<ActionCommand> SubWeapon::heavyTechnique() {
   PLOGE << "This Method from: '" << name << "' is not overridden!";
-  throw;
+  return nullptr;
 }
 
 
