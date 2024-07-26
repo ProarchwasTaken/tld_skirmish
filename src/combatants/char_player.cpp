@@ -11,6 +11,7 @@
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
+#include "weapon_knife.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -24,6 +25,8 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
   game_phase = &phase;
+
+  sub_weapon = make_unique<WeaponKnife>(this);
 
   morale = 5;
   max_morale = 50;
@@ -153,6 +156,20 @@ void PlayerCharacter::normalInterpretLogic() {
       useCommand(command);
       break;
     }
+    case BTN_LIGHT_TECH: {
+      PLOGI << "Attempting to assign light weapon technique.";
+      command = sub_weapon->lightTechnique();
+
+      if (command != nullptr) useCommand(command);
+      break;
+    }
+    case BTN_HEAVY_TECH: {
+      PLOGI << "Attempting to assign heavy weapon technique";
+      command = sub_weapon->heavyTechnique();
+
+      if (command != nullptr) useCommand(command);
+      break;
+    }
     case BTN_GUARD: {
       PLOGI << "Attempting to assign Guard";
       command = make_unique<Guard>(this, sprites::plr_metadata, 
@@ -271,6 +288,9 @@ void PlayerCharacter::inputPressed() {
 
   bool key_z = IsKeyPressed(KEY_Z);
   bool key_x = IsKeyPressed(KEY_X);
+  bool key_a = IsKeyPressed(KEY_A);
+  bool key_s = IsKeyPressed(KEY_S);
+
   bool key_space = IsKeyPressed(KEY_SPACE);
 
   bool gamepad_detected = IsGamepadAvailable(0);
@@ -279,6 +299,8 @@ void PlayerCharacter::inputPressed() {
 
   bool btn_face_right = false;
   bool btn_face_down = false;
+  bool btn_face_left = false;
+  bool btn_face_up = false;
 
   bool btn_shoulder_down = false;
 
@@ -292,6 +314,10 @@ void PlayerCharacter::inputPressed() {
     btn_face_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
     );
+    btn_face_left = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT
+    );
+    btn_face_up = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP);
 
     btn_shoulder_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
@@ -319,6 +345,16 @@ void PlayerCharacter::inputPressed() {
   bool input_heavy_attack = key_x || btn_face_right;
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
+  }
+
+  bool input_light_tech = key_a || btn_face_left;
+  if (input_light_tech) {
+    input_buffer.push_back(BTN_LIGHT_TECH);
+  }
+
+  bool input_heavy_tech = key_s || btn_face_up;
+  if (input_heavy_tech) {
+    input_buffer.push_back(BTN_HEAVY_TECH);
   }
 
   bool input_guard = key_space || btn_shoulder_down;

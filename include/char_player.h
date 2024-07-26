@@ -3,8 +3,10 @@
 #include <cstdint>
 #include <vector>
 #include <raylib.h>
+#include <memory>
 #include "base/generics.h"
 #include "base/combatant.h"
+#include "base/sub-weapon.h"
 
 #define PLR_BOUNDS 384
 
@@ -16,7 +18,9 @@
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
-#define BTN_GUARD 2
+#define BTN_LIGHT_TECH 2
+#define BTN_HEAVY_TECH 3
+#define BTN_GUARD 4
 
 
 /* The playable character, the controllable avatar for the user. The most
@@ -109,6 +113,8 @@ public:
   float movement_speed;
 private:
   uint8_t *game_phase;
+
+  std::unique_ptr<SubWeapon> sub_weapon;
 
   std::vector<uint8_t> input_buffer;
   bool buf_empty = false;
