@@ -55,6 +55,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_guard.cpp"
 "src/action_command/cmd_knife_light.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
+"src/sub-weapons/weapon_knife.cpp"
 )
 
 set(HEADER_FILES
@@ -85,6 +86,7 @@ set(HEADER_FILES
 "include/cmd_guard.h"
 "include/cmd_knife_light.h"
 "include/cmd_ghoul_atk.h"
+"include/weapon_knife.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
