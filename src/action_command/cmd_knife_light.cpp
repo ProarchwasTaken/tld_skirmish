@@ -8,7 +8,7 @@
 
 
 KnifeLight::KnifeLight(PlayerCharacter *user):
-ActionCommand(user, "Knife Light", 0.2, 0.1, 0.3)
+ActionCommand(user, "Knife Light", CMD_TECH_LIGHT, 0.2, 0.1, 0.3)
 {
   damage = 6;
   guard_pierce = 3.0;

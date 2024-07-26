@@ -1,5 +1,6 @@
 // action_command.cpp
 #include <string>
+#include <cstdint>
 #include <raylib.h>
 #include "globals.h"
 #include "base/combatant.h"
@@ -9,11 +10,13 @@
 using std::string;
 
 
-ActionCommand::ActionCommand(Combatant *user, string command_name,
-                             float charge_time, float act_time, 
-                             float recovery_time)
+ActionCommand::ActionCommand(Combatant *user, string command_name, 
+                             uint8_t type, float charge_time, 
+                             float act_time, float recovery_time)
 {
   this->command_name = command_name;
+  this->type = type;
+
   this->user = user;
   user->state = CHARGING;
 

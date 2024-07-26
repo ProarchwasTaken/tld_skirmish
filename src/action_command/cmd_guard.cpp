@@ -17,7 +17,7 @@ using std::vector;
 
 Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
              uint16_t boundary, bool can_parry):
-  ActionCommand(user, "Guard", 0.25, 0.5, 0.25) 
+  ActionCommand(user, "Guard", CMD_NONE, 0.25, 0.5, 0.25) 
 {
   this->boundary = boundary;
 

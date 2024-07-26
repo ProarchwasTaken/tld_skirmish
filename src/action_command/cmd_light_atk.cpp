@@ -9,7 +9,7 @@
 
 
 LightAttack::LightAttack(PlayerCharacter *user): 
-  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.3)
+  ActionCommand(user, "Light Attack", CMD_NORM_LIGHT, 0.2, 0.1, 0.3)
 {
   damage = 3;
   guard_pierce = 0.2;

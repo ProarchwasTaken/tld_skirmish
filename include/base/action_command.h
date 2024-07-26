@@ -1,7 +1,14 @@
 // action_command.h
 #pragma once
 #include <string>
+#include <cstdint>
 #include "generics.h"
+
+#define CMD_NONE 0
+#define CMD_NORM_LIGHT 1
+#define CMD_NORM_HEAVY 2
+#define CMD_TECH_LIGHT 3
+#define CMD_TECH_HEAVY 4
 
 
 /* The basis for every attack, support, or even utility action in the 
@@ -15,7 +22,7 @@
  * onto by the derived class.*/
 class ActionCommand {
 public:
-  ActionCommand(Combatant *user, std::string command_name, 
+  ActionCommand(Combatant *user, std::string command_name, uint8_t type,
                 float charge_time, float act_time, float recovery_time);
 
   virtual void chargeSequence(float time_elapsed, double &delta_time);
@@ -31,6 +38,8 @@ public:
   virtual void drawDebug() {};
 
   std::string command_name;
+  uint8_t type;
+
   float sequence_timestamp;
 protected:
   Combatant *user;

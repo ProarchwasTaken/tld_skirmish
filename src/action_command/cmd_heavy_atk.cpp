@@ -9,7 +9,7 @@
 
 
 HeavyAttack::HeavyAttack(PlayerCharacter *user):
-  ActionCommand(user, "Heavy Attack", 0.3, 0.1, 0.6)
+  ActionCommand(user, "Heavy Attack", CMD_NORM_HEAVY, 0.3, 0.1, 0.6)
 {
   damage = 5;
   guard_pierce = 0.25;

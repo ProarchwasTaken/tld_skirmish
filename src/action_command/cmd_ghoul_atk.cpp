@@ -9,7 +9,7 @@
 
 
 GhoulAttack::GhoulAttack(GhoulEnemy *user):
-  ActionCommand(user, "Ghoul Attack", 0.3, 0.1, 0.4)
+  ActionCommand(user, "Ghoul Attack", CMD_NONE, 0.3, 0.1, 0.4)
 {
   damage = 8;
   guard_pierce = 0.4;
