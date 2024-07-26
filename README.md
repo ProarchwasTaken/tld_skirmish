@@ -30,6 +30,11 @@ The controls detailed here are based on the SNES button layout, so it
 maybe different on other layouts. So try experimenting and see what the
 buttons do.
 
+WARNING: Depending on what controller you're using, pressing down all 4
+D-Pad button may crash the game. Since problem comes from the GLFW 
+library, (Something that raylib uses.) there's not much I could do about
+this besides letting this be known.
+
 ### Menu
 * **D-Pad** - Menu Navigation
 * **A Button** - Confirm
