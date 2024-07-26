@@ -83,8 +83,12 @@ public:
    * on what state the player is in.*/
   void interpretBuffer();
 
+  /* For clearing the buffer onces the timer runs out. That's it.
+   * possibly the simplest of the 3 methods.*/
+  void clearBufferCheck();
+
   /* This method is only called when the player is in the neutral state.
-   * It checks the first to second inputs in the buffer, and decides what
+   * It checks the first input in the buffer, and decides what
    * command to assign to the player based on that.*/
   void normalInterpretLogic();
 
@@ -95,14 +99,15 @@ public:
   void specialInterpretLogic();
 
   /* Only called during special interpret logic, and the player is using
-   * the LightAttack. For checking if the player should cancel the
-   * recovery phase of the attack and immediately perform a heavy attack.
-   * That's only if certain conditions are met.*/
+   * the LightAttack. This is the basically the function that allows
+   * the player to cancel the LightAttack to a heavy attack or weapon
+   * technique if it lands.*/
   void lightAttackHandling();
 
-  /* For clearing the buffer onces the timer runs out. That's it.
-   * possibly the simplest of the 3 methods.*/
-  void clearBufferCheck();
+  /* Only called during special interpret logic, and the player is using
+   * the HeavyAttack. It only allows the player to cancel the HeavyAttack
+   * to the heavy weapon technique if it connects.*/
+  void heavyAttackHanding();
 
   combatant_list *enemies;
 

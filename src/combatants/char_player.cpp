@@ -46,6 +46,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
 PlayerCharacter::~PlayerCharacter() {
   PLOGI << "Deleting the player character from memory.";
   input_buffer.clear();
+  sub_weapon.reset();
 }
 
 void PlayerCharacter::update(double &delta_time) {
@@ -140,48 +141,46 @@ void PlayerCharacter::interpretBuffer() {
 
 void PlayerCharacter::normalInterpretLogic() {
   uint8_t first_input = input_buffer.front();
-  unique_ptr<ActionCommand> command;
+  unique_ptr<ActionCommand> command = nullptr;
 
   PLOGI << "Deciding what commands to use depending on input buffer.";
   switch (first_input) {
     case BTN_LIGHT_ATK: {
       PLOGI << "Attempting to assign LightAttack";
       command = make_unique<LightAttack>(this);
-      useCommand(command);
       break;
     }
     case BTN_HEAVY_ATK: {
       PLOGI << "Attempting to assign HeavyAttack";
       command = make_unique<HeavyAttack>(this);
-      useCommand(command);
       break;
     }
     case BTN_LIGHT_TECH: {
       PLOGI << "Attempting to assign light weapon technique.";
       command = sub_weapon->lightTechnique();
-
-      if (command != nullptr) useCommand(command);
       break;
     }
     case BTN_HEAVY_TECH: {
       PLOGI << "Attempting to assign heavy weapon technique";
       command = sub_weapon->heavyTechnique();
-
-      if (command != nullptr) useCommand(command);
       break;
     }
     case BTN_GUARD: {
       PLOGI << "Attempting to assign Guard";
       command = make_unique<Guard>(this, sprites::plr_metadata, 
                                    PLR_BOUNDS, true);
-      useCommand(command);
       break;
     }
     default: {
       PLOGI << "No valid commands found!";
-      break;
     }
   }
+
+  if (command == nullptr) {
+    return;
+  }
+
+  useCommand(command);
 }
 
 void PlayerCharacter::specialInterpretLogic() {
@@ -192,8 +191,8 @@ void PlayerCharacter::specialInterpretLogic() {
 
   PLOGI << "The player is using: " << current_command->command_name;
   if (parried_attack) {
-    PLOGI << "Player is parrying an attack. Switching back to normal "
-      "interpret logic.";
+    PLOGI << "Detected that the player has parried an attack. Switching "
+      "back to interpret logic.";
     SoundUtils::play("cmd_cancel");
     
     // Best part is that I didn't need to do much to implement this. :)
@@ -206,7 +205,9 @@ void PlayerCharacter::specialInterpretLogic() {
 
   if (current_command->command_name == "Light Attack") {
     lightAttackHandling();
-    return;
+  }
+  else if (current_command->command_name == "Heavy Attack") {
+    heavyAttackHanding();
   }
 }
 
@@ -229,6 +230,10 @@ void PlayerCharacter::lightAttackHandling() {
       command = sub_weapon->lightTechnique();
       break;
     }
+    case BTN_HEAVY_TECH: {
+      command = sub_weapon->heavyTechnique();
+      break;
+    }
   }
 
   if (command == nullptr) {
@@ -237,8 +242,32 @@ void PlayerCharacter::lightAttackHandling() {
 
   PLOGI << "Cancelling recovery phase and assigning: " << 
     command->command_name;
-  useCommand(command);
   SoundUtils::play("cmd_cancel");
+  useCommand(command);
+}
+
+void PlayerCharacter::heavyAttackHanding() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command = nullptr;
+
+  auto heavy_atk = static_cast<HeavyAttack*>(current_command.get());
+
+  if (heavy_atk->attack_connected == false) {
+    return;
+  } 
+
+  if (first_input == BTN_HEAVY_TECH) {
+    command = sub_weapon->heavyTechnique();
+  }
+
+  if (command == nullptr) {
+    return;
+  }
+
+  PLOGI << "Cancelling recovery phase and assigning: " << 
+    command->command_name;
+  SoundUtils::play("cmd_cancel");
+  useCommand(command);
 }
 
 void PlayerCharacter::clearBufferCheck() {
