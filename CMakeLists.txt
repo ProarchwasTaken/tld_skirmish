@@ -50,10 +50,11 @@ set(SOURCE_FILES
 "src/combatants/char_player.cpp"
 "src/combatants/enemy_dummy.cpp"
 "src/combatants/enemy_ghoul.cpp"
-"src/action_command/cmd_ghoul_atk.cpp"
 "src/action_command/cmd_light_atk.cpp"
 "src/action_command/cmd_heavy_atk.cpp"
 "src/action_command/cmd_guard.cpp"
+"src/action_command/cmd_knife_light.cpp"
+"src/action_command/cmd_ghoul_atk.cpp"
 )
 
 set(HEADER_FILES
@@ -79,10 +80,11 @@ set(HEADER_FILES
 "include/char_player.h"
 "include/enemy_dummy.h"
 "include/enemy_ghoul.h"
-"include/cmd_ghoul_atk.h"
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
+"include/cmd_knife_light.h"
+"include/cmd_ghoul_atk.h"
 )
 
 set(STANDARD -static -static-libgcc -static-libstdc++)
