@@ -189,7 +189,6 @@ void PlayerCharacter::specialInterpretLogic() {
     throw;
   }
 
-  PLOGI << "The player is using: " << current_command->command_name;
   if (parried_attack) {
     PLOGI << "Detected that the player has parried an attack. Switching "
       "back to interpret logic.";
@@ -203,11 +202,16 @@ void PlayerCharacter::specialInterpretLogic() {
     return;
   }
 
-  if (current_command->command_name == "Light Attack") {
-    lightAttackHandling();
-  }
-  else if (current_command->command_name == "Heavy Attack") {
-    heavyAttackHanding();
+  PLOGI << "The player is using: " << current_command->command_name;
+  switch (current_command->type) {
+    case CMD_NORM_LIGHT: {
+      lightAttackHandling();
+      break;
+    }
+    case CMD_NORM_HEAVY: {
+      heavyAttackHanding();
+      break;
+    }
   }
 }
 
