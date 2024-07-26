@@ -17,6 +17,8 @@ SubWeapon::SubWeapon(PlayerCharacter *player, string name,
 
   this->mp_cost1 = mp_cost1;
   this->mp_cost2 = mp_cost2;
+
+  PLOGD << "Assigned sub-weapon: '" << name << "' to the player.";
 }
 
 unique_ptr<ActionCommand> SubWeapon::lightTechnique() {
