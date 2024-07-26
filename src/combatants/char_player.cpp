@@ -225,6 +225,10 @@ void PlayerCharacter::lightAttackHandling() {
       command = make_unique<HeavyAttack>(this);
       break;
     } 
+    case BTN_LIGHT_TECH: {
+      command = sub_weapon->lightTechnique();
+      break;
+    }
   }
 
   if (command == nullptr) {
