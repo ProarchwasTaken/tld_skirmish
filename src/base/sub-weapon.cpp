@@ -14,6 +14,7 @@ SubWeapon::SubWeapon(PlayerCharacter *player, string name,
                      uint8_t mp_cost1, uint8_t mp_cost2)
 {
   this->player = player;
+  this->name = name;
 
   this->mp_cost1 = mp_cost1;
   this->mp_cost2 = mp_cost2;
