@@ -110,6 +110,7 @@ public:
   void heavyAttackHanding();
 
   combatant_list *enemies;
+  std::vector<uint8_t> input_buffer;
 
   uint8_t morale;
   uint8_t max_morale;
@@ -121,7 +122,6 @@ private:
 
   std::unique_ptr<SubWeapon> sub_weapon;
 
-  std::vector<uint8_t> input_buffer;
   bool buf_empty = false;
   bool buf_timer_started = false;
 

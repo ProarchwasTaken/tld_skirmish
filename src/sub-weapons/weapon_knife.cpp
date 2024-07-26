@@ -1,9 +1,12 @@
 // sub-weapons/weapon_knife.cpp
+#include <cstdint>
 #include <memory>
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
+#include "utils.h"
 #include "char_player.h"
 #include "cmd_knife_light.h"
+#include "cmd_heavy_atk.h"
 #include "weapon_knife.h"
 #include <plog/Log.h>
 
@@ -25,5 +28,35 @@ unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
   else {
     PLOGI << "Player has insufficent morale.";
     return nullptr;
+  }
+}
+
+void WeaponKnife::lightTechHandling() {
+  uint8_t first_input = player->input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  auto light_knife = static_cast<KnifeLight*>(
+    player->current_command.get()
+  );
+
+  if (light_knife->attack_connected == false) {
+    return;
+  }
+
+  switch (first_input) {
+    case BTN_HEAVY_ATK: {
+      command = make_unique<HeavyAttack>(player);
+      break;
+    }
+    case BTN_HEAVY_TECH: {
+      command = heavyTechnique();
+      break;
+    }
+  }
+
+  if (command != nullptr) {
+    PLOGI << "Chaining command into: " << command->command_name;
+    SoundUtils::play("cmd_cancel");
+    player->useCommand(command);
   }
 }

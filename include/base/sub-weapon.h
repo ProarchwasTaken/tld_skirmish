@@ -14,8 +14,10 @@ public:
   virtual void update() {}
   
   virtual std::unique_ptr<ActionCommand> lightTechnique(); 
+  virtual void lightTechHandling() {}
 
   virtual std::unique_ptr<ActionCommand> heavyTechnique();
+  virtual void heavyTechHandling() {}
 
   std::string name;
   bool usable = true;

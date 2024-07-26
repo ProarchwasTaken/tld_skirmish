@@ -139,6 +139,19 @@ void PlayerCharacter::interpretBuffer() {
   }
 }
 
+void PlayerCharacter::clearBufferCheck() {
+  if (buf_timer_started == false) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
+  if (time_elapsed >= buf_clear_time) {
+    PLOGD << "Clearing input buffer.";
+    input_buffer.clear();
+    buf_timer_started = false;
+  }
+}
+
 void PlayerCharacter::normalInterpretLogic() {
   uint8_t first_input = input_buffer.front();
   unique_ptr<ActionCommand> command = nullptr;
@@ -176,11 +189,9 @@ void PlayerCharacter::normalInterpretLogic() {
     }
   }
 
-  if (command == nullptr) {
-    return;
+  if (command != nullptr) {
+    useCommand(command);
   }
-
-  useCommand(command);
 }
 
 void PlayerCharacter::specialInterpretLogic() {
@@ -212,6 +223,14 @@ void PlayerCharacter::specialInterpretLogic() {
       heavyAttackHanding();
       break;
     }
+    case CMD_TECH_LIGHT: {
+      sub_weapon->lightTechHandling();
+      break;
+    }
+    case CMD_TECH_HEAVY: {
+      sub_weapon->heavyTechHandling();
+      break;
+    }
   }
 }
 
@@ -240,14 +259,10 @@ void PlayerCharacter::lightAttackHandling() {
     }
   }
 
-  if (command == nullptr) {
-    return;
+  if (command != nullptr) {
+    SoundUtils::play("cmd_cancel");
+    useCommand(command);
   }
-
-  PLOGI << "Cancelling recovery phase and assigning: " << 
-    command->command_name;
-  SoundUtils::play("cmd_cancel");
-  useCommand(command);
 }
 
 void PlayerCharacter::heavyAttackHanding() {
@@ -264,26 +279,9 @@ void PlayerCharacter::heavyAttackHanding() {
     command = sub_weapon->heavyTechnique();
   }
 
-  if (command == nullptr) {
-    return;
-  }
-
-  PLOGI << "Cancelling recovery phase and assigning: " << 
-    command->command_name;
-  SoundUtils::play("cmd_cancel");
-  useCommand(command);
-}
-
-void PlayerCharacter::clearBufferCheck() {
-  if (buf_timer_started == false) {
-    return;
-  }
-
-  float time_elapsed = CURRENT_TIME - buf_input_timestamp;
-  if (time_elapsed >= buf_clear_time) {
-    PLOGD << "Clearing input buffer.";
-    input_buffer.clear();
-    buf_timer_started = false;
+  if (command != nullptr) {
+    SoundUtils::play("cmd_cancel");
+    useCommand(command);
   }
 }
 

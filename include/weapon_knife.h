@@ -11,4 +11,5 @@ public:
   WeaponKnife(PlayerCharacter *player);
 
   std::unique_ptr<ActionCommand> lightTechnique() override; 
+  void lightTechHandling() override;
 };
