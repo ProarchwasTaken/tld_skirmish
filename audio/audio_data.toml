@@ -37,6 +37,10 @@ name = "cmd_cancel"
 path = "audio/sfx/cmd_cancel.wav"
 
 [[sfx]]
+name = "knife_light"
+path = "audio/sfx/knife_light.wav"
+
+[[sfx]]
 name = "death"
 path = "audio/sfx/death.wav"
 

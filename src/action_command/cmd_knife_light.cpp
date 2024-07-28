@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils.h"
 #include "char_player.h"
 #include "cmd_knife_light.h"
 
@@ -10,7 +11,7 @@
 KnifeLight::KnifeLight(PlayerCharacter *user):
 ActionCommand(user, "Knife Light", CMD_TECH_LIGHT, 0.2, 0.1, 0.3)
 {
-  damage = 4;
+  damage = 6;
   guard_pierce = 3.0;
 
   stun_time = 0.5;
@@ -39,6 +40,7 @@ void KnifeLight::chargeSequence(float time_elapsed, double &delta_time) {
 
   if (finished_charge) {
     user->current_sprite = sprites::player[11];
+    SoundUtils::play("knife_light");
   }
 }
 
