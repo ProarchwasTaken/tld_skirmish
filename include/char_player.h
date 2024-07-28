@@ -60,6 +60,12 @@ public:
    * the player reaches max health.*/
   void regeneration();
 
+  /* Makes sure that the value that the player's morale is incremented to
+   * doesn't go past the maximum. The player's morale will increase
+   * through certain actions, and this method is typically used for the
+   * most part rather than just incrementing the value directly.*/
+  void incrementMorale(uint8_t value);
+
   /* Returns true if the player character should be moving. The outcome is
    * determined by user input.*/
   bool isMoving();

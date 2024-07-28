@@ -247,6 +247,7 @@ void PlayerCharacter::lightAttackHandling() {
   switch (first_input) {
     case BTN_HEAVY_ATK: {
       command = make_unique<HeavyAttack>(this);
+      incrementMorale(1);
       break;
     } 
     case BTN_LIGHT_TECH: {
@@ -323,6 +324,20 @@ void PlayerCharacter::regeneration() {
   if (time_elapsed >= regen_time) {
     health++;
     regen_timestamp = CURRENT_TIME;
+  }
+}
+
+void PlayerCharacter::incrementMorale(uint8_t value) {
+  if (morale == max_morale) {
+    return;
+  }
+
+  int new_morale = morale + value;
+  if (new_morale > max_morale) {
+    morale = max_morale;
+  }
+  else {
+    morale = new_morale;
   }
 }
 

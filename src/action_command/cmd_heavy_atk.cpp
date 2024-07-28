@@ -17,6 +17,7 @@ HeavyAttack::HeavyAttack(PlayerCharacter *user):
   stun_time = 0.5;
 
   this->enemies = user->enemies;
+  this->player = user;
   user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
@@ -54,18 +55,26 @@ void HeavyAttack::actSequence(float time_elapsed, double &delta_time) {
 }
 
 void HeavyAttack::enemyHitCheck() {
+  bool morale_eligible = false;
+
   for (auto enemy : *enemies) {
     if (enemy->state == DEAD) {
       continue;
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
+      if (enemy->isUsingCommand()) morale_eligible = true;
+
       enemy->takeDamage(damage, guard_pierce, stun_time, 0.5f, 
                         user->direction);
+
       attack_connected = true;
     }
   }
 
+  if (morale_eligible) {
+    player->incrementMorale(1);
+  }
   if (attack_connected) {
     user->state = RECOVER;
     sequence_timestamp = CURRENT_TIME;

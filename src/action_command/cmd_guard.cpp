@@ -8,6 +8,7 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "sprite_loader.h"
+#include "char_player.h"
 #include "utils.h"
 #include "cmd_guard.h"
 #include <plog/Log.h>
@@ -128,6 +129,13 @@ void Guard::applyGuardBonus(float stun_time, float kb_velocity,
 {
   guard_success = true;
   user->invulnerable = true;
+
+  if (user->type == TYPE_PLAYER) {
+    auto player = static_cast<PlayerCharacter*>(user);
+
+    int morale_bonus = 2 + (2 * player->parried_attack);
+    player->incrementMorale(morale_bonus);
+  }
 
   stun_time = stun_time * 0.75;
   kb_velocity = kb_velocity * 1.25;
