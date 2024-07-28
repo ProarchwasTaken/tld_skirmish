@@ -78,9 +78,15 @@ probably be added later, and some rules may be subject to change.
   smart pointer is fine as well.
 
 * The project's naming pattern is as follows: snake_case for variables,
-  MACRO_CASE for constants and preprocessor macros, camelCase for 
-  functions/methods (Pretty much anything that's callable), and PascalCase
-  for classes/namespaces.
+  MACRO_CASE for constants, global variables, and preprocessor macros, 
+  camelCase for functions/methods (Pretty much anything that's callable), 
+  and PascalCasefor classes/namespaces.
+
+* Try to avoid nesting if statements whenever possible. Something like 
+  this could be avoided through the use of guard clauses, or separating
+  one function multiple separate ones. If it's truly unavoidable, you may
+  want to restructure your code, or consider using inline\short hand if
+  statements.
 
 * All lines of code must not be longer than 74 characters. The reason for
   this is my monitor only has enough width for 2 vertical splits of 74
