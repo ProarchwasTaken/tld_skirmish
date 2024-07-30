@@ -24,4 +24,5 @@ public:
   virtual void update(double &delta_time) {};
 
   uint8_t type;
+  bool awaiting_deletion = false;
 };
