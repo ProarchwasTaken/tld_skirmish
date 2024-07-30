@@ -7,6 +7,7 @@
 #include <raylib.h>
 #include <vector>
 #include <random>
+#include "base/generics.h"
 #include "audio.h"
 #include "sprite_loader.h"
 
@@ -47,3 +48,7 @@ namespace RNG {
   extern std::mt19937 generator;
 }
 
+
+namespace Dynamic {
+  extern dynamic_list queue;
+}

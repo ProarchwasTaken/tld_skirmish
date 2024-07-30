@@ -3,6 +3,7 @@
 #include <vector>
 #include <random>
 #include "globals.h"
+#include "base/generics.h"
 #include "audio.h"
 #include "sprite_loader.h"
 
@@ -39,5 +40,9 @@ namespace audio {
 
 namespace RNG {
   mt19937 generator(random_device{}());
+}
+
+namespace Dynamic {
+  dynamic_list queue;
 }
 
