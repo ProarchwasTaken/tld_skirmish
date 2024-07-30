@@ -1,4 +1,5 @@
 // base/dynamic_actor.h
+#pragma once
 #include <cstdint>
 #include <raylib.h>
 #include "actor.h"
