@@ -1,5 +1,6 @@
 // utils.h
 #pragma once
+#include <memory>
 #include <raylib.h>
 #include <cstdint>
 #include <tuple>
@@ -9,6 +10,7 @@
 #include "sprite_loader.h"
 #include "base/generics.h"
 #include "base/actor.h"
+#include "base/dynamic_actor.h"
 #include "char_player.h"
 
 namespace CameraUtils {
@@ -99,6 +101,41 @@ namespace Enemies {
    * enemy's patience value some distance above their bounding box.*/
   void drawPatience(Combatant *enemy, uint8_t patience, Color color, 
                     int y_offset);
+}
+
+
+/* Consists of functions tailored around DynamicActors, and classes that
+ * derive from them. Pretty much stuff that's pretty much required to 
+ * make it all work.*/
+namespace Dynamic { 
+  /* For creating an class instance derivative of DynamicActor, and 
+   * adding to the queue to be tranferred into the gameplay scene later.
+   * This is my first ever template function, so issues might pop up.*/
+  template<class DerivedClass, typename... Args>
+  void create(Args&&... args);
+
+  /* Conparison function used for sorting a list from least to greatest.
+   * according to the DynamicActor's type.*/
+  bool typeCompare(std::unique_ptr<DynamicActor> &d1,
+                   std::unique_ptr<DynamicActor> &d2);
+
+  /* Comparison function that sorts the list a way that the Dynamic
+   * Actors that are awaiting deletion will end up at the front of
+   * the list. Useful for when trying to erase multiple DActors at 
+   * once.*/
+  bool deleteCompare(std::unique_ptr<DynamicActor> &d1,
+                     std::unique_ptr<DynamicActor> &d2);
+  
+  /* Transers all Dynamic Actors in the queue to the dynamic_list 
+   * specified. Also makes sures that the list is sorted from least,
+   * greatest according to each DynamicActor's type.*/
+  void moveFromQueue(dynamic_list &main_list);
+
+  /* For removing any Dynamic Actors that are waiting deletion from
+   * memory. Also erase the pointer who owned the cleared memory from
+   * the list as well. Similar to deleteDeadEnemies, but the way it's
+   * done is very much different.*/
+  void clearAwaitingDeletion(dynamic_list &main_list);
 }
 
 

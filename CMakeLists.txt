@@ -35,6 +35,7 @@ set(SOURCE_FILES
 "src/utils/camera.cpp"
 "src/utils/animation.cpp"
 "src/utils/enemies.cpp"
+"src/utils/dynamic.cpp"
 "src/utils/ai_behavior.cpp"
 "src/utils/sound.cpp"
 "src/utils/sprite.cpp"
