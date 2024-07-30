@@ -8,7 +8,7 @@
 
 
 /* A "Dynamic Actor" is a game object that's capable of being created
- * from anywhere in the progam through the call of a simple template
+ * from anywhere in the program through the call of a simple template
  * function. Used as the foundation for projectiles, and particle 
  * effects. Basically anything that doesn't fit the description of a
  * "Combatant."*/
