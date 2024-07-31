@@ -123,6 +123,11 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
       data_list = &sprites::hud_morale_metadata;
       break;
     }
+    case SHEET_KNIFE: {
+      sprite_list = &sprites::weapon_knife;
+      data_list = &sprites::weapon_knife_metadata;
+      break;
+    }
     default: {
       PLOGE << "Unable to find sprite list associated with sheet id!";
       return;

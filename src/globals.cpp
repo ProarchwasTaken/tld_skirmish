@@ -27,9 +27,11 @@ namespace sprites {
   vector<Texture*> ghoul;
   vector<Texture*> hud_life;
   vector<Texture*> hud_morale;
+  vector<Texture*> weapon_knife;
 
   vector<SpriteMetaData> plr_metadata;
   vector<SpriteMetaData> gol_metadata;
+  vector<SpriteMetaData> weapon_knife_metadata;
   vector<SpriteMetaData> hud_life_metadata;
   vector<SpriteMetaData> hud_morale_metadata;
 }

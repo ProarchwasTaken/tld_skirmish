@@ -42,6 +42,9 @@ namespace sprites {
 
   extern std::vector<Texture*> ghoul;
   extern std::vector<SpriteMetaData> gol_metadata;
+
+  extern std::vector<Texture*> weapon_knife;
+  extern std::vector<SpriteMetaData> weapon_knife_metadata;
 }
 
 namespace RNG {
