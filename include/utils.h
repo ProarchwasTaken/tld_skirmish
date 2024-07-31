@@ -113,18 +113,6 @@ namespace Dynamic {
    * This is my first ever template function, so issues might pop up.*/
   template<class DerivedClass, typename... Args>
   void create(Args&&... args);
-
-  /* Conparison function used for sorting a list from least to greatest.
-   * according to the DynamicActor's type.*/
-  bool typeCompare(std::unique_ptr<DynamicActor> &d1,
-                   std::unique_ptr<DynamicActor> &d2);
-
-  /* Comparison function that sorts the list a way that the Dynamic
-   * Actors that are awaiting deletion will end up at the front of
-   * the list. Useful for when trying to erase multiple DActors at 
-   * once.*/
-  bool deleteCompare(std::unique_ptr<DynamicActor> &d1,
-                     std::unique_ptr<DynamicActor> &d2);
   
   /* Transers all Dynamic Actors in the queue to the dynamic_list 
    * specified. Also makes sures that the list is sorted from least,

@@ -11,6 +11,17 @@
 
 using std::vector, std::is_base_of, std::make_unique, std::unique_ptr;
 
+/* Comparison function used for sorting a list from least to greatest
+ * according to the DynamicActor's type.*/
+bool typeCompare(unique_ptr<DynamicActor> &d1, 
+                 unique_ptr<DynamicActor> &d2);
+
+/* Comparison function that sorts the list a way that the Dynamic Actors 
+ * that are awaiting deletion will end up at the front of the list. Useful
+ * for when trying to erase multiple DActors at once.*/
+bool deleteCompare(unique_ptr<DynamicActor> &d1, 
+                   unique_ptr<DynamicActor> &d2);
+
 
 template<class DerivedClass, typename... Args>
 void Dynamic::create(Args&&... args) {
@@ -24,17 +35,6 @@ void Dynamic::create(Args&&... args) {
   PLOGD << "Added DerivedClass to the queue.";
 }
 
-bool Dynamic::typeCompare(unique_ptr<DynamicActor> &d1, 
-                          unique_ptr<DynamicActor> &d2)
-{
-  return d1->type < d2->type;
-}
-
-bool Dynamic::deleteCompare(std::unique_ptr<DynamicActor> &d1, 
-                            std::unique_ptr<DynamicActor> &d2)
-{
-  return d1->awaiting_deletion > d2->awaiting_deletion;
-}
 
 void Dynamic::moveFromQueue(dynamic_list &main_list) {
   if (queue.size() == 0) {
@@ -73,3 +73,18 @@ void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
     std::sort(main_list.begin(), main_list.end(), typeCompare);
   }
 }
+
+
+bool typeCompare(unique_ptr<DynamicActor> &d1, 
+                 unique_ptr<DynamicActor> &d2)
+{
+  return d1->type < d2->type;
+}
+
+
+bool deleteCompare(unique_ptr<DynamicActor> &d1, 
+                   unique_ptr<DynamicActor> &d2)
+{
+  return d1->awaiting_deletion > d2->awaiting_deletion;
+}
+
