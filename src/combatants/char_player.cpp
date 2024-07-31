@@ -81,6 +81,7 @@ void PlayerCharacter::update(double &delta_time) {
     }
   }
 
+  sub_weapon->update();
   clearBufferCheck();
 }
 

@@ -25,6 +25,7 @@ SubWeapon::SubWeapon(PlayerCharacter *player, string name,
 }
 
 void SubWeapon::disable() {
+  PLOGI << "Disabling: " << name;
   usable = false;
   disabled_timestamp = CURRENT_TIME;
 }

@@ -3,6 +3,7 @@
 #include <memory>
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
+#include "globals.h"
 #include "utils.h"
 #include "char_player.h"
 #include "cmd_knife_light.h"
@@ -17,10 +18,27 @@ using std::unique_ptr, std::make_unique;
 WeaponKnife::WeaponKnife(PlayerCharacter *player) : 
   SubWeapon(player, "Knife", 5, 0)
 {
+  cooldown_time = 2.0;
+}
 
+void WeaponKnife::update() {
+  if (usable) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - disabled_timestamp;
+  if (time_elapsed >= cooldown_time) {
+    PLOGI << "Knife is now off cooldown.";
+    usable = true;
+  }
 }
 
 unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
+  if (usable == false) {
+    PLOGI << "The sub-weapon is not usable at the moment.";
+    return nullptr;
+  }
+
   bool sufficent_morale = player->morale >= mp_cost1;
   if (sufficent_morale) {
     player->morale -= mp_cost1;
@@ -33,6 +51,11 @@ unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
 }
 
 unique_ptr<ActionCommand> WeaponKnife::heavyTechnique() {
+  if (usable == false) {
+    PLOGI << "The sub-weapon is not usable at the moment.";
+    return nullptr;
+  }
+
   bool sufficent_morale = player->morale >= mp_cost2;
   if (sufficent_morale) {
     player->morale -= mp_cost2;

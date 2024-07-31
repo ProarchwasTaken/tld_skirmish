@@ -10,7 +10,12 @@ class WeaponKnife : public SubWeapon{
 public:
   WeaponKnife(PlayerCharacter *player);
 
+  void update() override;
+
   std::unique_ptr<ActionCommand> lightTechnique() override; 
   std::unique_ptr<ActionCommand> heavyTechnique() override;
   void lightTechHandling() override;
+
+private:
+  float cooldown_time;
 };
