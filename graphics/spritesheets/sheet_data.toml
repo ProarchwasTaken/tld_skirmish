@@ -54,6 +54,13 @@ area = {x = 64, y = 128, width = 64, height = 64}
 name = "knife_light3"
 area = {x = 128, y = 128, width = 64, height = 64}
 
+[[player.sprites]] # ID: 13
+name = "knife_heavy1"
+area = {x = 192, y = 128, width = 64, height = 64}
+
+[[player.sprites]] # ID: 14
+name = "knife_heavy2"
+area = {x = 256, y = 128, width = 64, height = 64}
 
 [ghoul]
 path = "graphics/spritesheets/ghoul.png"
