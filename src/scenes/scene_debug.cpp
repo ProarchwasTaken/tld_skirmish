@@ -53,6 +53,11 @@ DebugScene::~DebugScene() {
   }
   enemies.clear();
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor.reset();
+  }
+  dynamic_actors.clear();
+
   PLOGI << "Debug scene has unloaded succesfully.";
 }
 
