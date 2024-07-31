@@ -57,6 +57,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_heavy_atk.cpp"
 "src/action_command/cmd_guard.cpp"
 "src/action_command/cmd_knife_light.cpp"
+"src/action_command/cmd_knife_heavy.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/sub-weapons/weapon_knife.cpp"
 )
@@ -90,6 +91,7 @@ set(HEADER_FILES
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
 "include/cmd_knife_light.h"
+"include/cmd_knife_heavy.h"
 "include/cmd_ghoul_atk.h"
 "include/weapon_knife.h"
 )
