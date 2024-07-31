@@ -1,14 +1,22 @@
 // projectiles/proj_knife.cpp
 #include <raylib.h>
+#include <cstdint>
 #include "globals.h"
+#include "base/generics.h"
 #include "base/dynamic_actor.h"
 #include "utils.h"
 #include "proj_knife.h"
 
 
-KnifeProjectile::KnifeProjectile(Vector2 position):
+KnifeProjectile::KnifeProjectile(Vector2 position, int8_t direction,
+                                 combatant_list &enemies):
   DynamicActor(position, TYPE_PROJECTILE) 
 {
+  damage = 4;
+  direction = direction;
+
+  stun_time = 0.2;
+
   anim_spin = {0, 1, 2, 3, 4, 5, 6, 7};
   spin_frametime = 0.1;
 }
