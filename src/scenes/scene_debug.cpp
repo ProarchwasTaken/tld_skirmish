@@ -99,8 +99,15 @@ void DebugScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor->update(delta_time);
+  }
+
   life_hud->update();
   morale_hud->update();
+
+  Dynamic::moveFromQueue(dynamic_actors);
+  Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
 
   if (player->awaiting_deletion) {
@@ -119,6 +126,11 @@ void DebugScene::drawScene() {
     }
 
     player->draw();
+
+    for (auto &d_actor : dynamic_actors) {
+      d_actor->draw();
+    }
+
     DrawTexture(overlay, -512, 0, WHITE);
 
     if (DEBUG_MODE) {

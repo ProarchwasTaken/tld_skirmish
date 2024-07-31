@@ -40,5 +40,7 @@ private:
   std::shared_ptr<PlayerCharacter> player;
   std::unique_ptr<LifeHud> life_hud;
   std::unique_ptr<MoraleHud> morale_hud;
+
   combatant_list enemies;
+  dynamic_list dynamic_actors;
 };
