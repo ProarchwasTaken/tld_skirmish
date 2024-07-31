@@ -112,14 +112,14 @@ namespace Dynamic {
   /* For creating an class instance derivative of DynamicActor, and 
    * adding to the queue to be tranferred into the gameplay scene later.
    * This is my first ever template function, so issues might pop up.*/
-  template<class DerivedClass>
-  void create(DerivedClass&& args) {
+  template<class DerivedClass, typename... Args>
+  void create(Args&&... args) {
     if (std::is_base_of<DynamicActor, DerivedClass>::value == false) {
       throw;
     }
 
     queue.push_back(
-      std::make_unique<DerivedClass>(std::forward<DerivedClass>(args))
+      std::make_unique<DerivedClass>(args...)
     );
   }
   

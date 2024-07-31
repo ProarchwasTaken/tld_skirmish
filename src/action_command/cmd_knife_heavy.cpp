@@ -1,7 +1,10 @@
 // action_command/cmd_knife_heavy.h
 #include <raylib.h>
+#include <raymath.h>
 #include "globals.h"
 #include "base/action_command.h"
+#include "utils.h"
+#include "proj_knife.h"
 #include "char_player.h"
 #include "cmd_knife_heavy.h"
 
@@ -20,6 +23,14 @@ void KnifeHeavy::chargeSequence(float time_elapsed, double &delta_time) {
 
   if (finished_charge) {
     user->current_sprite = sprites::player[14];
+    createProjectile();
     sub_weapon->disable();
   }
+}
+
+void KnifeHeavy::createProjectile() {
+  Vector2 offset = {20.0f * user->direction, -48.0};
+  Vector2 position = Vector2Add(user->position, offset);
+
+  Dynamic::create<KnifeProjectile>(position, user->direction, enemies);
 }
