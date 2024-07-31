@@ -12,6 +12,7 @@ public:
             uint8_t mp_cost2);
 
   virtual void update() {}
+  void disable();
   
   virtual std::unique_ptr<ActionCommand> lightTechnique(); 
   virtual void lightTechHandling() {}
@@ -26,4 +27,5 @@ public:
   uint8_t mp_cost2;
 protected:
   PlayerCharacter *player;
+  float disabled_timestamp = 0;
 };
