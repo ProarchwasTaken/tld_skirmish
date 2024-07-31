@@ -208,7 +208,9 @@ void Combatant::stunSequence() {
   PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
+
     kb_velocity = 0;
+    kb_direction = 0;
   } 
   else {
     death();
