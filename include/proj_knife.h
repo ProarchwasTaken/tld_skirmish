@@ -9,7 +9,7 @@
 
 class KnifeProjectile : public DynamicActor {
 public:
-  KnifeProjectile(Vector2 position, int8_t direction, 
+  KnifeProjectile(Vector2 position, int8_t direction,
                   combatant_list *enemies);
 
   void update(double &delta_time) override;
