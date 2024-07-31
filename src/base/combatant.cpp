@@ -144,16 +144,20 @@ void Combatant::enterHitStun(float stun_time) {
 }
 
 void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
-  bool different_direction = this->kb_direction == kb_direction;
+  bool different_direction = this->kb_direction != kb_direction;
   bool greater_velocity = this->kb_velocity < kb_velocity;
 
-  if (greater_velocity || different_direction) {
-    PLOGI << "Updating knockback velocity to: " << kb_velocity;
+  if (greater_velocity) {
+    PLOGD << "Updating knockback velocity to: " << kb_velocity;
     // I hope the decision of having both lines within this if statement 
     // won't come back to bite me later.
     this->kb_velocity = kb_velocity;
-    this->kb_direction = kb_direction;
   } 
+
+  if (different_direction && kb_direction != 0) {
+    PLOGD << "Updated knockback direction.";
+    this->kb_direction = kb_direction;
+  }
 }
 
 void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
