@@ -1,6 +1,5 @@
 // utils/dynamic.cpp
 #include <memory>
-#include <type_traits>
 #include <vector>
 #include <algorithm>
 #include "base/generics.h"
@@ -9,7 +8,7 @@
 #include "utils.h"
 #include <plog/Log.h>
 
-using std::vector, std::is_base_of, std::make_unique, std::unique_ptr;
+using std::vector, std::unique_ptr;
 
 /* Comparison function used for sorting a list from least to greatest
  * according to the DynamicActor's type.*/
@@ -22,30 +21,20 @@ bool typeCompare(unique_ptr<DynamicActor> &d1,
 bool deleteCompare(unique_ptr<DynamicActor> &d1, 
                    unique_ptr<DynamicActor> &d2);
 
-
-template<class DerivedClass, typename... Args>
-void Dynamic::create(Args&&... args) {
-  if (is_base_of<DynamicActor, DerivedClass>::value == false) {
-    PLOGE << "DerivedClass does not derive from Base!";
-    throw;
-  }
-
-  PLOGI << "Creating DynamicActor: DerivedClass...";
-  queue.push_back(make_unique<DerivedClass>(args...));
-  PLOGD << "Added DerivedClass to the queue.";
-}
-
-
 void Dynamic::moveFromQueue(dynamic_list &main_list) {
   if (queue.size() == 0) {
     return;
   }
 
   PLOGI << "Moving Dynamic Actors from queue to main list.";
-  std::move(queue.begin(), queue.end(), main_list.end());
+  for (auto &d_actor : queue) {
+    main_list.push_back(std::move(d_actor));
+  }
+  queue.clear();
 
   PLOGI << "Now sorting main list.";
   std::sort(main_list.begin(), main_list.end(), typeCompare);
+  PLOGD << "Dynamic Actor Count: " << main_list.size();
 }
 
 void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
@@ -54,7 +43,7 @@ void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
     return;
   }
 
-  int deleted;
+  int deleted = 0;
   for (int index = 0; index < count; index++) {
     auto &dynamic_actor = main_list[index];
 
@@ -63,12 +52,12 @@ void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
       deleted++;
     }
   }
-  PLOGI << "Deleted: " << deleted << "Dynamic Actors";
 
   if (deleted != 0) {
     std::sort(main_list.begin(), main_list.end(), deleteCompare);
 
     main_list.erase(main_list.begin(), main_list.begin() + deleted);
+    PLOGI << "Deleted: " << deleted << " Dynamic Actors";
 
     std::sort(main_list.begin(), main_list.end(), typeCompare);
   }

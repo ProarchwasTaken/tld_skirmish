@@ -1,16 +1,17 @@
 // utils.h
 #pragma once
-#include <memory>
 #include <raylib.h>
 #include <cstdint>
+#include <utility>
 #include <tuple>
 #include <string>
+#include <type_traits>
 #include <vector>
+#include <globals.h>
 #include "audio.h"
 #include "sprite_loader.h"
 #include "base/generics.h"
 #include "base/actor.h"
-#include "base/dynamic_actor.h"
 #include "char_player.h"
 
 namespace CameraUtils {
@@ -111,10 +112,18 @@ namespace Dynamic {
   /* For creating an class instance derivative of DynamicActor, and 
    * adding to the queue to be tranferred into the gameplay scene later.
    * This is my first ever template function, so issues might pop up.*/
-  template<class DerivedClass, typename... Args>
-  void create(Args&&... args);
+  template<class DerivedClass>
+  void create(DerivedClass&& args) {
+    if (std::is_base_of<DynamicActor, DerivedClass>::value == false) {
+      throw;
+    }
+
+    queue.push_back(
+      std::make_unique<DerivedClass>(std::forward<DerivedClass>(args))
+    );
+  }
   
-  /* Transers all Dynamic Actors in the queue to the dynamic_list 
+  /* Tranfers all Dynamic Actors in the queue to the dynamic_list 
    * specified. Also makes sures that the list is sorted from least,
    * greatest according to each DynamicActor's type.*/
   void moveFromQueue(dynamic_list &main_list);
