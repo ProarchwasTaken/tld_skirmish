@@ -116,17 +116,18 @@ public:
   void heavyAttackHanding();
 
   combatant_list *enemies;
-  std::vector<uint8_t> input_buffer;
+
+  std::unique_ptr<SubWeapon> sub_weapon;
 
   uint8_t morale;
   uint8_t max_morale;
 
   bool moving;
   float movement_speed;
+
+  std::vector<uint8_t> input_buffer;
 private:
   uint8_t *game_phase;
-
-  std::unique_ptr<SubWeapon> sub_weapon;
 
   bool buf_empty = false;
   bool buf_timer_started = false;
