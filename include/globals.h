@@ -31,20 +31,14 @@ namespace audio {
 }
 
 namespace sprites {
-  extern std::vector<Texture*> hud_life;
-  extern std::vector<SpriteMetaData> hud_life_metadata;
-
-  extern std::vector<Texture*> hud_morale;
-  extern std::vector<SpriteMetaData> hud_morale_metadata;
-
   extern std::vector<Texture*> player;
   extern std::vector<SpriteMetaData> plr_metadata;
 
   extern std::vector<Texture*> ghoul;
-  extern std::vector<SpriteMetaData> gol_metadata;
 
   extern std::vector<Texture*> weapon_knife;
-  extern std::vector<SpriteMetaData> weapon_knife_metadata;
+  extern std::vector<Texture*> hud_life;
+  extern std::vector<Texture*> hud_morale;
 }
 
 namespace RNG {
