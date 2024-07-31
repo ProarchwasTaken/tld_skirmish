@@ -9,9 +9,11 @@
 
 
 KnifeProjectile::KnifeProjectile(Vector2 position, int8_t direction,
-                                 combatant_list &enemies):
+                                 combatant_list *enemies):
   DynamicActor(position, TYPE_PROJECTILE) 
 {
+  this->enemies = enemies;
+
   damage = 4;
   direction = direction;
 
