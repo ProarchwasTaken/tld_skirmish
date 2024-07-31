@@ -10,6 +10,7 @@ public:
   KnifeProjectile(Vector2 position);
 
   void update(double &delta_time) override;
+  void draw() override;
 private:
   std::vector<int> anim_spin;
   float spin_frametime;
