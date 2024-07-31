@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "char_player.h"
 #include "cmd_knife_light.h"
+#include "cmd_knife_heavy.h"
 #include "cmd_heavy_atk.h"
 #include "weapon_knife.h"
 #include <plog/Log.h>
@@ -24,6 +25,18 @@ unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
   if (sufficent_morale) {
     player->morale -= mp_cost1;
     return make_unique<KnifeLight>(player);
+  }
+  else {
+    PLOGI << "Player has insufficent morale.";
+    return nullptr;
+  }
+}
+
+unique_ptr<ActionCommand> WeaponKnife::heavyTechnique() {
+  bool sufficent_morale = player->morale >= mp_cost2;
+  if (sufficent_morale) {
+    player->morale -= mp_cost2;
+    return make_unique<KnifeHeavy>(player);
   }
   else {
     PLOGI << "Player has insufficent morale.";
