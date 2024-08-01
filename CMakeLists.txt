@@ -12,7 +12,7 @@ else()
 endif()
 
 project("skirmish" 
-VERSION 0.0.5
+VERSION 0.1
 DESCRIPTION "A short wave based fighter."
 LANGUAGES CXX
 )
