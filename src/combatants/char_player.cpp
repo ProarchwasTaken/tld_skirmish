@@ -452,6 +452,7 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
+  Actor::draw();
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
   Rectangle dest = {tex_position.x, tex_position.y, 
     tex_scale.x, tex_scale.y};
