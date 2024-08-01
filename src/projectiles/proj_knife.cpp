@@ -6,6 +6,7 @@
 #include "base/dynamic_actor.h"
 #include "utils.h"
 #include "proj_knife.h"
+#include <plog/Log.h>
 
 
 KnifeProjectile::KnifeProjectile(Vector2 position, int8_t direction,
@@ -19,8 +20,12 @@ KnifeProjectile::KnifeProjectile(Vector2 position, int8_t direction,
 
   stun_time = 0.2;
 
+  // Always remember to set the current_sprite ahead of time!
+  // Learned that the hard way...
+  current_sprite = sprites::weapon_knife[0];
   anim_spin = {0, 1, 2, 3, 4, 5, 6, 7};
   spin_frametime = 0.1;
+
 }
 
 void KnifeProjectile::update(double &delta_time) {
