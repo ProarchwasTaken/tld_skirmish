@@ -14,12 +14,16 @@ public:
 
   void update(double &delta_time) override;
   void draw() override;
+
+  void movement(double &delta_time);
+  void enemyHitCheck();
 private:
   combatant_list *enemies;
 
+  float velocity_x;
   int8_t direction;
-  uint16_t damage;
 
+  uint16_t damage;
   float stun_time;
 
   std::vector<int> anim_spin;
