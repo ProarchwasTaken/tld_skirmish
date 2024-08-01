@@ -59,6 +59,11 @@ GameplayScene::~GameplayScene() {
   }
   enemies.clear();
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor.reset();
+  }
+  dynamic_actors.clear();
+
   PLOGI << "Gameplay scene has unloaded successfully.";
 }
 
@@ -108,11 +113,19 @@ void GameplayScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor->update(delta_time);
+  }
+
   life_hud->update();
   morale_hud->update();
 
   wave_manager->waveSequence();
+
+  Dynamic::moveFromQueue(dynamic_actors);
+  Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
+
   phase = determinePhase();
 
   // PLACEHOLDER
@@ -206,6 +219,10 @@ void GameplayScene::drawScene() {
     }
 
     player->draw();
+
+    for (auto &d_actor : dynamic_actors) {
+      d_actor->draw();
+    }
 
     DrawTexture(overlay, -512, 0, WHITE);
   }

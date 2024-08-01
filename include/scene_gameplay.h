@@ -44,7 +44,9 @@ private:
   Texture overlay;
 
   std::shared_ptr<PlayerCharacter> player;
+
   combatant_list enemies;
+  dynamic_list dynamic_actors;
 
   std::unique_ptr<WaveManager> wave_manager;
   std::unique_ptr<LifeHud> life_hud;
