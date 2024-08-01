@@ -28,7 +28,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
 
   sub_weapon = make_unique<WeaponKnife>(this);
 
-  morale = 5;
+  morale = 10;
   max_morale = 50;
 
   anim_walk = {1, 2, 3, 2};

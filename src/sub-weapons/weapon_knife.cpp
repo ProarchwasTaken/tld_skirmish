@@ -16,7 +16,7 @@ using std::unique_ptr, std::make_unique;
 
 
 WeaponKnife::WeaponKnife(PlayerCharacter *player) : 
-  SubWeapon(player, "Knife", 5, 0)
+  SubWeapon(player, "Knife", 3, 5)
 {
   cooldown_time = 2.0;
 }
