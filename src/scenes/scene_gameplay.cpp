@@ -134,6 +134,11 @@ void GameplayScene::updateScene(double &delta_time) {
     PLOGI << "Resorting to go back to the title screen for now.";
     load_scene(SCENE_TITLE);
   }
+  else if (phase == PHASE_REST && wave == max_wave) {
+    PLOGW << "A proper win state hasn't been implemented yet!";
+    PLOGI << "Sorry for the inconvenience!";
+    load_scene(SCENE_TITLE);
+  }
 }
 
 void GameplayScene::pauseGame() {
