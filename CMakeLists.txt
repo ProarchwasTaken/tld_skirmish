@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_COMPILER clang++)
 
 option(BUILD_DEBUG "Build the game for debugging." OFF)
 
 if(${BUILD_DEBUG})
-  set(CMAKE_CXX_COMPILER clang++)
   set(PROJECT_STAGE "Developer")
 else()
-  set(CMAKE_CXX_COMPILER g++)
   set(PROJECT_STAGE "Alpha")
 endif()
 
@@ -97,8 +96,6 @@ set(HEADER_FILES
 "include/weapon_knife.h"
 )
 
-set(STANDARD -static -static-libgcc -static-libstdc++)
-
 if(WIN32)
   message(STATUS "OS detected: Windows")
   set(RAYLIB -lraylib -lopengl32 -lgdi32 -lwinmm)
@@ -108,6 +105,7 @@ elseif(LINUX OR UNIX)
 endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries("skirmish" PRIVATE ${RAYLIB})
 target_compile_options("skirmish" PRIVATE 
 -DVERSION="${CMAKE_PROJECT_VERSION}" 
 -DVER_STAGE="${PROJECT_STAGE}"
@@ -117,13 +115,7 @@ target_compile_options("skirmish" PRIVATE
 
 if(${BUILD_DEBUG})
   target_compile_options("skirmish" PRIVATE --debug -O0)
-  target_link_libraries("skirmish" PRIVATE ${RAYLIB})
 else()
-  target_compile_options("skirmish" PRIVATE -O3 -DNDEBUG)
-  if(WIN32)
-    target_link_options("skirmish" PRIVATE -mwindows)
-    target_link_libraries("skirmish" PRIVATE ${STANDARD} ${RAYLIB})
-  elseif(LINUX OR UNIX)
-    target_link_libraries("skirmish" PRIVATE ${RAYLIB})
-  endif()
+  target_compile_options("skirmish" PRIVATE -DNDEBUG)
+  target_link_options("skirmish" PRIVATE -mwindows)
 endif()
