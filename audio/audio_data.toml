@@ -37,8 +37,20 @@ name = "cmd_cancel"
 path = "audio/sfx/cmd_cancel.wav"
 
 [[sfx]]
+name = "weapon_error"
+path = "audio/sfx/weapon_error.wav"
+
+[[sfx]]
+name = "weapon_ready"
+path = "audio/sfx/weapon_ready.wav"
+
+[[sfx]]
 name = "knife_light"
 path = "audio/sfx/knife_light.wav"
+
+[[sfx]]
+name = "knife_heavy"
+path = "audio/sfx/knife_heavy.wav"
 
 [[sfx]]
 name = "death"

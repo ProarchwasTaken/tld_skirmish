@@ -29,6 +29,7 @@ void WeaponKnife::update() {
   float time_elapsed = CURRENT_TIME - disabled_timestamp;
   if (time_elapsed >= cooldown_time) {
     PLOGI << "Knife is now off cooldown.";
+    SoundUtils::play("weapon_ready");
     usable = true;
   }
 }
@@ -36,6 +37,7 @@ void WeaponKnife::update() {
 unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
   if (usable == false) {
     PLOGI << "The sub-weapon is not usable at the moment.";
+    SoundUtils::play("weapon_error");
     return nullptr;
   }
 
@@ -46,6 +48,7 @@ unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
   }
   else {
     PLOGI << "Player has insufficent morale.";
+    SoundUtils::play("weapon_error");
     return nullptr;
   }
 }
@@ -53,6 +56,7 @@ unique_ptr<ActionCommand> WeaponKnife::lightTechnique() {
 unique_ptr<ActionCommand> WeaponKnife::heavyTechnique() {
   if (usable == false) {
     PLOGI << "The sub-weapon is not usable at the moment.";
+    SoundUtils::play("weapon_error");
     return nullptr;
   }
 
@@ -63,6 +67,7 @@ unique_ptr<ActionCommand> WeaponKnife::heavyTechnique() {
   }
   else {
     PLOGI << "Player has insufficent morale.";
+    SoundUtils::play("weapon_error");
     return nullptr;
   }
 }

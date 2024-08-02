@@ -23,7 +23,10 @@ void KnifeHeavy::chargeSequence(float time_elapsed, double &delta_time) {
 
   if (finished_charge) {
     user->current_sprite = sprites::player[14];
+
+    SoundUtils::play("knife_heavy");
     createProjectile();
+
     sub_weapon->disable();
   }
 }
