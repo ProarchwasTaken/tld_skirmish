@@ -259,6 +259,12 @@ void PlayerCharacter::lightAttackHandling() {
       command = sub_weapon->heavyTechnique();
       break;
     }
+    // Did this for fun. If it's too OP, it would be easy to remove.
+    case BTN_GUARD: {
+      command = make_unique<Guard>(this, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
+      break;
+    }
   }
 
   if (command != nullptr) {
