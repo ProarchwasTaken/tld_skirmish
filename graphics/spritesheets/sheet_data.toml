@@ -139,6 +139,10 @@ area = {x = 7, y = 18, width = 70, height = 6}
 name = "gauge"
 area = {x = 7, y = 25, width = 70, height = 6}
 
+[[hud_morale.sprites]] # ID: 3
+name = "empty_grey"
+area = {x = 7, y = 32, width = 70, height = 6}
+
 
 [weapon_knife]
 path = "graphics/spritesheets/weapon_knife.png"

@@ -13,7 +13,8 @@ using std::string;
 
 MoraleHud::MoraleHud(PlayerCharacter &player) {
   this->player = &player;
-  hud_position = {98, 207};
+  usable = &player.sub_weapon->usable;
+  hud_position = {98, 208};
   
   gauge_width = 70;
   segment_width = gauge_width * 0.2;
@@ -31,6 +32,13 @@ MoraleHud::MoraleHud(PlayerCharacter &player) {
 void MoraleHud::update() {
   updateGauge();
   segmentBlinkInterval();
+
+  if (*usable) {
+    hud_color = COLORS::PALETTE[42];
+  }
+  else {
+    hud_color = COLORS::PALETTE[2];
+  }
 }
 
 void MoraleHud::updateGauge() {
@@ -58,19 +66,20 @@ void MoraleHud::segmentBlinkInterval() {
 void MoraleHud::drawMoraleText() {
   string txt_mp = TextFormat("%02i/%02i", player->morale, 
                              player->max_morale);
-  Vector2 base_position = {hud_position.x + 79, hud_position.y - 1};
+  Vector2 base_position = {hud_position.x + 78, hud_position.y - 2};
   txt_position = Text::alignRight(fonts::skirmish, txt_mp, base_position,
                                   1, -3);
 
   int size = fonts::skirmish->baseSize;
   DrawTextEx(*fonts::skirmish, txt_mp.c_str(), txt_position, size, -3, 
-             COLORS::PALETTE[42]);
+             hud_color);
 }
 
 void MoraleHud::drawMoraleGauge() {
-  DrawTextureV(*sprites::hud_morale[0], hud_position, WHITE);
+  DrawTextureV(*sprites::hud_morale[0], hud_position, hud_color);
+  DrawTextureV(*sprites::hud_morale[3], gauge_position, WHITE);
   DrawTextureRec(*sprites::hud_morale[2], gauge_source, gauge_position, 
-                 WHITE);
+                 hud_color);
 
   if (blink_interval == 1.0) {
     return;
@@ -85,7 +94,7 @@ void MoraleHud::drawMoraleGauge() {
   }
 
   DrawTextureRec(*sprites::hud_morale[index], segment_source, 
-                 segment_position, WHITE);
+                 segment_position, hud_color);
 }
 
 void MoraleHud::draw() {

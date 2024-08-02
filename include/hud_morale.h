@@ -20,8 +20,10 @@ public:
 private:
   PlayerCharacter *player;
   float morale_percentage;
+  bool *usable;
 
   Vector2 hud_position;
+  Color hud_color;
   Vector2 txt_position;
 
   Vector2 gauge_position;
