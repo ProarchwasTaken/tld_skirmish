@@ -4,16 +4,17 @@ set(CMAKE_CXX_STANDARD 17)
 option(BUILD_DEBUG "Build the game for debugging." OFF)
 
 if(${BUILD_DEBUG})
-  message(STATUS "Building the game for debugging.")
   set(CMAKE_CXX_COMPILER clang++)
+  set(PROJECT_STAGE "Developer")
 else()
-  message(STATUS "Building the game for release.")
   set(CMAKE_CXX_COMPILER g++)
+  set(PROJECT_STAGE "Alpha")
 endif()
 
 project("skirmish" 
-VERSION 0.1
+VERSION 0.1.0
 DESCRIPTION "A short wave based fighter."
+HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
 )
 
@@ -107,6 +108,12 @@ elseif(LINUX OR UNIX)
 endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
+target_compile_options("skirmish" PRIVATE 
+-DVERSION="${CMAKE_PROJECT_VERSION}" 
+-DVER_STAGE="${PROJECT_STAGE}"
+-DAUTHOR="Tyler Dillard"
+-DHOME_URL="${CMAKE_PROJECT_HOMEPAGE_URL}"
+)
 
 if(${BUILD_DEBUG})
   target_compile_options("skirmish" PRIVATE --debug -O0)

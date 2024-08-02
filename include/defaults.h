@@ -11,3 +11,8 @@
 
 #define TARGET_FRAMERATE 60
 
+#ifdef NDEBUG
+  #define DEV_BUILD 0
+#else
+  #define DEV_BUILD 1
+#endif

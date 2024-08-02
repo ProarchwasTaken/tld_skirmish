@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
   setupCustomLogger();
   int start_scene = parseArguments(argc, argv);
 
-  PLOGI << "Initializing the game...";
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
   SetTargetFPS(TARGET_FRAMERATE);
@@ -62,7 +61,10 @@ void setupCustomLogger() {
   static ColorConsoleAppender<TxtFormatter> console_appender;
   plog::init(plog::info, &file_appender)
     .addAppender(&console_appender);
-  PLOGI << "Logger initialized."; 
+
+  PLOGI << "Skirmish " << VERSION << " -- " << VER_STAGE << " Build";
+  PLOGI << "Open Source project originally made by: " << AUTHOR;
+  PLOGI << "Github Repository: " << HOME_URL;
 }
 
 
@@ -72,7 +74,7 @@ int parseArguments(int argc, char *argv[]) {
 
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];
-    if (arg == "--debug_scene") {
+    if (DEV_BUILD && arg == "--debug_scene") {
       PLOGI << "Starting the game in the debug scene.";
       start_scene = SCENE_DEBUG;
     }
