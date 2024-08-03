@@ -23,7 +23,9 @@ Game::Game(int start_scene) {
   loadGameFonts();
 
   sprite_loader = make_unique<SpriteLoader>();
-  sprite_loader->loadSpritesheet({"hud_life","player", "ghoul"});
+  sprite_loader->loadSpritesheet({
+    "hud_life", "hud_morale", "player", "ghoul", "weapon_knife"
+  });
 
   audio_manager = make_unique<AudioManager>();
 

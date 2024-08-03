@@ -3,12 +3,14 @@
 #include <cstdint>
 #include <vector>
 #include <raylib.h>
+#include <memory>
 #include "base/generics.h"
 #include "base/combatant.h"
+#include "base/sub-weapon.h"
 
 #define PLR_BOUNDS 384
 
-#define PLR_HP 100
+#define PLR_HP 30
 #define PLR_STABILITY 0.5
 #define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
@@ -16,7 +18,9 @@
 
 #define BTN_LIGHT_ATK 0
 #define BTN_HEAVY_ATK 1
-#define BTN_GUARD 2
+#define BTN_LIGHT_TECH 2
+#define BTN_HEAVY_TECH 3
+#define BTN_GUARD 4
 
 
 /* The playable character, the controllable avatar for the user. The most
@@ -56,6 +60,12 @@ public:
    * the player reaches max health.*/
   void regeneration();
 
+  /* Makes sure that the value that the player's morale is incremented to
+   * doesn't go past the maximum. The player's morale will increase
+   * through certain actions, and this method is typically used for the
+   * most part rather than just incrementing the value directly.*/
+  void incrementMorale(uint8_t value);
+
   /* Returns true if the player character should be moving. The outcome is
    * determined by user input.*/
   bool isMoving();
@@ -79,8 +89,12 @@ public:
    * on what state the player is in.*/
   void interpretBuffer();
 
+  /* For clearing the buffer onces the timer runs out. That's it.
+   * possibly the simplest of the 3 methods.*/
+  void clearBufferCheck();
+
   /* This method is only called when the player is in the neutral state.
-   * It checks the first to second inputs in the buffer, and decides what
+   * It checks the first input in the buffer, and decides what
    * command to assign to the player based on that.*/
   void normalInterpretLogic();
 
@@ -91,23 +105,29 @@ public:
   void specialInterpretLogic();
 
   /* Only called during special interpret logic, and the player is using
-   * the LightAttack. For checking if the player should cancel the
-   * recovery phase of the attack and immediately perform a heavy attack.
-   * That's only if certain conditions are met.*/
+   * the LightAttack. This is the basically the function that allows
+   * the player to cancel the LightAttack to a heavy attack or weapon
+   * technique if it lands.*/
   void lightAttackHandling();
 
-  /* For clearing the buffer onces the timer runs out. That's it.
-   * possibly the simplest of the 3 methods.*/
-  void clearBufferCheck();
+  /* Only called during special interpret logic, and the player is using
+   * the HeavyAttack. It only allows the player to cancel the HeavyAttack
+   * to the heavy weapon technique if it connects.*/
+  void heavyAttackHanding();
 
   combatant_list *enemies;
 
+  std::unique_ptr<SubWeapon> sub_weapon;
+
+  uint8_t morale;
+  uint8_t max_morale;
+
   bool moving;
   float movement_speed;
-private:
-  uint8_t *game_phase;
 
   std::vector<uint8_t> input_buffer;
+private:
+  uint8_t *game_phase;
 
   bool buf_empty = false;
   bool buf_timer_started = false;

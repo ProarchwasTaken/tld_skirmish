@@ -8,6 +8,7 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "sprite_loader.h"
+#include "char_player.h"
 #include "utils.h"
 #include "cmd_guard.h"
 #include <plog/Log.h>
@@ -17,7 +18,7 @@ using std::vector;
 
 Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
              uint16_t boundary, bool can_parry):
-  ActionCommand(user, "Guard", 0.25, 0.5, 0.25) 
+  ActionCommand(user, "Guard", CMD_NONE, 0.25, 0.5, 0.25) 
 {
   this->boundary = boundary;
 
@@ -129,6 +130,13 @@ void Guard::applyGuardBonus(float stun_time, float kb_velocity,
   guard_success = true;
   user->invulnerable = true;
 
+  if (user->type == TYPE_PLAYER) {
+    auto player = static_cast<PlayerCharacter*>(user);
+
+    int morale_bonus = 2 + (2 * player->parried_attack);
+    player->incrementMorale(morale_bonus);
+  }
+
   stun_time = stun_time * 0.75;
   kb_velocity = kb_velocity * 1.25;
 
@@ -165,7 +173,7 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
 }
 
 void Guard::deathProtection(uint16_t &dmg_magnitude) {
-  bool death_protection = dmg_magnitude < 10;
+  bool death_protection = dmg_magnitude < 5;
   bool death_imminent = user->health - dmg_magnitude <= 0;
 
   if (death_protection && death_imminent) {

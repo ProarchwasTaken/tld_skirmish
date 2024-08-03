@@ -7,6 +7,7 @@
 #include "base/scene.h"
 #include "base/generics.h"
 #include "hud_life.h"
+#include "hud_morale.h"
 #include "char_player.h"
 
 
@@ -22,7 +23,10 @@ public:
   ~DebugScene() override;
 
   void checkInput() override;
+  void debugInputs();
+
   void updateScene(double &delta_time) override;
+
   void drawScene() override;
   void drawDebugInfo() override;
 private:
@@ -35,5 +39,8 @@ private:
 
   std::shared_ptr<PlayerCharacter> player;
   std::unique_ptr<LifeHud> life_hud;
+  std::unique_ptr<MoraleHud> morale_hud;
+
   combatant_list enemies;
+  dynamic_list dynamic_actors;
 };

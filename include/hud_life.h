@@ -28,9 +28,9 @@ public:
    * the last segment of the life gauge will "blink" to indicate that.*/
   void segmentBlinkInterval();
 
-  /* The life text is meant to display the exact amount of health the
-   * player has left, relative to their maximum amount of health.*/
   void drawLifeText();
+  void drawLifeGauge();
+
   void draw();
 
 private:

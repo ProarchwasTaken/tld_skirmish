@@ -10,8 +10,9 @@
 #include "utils.h"
 #include "game.h"
 #include "wave_manager.h"
-#include "char_player.h"
 #include "hud_life.h"
+#include "hud_morale.h"
+#include "char_player.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
@@ -36,6 +37,7 @@ Scene(load_scene)
 
   player = make_shared<PlayerCharacter>(enemies, phase);
   life_hud = make_unique<LifeHud>(*player, phase);
+  morale_hud = make_unique<MoraleHud>(*player);
 
   camera = CameraUtils::setupCamera();
   wave_manager = make_unique<WaveManager>(*player, enemies);
@@ -49,12 +51,18 @@ GameplayScene::~GameplayScene() {
 
   player.reset();
   life_hud.reset();
+  morale_hud.reset();
   wave_manager.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
   }
   enemies.clear();
+
+  for (auto &d_actor : dynamic_actors) {
+    d_actor.reset();
+  }
+  dynamic_actors.clear();
 
   PLOGI << "Gameplay scene has unloaded successfully.";
 }
@@ -105,16 +113,30 @@ void GameplayScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor->update(delta_time);
+  }
+
   life_hud->update();
+  morale_hud->update();
 
   wave_manager->waveSequence();
+
+  Dynamic::moveFromQueue(dynamic_actors);
+  Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
+
   phase = determinePhase();
 
   // PLACEHOLDER
   if (player->awaiting_deletion) {
     PLOGW << "A proper fail state hasn't been implemented yet!";
     PLOGI << "Resorting to go back to the title screen for now.";
+    load_scene(SCENE_TITLE);
+  }
+  else if (phase == PHASE_REST && wave == max_wave) {
+    PLOGW << "A proper win state hasn't been implemented yet!";
+    PLOGI << "Sorry for the inconvenience!";
     load_scene(SCENE_TITLE);
   }
 }
@@ -203,11 +225,16 @@ void GameplayScene::drawScene() {
 
     player->draw();
 
+    for (auto &d_actor : dynamic_actors) {
+      d_actor->draw();
+    }
+
     DrawTexture(overlay, -512, 0, WHITE);
   }
   EndMode2D();
 
   life_hud->draw();
+  morale_hud->draw();
 
   drawWaveCount();
   drawTimer();

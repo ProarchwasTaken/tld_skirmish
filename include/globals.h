@@ -7,6 +7,7 @@
 #include <raylib.h>
 #include <vector>
 #include <random>
+#include "base/generics.h"
 #include "audio.h"
 #include "sprite_loader.h"
 
@@ -30,17 +31,21 @@ namespace audio {
 }
 
 namespace sprites {
-  extern std::vector<Texture*> hud_life;
-  extern std::vector<SpriteMetaData> hud_life_metadata;
-
   extern std::vector<Texture*> player;
   extern std::vector<SpriteMetaData> plr_metadata;
 
   extern std::vector<Texture*> ghoul;
-  extern std::vector<SpriteMetaData> gol_metadata;
+
+  extern std::vector<Texture*> weapon_knife;
+  extern std::vector<Texture*> hud_life;
+  extern std::vector<Texture*> hud_morale;
 }
 
 namespace RNG {
   extern std::mt19937 generator;
 }
 
+
+namespace Dynamic {
+  extern dynamic_list queue;
+}

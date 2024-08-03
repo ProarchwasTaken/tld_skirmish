@@ -9,14 +9,15 @@
 
 
 LightAttack::LightAttack(PlayerCharacter *user): 
-  ActionCommand(user, "Light Attack", 0.2, 0.1, 0.3)
+  ActionCommand(user, "Light Attack", CMD_NORM_LIGHT, 0.2, 0.1, 0.3)
 {
-  damage = 10;
+  damage = 3;
   guard_pierce = 0.2;
 
   stun_time = 0.5;
 
   this->enemies = user->enemies;
+  this->player = user;
   user->current_sprite = sprites::player[4];
   setupHurtbox();
 }
@@ -60,14 +61,19 @@ void LightAttack::enemyHitCheck() {
     }
 
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
+      if (enemy->isUsingCommand()) player->incrementMorale(1);
+
       enemy->takeDamage(damage, guard_pierce, stun_time, 0.15f, 
                         user->direction);
-      attack_connected = true;
 
-      user->state = RECOVER;
-      sequence_timestamp = CURRENT_TIME;
-      return;
+      attack_connected = true;
+      break;
     }
+  }
+
+  if (attack_connected) {
+    user->state = RECOVER;
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 

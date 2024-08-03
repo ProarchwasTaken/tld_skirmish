@@ -18,7 +18,7 @@ LifeHud::LifeHud(PlayerCharacter &player, uint8_t &phase) {
   this->player = &player;
   game_phase = &phase;
 
-  hud_position = {16, 212};
+  hud_position = {16, 208};
 
   gauge_position = {hud_position.x + 8, hud_position.y + 9};
   gauge_width = 69;
@@ -56,11 +56,6 @@ void LifeHud::determineHudColor() {
 }
 
 void LifeHud::segmentBlinkInterval() {
-  if (blink_interval == 0.0) {
-    display_segment = false;
-    return;
-  }
-
   float time_elasped = CURRENT_TIME - blink_timestamp;
   if (time_elasped >= blink_interval) {
     display_segment = !display_segment;
@@ -73,7 +68,8 @@ void LifeHud::updateGauge() {
   life_percentage = health / player->max_health;
 
   int base_value = floor(life_percentage * 10);
-  blink_interval = (life_percentage * 10) - base_value;
+  float remainder = (life_percentage * 10) - base_value;
+  blink_interval = 1.0 - remainder;
 
   int segments = base_value;
   gauge_source.width = segment_width * segments;
@@ -85,15 +81,7 @@ void LifeHud::updateGauge() {
 }
 
 void LifeHud::draw() {
-  DrawTextureV(*sprites::hud_life[0], hud_position, WHITE);
-  DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
-                 hud_color);
-
-  if (display_segment) {
-    DrawTextureRec(*sprites::hud_life[1], segment_source, 
-                   segment_position, hud_color);
-  }
-
+  drawLifeGauge();
   drawLifeText();
 }
 
@@ -106,4 +94,26 @@ void LifeHud::drawLifeText() {
   int size = fonts::skirmish->baseSize;
   DrawTextEx(*fonts::skirmish, txt_hp.c_str(), txt_position, size, -3, 
              hud_color);
+}
+
+void LifeHud::drawLifeGauge() {
+  DrawTextureV(*sprites::hud_life[0], hud_position, hud_color);
+  DrawTextureV(*sprites::hud_life[3], gauge_position, WHITE);
+  DrawTextureRec(*sprites::hud_life[1], gauge_source, gauge_position, 
+                 hud_color);
+
+  if (blink_interval == 1.0) {
+    return;
+  }
+
+  int index;
+  if (display_segment) {
+    index = 1;
+  }
+  else {
+    index = 2;
+  }
+
+  DrawTextureRec(*sprites::hud_life[index], segment_source, 
+                 segment_position, hud_color);
 }

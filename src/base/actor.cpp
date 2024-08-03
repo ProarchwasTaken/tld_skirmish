@@ -1,4 +1,5 @@
 // actor.cpp
+#include <cassert>
 #include <raylib.h>
 #include "base/actor.h"
 
@@ -31,6 +32,11 @@ void Actor::texRectCorrection() {
 
   tex_position = {x, y};
   tex_rect = {x, y, tex_scale.x, tex_scale.y};
+}
+
+void Actor::draw() {
+  assert(current_sprite != NULL && 
+         "You forgot to set the default sprite idiot!");
 }
 
 void Actor::drawDebug() { 

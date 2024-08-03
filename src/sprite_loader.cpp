@@ -1,4 +1,5 @@
 // sprite_loader.cpp
+#include <cstddef>
 #include <raylib.h>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
@@ -100,7 +101,7 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
 
 void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
   vector<Texture*> *sprite_list;
-  vector<SpriteMetaData> *data_list;
+  vector<SpriteMetaData> *data_list = NULL;
 
   switch (sheet_id) {
     case SHEET_PLAYER: {
@@ -110,12 +111,18 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
     }
     case SHEET_GHOUL: {
       sprite_list = &sprites::ghoul;
-      data_list = &sprites::gol_metadata;
       break;
     }
     case SHEET_LIFE: {
       sprite_list = &sprites::hud_life;
-      data_list = &sprites::hud_life_metadata;
+      break;
+    }
+    case SHEET_MORALE: {
+      sprite_list = &sprites::hud_morale;
+      break;
+    }
+    case SHEET_KNIFE: {
+      sprite_list = &sprites::weapon_knife;
       break;
     }
     default: {
@@ -125,9 +132,11 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
   }
 
   sprite_list->push_back(&sprites[latest_index]);
-  data_list->push_back(
-    SpriteMetaData(sprite_name, &sprites[latest_index])
-  );
-  
+
+  if (data_list != NULL) {
+    data_list->push_back(
+      SpriteMetaData(sprite_name, &sprites[latest_index])
+    );
+  } 
   PLOGD << "Allocated sprite: '" << sprite_name << "'.";
 }

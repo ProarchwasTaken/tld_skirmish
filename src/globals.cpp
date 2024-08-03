@@ -3,6 +3,7 @@
 #include <vector>
 #include <random>
 #include "globals.h"
+#include "base/generics.h"
 #include "audio.h"
 #include "sprite_loader.h"
 
@@ -25,10 +26,10 @@ namespace sprites {
   vector<Texture*> player;
   vector<Texture*> ghoul;
   vector<Texture*> hud_life;
+  vector<Texture*> hud_morale;
+  vector<Texture*> weapon_knife;
 
   vector<SpriteMetaData> plr_metadata;
-  vector<SpriteMetaData> gol_metadata;
-  vector<SpriteMetaData> hud_life_metadata;
 }
 
 namespace audio {
@@ -37,5 +38,9 @@ namespace audio {
 
 namespace RNG {
   mt19937 generator(random_device{}());
+}
+
+namespace Dynamic {
+  dynamic_list queue;
 }
 

@@ -11,6 +11,7 @@
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
+#include "weapon_knife.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -25,11 +26,16 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   current_sprite = sprites::player[1];
   game_phase = &phase;
 
+  sub_weapon = make_unique<WeaponKnife>(this);
+
+  morale = 10;
+  max_morale = 50;
+
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;
 
   movement_speed = 1.75;
-  regen_time = 0.6;
+  regen_time = 2;
 
   buf_clear_time = 0.010;
 
@@ -40,6 +46,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
 PlayerCharacter::~PlayerCharacter() {
   PLOGI << "Deleting the player character from memory.";
   input_buffer.clear();
+  sub_weapon.reset();
 }
 
 void PlayerCharacter::update(double &delta_time) {
@@ -74,6 +81,7 @@ void PlayerCharacter::update(double &delta_time) {
     }
   }
 
+  sub_weapon->update();
   clearBufferCheck();
 }
 
@@ -132,82 +140,6 @@ void PlayerCharacter::interpretBuffer() {
   }
 }
 
-void PlayerCharacter::normalInterpretLogic() {
-  uint8_t first_input = input_buffer.front();
-  unique_ptr<ActionCommand> command;
-
-  PLOGI << "Deciding what commands to use depending on input buffer.";
-  switch (first_input) {
-    case BTN_LIGHT_ATK: {
-      PLOGI << "Attempting to assign LightAttack";
-      command = make_unique<LightAttack>(this);
-      useCommand(command);
-      break;
-    }
-    case BTN_HEAVY_ATK: {
-      PLOGI << "Attempting to assign HeavyAttack";
-      command = make_unique<HeavyAttack>(this);
-      useCommand(command);
-      break;
-    }
-    case BTN_GUARD: {
-      PLOGI << "Attempting to assign Guard";
-      command = make_unique<Guard>(this, sprites::plr_metadata, 
-                                   PLR_BOUNDS, true);
-      useCommand(command);
-      break;
-    }
-    default: {
-      PLOGI << "No valid commands found!";
-      break;
-    }
-  }
-}
-
-void PlayerCharacter::specialInterpretLogic() {
-  if (current_command == nullptr) {
-    PLOGE << "Player doesn't have an command assigned to them!";
-    throw;
-  }
-
-  PLOGI << "The player is using: " << current_command->command_name;
-  if (parried_attack) {
-    PLOGI << "Player is parrying an attack. Switching back to normal "
-      "interpret logic.";
-    SoundUtils::play("cmd_cancel");
-    
-    // Best part is that I didn't need to do much to implement this. :)
-    normalInterpretLogic();
-
-    invulnerable = false;
-    parried_attack = false;
-    return;
-  }
-
-  if (current_command->command_name == "Light Attack") {
-    lightAttackHandling();
-    return;
-  }
-}
-
-void PlayerCharacter::lightAttackHandling() {
-  uint8_t first_input = input_buffer.front();
-  unique_ptr<ActionCommand> command;
-
-  auto light_atk = static_cast<LightAttack*>(current_command.get());
-
-  PLOGI << "Deciding if the recovery phase should be canceled depending"
-    " specific conditions.";
-  if (light_atk->attack_connected && first_input == BTN_HEAVY_ATK) {
-    PLOGI << "Canceling recovery phase and assigning HeavyAttack.";
-    command = make_unique<HeavyAttack>(this);
-    useCommand(command);
-
-    SoundUtils::play("cmd_cancel");
-    return;
-  }
-}
-
 void PlayerCharacter::clearBufferCheck() {
   if (buf_timer_started == false) {
     return;
@@ -218,6 +150,146 @@ void PlayerCharacter::clearBufferCheck() {
     PLOGD << "Clearing input buffer.";
     input_buffer.clear();
     buf_timer_started = false;
+  }
+}
+
+void PlayerCharacter::normalInterpretLogic() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command = nullptr;
+
+  PLOGI << "Deciding what commands to use depending on input buffer.";
+  switch (first_input) {
+    case BTN_LIGHT_ATK: {
+      PLOGI << "Attempting to assign LightAttack";
+      command = make_unique<LightAttack>(this);
+      break;
+    }
+    case BTN_HEAVY_ATK: {
+      PLOGI << "Attempting to assign HeavyAttack";
+      command = make_unique<HeavyAttack>(this);
+      break;
+    }
+    case BTN_LIGHT_TECH: {
+      PLOGI << "Attempting to assign light weapon technique.";
+      command = sub_weapon->lightTechnique();
+      break;
+    }
+    case BTN_HEAVY_TECH: {
+      PLOGI << "Attempting to assign heavy weapon technique";
+      command = sub_weapon->heavyTechnique();
+      break;
+    }
+    case BTN_GUARD: {
+      PLOGI << "Attempting to assign Guard";
+      command = make_unique<Guard>(this, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
+      break;
+    }
+    default: {
+      PLOGI << "No valid commands found!";
+    }
+  }
+
+  if (command != nullptr) {
+    useCommand(command);
+  }
+}
+
+void PlayerCharacter::specialInterpretLogic() {
+  if (current_command == nullptr) {
+    PLOGE << "Player doesn't have an command assigned to them!";
+    throw;
+  }
+
+  if (parried_attack) {
+    PLOGI << "Detected that the player has parried an attack. Switching "
+      "back to interpret logic.";
+    SoundUtils::play("cmd_cancel");
+    
+    // Best part is that I didn't need to do much to implement this. :)
+    normalInterpretLogic();
+
+    invulnerable = false;
+    parried_attack = false;
+    return;
+  }
+
+  PLOGI << "The player is using: " << current_command->command_name;
+  switch (current_command->type) {
+    case CMD_NORM_LIGHT: {
+      lightAttackHandling();
+      break;
+    }
+    case CMD_NORM_HEAVY: {
+      heavyAttackHanding();
+      break;
+    }
+    case CMD_TECH_LIGHT: {
+      sub_weapon->lightTechHandling();
+      break;
+    }
+    case CMD_TECH_HEAVY: {
+      sub_weapon->heavyTechHandling();
+      break;
+    }
+  }
+}
+
+void PlayerCharacter::lightAttackHandling() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  auto light_atk = static_cast<LightAttack*>(current_command.get());
+
+  if (light_atk->attack_connected == false) {
+    return;
+  }
+
+  switch (first_input) {
+    case BTN_HEAVY_ATK: {
+      command = make_unique<HeavyAttack>(this);
+      incrementMorale(1);
+      break;
+    } 
+    case BTN_LIGHT_TECH: {
+      command = sub_weapon->lightTechnique();
+      break;
+    }
+    case BTN_HEAVY_TECH: {
+      command = sub_weapon->heavyTechnique();
+      break;
+    }
+    // Did this for fun. If it's too OP, it would be easy to remove.
+    case BTN_GUARD: {
+      command = make_unique<Guard>(this, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
+      break;
+    }
+  }
+
+  if (command != nullptr) {
+    SoundUtils::play("cmd_cancel");
+    useCommand(command);
+  }
+}
+
+void PlayerCharacter::heavyAttackHanding() {
+  uint8_t first_input = input_buffer.front();
+  unique_ptr<ActionCommand> command = nullptr;
+
+  auto heavy_atk = static_cast<HeavyAttack*>(current_command.get());
+
+  if (heavy_atk->attack_connected == false) {
+    return;
+  } 
+
+  if (first_input == BTN_HEAVY_TECH) {
+    command = sub_weapon->heavyTechnique();
+  }
+
+  if (command != nullptr) {
+    SoundUtils::play("cmd_cancel");
+    useCommand(command);
   }
 }
 
@@ -262,12 +334,29 @@ void PlayerCharacter::regeneration() {
   }
 }
 
+void PlayerCharacter::incrementMorale(uint8_t value) {
+  if (morale == max_morale) {
+    return;
+  }
+
+  int new_morale = morale + value;
+  if (new_morale > max_morale) {
+    morale = max_morale;
+  }
+  else {
+    morale = new_morale;
+  }
+}
+
 void PlayerCharacter::inputPressed() {
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
 
   bool key_z = IsKeyPressed(KEY_Z);
   bool key_x = IsKeyPressed(KEY_X);
+  bool key_a = IsKeyPressed(KEY_A);
+  bool key_s = IsKeyPressed(KEY_S);
+
   bool key_space = IsKeyPressed(KEY_SPACE);
 
   bool gamepad_detected = IsGamepadAvailable(0);
@@ -276,6 +365,8 @@ void PlayerCharacter::inputPressed() {
 
   bool btn_face_right = false;
   bool btn_face_down = false;
+  bool btn_face_left = false;
+  bool btn_face_up = false;
 
   bool btn_shoulder_down = false;
 
@@ -289,6 +380,10 @@ void PlayerCharacter::inputPressed() {
     btn_face_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN
     );
+    btn_face_left = IsGamepadButtonPressed(
+      0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT
+    );
+    btn_face_up = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP);
 
     btn_shoulder_down = IsGamepadButtonPressed(
       0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
@@ -316,6 +411,16 @@ void PlayerCharacter::inputPressed() {
   bool input_heavy_attack = key_x || btn_face_right;
   if (input_heavy_attack) {
     input_buffer.push_back(BTN_HEAVY_ATK);
+  }
+
+  bool input_light_tech = key_a || btn_face_left;
+  if (input_light_tech) {
+    input_buffer.push_back(BTN_LIGHT_TECH);
+  }
+
+  bool input_heavy_tech = key_s || btn_face_up;
+  if (input_heavy_tech) {
+    input_buffer.push_back(BTN_HEAVY_TECH);
   }
 
   bool input_guard = key_space || btn_shoulder_down;
@@ -353,6 +458,7 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw() {
+  Actor::draw();
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
   Rectangle dest = {tex_position.x, tex_position.y, 
     tex_scale.x, tex_scale.y};

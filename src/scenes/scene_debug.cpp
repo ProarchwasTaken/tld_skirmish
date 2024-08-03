@@ -4,11 +4,13 @@
 #include <tuple>
 #include <memory>
 #include "globals.h"
+#include "game.h"
 #include "utils.h"
 #include "scene_debug.h"
 #include "scene_gameplay.h"
 #include "char_player.h"
 #include "hud_life.h"
+#include "hud_morale.h"
 #include "enemy_dummy.h"
 #include "enemy_ghoul.h"
 #include <plog/Log.h>
@@ -22,10 +24,11 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   tie(background, overlay) = Stages::loadStage("debug");
   debug_overlay = LoadTexture("graphics/stages/debug/debug_overlay.png");
 
-  phase = PHASE_REST;
+  phase = PHASE_ACTION;
 
   player = make_shared<PlayerCharacter>(enemies, phase);
   life_hud = make_unique<LifeHud>(*player, phase);
+  morale_hud = make_unique<MoraleHud>(*player);
 
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),
@@ -50,32 +53,50 @@ DebugScene::~DebugScene() {
   }
   enemies.clear();
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor.reset();
+  }
+  dynamic_actors.clear();
+
   PLOGI << "Debug scene has unloaded succesfully.";
 }
 
 void DebugScene::checkInput() {
+  debugInputs();
+
   player->inputPressed();
   player->inputReleased();
 }
 
-void DebugScene::updateScene(double &delta_time) {
+void DebugScene::debugInputs() {
   if (IsKeyPressed(KEY_E)) {
     enemies.push_back(
       make_shared<GhoulEnemy>(*player, (Vector2){450, 152})
     );
-    PLOGI << "Spawned enemy at the right of the stage.";
+    PLOGD << "Spawned enemy at the right of the stage.";
   }
+
   if (IsKeyPressed(KEY_Q)) {
     enemies.push_back(
       make_shared<GhoulEnemy>(*player, (Vector2){-450, 152})
     );
-    PLOGI << "Spawned enemy at the left side of the stage.";
+    PLOGD << "Spawned enemy at the left side of the stage.";
   }
+
   if (IsKeyPressed(KEY_W)) {
-    PLOGI << "Toggling game phase.";
+    PLOGD << "Toggling game phase.";
     phase = !phase;
   }
 
+  if (player->morale != 0 && IsKeyPressed(KEY_R)) {
+    player->morale--;
+  }
+  if (player->morale != player->max_morale && IsKeyPressed(KEY_T)) {
+    player->morale++;
+  }
+}
+
+void DebugScene::updateScene(double &delta_time) {
   player->update(delta_time);
   CameraUtils::followPlayer(camera, *player, delta_time);
 
@@ -83,8 +104,21 @@ void DebugScene::updateScene(double &delta_time) {
     enemy->update(delta_time);
   }
 
+  for (auto &d_actor : dynamic_actors) {
+    d_actor->update(delta_time);
+  }
+
   life_hud->update();
+  morale_hud->update();
+
+  Dynamic::moveFromQueue(dynamic_actors);
+  Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
+
+  if (player->awaiting_deletion) {
+    PLOGD << "Reloading scene...";
+    load_scene(SCENE_DEBUG);
+  }
 }
 
 void DebugScene::drawScene() {
@@ -97,6 +131,11 @@ void DebugScene::drawScene() {
     }
 
     player->draw();
+
+    for (auto &d_actor : dynamic_actors) {
+      d_actor->draw();
+    }
+
     DrawTexture(overlay, -512, 0, WHITE);
 
     if (DEBUG_MODE) {
@@ -106,6 +145,7 @@ void DebugScene::drawScene() {
   EndMode2D();
 
   life_hud->draw();
+  morale_hud->draw();
 }
 
 void DebugScene::drawDebugInfo() {

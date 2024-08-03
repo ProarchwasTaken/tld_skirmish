@@ -4,6 +4,7 @@ build_linux/
 build_win32/
 logs/
 doc/.$game_structure.html.bkp
+doc/.$roadmap.html.bkp
 doc/.$game_structure.html.dtmp
 skirmish.exe
 skirmish

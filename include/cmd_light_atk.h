@@ -34,6 +34,7 @@ public:
 private:
   Rectangle hurtbox;
   combatant_list *enemies;
+  PlayerCharacter *player;
 
   uint16_t damage;
   float guard_pierce;

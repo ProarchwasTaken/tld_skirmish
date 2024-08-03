@@ -26,10 +26,10 @@ public:
    * any way.*/
   void texRectCorrection();
 
-  virtual void draw() {};
+  virtual void draw();
   virtual void drawDebug();
 
-  Texture *current_sprite;
+  Texture *current_sprite = NULL;
   std::vector<int> *current_anim = NULL;
   float frame_timestamp = 0;
 
