@@ -15,7 +15,7 @@
  * player, and to provide some amount of mechanical variety for the 
  * enemies. Given the nature of the game, it should be important to go 
  * with the assumption that this action command will be used most often
- * by the  PlayerCharacter than other combatants.*/
+ * by the PlayerCharacter than other combatants.*/
 class Guard : public ActionCommand {
 public:
   Guard(Combatant *user, std::vector<SpriteMetaData> &data_list,
@@ -39,9 +39,9 @@ public:
                    uint8_t kb_direction);
 
   /* For applying the usual bonuses from successfully performing a guard
-   * or parrying an attack. These bonuses would be automatically reverted
-   * once the recovery sequence ends. If it wasn't canceled for any 
-   * reason.*/
+   * or parrying an attack. Most of these bonuses would be automatically 
+   * reverted once the recovery sequence ends. If it wasn't canceled for 
+   * any reason.*/
   void applyGuardBonus(float stun_time, float kb_velocity = 0, 
                        uint8_t kb_direction = 0);
 

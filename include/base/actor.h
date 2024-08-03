@@ -26,7 +26,15 @@ public:
    * any way.*/
   void texRectCorrection();
 
+  /* Doesn't actually draw anything, but instead contains assertion 
+   * statements that stops someone the inevitably forgetting something 
+   * like assigning a default sprite. Resulting in a seqfault that could 
+   * take hours to track down. (Example has no relation to any past 
+   * events.)*/
   virtual void draw();
+
+  /* Basically draws the actor's hitbox, and texture rect on the screen.
+   * Must only be used for debug purposes only.*/
   virtual void drawDebug();
 
   Texture *current_sprite = NULL;

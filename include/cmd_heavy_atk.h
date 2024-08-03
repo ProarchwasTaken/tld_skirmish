@@ -11,9 +11,7 @@
  * character, and it could be performed by pressing a button.
  * It functions the same as the Light Attack but it inflicts more damage,
  * and it can damage multiple enemies at once in exchange for longer 
- * charge and recovery time. If the player hits a light attack, this 
- * ActionCommand could be performed immediantly, skipping the recovery 
- * time the light attack usually provides.*/
+ * charge and recovery time.*/
 class HeavyAttack : public ActionCommand {
 public:
   HeavyAttack(PlayerCharacter *user);

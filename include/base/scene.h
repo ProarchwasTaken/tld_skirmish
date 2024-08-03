@@ -3,6 +3,11 @@
 #include <functional>
 
 
+/* A scene is more like an collection of game elements. A enclosed space
+ * of which game objects of initialized, and it's practically the third
+ * and lowest level of the program. Think of it as how scenes are normally
+ * done in game engines like Unity. (Even though I despise that 
+ * comparison.)*/
 class Scene {
 public:
   Scene(std::function<void(int)> load_scene) {

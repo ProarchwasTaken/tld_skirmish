@@ -6,6 +6,8 @@
 #include "base/generics.h"
 #include "char_player.h"
 
+/* Light Technique that's associated with the Knife SubWeapon. Upon use,
+ * the player will perform a simple slash attack.*/
 class KnifeLight : public ActionCommand {
 public:
   KnifeLight(PlayerCharacter *player);

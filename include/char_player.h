@@ -100,19 +100,22 @@ public:
 
   /* Special interpret logic is quite special as it's only used when the
    * player is currently performing an action command. Different 
-   * logic may be also used depending on what action command is being
-   * used as well.*/
+   * logic may be also used depending on what type of ActionCommand is 
+   * being used as well.*/
   void specialInterpretLogic();
 
   /* Only called during special interpret logic, and the player is using
    * the LightAttack. This is the basically the function that allows
-   * the player to cancel the LightAttack to a heavy attack or weapon
-   * technique if it lands.*/
+   * the player to cancel the LightAttack into basically any other 
+   * ActionCommand that the player has access except itself. That is, if
+   * it lands.*/
   void lightAttackHandling();
 
   /* Only called during special interpret logic, and the player is using
-   * the HeavyAttack. It only allows the player to cancel the HeavyAttack
-   * to the heavy weapon technique if it connects.*/
+   * the HeavyAttack. It's a bit more limited in what ActionCommands the
+   * player could cancel into if the attack were to connect. Only allowing
+   * the player to cancel into a Heavy Technique, but even so that may not
+   * always be the case depending on the player's current sub-weapon.*/
   void heavyAttackHanding();
 
   combatant_list *enemies;

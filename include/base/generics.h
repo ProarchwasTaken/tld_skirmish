@@ -1,5 +1,5 @@
 // generics.h
-/* This file is meant to contain forward declarations for specific base
+/* This file is meant to contain forward declarations for specific
  * classes and type definitions.*/
 #pragma once
 #include <vector>
