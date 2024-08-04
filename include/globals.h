@@ -8,8 +8,8 @@
 #include <vector>
 #include <random>
 #include "base/generics.h"
-#include "audio.h"
-#include "sprite_loader.h"
+#include "sys_audio.h"
+#include "sys_sprites.h"
 
 
 extern bool DEBUG_MODE;

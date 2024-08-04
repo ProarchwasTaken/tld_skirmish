@@ -9,7 +9,7 @@
 #include "globals.h"
 #include "utils.h"
 #include "game.h"
-#include "wave_manager.h"
+#include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
 #include "char_player.h"

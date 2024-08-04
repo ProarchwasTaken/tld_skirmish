@@ -7,8 +7,8 @@
 #include <type_traits>
 #include <vector>
 #include <globals.h>
-#include "audio.h"
-#include "sprite_loader.h"
+#include "sys_audio.h"
+#include "sys_sprites.h"
 #include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"

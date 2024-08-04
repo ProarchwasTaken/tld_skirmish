@@ -1,4 +1,4 @@
-// sprite_loader.cpp
+// system/sprites.cpp
 #include <cstddef>
 #include <raylib.h>
 #include <toml/parser.hpp>
@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include "globals.h"
-#include "sprite_loader.h"
+#include "sys_sprites.h"
 #include <plog/Log.h>
 
 using std::string, std::vector;

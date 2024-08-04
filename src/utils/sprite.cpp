@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
-#include "sprite_loader.h"
+#include "sys_sprites.h"
 #include "utils.h"
 #include <plog/Log.h>
 

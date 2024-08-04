@@ -1,4 +1,4 @@
-// wave_manager.cpp
+// system/wave_manager.cpp
 #include <raylib.h>
 #include <cstdint>
 #include <toml/parser.hpp>
@@ -10,7 +10,7 @@
 #include "base/generics.h"
 #include "globals.h"
 #include "enemy_ghoul.h"
-#include "wave_manager.h"
+#include "sys_wave_manager.h"
 #include <plog/Log.h>
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 

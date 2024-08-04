@@ -5,7 +5,7 @@
 #include <vector>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "sprite_loader.h"
+#include "sys_sprites.h"
 
 #define DEF_PARRY_WINDOW 0.20
 

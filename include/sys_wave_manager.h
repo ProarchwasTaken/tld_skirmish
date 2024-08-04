@@ -1,4 +1,4 @@
-// wave_manager.h
+// sys_wave_manager.h
 #pragma once
 #include <cstdint>
 #include <vector>

@@ -2,8 +2,8 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "sprite_loader.h"
-#include "audio.h"
+#include "sys_sprites.h"
+#include "sys_audio.h"
 #include "base/scene.h"
 
 #define SCENE_STARTUP 0
