@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <raylib.h>
+#include <cassert>
 #include "globals.h"
 #include "utils.h"
 #include "base/generics.h"
@@ -196,10 +197,8 @@ void PlayerCharacter::normalInterpretLogic() {
 }
 
 void PlayerCharacter::specialInterpretLogic() {
-  if (current_command == nullptr) {
-    PLOGE << "Player doesn't have an command assigned to them!";
-    throw;
-  }
+  assert(current_command != nullptr &&
+         "Caught the player with a command assigned to them!");
 
   if (parried_attack) {
     PLOGI << "Detected that the player has parried an attack. Switching "

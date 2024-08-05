@@ -7,6 +7,7 @@
 #include <random>
 #include <memory>
 #include <string>
+#include <cassert>
 #include "base/generics.h"
 #include "globals.h"
 #include "enemy_ghoul.h"
@@ -46,11 +47,6 @@ void WaveManager::startWave(uint8_t difficulty) {
   PLOGD << "Getting all waves associated with difficulty: " <<
     int(difficulty);
   do {
-    if (difficulty == 0) {
-      PLOGE << "Absolutely no valid waves were found!";
-      throw;
-    }
-
     waves_found = waveSearch(difficulty);
     waves_not_found = waves_found.size() == 0;
 
@@ -58,6 +54,7 @@ void WaveManager::startWave(uint8_t difficulty) {
       difficulty--;
     } 
 
+    assert(difficulty != 0 && "Absolutely no valid waves were found!");
   } while (waves_not_found);
 
   PLOGD << "Found waves of identical difficulty level.";

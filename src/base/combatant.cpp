@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <raylib.h>
+#include <cassert>
 #include "globals.h"
 #include "base/actor.h"
 #include "base/combatant.h"
@@ -55,11 +56,9 @@ void Combatant::cancelCommand() {
 }
 
 void Combatant::commandSequence() {
-  if (current_command == nullptr) {
-    PLOGF << name << "Combatant has attempted to go through command"
-      << " sequence when no command is assigned to them!";
-    throw;
-  }
+  assert(current_command != nullptr && 
+         "Combatant has attaempted to go through command sequence when"
+         " no command is assigned to them!");
 
   float time_elapsed = CURRENT_TIME - current_command->sequence_timestamp;
 
@@ -194,11 +193,8 @@ void Combatant::death() {
 }
 
 void Combatant::stunSequence() {
-  if (state != HIT_STUN) {
-    PLOGE << "{Combatant: " << name << "} entered stun sequence when it"
-      " wasn't supposed to!";
-    throw;
-  }
+  assert(state == HIT_STUN && 
+         "Method called while combatant is not in hit stun!");
 
   float time_elapsed = CURRENT_TIME - stun_timestamp;
   if (time_elapsed < stun_time) {
