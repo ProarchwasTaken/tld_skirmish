@@ -71,6 +71,4 @@ private:
   std::unique_ptr<SpriteLoader> sprite_loader;
   std::unique_ptr<AudioManager> audio_manager;
   std::unique_ptr<Scene> scene;
-
-  double delta_time;
 };

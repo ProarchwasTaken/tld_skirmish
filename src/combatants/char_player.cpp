@@ -49,7 +49,7 @@ PlayerCharacter::~PlayerCharacter() {
   sub_weapon.reset();
 }
 
-void PlayerCharacter::update(double &delta_time) {
+void PlayerCharacter::update() {
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {
@@ -59,7 +59,7 @@ void PlayerCharacter::update(double &delta_time) {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
-      movement(delta_time);
+      movement();
 
       interpretBuffer();
       break;
@@ -67,7 +67,7 @@ void PlayerCharacter::update(double &delta_time) {
     case HIT_STUN: {
       current_sprite = sprites::player[7];
 
-      applyKnockback(delta_time, PLR_BOUNDS);
+      applyKnockback(PLR_BOUNDS);
       stunSequence();
       break;
     }
@@ -76,7 +76,7 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     default: {
-      commandSequence(delta_time);
+      commandSequence();
       interpretBuffer();
     }
   }
@@ -293,7 +293,7 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::movement(double &delta_time) {
+void PlayerCharacter::movement() {
   if (!moving) {
     return;
   }
@@ -304,7 +304,7 @@ void PlayerCharacter::movement(double &delta_time) {
     direction = LEFT;
   }
 
-  float magnitude = (movement_speed * direction) * delta_time;
+  float magnitude = (movement_speed * direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 

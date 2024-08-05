@@ -15,7 +15,7 @@ class KnifeHeavy : public ActionCommand {
 public:
   KnifeHeavy(PlayerCharacter *player);
 
-  void chargeSequence(float time_elapsed, double &delta_time) override;
+  void chargeSequence(float time_elapsed) override;
   void createProjectile();
 private:
   combatant_list *enemies;

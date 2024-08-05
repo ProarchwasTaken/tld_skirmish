@@ -30,14 +30,14 @@ KnifeProjectile::KnifeProjectile(Vector2 position, int8_t direction,
 
 }
 
-void KnifeProjectile::update(double &delta_time) {
+void KnifeProjectile::update() {
   Animation::play(this, sprites::weapon_knife, anim_spin, spin_frametime);
-  movement(delta_time);
+  movement();
   enemyHitCheck();
 }
 
-void KnifeProjectile::movement(double &delta_time) {
-  position.x += (velocity_x * delta_time) * direction;
+void KnifeProjectile::movement() {
+  position.x += (velocity_x * DELTA_TIME) * direction;
 
   if (position.x < -CAMERA_BOUNDS || position.x > CAMERA_BOUNDS) {
     awaiting_deletion = true;

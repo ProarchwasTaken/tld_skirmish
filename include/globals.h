@@ -7,6 +7,7 @@
 #include <raylib.h>
 #include <vector>
 #include <random>
+#include "defaults.h"
 #include "base/generics.h"
 #include "sys_audio.h"
 #include "sys_sprites.h"
@@ -17,6 +18,7 @@ extern bool EXIT_GAME;
 
 extern double PAUSE_PENALTY;
 #define CURRENT_TIME (GetTime() - PAUSE_PENALTY)
+#define DELTA_TIME (GetFrameTime() * TARGET_FRAMERATE)
 
 namespace COLORS {
   extern Color *PALETTE;

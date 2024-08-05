@@ -137,10 +137,8 @@ void Game::loadScene(int scene_id) {
 }
 
 void Game::refresh() {
-  delta_time = GetFrameTime() * TARGET_FRAMERATE;
-
   scene->checkInput();
-  scene->updateScene(delta_time);
+  scene->updateScene();
 
   BeginTextureMode(canvas);
   {

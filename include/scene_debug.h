@@ -25,7 +25,7 @@ public:
   void checkInput() override;
   void debugInputs();
 
-  void updateScene(double &delta_time) override;
+  void updateScene() override;
 
   void drawScene() override;
   void drawDebugInfo() override;

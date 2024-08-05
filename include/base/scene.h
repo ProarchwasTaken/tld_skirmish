@@ -18,7 +18,7 @@ public:
   std::function<void(int)> load_scene;
 
   virtual void checkInput() {};
-  virtual void updateScene(double &delta_time) {};
+  virtual void updateScene() {};
   virtual void drawScene() {};
   virtual void drawDebugInfo() {};
 };

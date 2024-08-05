@@ -35,7 +35,7 @@ public:
   void checkInput() override;
   void checkPauseInput();
 
-  void updateScene(double &delta_time) override;
+  void updateScene() override;
 
   void drawScene() override;
   void drawPauseMenu();

@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "defaults.h"
+#include "globals.h"
 #include "utils.h"
 #include "char_player.h"
 
@@ -17,8 +18,7 @@ Camera2D CameraUtils::setupCamera() {
 }
 
 
-void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player,
-                            double &delta_time) 
+void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player) 
 {
   bool player_offCenter = camera.target.x != player.position.x;
   if (player_offCenter == false) {
@@ -56,7 +56,7 @@ void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player,
     camera.target.x = CAMERA_BOUNDS - half_width;
   }
   else {
-    camera.target.x += next_x * delta_time;
+    camera.target.x += next_x * DELTA_TIME;
     if (FloatEquals(camera.target.x, player.position.x)) {
       camera.target.x = player.position.x;
     }

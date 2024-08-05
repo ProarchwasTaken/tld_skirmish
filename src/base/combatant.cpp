@@ -54,7 +54,7 @@ void Combatant::cancelCommand() {
   }
 }
 
-void Combatant::commandSequence(double &delta_time) {
+void Combatant::commandSequence() {
   if (current_command == nullptr) {
     PLOGF << name << "Combatant has attempted to go through command"
       << " sequence when no command is assigned to them!";
@@ -65,15 +65,15 @@ void Combatant::commandSequence(double &delta_time) {
 
   switch (state) {
     case CHARGING: {
-      current_command->chargeSequence(time_elapsed, delta_time);
+      current_command->chargeSequence(time_elapsed);
       break;
     }
     case ACT: {
-      current_command->actSequence(time_elapsed, delta_time);
+      current_command->actSequence(time_elapsed);
       break;
     }
     case RECOVER: {
-      current_command->recoverySequence(time_elapsed, delta_time);
+      current_command->recoverySequence(time_elapsed);
       break;
     }
   }
@@ -160,8 +160,8 @@ void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
   }
 }
 
-void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
-  float magnitude = (kb_velocity * kb_direction) * delta_time;
+void Combatant::applyKnockback(uint16_t boundary) {
+  float magnitude = (kb_velocity * kb_direction) * DELTA_TIME;
 
   if (magnitude == 0) {
     return;

@@ -19,7 +19,7 @@ public:
   void setupEnter();
 
   void checkInput() override;
-  void updateScene(double &delta_time) override;
+  void updateScene() override;
   void drawScene() override;
 private:
   std::string txt_title;

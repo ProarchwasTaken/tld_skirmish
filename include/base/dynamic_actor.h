@@ -21,7 +21,7 @@ public:
                Vector2 hitbox_offset = {-8, -8}, 
                Vector2 tex_offset = {-8, -8});
 
-  virtual void update(double &delta_time) {};
+  virtual void update() {};
 
   uint8_t type;
   bool awaiting_deletion = false;

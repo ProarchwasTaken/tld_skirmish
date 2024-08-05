@@ -36,16 +36,16 @@ void LightAttack::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void LightAttack::chargeSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::chargeSequence(time_elapsed, delta_time);
+void LightAttack::chargeSequence(float time_elapsed) {
+  ActionCommand::chargeSequence(time_elapsed);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[5];
   }
 }
 
-void LightAttack::actSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::actSequence(time_elapsed, delta_time);
+void LightAttack::actSequence(float time_elapsed) {
+  ActionCommand::actSequence(time_elapsed);
 
   enemyHitCheck(); 
 

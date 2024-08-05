@@ -46,14 +46,14 @@ public:
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
-  void update(double &delta_time) override;
+  void update() override;
   void draw() override;
   void drawDebug() override;
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
    * Prevents the player from moving out of bounds when needed.*/
-  void movement(double &delta_time);
+  void movement();
 
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when

@@ -22,14 +22,14 @@ class GhoulEnemy : public Combatant {
 public:
   GhoulEnemy(PlayerCharacter &player, Vector2 position);
 
-  void update(double &delta_time) override;
+  void update() override;
   void draw() override;
   void drawDebug() override;
 
   /* For the ghoul's neutral behavior, the direction they're facing
    * would automatically be updated to face the player. Only performing
    * an attack once the player is within their preferred distance.*/
-  void neutralBehavior(double &delta_time);
+  void neutralBehavior();
 
   /* The ghoul will play an animation upon death. When that animation is
    * over and a certain amount of time as passed, the enemy will await
@@ -39,7 +39,7 @@ public:
   /* Moves the Ghoul Enemy in a specific direction while correcting their
    * hitbox and tex_rect. Called one every frame of which the player is 
    * outside their preferred distance.*/
-  void movement(double &delta_time);
+  void movement();
 
   PlayerCharacter *player;
 private:

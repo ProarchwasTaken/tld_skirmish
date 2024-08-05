@@ -12,7 +12,7 @@ DummyEnemy::DummyEnemy(PlayerCharacter &player, Vector2 position):
   this->player = &player;
 }
 
-void DummyEnemy::update(double &delta_time) {
+void DummyEnemy::update() {
   switch (state) {
     case HIT_STUN: {
       stunSequence();

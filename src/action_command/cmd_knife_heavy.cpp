@@ -18,8 +18,8 @@ KnifeHeavy::KnifeHeavy(PlayerCharacter *player):
   user->current_sprite = sprites::player[13];
 }
 
-void KnifeHeavy::chargeSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::chargeSequence(time_elapsed, delta_time);
+void KnifeHeavy::chargeSequence(float time_elapsed) {
+  ActionCommand::chargeSequence(time_elapsed);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[14];

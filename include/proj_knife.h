@@ -16,10 +16,10 @@ public:
   KnifeProjectile(Vector2 position, int8_t direction,
                   combatant_list *enemies);
 
-  void update(double &delta_time) override;
+  void update() override;
   void draw() override;
 
-  void movement(double &delta_time);
+  void movement();
   void enemyHitCheck();
 private:
   combatant_list *enemies;

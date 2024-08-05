@@ -99,22 +99,22 @@ void GameplayScene::checkPauseInput() {
   }
 }
 
-void GameplayScene::updateScene(double &delta_time) {
+void GameplayScene::updateScene() {
   if (paused) {
     return;
   }
 
   tickTimer();
 
-  player->update(delta_time);
-  CameraUtils::followPlayer(camera, *player, delta_time);
+  player->update();
+  CameraUtils::followPlayer(camera, *player);
 
   for (auto enemy : enemies) {
-    enemy->update(delta_time);
+    enemy->update();
   }
 
   for (auto &d_actor : dynamic_actors) {
-    d_actor->update(delta_time);
+    d_actor->update();
   }
 
   life_hud->update();
