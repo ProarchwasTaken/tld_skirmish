@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <tuple>
 #include <string>
-#include <type_traits>
 #include <vector>
 #include <globals.h>
 #include "sys_audio.h"
@@ -112,10 +111,6 @@ namespace Dynamic {
    * This is my first ever template function, so issues might pop up.*/
   template<class DerivedClass, typename... Args>
   void create(Args&&... args) {
-    if (std::is_base_of<DynamicActor, DerivedClass>::value == false) {
-      throw;
-    }
-
     queue.push_back(
       std::make_unique<DerivedClass>(args...)
     );
