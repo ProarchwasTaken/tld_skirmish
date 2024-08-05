@@ -27,19 +27,19 @@ int main(int argc, char *argv[]) {
   SetTargetFPS(TARGET_FRAMERATE);
   InitAudioDevice();
 
-  Game game(start_scene);
+  Game skirmish(start_scene);
 
   PLOGI << "Everything seems good to go!";
   while (EXIT_GAME == false) {
     EXIT_GAME = WindowShouldClose();
     if (IsWindowResized()) {
-      game.correctWindow();
+      skirmish.correctWindow();
     }
 
     if (IsKeyPressed(KEY_F11)) {
       PLOGI << "Toggling borderless fullscreen.";
       ToggleBorderlessWindowed();
-      game.correctWindow();
+      skirmish.correctWindow();
     }
 
     if (IsKeyPressed(KEY_F3)) {
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
       DEBUG_MODE = !DEBUG_MODE;
     }
 
-    game.refresh();
+    skirmish.refresh();
   }
 
   CloseWindow();
@@ -62,7 +62,7 @@ void setupCustomLogger() {
   plog::init(plog::info, &file_appender)
     .addAppender(&console_appender);
 
-  PLOGI << "Skirmish " << VERSION << " -- " << VER_STAGE << " Build";
+  PLOGI << "Skirmish " << VERSION << " - " << VER_STAGE << " Build";
   PLOGI << "Open Source project originally made by: " << AUTHOR;
   PLOGI << "Github Repository: " << HOME_URL;
 }
