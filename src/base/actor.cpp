@@ -34,7 +34,7 @@ void Actor::texRectCorrection() {
   tex_rect = {x, y, tex_scale.x, tex_scale.y};
 }
 
-void Actor::draw() {
+void Actor::draw(Vector2 &camera_target) {
   assert(current_sprite != NULL && 
          "You forgot to set the default sprite idiot!");
 }

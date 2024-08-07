@@ -23,7 +23,7 @@ public:
   GhoulEnemy(PlayerCharacter &player, Vector2 position);
 
   void update() override;
-  void draw() override;
+  void draw(Vector2 &camera_target) override;
   void drawDebug() override;
 
   /* For the ghoul's neutral behavior, the direction they're facing

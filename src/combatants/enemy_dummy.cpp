@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "globals.h"
 #include "base/combatant.h"
+#include "utils.h"
 #include "char_player.h"
 #include "enemy_dummy.h"
 
@@ -24,7 +25,11 @@ void DummyEnemy::update() {
   }
 }
 
-void DummyEnemy::draw() {
+void DummyEnemy::draw(Vector2 &camera_target) {
+  if (CameraUtils::onScreen(this, camera_target) == false) {
+    return;
+  }
+
   if (state == NEUTRAL) {
     DrawRectangleRec(hitbox, MAGENTA);
   }

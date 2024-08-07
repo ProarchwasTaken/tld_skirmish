@@ -47,7 +47,8 @@ public:
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
   void update() override;
-  void draw() override;
+
+  void draw(Vector2 &camera_target) override;
   void drawDebug() override;
 
   /* For moving the player left or right. The direction the player moves

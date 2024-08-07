@@ -40,13 +40,13 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 
 DebugScene::~DebugScene() {
   PLOGI << "Unloading Debug scene.";
-
   UnloadTexture(background);
   UnloadTexture(overlay);
   UnloadTexture(debug_overlay);
 
   player.reset();
   life_hud.reset();
+  morale_hud.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -127,13 +127,13 @@ void DebugScene::drawScene() {
     DrawTexture(background, -512, 0, WHITE);
     
     for (auto enemy : enemies) {
-      enemy->draw();
+      enemy->draw(camera.target);
     }
 
-    player->draw();
+    player->draw(camera.target);
 
     for (auto &d_actor : dynamic_actors) {
-      d_actor->draw();
+      d_actor->draw(camera.target);
     }
 
     DrawTexture(overlay, -512, 0, WHITE);

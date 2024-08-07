@@ -62,3 +62,18 @@ void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player)
     }
   }
 }
+
+bool CameraUtils::onScreen(Actor *actor, Vector2 &camera_target) {
+  Rectangle screen;
+  screen.x = camera_target.x - (CANVAS_WIDTH / 2.0);
+  screen.y = camera_target.y - (CANVAS_HEIGHT / 2.0);
+  screen.width = CANVAS_WIDTH;
+  screen.height = CANVAS_HEIGHT;
+
+  if (CheckCollisionRecs(actor->tex_rect, screen)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}

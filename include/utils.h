@@ -19,6 +19,10 @@ namespace CameraUtils {
    * This process only stops when the player is at the center of the 
    * screen again, or the camera has hit a boundary.*/
   void followPlayer(Camera2D &camera, PlayerCharacter &player);
+
+  /* Returns true if the specified actor's tex rect on is on screen. This
+   * function is mainly used to check if actor should be drawn.*/
+  bool onScreen(Actor *actor, Vector2 &camera_target);
 }
 
 

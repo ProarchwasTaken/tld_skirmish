@@ -220,13 +220,13 @@ void GameplayScene::drawScene() {
     DrawTexture(background, -512, 0, WHITE);
 
     for (auto enemy : enemies) {
-      enemy->draw();
+      enemy->draw(camera.target);
     }
 
-    player->draw();
+    player->draw(camera.target);
 
     for (auto &d_actor : dynamic_actors) {
-      d_actor->draw();
+      d_actor->draw(camera.target);
     }
 
     DrawTexture(overlay, -512, 0, WHITE);

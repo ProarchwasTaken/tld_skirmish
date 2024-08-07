@@ -61,17 +61,18 @@ void KnifeProjectile::enemyHitCheck() {
   }
 }
 
-void KnifeProjectile::draw() {
-  Actor::draw();
-  Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
-  Rectangle dest = {tex_position.x, tex_position.y, 
-    tex_scale.x, tex_scale.y};
+void KnifeProjectile::draw(Vector2 &camera_target) {
+  Actor::draw(camera_target);
+  if (CameraUtils::onScreen(this, camera_target) == false) {
+    return;
+  }
 
+  Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
   if (direction == -1) {
     source.width *= -1;
   }
 
-  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
+  DrawTexturePro(*current_sprite, source, tex_rect, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE) {
     drawDebug();

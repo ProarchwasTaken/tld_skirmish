@@ -17,7 +17,7 @@ public:
                   combatant_list *enemies);
 
   void update() override;
-  void draw() override;
+  void draw(Vector2 &camera_target) override;
 
   void movement();
   void enemyHitCheck();
