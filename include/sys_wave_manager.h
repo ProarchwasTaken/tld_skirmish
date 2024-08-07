@@ -45,5 +45,6 @@ private:
 
   toml::value wave_metadata;
 
+  std::vector<int> used_waves;
   float wave_timestamp = 0;
 };

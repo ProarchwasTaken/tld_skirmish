@@ -7,6 +7,7 @@
 #include <random>
 #include <memory>
 #include <string>
+#include <algorithm>
 #include <cassert>
 #include "base/generics.h"
 #include "globals.h"
@@ -15,7 +16,7 @@
 #include <plog/Log.h>
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 
-std::string;
+std::string, std::find;
 
 
 EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
@@ -38,6 +39,7 @@ WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies)
 
 WaveManager::~WaveManager() {
   enemy_queue.clear();
+  used_waves.clear();
 }
 
 void WaveManager::startWave(uint8_t difficulty) {
@@ -74,11 +76,20 @@ void WaveManager::startWave(uint8_t difficulty) {
 vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
   vector<toml::value> waves_found;
   int wave_count = wave_metadata.size();
+  vector<int>::iterator result;
 
   for (int index = 0; index < wave_count; index++) {
     toml::value wave = wave_metadata[index];
-    int wave_difficulty = wave["difficulty"].as_integer();
 
+    int wave_id = wave["id"].as_integer();
+    result = find(used_waves.begin(), used_waves.end(), wave_id);
+
+    bool already_used = result != used_waves.end();
+    if (already_used) {
+      continue;
+    }
+
+    int wave_difficulty = wave["difficulty"].as_integer();
     if (difficulty == wave_difficulty) {
       waves_found.push_back(wave);
     }
@@ -89,7 +100,10 @@ vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
 
 void WaveManager::assignWave(toml::value wave) {
   wave_timer = wave["time_limit"].as_integer();
+  int wave_id = wave["id"].as_integer();
   int enemy_count = wave["enemies"].size();
+
+  used_waves.push_back(wave_id);
 
   if (enemy_count == 0) {
     PLOGW << "There are no enemies in this wave!";
