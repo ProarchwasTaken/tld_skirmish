@@ -41,7 +41,7 @@ public:
   /* Takes a action command as a parameter, and assigns it to the 
    * combatant. Acts as a streamlined way to assign any class that derives
    * from ActionCommand.*/
-  virtual void useCommand(std::unique_ptr<ActionCommand> &command);
+  void useCommand(std::unique_ptr<ActionCommand> &command);
 
   /* For handling the all of the stages of using a command, like the 
    * charge up, action, and recovery. Is called once every frame of which
@@ -60,9 +60,9 @@ public:
    * putting them in hit stun. Also makes sure the combatant's health will
    * not be below 0. If the stun_time parameter is 0, the combatant
    * will not be put into hit stun, and a death check will be made.*/
-  void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
-                  float stun_time, float kb_velocity = 0, 
-                  uint8_t kb_direction = 0);
+  virtual void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
+                          float stun_time, float kb_velocity = 0, 
+                          uint8_t kb_direction = 0);
 
   /* Causes the combatant to enter the hit stun sequence. Automatically
    * cancelling any action command the combatant was performing at the

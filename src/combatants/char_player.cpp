@@ -327,9 +327,21 @@ void PlayerCharacter::regeneration() {
   }
 
   float time_elapsed = CURRENT_TIME - regen_timestamp;
-  if (time_elapsed >= regen_time) {
-    health++;
-    regen_timestamp = CURRENT_TIME;
+  if (time_elapsed < regen_time) {
+    return;
+  }
+
+  health++;
+  regen_timestamp = CURRENT_TIME;
+
+  if (critical_health == false) {
+    return;
+  }
+
+  float percentage = static_cast<float>(health) / max_health;
+  if (percentage > PLR_HP_CRITICAL) {
+    PLOGI << "The player has reached safe levels of HP!";
+    critical_health = false;
   }
 }
 
@@ -344,6 +356,28 @@ void PlayerCharacter::incrementMorale(uint8_t value) {
   }
   else {
     morale = new_morale;
+  }
+}
+
+void PlayerCharacter::takeDamage(uint16_t dmg_magnitude, 
+                                 float guard_pierce, 
+                                 float stun_time, 
+                                 float kb_velocity,
+                                 uint8_t kb_direction)
+{
+  Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
+                        kb_velocity, kb_direction);
+
+  if (critical_health) {
+    return;
+  }
+
+  float percentage = static_cast<float>(health) / max_health;
+  PLOGD << "Percentage of health remaining: " << percentage;
+  if (percentage <= PLR_HP_CRITICAL) {
+    PLOGI << "The player is now in critical health!";
+    critical_health = true;
+    SoundUtils::play("critical_health");
   }
 }
 

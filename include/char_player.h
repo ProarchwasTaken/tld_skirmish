@@ -11,6 +11,7 @@
 #define PLR_BOUNDS 384
 
 #define PLR_HP 30
+#define PLR_HP_CRITICAL 0.30
 #define PLR_STABILITY 0.5
 #define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
@@ -119,6 +120,12 @@ public:
    * always be the case depending on the player's current sub-weapon.*/
   void heavyAttackHanding();
 
+  /* The method retains the same functionality of the method it overrides
+   * except it checks if the player is in low health afterwards.*/
+  void takeDamage(uint16_t dmg_magnitude, float guard_pierce,
+                  float stun_time, float kb_velocity = 0,
+                  uint8_t kb_direction = 0) override;
+
   combatant_list *enemies;
 
   std::unique_ptr<SubWeapon> sub_weapon;
@@ -128,6 +135,8 @@ public:
 
   bool moving;
   float movement_speed;
+
+  bool critical_health;
 
   std::vector<uint8_t> input_buffer;
 private:
