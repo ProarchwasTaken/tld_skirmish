@@ -11,7 +11,7 @@
 #define PLR_BOUNDS 384
 
 #define PLR_HP 30
-#define PLR_HP_CRITICAL 0.30
+#define PLR_HP_CRITICAL 0.40
 #define PLR_STABILITY 0.5
 #define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
@@ -136,7 +136,7 @@ public:
   bool moving;
   float movement_speed;
 
-  bool critical_health;
+  bool critical_health = false;
 
   std::vector<uint8_t> input_buffer;
 private:
@@ -146,7 +146,7 @@ private:
   bool buf_timer_started = false;
 
   float buf_clear_time;
-  float buf_input_timestamp;
+  float buf_input_timestamp = 0;
 
   std::vector<int> anim_walk;
   float walk_frametime;
