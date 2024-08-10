@@ -152,18 +152,14 @@ void DebugScene::drawDebugInfo() {
   int text_size = fonts::skirmish->baseSize;
   DrawTextEx(*fonts::skirmish, TextFormat("FPS: %i", GetFPS()), {0, 0}, 
              text_size, -3, GREEN);
-  DrawTextEx(*fonts::skirmish, TextFormat("State: %i", player->state), 
-             {0, 8}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, TextFormat("Position: (%03.02f, %03.02f)", 
                                           player->position.x, 
                                           player->position.y), 
+             {0, 8}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("Enemies Active: %i", enemies.size()), 
              {0, 16}, text_size, -3, GREEN);
-  DrawTextEx(*fonts::skirmish, TextFormat("Invulnerable: %i", 
-                                          player->invulnerable), 
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 24}, text_size, -3, GREEN);
-  DrawTextEx(*fonts::skirmish, TextFormat("Parry: %i",
-                                          player->parried_attack), 
-             {0, 32}, text_size, -3, GREEN);
-  DrawTextEx(*fonts::skirmish, TextFormat("Game Phase: %i", phase), 
-             {0, 40}, text_size, -3, GREEN);
 }
