@@ -30,6 +30,7 @@ public:
   ~WaveManager();
 
   void startWave(uint8_t difficulty);
+  void startWaveByID(int wave_id);
 
   std::vector<toml::value> waveSearch(uint8_t difficulty);
   void assignWave(toml::value wave);

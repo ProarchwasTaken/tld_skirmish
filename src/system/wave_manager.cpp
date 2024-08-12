@@ -1,8 +1,10 @@
 // system/wave_manager.cpp
+#include <optional>
 #include <raylib.h>
 #include <cstdint>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
+#include <toml/get.hpp>
 #include <vector>
 #include <random>
 #include <memory>
@@ -16,7 +18,7 @@
 #include <plog/Log.h>
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 
-std::string, std::find;
+std::string, std::find, std::optional;
 
 
 EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
@@ -70,6 +72,33 @@ void WaveManager::startWave(uint8_t difficulty) {
 
   PLOGI << "Now starting wave: " << wave_name;
   assignWave(chosen_wave);
+  wave_timestamp = GetTime();
+}
+
+void WaveManager::startWaveByID(int wave_id) {
+  PLOGI << "Attempting to start wave by ID: " << wave_id;
+
+  int wave_count = wave_metadata.size();
+  optional<toml::value> found_wave;
+
+  for (int index = 0; index < wave_count; index++) {
+    int current_id = toml::find<int>(wave_metadata[index], "id");
+
+    if (current_id == wave_id) {
+      found_wave = wave_metadata[index];
+      break;
+    }
+  }
+
+  if (found_wave.has_value() == false) {
+    PLOGE << "Wave not found!";
+    return;
+  }
+
+  toml::value wave = found_wave.value();
+
+  PLOGI << "Now starting wave: " << wave["name"].as_string();
+  assignWave(wave);
   wave_timestamp = GetTime();
 }
 
