@@ -1,6 +1,8 @@
 // scenes/scene_debug.cpp
+#include <cctype>
 #include <raylib.h>
 #include <functional>
+#include <string>
 #include <tuple>
 #include <memory>
 #include "globals.h"
@@ -13,7 +15,6 @@
 #include "hud_life.h"
 #include "hud_morale.h"
 #include "enemy_dummy.h"
-#include "enemy_ghoul.h"
 #include <plog/Log.h>
 
 using std::make_shared, std::make_unique, std::function, std::tie;
@@ -62,6 +63,7 @@ DebugScene::~DebugScene() {
   }
   dynamic_actors.clear();
 
+  num_buffer.clear();
   PLOGI << "Debug scene has unloaded succesfully.";
 }
 
@@ -73,6 +75,11 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::debugInputs() {
+  int unicode = GetKeyPressed();
+  if (unicode != 0) {
+    appendNumBuffer(unicode);
+  }
+
   if (IsKeyPressed(KEY_Q)) {
     PLOGD << "Toggling game phase.";
     phase = !phase;
@@ -85,8 +92,26 @@ void DebugScene::debugInputs() {
     player->morale++;
   }
 
-  if (IsKeyPressed(KEY_R) && wave_manager->enemy_queue.size() == 0) {
-    wave_manager->startWaveByID(0);
+  if (num_buffer.size() == 0) {
+    return;
+  }
+
+  if (IsKeyPressed(KEY_BACKSPACE)) {
+    num_buffer.pop_back();
+  }
+
+  if (IsKeyPressed(KEY_ENTER)) {
+    int wave_id = std::stoi(num_buffer);
+    wave_manager->startWaveByID(wave_id);
+    num_buffer.clear();
+  }
+}
+
+void DebugScene::appendNumBuffer(int unicode) {
+  char key_pressed = static_cast<char>(unicode);
+
+  if (isdigit(key_pressed)) {
+    num_buffer.push_back(key_pressed);
   }
 }
 
@@ -141,6 +166,8 @@ void DebugScene::drawScene() {
 
   life_hud->draw();
   morale_hud->draw();
+
+  drawNumBuffer();
 }
 
 void DebugScene::drawDebugInfo() {
@@ -161,4 +188,12 @@ void DebugScene::drawDebugInfo() {
   DrawTextEx(*fonts::skirmish, 
              TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 32}, text_size, -3, GREEN);
+}
+
+void DebugScene::drawNumBuffer() {
+  int size = fonts::skirmish->baseSize;
+  Vector2 position = Text::alignRight(fonts::skirmish, num_buffer, 
+                                      {426, 0}, 1, -3);
+  DrawTextEx(*fonts::skirmish, num_buffer.c_str(), position, size, -3, 
+             RED);
 }

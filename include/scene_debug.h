@@ -4,6 +4,7 @@
 #include <functional>
 #include <raylib.h>
 #include <cstdint>
+#include <string>
 #include "base/scene.h"
 #include "base/generics.h"
 #include "sys_wave_manager.h"
@@ -28,6 +29,9 @@ public:
 
   void updateScene() override;
 
+  void appendNumBuffer(int unicode);
+  void drawNumBuffer();
+
   void drawScene() override;
   void drawDebugInfo() override;
 private:
@@ -46,4 +50,5 @@ private:
   std::unique_ptr<LifeHud> life_hud;
   std::unique_ptr<MoraleHud> morale_hud;
 
+  std::string num_buffer;
 };
