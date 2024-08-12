@@ -72,7 +72,7 @@ void WaveManager::startWave(uint8_t difficulty) {
 
   PLOGI << "Now starting wave: " << wave_name;
   assignWave(chosen_wave);
-  wave_timestamp = GetTime();
+  wave_timestamp = CURRENT_TIME;
 }
 
 void WaveManager::startWaveByID(int wave_id) {
@@ -100,7 +100,7 @@ void WaveManager::startWaveByID(int wave_id) {
 
   PLOGI << "Now starting wave: " << wave_name;
   assignWave(wave);
-  wave_timestamp = GetTime();
+  wave_timestamp = CURRENT_TIME;
 }
 
 vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
@@ -157,7 +157,7 @@ void WaveManager::waveSequence() {
   }
 
   EnemyMetadata *enemy = &enemy_queue.front();
-  float time_elapsed = GetTime() - wave_timestamp;
+  float time_elapsed = CURRENT_TIME - wave_timestamp;
 
   if (time_elapsed >= enemy->spawn_time) {
     uint8_t enemy_id = enemy->enemy_id;
