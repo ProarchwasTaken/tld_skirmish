@@ -96,8 +96,9 @@ void WaveManager::startWaveByID(int wave_id) {
   }
 
   toml::value wave = found_wave.value();
+  string wave_name = wave["name"].as_string();
 
-  PLOGI << "Now starting wave: " << wave["name"].as_string();
+  PLOGI << "Now starting wave: " << wave_name;
   assignWave(wave);
   wave_timestamp = GetTime();
 }
