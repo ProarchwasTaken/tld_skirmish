@@ -49,10 +49,11 @@ GameplayScene::~GameplayScene() {
   UnloadTexture(background);
   UnloadTexture(overlay);
 
-  player.reset();
   life_hud.reset();
   morale_hud.reset();
   wave_manager.reset();
+
+  player.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
