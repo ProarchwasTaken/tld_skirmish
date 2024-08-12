@@ -6,6 +6,7 @@
 #include <cstdint>
 #include "base/scene.h"
 #include "base/generics.h"
+#include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
 #include "char_player.h"
@@ -38,9 +39,11 @@ private:
   uint8_t phase;
 
   std::shared_ptr<PlayerCharacter> player;
+  combatant_list enemies;
+  dynamic_list dynamic_actors;
+
+  std::unique_ptr<WaveManager> wave_manager;
   std::unique_ptr<LifeHud> life_hud;
   std::unique_ptr<MoraleHud> morale_hud;
 
-  combatant_list enemies;
-  dynamic_list dynamic_actors;
 };

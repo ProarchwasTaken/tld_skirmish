@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "game.h"
 #include "utils.h"
+#include "sys_wave_manager.h"
 #include "scene_debug.h"
 #include "scene_gameplay.h"
 #include "char_player.h"
@@ -27,14 +28,15 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   phase = PHASE_ACTION;
 
   player = make_shared<PlayerCharacter>(enemies, phase);
-  life_hud = make_unique<LifeHud>(*player, phase);
-  morale_hud = make_unique<MoraleHud>(*player);
-
   enemies = {
     make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),
   };
   
+  life_hud = make_unique<LifeHud>(*player, phase);
+  morale_hud = make_unique<MoraleHud>(*player);
+
   camera = CameraUtils::setupCamera();
+  wave_manager = make_unique<WaveManager>(*player, enemies);
   PLOGI << "Debug scene has loaded successfully!";
 }
 
@@ -44,9 +46,11 @@ DebugScene::~DebugScene() {
   UnloadTexture(overlay);
   UnloadTexture(debug_overlay);
 
-  player.reset();
   life_hud.reset();
   morale_hud.reset();
+  wave_manager.reset();
+
+  player.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -69,30 +73,20 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::debugInputs() {
-  if (IsKeyPressed(KEY_E)) {
-    enemies.push_back(
-      make_shared<GhoulEnemy>(*player, (Vector2){450, 152})
-    );
-    PLOGD << "Spawned enemy at the right of the stage.";
-  }
-
   if (IsKeyPressed(KEY_Q)) {
-    enemies.push_back(
-      make_shared<GhoulEnemy>(*player, (Vector2){-450, 152})
-    );
-    PLOGD << "Spawned enemy at the left side of the stage.";
-  }
-
-  if (IsKeyPressed(KEY_W)) {
     PLOGD << "Toggling game phase.";
     phase = !phase;
   }
 
-  if (player->morale != 0 && IsKeyPressed(KEY_R)) {
+  if (player->morale != 0 && IsKeyPressed(KEY_W)) {
     player->morale--;
   }
-  if (player->morale != player->max_morale && IsKeyPressed(KEY_T)) {
+  if (player->morale != player->max_morale && IsKeyPressed(KEY_E)) {
     player->morale++;
+  }
+
+  if (IsKeyPressed(KEY_R) && wave_manager->enemy_queue.size() == 0) {
+    wave_manager->startWaveByID(0);
   }
 }
 
@@ -110,6 +104,7 @@ void DebugScene::updateScene() {
 
   life_hud->update();
   morale_hud->update();
+  wave_manager->waveSequence();
 
   Dynamic::moveFromQueue(dynamic_actors);
   Dynamic::clearAwaitingDeletion(dynamic_actors);
@@ -157,9 +152,13 @@ void DebugScene::drawDebugInfo() {
                                           player->position.y), 
              {0, 8}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, 
-             TextFormat("Enemies Active: %i", enemies.size()), 
+             TextFormat("Enemy Queue: %i",
+                        wave_manager->enemy_queue.size()),
              {0, 16}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, 
-             TextFormat("D Actors: %i", dynamic_actors.size()),
+             TextFormat("Enemies Active: %i", enemies.size()), 
              {0, 24}, text_size, -3, GREEN);
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("D Actors: %i", dynamic_actors.size()),
+             {0, 32}, text_size, -3, GREEN);
 }
