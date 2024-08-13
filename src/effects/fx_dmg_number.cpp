@@ -4,6 +4,7 @@
 #include "base/dynamic_actor.h"
 #include "utils.h"
 #include "fx_dmg_number.h"
+#include <plog/Log.h>
 
 
 Texture createNumTexture(int value, Vector2 position, Color color) {
@@ -26,10 +27,8 @@ DamageNumber::DamageNumber(int value, Vector2 position, Color color):
 
   tex_scale.x = number_texture.width;
   tex_scale.y = number_texture.height;
-  hitbox_scale = {0, 0};
 
-
-  tex_offset = {position.y - tex_scale.y, position.x - (tex_scale.y / 2)};
+  tex_offset = {(-tex_scale.x / 2), -tex_scale.y};
   texRectCorrection();
 
   movement_speed = 0.2;
@@ -63,6 +62,7 @@ void DamageNumber::draw(Vector2 &camera_target) {
 
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
   DrawTexturePro(number_texture, source, tex_rect, {0, 0}, 0, WHITE);
+  
 
   if (DEBUG_MODE == true) {
     drawDebug();
