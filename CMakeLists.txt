@@ -60,6 +60,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_knife_heavy.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/sub-weapons/weapon_knife.cpp"
+"src/effects/fx_dmg_number.cpp"
 )
 
 set(HEADER_FILES
@@ -94,6 +95,7 @@ set(HEADER_FILES
 "include/cmd_knife_heavy.h"
 "include/cmd_ghoul_atk.h"
 "include/weapon_knife.h"
+"include/fx_dmg_number.h"
 )
 
 if(WIN32)
