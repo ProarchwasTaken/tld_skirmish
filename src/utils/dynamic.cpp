@@ -76,6 +76,6 @@ bool typeCompare(unique_ptr<DynamicActor> &d1,
 bool deleteCompare(unique_ptr<DynamicActor> &d1, 
                    unique_ptr<DynamicActor> &d2)
 {
-  return d1->awaiting_deletion > d2->awaiting_deletion;
+  return (d1 == nullptr) > (d2 == nullptr);
 }
 
