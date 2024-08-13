@@ -43,7 +43,7 @@
 class PlayerCharacter : public Combatant {
 public:
   PlayerCharacter(combatant_list &enemies, uint8_t &phase);
-  ~PlayerCharacter();
+  ~PlayerCharacter() override;
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/

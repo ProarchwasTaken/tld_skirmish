@@ -13,6 +13,7 @@ class Actor {
 public:
   Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale, 
         Vector2 hitbox_offset, Vector2 tex_offset);
+  virtual ~Actor() {}
 
   /* The hitbox is used for checking for collision with the level's 
    * boundaries, etc. Whenever an actors position changes, this method 

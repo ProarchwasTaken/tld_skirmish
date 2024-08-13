@@ -11,7 +11,7 @@
 class DamageNumber : public DynamicActor {
 public:
   DamageNumber(int value, Vector2 position, Color color);
-  ~DamageNumber();
+  ~DamageNumber() override;
 
   void update() override;
   void movement();
