@@ -9,6 +9,7 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_guard.h"
+#include "fx_dmg_number.h"
 #include "utils.h"
 #include <plog/Log.h>
 
@@ -122,16 +123,25 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   }
 
   int destined_health = health - dmg_magnitude;
-  if (destined_health < 0) {
+  Color num_color = WHITE;
+
+  if (destined_health <= 0) {
     destined_health = 0;
+    num_color = COLORS::PALETTE[32];
   }
 
+  createDamageNumber(dmg_magnitude, num_color);
   health = destined_health;
   PLOGI << "Combatant's health is now at: " << health;
 
   if (state != HIT_STUN && health <= 0) {
     death();
   }
+}
+
+void Combatant::createDamageNumber(int value, Color color) {
+  Vector2 spawn_pos = {position.x, position.y - tex_scale.y};
+  Dynamic::create<DamageNumber>(value, spawn_pos, color);
 }
 
 void Combatant::enterHitStun(float stun_time) {

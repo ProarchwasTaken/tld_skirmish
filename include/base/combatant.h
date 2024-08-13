@@ -64,6 +64,8 @@ public:
                           float stun_time, float kb_velocity = 0, 
                           uint8_t kb_direction = 0);
 
+  void createDamageNumber(int value, Color color);
+
   /* Causes the combatant to enter the hit stun sequence. Automatically
    * cancelling any action command the combatant was performing at the
    * time the method was called.*/
