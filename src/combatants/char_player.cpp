@@ -332,6 +332,7 @@ void PlayerCharacter::regeneration() {
   }
 
   health++;
+  createDamageNumber(1, COLORS::PALETTE[14]);
   regen_timestamp = CURRENT_TIME;
 
   if (critical_health == false) {
