@@ -47,12 +47,12 @@ public:
   Rectangle hitbox;
   Rectangle tex_rect;
 
+  Vector2 tex_scale;
+  Vector2 hitbox_scale;
+
   Vector2 tex_offset;
   Vector2 hitbox_offset;
 protected:
   Vector2 tex_position;
-  Vector2 tex_scale;
-
   Vector2 hitbox_position;
-  Vector2 hitbox_scale;
 };
