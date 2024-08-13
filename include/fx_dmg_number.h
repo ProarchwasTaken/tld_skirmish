@@ -4,6 +4,10 @@
 #include "base/dynamic_actor.h"
 
 
+/* DamageNumber is a DynamicActor that's of an special effect more than
+ * anything. Not meant to affect anything in the game physically. It's
+ * a number that's floats up for a bit before disappearing. They're
+ * typically used to indicate how much damage an attack has inflicted.*/
 class DamageNumber : public DynamicActor {
 public:
   DamageNumber(int value, Vector2 position, Color color);
