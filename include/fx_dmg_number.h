@@ -15,6 +15,7 @@ public:
   void draw(Vector2 &camera_target) override;
 private:
   Texture number_texture;
+  Color tint = WHITE;
 
   float movement_speed;
   float distance_traveled = 0;

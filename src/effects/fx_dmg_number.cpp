@@ -28,7 +28,7 @@ DamageNumber::DamageNumber(int value, Vector2 position, Color color):
   tex_scale.x = number_texture.width;
   tex_scale.y = number_texture.height;
 
-  tex_offset = {(-tex_scale.x / 2), -tex_scale.y};
+  tex_offset = {(-tex_scale.x / 2), 0};
   texRectCorrection();
 
   movement_speed = 0.2;
@@ -48,7 +48,10 @@ void DamageNumber::movement() {
   position.y -= magnitude;
   distance_traveled += magnitude;
 
-  if (distance_traveled >= 12) {
+  float percentage = 1.0 - (distance_traveled / 18);
+  tint.a = 255 * percentage;
+
+  if (distance_traveled >= 18) {
     awaiting_deletion = true;
   }
 
@@ -61,7 +64,7 @@ void DamageNumber::draw(Vector2 &camera_target) {
   }
 
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
-  DrawTexturePro(number_texture, source, tex_rect, {0, 0}, 0, WHITE);
+  DrawTexturePro(number_texture, source, tex_rect, {0, 0}, 0, tint);
   
 
   if (DEBUG_MODE == true) {
