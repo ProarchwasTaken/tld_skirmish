@@ -48,8 +48,10 @@ void DamageNumber::movement() {
   position.y -= magnitude;
   distance_traveled += magnitude;
 
-  float percentage = 1.0 - (distance_traveled / 18);
-  tint.a = 255 * percentage;
+  if (distance_traveled >= 12) {
+    float percentage = 1.0 - ((distance_traveled - 12) / 6);
+    tint.a = 255 * percentage;
+  }
 
   if (distance_traveled >= 18) {
     awaiting_deletion = true;
