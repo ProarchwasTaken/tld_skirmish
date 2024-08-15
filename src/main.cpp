@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   int start_scene = parseArguments(argc, argv);
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
+  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
   SetTargetFPS(TARGET_FRAMERATE);
   InitAudioDevice();
 
