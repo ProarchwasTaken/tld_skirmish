@@ -1,6 +1,8 @@
 # Difficulty - 1
 [[waves]] # ID: 0
 name = "First Born"
+id = 0
+
 difficulty = 1
 time_limit = 60
 
@@ -16,6 +18,8 @@ enemies = [
 # Difficulty - 2
 [[waves]] # ID: 1
 name = "Pace Increase"
+id = 1
+
 difficulty = 2
 time_limit = 80
 
@@ -33,6 +37,8 @@ enemies = [
 # Difficulty - 3
 [[waves]] # ID: 2
 name = "Only the Beginning"
+id = 2
+
 difficulty = 3
 time_limit = 120
 

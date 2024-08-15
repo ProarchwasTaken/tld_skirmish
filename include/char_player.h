@@ -11,6 +11,7 @@
 #define PLR_BOUNDS 384
 
 #define PLR_HP 30
+#define PLR_HP_CRITICAL 0.40
 #define PLR_STABILITY 0.5
 #define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
@@ -42,18 +43,19 @@
 class PlayerCharacter : public Combatant {
 public:
   PlayerCharacter(combatant_list &enemies, uint8_t &phase);
-  ~PlayerCharacter();
+  ~PlayerCharacter() override;
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
-  void update(double &delta_time) override;
-  void draw() override;
+  void update() override;
+
+  void draw(Vector2 &camera_target) override;
   void drawDebug() override;
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
    * Prevents the player from moving out of bounds when needed.*/
-  void movement(double &delta_time);
+  void movement();
 
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
@@ -100,20 +102,29 @@ public:
 
   /* Special interpret logic is quite special as it's only used when the
    * player is currently performing an action command. Different 
-   * logic may be also used depending on what action command is being
-   * used as well.*/
+   * logic may be also used depending on what type of ActionCommand is 
+   * being used as well.*/
   void specialInterpretLogic();
 
   /* Only called during special interpret logic, and the player is using
    * the LightAttack. This is the basically the function that allows
-   * the player to cancel the LightAttack to a heavy attack or weapon
-   * technique if it lands.*/
+   * the player to cancel the LightAttack into basically any other 
+   * ActionCommand that the player has access except itself. That is, if
+   * it lands.*/
   void lightAttackHandling();
 
   /* Only called during special interpret logic, and the player is using
-   * the HeavyAttack. It only allows the player to cancel the HeavyAttack
-   * to the heavy weapon technique if it connects.*/
+   * the HeavyAttack. It's a bit more limited in what ActionCommands the
+   * player could cancel into if the attack were to connect. Only allowing
+   * the player to cancel into a Heavy Technique, but even so that may not
+   * always be the case depending on the player's current sub-weapon.*/
   void heavyAttackHanding();
+
+  /* The method retains the same functionality of the method it overrides
+   * except it checks if the player is in low health afterwards.*/
+  void takeDamage(uint16_t dmg_magnitude, float guard_pierce,
+                  float stun_time, float kb_velocity = 0,
+                  uint8_t kb_direction = 0) override;
 
   combatant_list *enemies;
 
@@ -125,6 +136,8 @@ public:
   bool moving;
   float movement_speed;
 
+  bool critical_health = false;
+
   std::vector<uint8_t> input_buffer;
 private:
   uint8_t *game_phase;
@@ -133,7 +146,7 @@ private:
   bool buf_timer_started = false;
 
   float buf_clear_time;
-  float buf_input_timestamp;
+  float buf_input_timestamp = 0;
 
   std::vector<int> anim_walk;
   float walk_frametime;

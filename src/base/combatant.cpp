@@ -3,11 +3,13 @@
 #include <string>
 #include <memory>
 #include <raylib.h>
+#include <cassert>
 #include "globals.h"
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_guard.h"
+#include "fx_dmg_number.h"
 #include "utils.h"
 #include <plog/Log.h>
 
@@ -54,26 +56,24 @@ void Combatant::cancelCommand() {
   }
 }
 
-void Combatant::commandSequence(double &delta_time) {
-  if (current_command == nullptr) {
-    PLOGF << name << "Combatant has attempted to go through command"
-      << " sequence when no command is assigned to them!";
-    throw;
-  }
+void Combatant::commandSequence() {
+  assert(current_command != nullptr && 
+         "Combatant has attaempted to go through command sequence when"
+         " no command is assigned to them!");
 
   float time_elapsed = CURRENT_TIME - current_command->sequence_timestamp;
 
   switch (state) {
     case CHARGING: {
-      current_command->chargeSequence(time_elapsed, delta_time);
+      current_command->chargeSequence(time_elapsed);
       break;
     }
     case ACT: {
-      current_command->actSequence(time_elapsed, delta_time);
+      current_command->actSequence(time_elapsed);
       break;
     }
     case RECOVER: {
-      current_command->recoverySequence(time_elapsed, delta_time);
+      current_command->recoverySequence(time_elapsed);
       break;
     }
   }
@@ -123,16 +123,25 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   }
 
   int destined_health = health - dmg_magnitude;
-  if (destined_health < 0) {
+  Color num_color = WHITE;
+
+  if (destined_health <= 0) {
     destined_health = 0;
+    num_color = COLORS::PALETTE[32];
   }
 
+  createDamageNumber(dmg_magnitude, num_color);
   health = destined_health;
   PLOGI << "Combatant's health is now at: " << health;
 
   if (state != HIT_STUN && health <= 0) {
     death();
   }
+}
+
+void Combatant::createDamageNumber(int value, Color color) {
+  Vector2 spawn_pos = {position.x, position.y - tex_scale.y};
+  Dynamic::create<DamageNumber>(value, spawn_pos, color);
 }
 
 void Combatant::enterHitStun(float stun_time) {
@@ -160,8 +169,8 @@ void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
   }
 }
 
-void Combatant::applyKnockback(double &delta_time, uint16_t boundary) {
-  float magnitude = (kb_velocity * kb_direction) * delta_time;
+void Combatant::applyKnockback(uint16_t boundary) {
+  float magnitude = (kb_velocity * kb_direction) * DELTA_TIME;
 
   if (magnitude == 0) {
     return;
@@ -194,11 +203,8 @@ void Combatant::death() {
 }
 
 void Combatant::stunSequence() {
-  if (state != HIT_STUN) {
-    PLOGE << "{Combatant: " << name << "} entered stun sequence when it"
-      " wasn't supposed to!";
-    throw;
-  }
+  assert(state == HIT_STUN && 
+         "Method called while combatant is not in hit stun!");
 
   float time_elapsed = CURRENT_TIME - stun_timestamp;
   if (time_elapsed < stun_time) {

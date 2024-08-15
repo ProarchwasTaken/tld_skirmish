@@ -6,8 +6,8 @@
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
-#include "sprite_loader.h"
-#include "audio.h"
+#include "sys_sprites.h"
+#include "sys_audio.h"
 #include "scene_debug.h"
 #include "scene_title.h"
 #include "scene_menu.h"
@@ -137,10 +137,8 @@ void Game::loadScene(int scene_id) {
 }
 
 void Game::refresh() {
-  delta_time = GetFrameTime() * TARGET_FRAMERATE;
-
   scene->checkInput();
-  scene->updateScene(delta_time);
+  scene->updateScene();
 
   BeginTextureMode(canvas);
   {

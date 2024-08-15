@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <raylib.h>
+#include <cassert>
 #include "globals.h"
 #include "utils.h"
 #include "base/generics.h"
@@ -49,7 +50,7 @@ PlayerCharacter::~PlayerCharacter() {
   sub_weapon.reset();
 }
 
-void PlayerCharacter::update(double &delta_time) {
+void PlayerCharacter::update() {
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {
@@ -59,7 +60,7 @@ void PlayerCharacter::update(double &delta_time) {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
-      movement(delta_time);
+      movement();
 
       interpretBuffer();
       break;
@@ -67,7 +68,7 @@ void PlayerCharacter::update(double &delta_time) {
     case HIT_STUN: {
       current_sprite = sprites::player[7];
 
-      applyKnockback(delta_time, PLR_BOUNDS);
+      applyKnockback(PLR_BOUNDS);
       stunSequence();
       break;
     }
@@ -76,7 +77,7 @@ void PlayerCharacter::update(double &delta_time) {
       break;
     }
     default: {
-      commandSequence(delta_time);
+      commandSequence();
       interpretBuffer();
     }
   }
@@ -196,10 +197,8 @@ void PlayerCharacter::normalInterpretLogic() {
 }
 
 void PlayerCharacter::specialInterpretLogic() {
-  if (current_command == nullptr) {
-    PLOGE << "Player doesn't have an command assigned to them!";
-    throw;
-  }
+  assert(current_command != nullptr &&
+         "Caught the player with a command assigned to them!");
 
   if (parried_attack) {
     PLOGI << "Detected that the player has parried an attack. Switching "
@@ -293,7 +292,7 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::movement(double &delta_time) {
+void PlayerCharacter::movement() {
   if (!moving) {
     return;
   }
@@ -304,7 +303,7 @@ void PlayerCharacter::movement(double &delta_time) {
     direction = LEFT;
   }
 
-  float magnitude = (movement_speed * direction) * delta_time;
+  float magnitude = (movement_speed * direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
@@ -328,9 +327,22 @@ void PlayerCharacter::regeneration() {
   }
 
   float time_elapsed = CURRENT_TIME - regen_timestamp;
-  if (time_elapsed >= regen_time) {
-    health++;
-    regen_timestamp = CURRENT_TIME;
+  if (time_elapsed < regen_time) {
+    return;
+  }
+
+  health++;
+  createDamageNumber(1, COLORS::PALETTE[14]);
+  regen_timestamp = CURRENT_TIME;
+
+  if (critical_health == false) {
+    return;
+  }
+
+  float percentage = static_cast<float>(health) / max_health;
+  if (percentage > PLR_HP_CRITICAL) {
+    PLOGI << "The player has reached safe levels of HP!";
+    critical_health = false;
   }
 }
 
@@ -345,6 +357,28 @@ void PlayerCharacter::incrementMorale(uint8_t value) {
   }
   else {
     morale = new_morale;
+  }
+}
+
+void PlayerCharacter::takeDamage(uint16_t dmg_magnitude, 
+                                 float guard_pierce, 
+                                 float stun_time, 
+                                 float kb_velocity,
+                                 uint8_t kb_direction)
+{
+  Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
+                        kb_velocity, kb_direction);
+
+  if (critical_health) {
+    return;
+  }
+
+  float percentage = static_cast<float>(health) / max_health;
+  PLOGD << "Percentage of health remaining: " << percentage;
+  if (percentage <= PLR_HP_CRITICAL) {
+    PLOGI << "The player is now in critical health!";
+    critical_health = true;
+    SoundUtils::play("critical_health");
   }
 }
 
@@ -457,16 +491,18 @@ void PlayerCharacter::inputReleased() {
   }
 }
 
-void PlayerCharacter::draw() {
-  Actor::draw();
+void PlayerCharacter::draw(Vector2 &camera_target) {
+  Actor::draw(camera_target);
+  if (CameraUtils::onScreen(this, camera_target) == false) {
+    return;
+  }
+
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
-  Rectangle dest = {tex_position.x, tex_position.y, 
-    tex_scale.x, tex_scale.y};
   if (direction == LEFT) {
     source.width *= -1;
   }
 
-  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
+  DrawTexturePro(*current_sprite, source, tex_rect, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE == true) {
     drawDebug();

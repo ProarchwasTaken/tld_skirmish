@@ -39,16 +39,16 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
   attack_patience = patience_range(RNG::generator);
 }
 
-void GhoulEnemy::update(double &delta_time) {
+void GhoulEnemy::update() {
   switch (state) {
     case NEUTRAL: {
-      neutralBehavior(delta_time);
+      neutralBehavior();
       break;
     }
     case HIT_STUN: {
       current_sprite = sprites::ghoul[3];
 
-      applyKnockback(delta_time, 512);
+      applyKnockback(512);
       stunSequence();
       break;
     }
@@ -57,18 +57,18 @@ void GhoulEnemy::update(double &delta_time) {
       break;
     }
     default: {
-      commandSequence(delta_time);
+      commandSequence();
     }
   }
 }
 
-void GhoulEnemy::neutralBehavior(double &delta_time) {
+void GhoulEnemy::neutralBehavior() {
   int16_t x_offset = player->position.x - position.x;
   player_dist = std::abs(x_offset);
   direction = Clamp(x_offset, -1, 1);
 
   if (player_dist > preferred_dist) {
-    movement(delta_time);
+    movement();
     Animation::play(this, sprites::ghoul, anim_walk, walk_frametime);
     return;
   }
@@ -89,8 +89,8 @@ void GhoulEnemy::neutralBehavior(double &delta_time) {
   }
 }
 
-void GhoulEnemy::movement(double &delta_time) {
-  position.x += (movement_speed * direction) * delta_time;
+void GhoulEnemy::movement() {
+  position.x += (movement_speed * direction) * DELTA_TIME; 
   hitboxCorrection();
   texRectCorrection();
 }
@@ -107,16 +107,18 @@ void GhoulEnemy::deathSequence() {
   }
 }
 
-void GhoulEnemy::draw() {
-  Actor::draw();
+void GhoulEnemy::draw(Vector2 &camera_target) {
+  Actor::draw(camera_target);
+  if (CameraUtils::onScreen(this, camera_target) == false) {
+    return;
+  }
+
   Rectangle source = {0, 0, tex_scale.x, tex_scale.y};
-  Rectangle dest = {tex_position.x, tex_position.y, 
-    tex_scale.x, tex_scale.y};
   if (direction == LEFT) {
     source.width *= -1;
   }
 
-  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
+  DrawTexturePro(*current_sprite, source, tex_rect, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE == true) {
     drawDebug();

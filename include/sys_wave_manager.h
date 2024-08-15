@@ -1,4 +1,4 @@
-// wave_manager.h
+// sys_wave_manager.h
 #pragma once
 #include <cstdint>
 #include <vector>
@@ -30,6 +30,7 @@ public:
   ~WaveManager();
 
   void startWave(uint8_t difficulty);
+  void startWaveByID(int wave_id);
 
   std::vector<toml::value> waveSearch(uint8_t difficulty);
   void assignWave(toml::value wave);
@@ -45,5 +46,6 @@ private:
 
   toml::value wave_metadata;
 
+  std::vector<int> used_waves;
   float wave_timestamp = 0;
 };

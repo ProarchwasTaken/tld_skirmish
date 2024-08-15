@@ -7,15 +7,19 @@
 #include "base/dynamic_actor.h"
 
 
+/* KnifeProjectile is an DynamicActor that created upon the player
+ * successfully performing the KnifeHeavy ActionCommand. It simply moves
+ * in one direction, inflicting damage to the first enemy it comes in
+ * contact with before deleting itself.*/
 class KnifeProjectile : public DynamicActor {
 public:
   KnifeProjectile(Vector2 position, int8_t direction,
                   combatant_list *enemies);
 
-  void update(double &delta_time) override;
-  void draw() override;
+  void update() override;
+  void draw(Vector2 &camera_target) override;
 
-  void movement(double &delta_time);
+  void movement();
   void enemyHitCheck();
 private:
   combatant_list *enemies;

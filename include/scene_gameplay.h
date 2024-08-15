@@ -6,7 +6,7 @@
 #include <cstdint>
 #include "base/generics.h"
 #include "base/scene.h"
-#include "wave_manager.h"
+#include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
 #include "char_player.h"
@@ -35,7 +35,7 @@ public:
   void checkInput() override;
   void checkPauseInput();
 
-  void updateScene(double &delta_time) override;
+  void updateScene() override;
 
   void drawScene() override;
   void drawPauseMenu();

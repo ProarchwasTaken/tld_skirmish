@@ -11,7 +11,7 @@ else()
 endif()
 
 project("skirmish" 
-VERSION 0.1.0
+VERSION 0.1.1
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
@@ -25,8 +25,9 @@ set(SOURCE_FILES
 "src/main.cpp"
 "src/globals.cpp"
 "src/game.cpp"
-"src/sprite_loader.cpp"
-"src/audio.cpp"
+"src/system/audio.cpp"
+"src/system/sprites.cpp"
+"src/system/wave_manager.cpp"
 "src/base/actor.cpp"
 "src/base/dynamic_actor.cpp"
 "src/base/combatant.cpp"
@@ -42,7 +43,6 @@ set(SOURCE_FILES
 "src/utils/stages.cpp"
 "src/utils/text.cpp"
 "src/utils/menu.cpp"
-"src/wave_manager.cpp"
 "src/scenes/scene_title.cpp"
 "src/scenes/scene_menu.cpp"
 "src/scenes/scene_gameplay.cpp"
@@ -60,6 +60,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_knife_heavy.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/sub-weapons/weapon_knife.cpp"
+"src/effects/fx_dmg_number.cpp"
 )
 
 set(HEADER_FILES
@@ -67,8 +68,9 @@ set(HEADER_FILES
 "include/globals.h"
 "include/game.h"
 "include/utils.h"
-"include/sprite_loader.h"
-"include/audio.h"
+"include/sys_sprites.h"
+"include/sys_audio.h"
+"include/sys_wave_manager.h"
 "include/base/generics.h"
 "include/base/scene.h"
 "include/base/actor.h"
@@ -76,7 +78,6 @@ set(HEADER_FILES
 "include/base/combatant.h"
 "include/base/action_command.h"
 "include/base/sub-weapon.h"
-"include/wave_manager.h"
 "include/scene_title.h"
 "include/scene_menu.h"
 "include/scene_gameplay.h"
@@ -94,6 +95,7 @@ set(HEADER_FILES
 "include/cmd_knife_heavy.h"
 "include/cmd_ghoul_atk.h"
 "include/weapon_knife.h"
+"include/fx_dmg_number.h"
 )
 
 if(WIN32)

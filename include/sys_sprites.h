@@ -1,4 +1,4 @@
-// sprite_loader.h
+// sys_sprites
 #pragma once
 #include <raylib.h>
 #include <toml/value.hpp>

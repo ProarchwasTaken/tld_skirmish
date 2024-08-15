@@ -26,7 +26,6 @@ void Dynamic::moveFromQueue(dynamic_list &main_list) {
   if (queue.size() == 0) {
     return;
   }
-  PLOGD << "DActors in queue: " << queue.size(); 
 
   PLOGD << "Moving Dynamic Actors from queue to main list.";
   for (auto &d_actor : queue) {
@@ -34,9 +33,7 @@ void Dynamic::moveFromQueue(dynamic_list &main_list) {
   }
   queue.clear();
 
-  PLOGD << "Now sorting main list.";
   std::sort(main_list.begin(), main_list.end(), typeCompare);
-  PLOGD << "DActor Count: " << main_list.size();
 }
 
 void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
@@ -59,7 +56,6 @@ void Dynamic::clearAwaitingDeletion(dynamic_list &main_list) {
     std::sort(main_list.begin(), main_list.end(), deleteCompare);
 
     main_list.erase(main_list.begin(), main_list.begin() + deleted);
-    PLOGI << "Deleted: " << deleted << " DActors";
 
     std::sort(main_list.begin(), main_list.end(), typeCompare);
   }
@@ -76,6 +72,6 @@ bool typeCompare(unique_ptr<DynamicActor> &d1,
 bool deleteCompare(unique_ptr<DynamicActor> &d1, 
                    unique_ptr<DynamicActor> &d2)
 {
-  return d1->awaiting_deletion > d2->awaiting_deletion;
+  return (d1 == nullptr) > (d2 == nullptr);
 }
 

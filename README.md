@@ -6,8 +6,8 @@ controls simple enough that you could play with just an SNES controller.
 
 # Controls
 This section gives a basic rundown the game's controls with a keyboard and
-a controller. The controls are simple. I trust that you could figure it out
-with a bit of experimenting.
+a controller. The controls are simple. I trust that you could figure it 
+out with a bit of experimenting.
 
 ## Keyboard
 
@@ -20,7 +20,8 @@ with a bit of experimenting.
 * **Arrow Keys** - Movement
 * **Z Key** - Light Attack
 * **X Key** - Heavy Attack
-* **A & S Keys** - Weapon Techniques
+* **A Key** - Light Technique
+* **S Key** - Heavy Technique
 * **Space Bar** - Guard
 
 * **Tab Key** - Pause/Resume
@@ -44,7 +45,8 @@ this besides letting this be known.
 * **D-Pad** - Movement
 * **A Button** - Light Attack
 * **B Button** - Heavy Attack
-* **Y & X Buttons** - Weapon Techniques
+* **X Button** - Light Technique
+* **Y Button** - Heavy Technique
 * **L or R Button** - Guard
 
 * **Start Button** - Pause/Resume
@@ -53,7 +55,7 @@ this besides letting this be known.
 # Credits and Contacts
 
 ## Tyler Dillard
-Role: Programmer, Designer, Pixel Artist, Sound and Music Designer, pretty
+Role: Programmer, Designer, Pixel Artist, Composer, Sound Designer, pretty
 much everything.
 
 **Contact Email** - lorenarcdev@gmail.com

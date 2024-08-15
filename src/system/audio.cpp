@@ -1,4 +1,4 @@
-// audio.h
+// system/audio.cpp
 #include <raylib.h>
 #include <string>
 #include <toml/get.hpp>
@@ -6,7 +6,7 @@
 #include <toml/value.hpp>
 #include <tuple>
 #include "globals.h"
-#include "audio.h"
+#include "sys_audio.h"
 #include <plog/Log.h>
 
 using std::string, std::tuple, std::make_tuple, std::tie;

@@ -36,17 +36,17 @@ public:
 
   /* Called once every frame. Holds code for a combatant's unique logic,
    * and checks. So expect this to be overridded by derived classes.*/
-  virtual void update(double &delta_time) {};
+  virtual void update() {};
 
   /* Takes a action command as a parameter, and assigns it to the 
    * combatant. Acts as a streamlined way to assign any class that derives
    * from ActionCommand.*/
-  virtual void useCommand(std::unique_ptr<ActionCommand> &command);
+  void useCommand(std::unique_ptr<ActionCommand> &command);
 
   /* For handling the all of the stages of using a command, like the 
    * charge up, action, and recovery. Is called once every frame of which
    * the combatant is in a state other than Neutral or Hit Stun.*/
-  void commandSequence(double &delta_time);
+  void commandSequence();
 
   /* Returns true if combatant is currently using an action command if 
    * haven't already figured it out.*/
@@ -60,9 +60,14 @@ public:
    * putting them in hit stun. Also makes sure the combatant's health will
    * not be below 0. If the stun_time parameter is 0, the combatant
    * will not be put into hit stun, and a death check will be made.*/
-  void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
-                  float stun_time, float kb_velocity = 0, 
-                  uint8_t kb_direction = 0);
+  virtual void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
+                          float stun_time, float kb_velocity = 0, 
+                          uint8_t kb_direction = 0);
+
+  /* Acts as straight forward wrapper for creating a instance of Damage
+   * Number, and positioning it right above the combatant's tex_rect.
+   * Typically called after the combatant takes damage.*/
+  void createDamageNumber(int value, Color color);
 
   /* Causes the combatant to enter the hit stun sequence. Automatically
    * cancelling any action command the combatant was performing at the
@@ -76,7 +81,7 @@ public:
 
   /* For applying knockback primarily, during the stun sequence. Also
    * makes sure that the combatant won't move past any boundaries.*/
-  void applyKnockback(double &delta_time, uint16_t boundary);
+  void applyKnockback(uint16_t boundary);
 
   /* If a combatant's HP reaches 0, and the appropriate check is made,
    * they are legally considered dead. When that happens, this method is 

@@ -13,6 +13,7 @@ class Actor {
 public:
   Actor(Vector2 position, Vector2 hitbox_scale, Vector2 tex_scale, 
         Vector2 hitbox_offset, Vector2 tex_offset);
+  virtual ~Actor() {}
 
   /* The hitbox is used for checking for collision with the level's 
    * boundaries, etc. Whenever an actors position changes, this method 
@@ -26,7 +27,15 @@ public:
    * any way.*/
   void texRectCorrection();
 
-  virtual void draw();
+  /* Doesn't actually draw anything, but instead contains assertion 
+   * statements that stops someone the inevitably forgetting something 
+   * like assigning a default sprite. Resulting in a seqfault that could 
+   * take hours to track down. (Example has no relation to any past 
+   * events.)*/
+  virtual void draw(Vector2 &camera_target);
+
+  /* Basically draws the actor's hitbox, and texture rect on the screen.
+   * Must only be used for debug purposes only.*/
   virtual void drawDebug();
 
   Texture *current_sprite = NULL;
@@ -37,14 +46,14 @@ public:
 
   Vector2 position;
   Rectangle hitbox;
+  Rectangle tex_rect;
+
+  Vector2 tex_scale;
+  Vector2 hitbox_scale;
 
   Vector2 tex_offset;
   Vector2 hitbox_offset;
 protected:
-  Rectangle tex_rect;
   Vector2 tex_position;
-  Vector2 tex_scale;
-
   Vector2 hitbox_position;
-  Vector2 hitbox_scale;
 };

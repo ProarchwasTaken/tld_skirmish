@@ -2,8 +2,8 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "sprite_loader.h"
-#include "audio.h"
+#include "sys_sprites.h"
+#include "sys_audio.h"
 #include "base/scene.h"
 
 #define SCENE_STARTUP 0
@@ -71,6 +71,4 @@ private:
   std::unique_ptr<SpriteLoader> sprite_loader;
   std::unique_ptr<AudioManager> audio_manager;
   std::unique_ptr<Scene> scene;
-
-  double delta_time;
 };

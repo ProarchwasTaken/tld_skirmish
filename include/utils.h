@@ -2,14 +2,12 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
-#include <utility>
 #include <tuple>
 #include <string>
-#include <type_traits>
 #include <vector>
 #include <globals.h>
-#include "audio.h"
-#include "sprite_loader.h"
+#include "sys_audio.h"
+#include "sys_sprites.h"
 #include "base/generics.h"
 #include "base/actor.h"
 #include "char_player.h"
@@ -20,8 +18,11 @@ namespace CameraUtils {
   /* For having the camera follow the player whenever they are off center.
    * This process only stops when the player is at the center of the 
    * screen again, or the camera has hit a boundary.*/
-  void followPlayer(Camera2D &camera, PlayerCharacter &player, 
-                    double &delta_time);
+  void followPlayer(Camera2D &camera, PlayerCharacter &player);
+
+  /* Returns true if the specified actor's tex rect on is on screen. This
+   * function is mainly used to check if actor should be drawn.*/
+  bool onScreen(Actor *actor, Vector2 &camera_target);
 }
 
 
@@ -114,10 +115,6 @@ namespace Dynamic {
    * This is my first ever template function, so issues might pop up.*/
   template<class DerivedClass, typename... Args>
   void create(Args&&... args) {
-    if (std::is_base_of<DynamicActor, DerivedClass>::value == false) {
-      throw;
-    }
-
     queue.push_back(
       std::make_unique<DerivedClass>(args...)
     );

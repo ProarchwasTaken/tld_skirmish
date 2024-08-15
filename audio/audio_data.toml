@@ -33,6 +33,10 @@ pitch_min = 0.75
 pitch_max = 1.25
 
 [[sfx]]
+name = "critical_health"
+path = "audio/sfx/critical_health.wav"
+
+[[sfx]]
 name = "cmd_cancel"
 path = "audio/sfx/cmd_cancel.wav"
 

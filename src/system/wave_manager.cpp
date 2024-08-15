@@ -1,20 +1,24 @@
-// wave_manager.cpp
+// system/wave_manager.cpp
+#include <optional>
 #include <raylib.h>
 #include <cstdint>
 #include <toml/parser.hpp>
 #include <toml/value.hpp>
+#include <toml/get.hpp>
 #include <vector>
 #include <random>
 #include <memory>
 #include <string>
+#include <algorithm>
+#include <cassert>
 #include "base/generics.h"
 #include "globals.h"
 #include "enemy_ghoul.h"
-#include "wave_manager.h"
+#include "sys_wave_manager.h"
 #include <plog/Log.h>
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 
-std::string;
+std::string, std::find, std::optional;
 
 
 EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
@@ -37,6 +41,7 @@ WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies)
 
 WaveManager::~WaveManager() {
   enemy_queue.clear();
+  used_waves.clear();
 }
 
 void WaveManager::startWave(uint8_t difficulty) {
@@ -46,11 +51,6 @@ void WaveManager::startWave(uint8_t difficulty) {
   PLOGD << "Getting all waves associated with difficulty: " <<
     int(difficulty);
   do {
-    if (difficulty == 0) {
-      PLOGE << "Absolutely no valid waves were found!";
-      throw;
-    }
-
     waves_found = waveSearch(difficulty);
     waves_not_found = waves_found.size() == 0;
 
@@ -58,6 +58,7 @@ void WaveManager::startWave(uint8_t difficulty) {
       difficulty--;
     } 
 
+    assert(difficulty != 0 && "Absolutely no valid waves were found!");
   } while (waves_not_found);
 
   PLOGD << "Found waves of identical difficulty level.";
@@ -71,17 +72,54 @@ void WaveManager::startWave(uint8_t difficulty) {
 
   PLOGI << "Now starting wave: " << wave_name;
   assignWave(chosen_wave);
-  wave_timestamp = GetTime();
+  wave_timestamp = CURRENT_TIME;
+}
+
+void WaveManager::startWaveByID(int wave_id) {
+  PLOGI << "Attempting to start wave by ID: " << wave_id;
+
+  int wave_count = wave_metadata.size();
+  optional<toml::value> found_wave;
+
+  for (int index = 0; index < wave_count; index++) {
+    int current_id = toml::find<int>(wave_metadata[index], "id");
+
+    if (current_id == wave_id) {
+      found_wave = wave_metadata[index];
+      break;
+    }
+  }
+
+  if (found_wave.has_value() == false) {
+    PLOGE << "Wave not found!";
+    return;
+  }
+
+  toml::value wave = found_wave.value();
+  string wave_name = wave["name"].as_string();
+
+  PLOGI << "Now starting wave: " << wave_name;
+  assignWave(wave);
+  wave_timestamp = CURRENT_TIME;
 }
 
 vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
   vector<toml::value> waves_found;
   int wave_count = wave_metadata.size();
+  vector<int>::iterator result;
 
   for (int index = 0; index < wave_count; index++) {
     toml::value wave = wave_metadata[index];
-    int wave_difficulty = wave["difficulty"].as_integer();
 
+    int wave_id = wave["id"].as_integer();
+    result = find(used_waves.begin(), used_waves.end(), wave_id);
+
+    bool already_used = result != used_waves.end();
+    if (already_used) {
+      continue;
+    }
+
+    int wave_difficulty = wave["difficulty"].as_integer();
     if (difficulty == wave_difficulty) {
       waves_found.push_back(wave);
     }
@@ -92,7 +130,10 @@ vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
 
 void WaveManager::assignWave(toml::value wave) {
   wave_timer = wave["time_limit"].as_integer();
+  int wave_id = wave["id"].as_integer();
   int enemy_count = wave["enemies"].size();
+
+  used_waves.push_back(wave_id);
 
   if (enemy_count == 0) {
     PLOGW << "There are no enemies in this wave!";
@@ -116,7 +157,7 @@ void WaveManager::waveSequence() {
   }
 
   EnemyMetadata *enemy = &enemy_queue.front();
-  float time_elapsed = GetTime() - wave_timestamp;
+  float time_elapsed = CURRENT_TIME - wave_timestamp;
 
   if (time_elapsed >= enemy->spawn_time) {
     uint8_t enemy_id = enemy->enemy_id;

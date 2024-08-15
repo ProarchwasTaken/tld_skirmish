@@ -25,14 +25,14 @@ public:
   ActionCommand(Combatant *user, std::string command_name, uint8_t type,
                 float charge_time, float act_time, float recovery_time);
 
-  virtual void chargeSequence(float time_elapsed, double &delta_time);
+  virtual void chargeSequence(float time_elapsed);
 
   /* This method is the most special as it executes the main functionality
    * for a given action command. So expect this to be overidden by other
    * classes that derive from this class.*/
-  virtual void actSequence(float time_elapsed, double &delta_time);
+  virtual void actSequence(float time_elapsed);
 
-  virtual void recoverySequence(float time_elapsed, double &delta_time);
+  virtual void recoverySequence(float time_elapsed);
 
   virtual void draw() {};
   virtual void drawDebug() {};

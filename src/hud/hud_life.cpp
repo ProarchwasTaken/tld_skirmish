@@ -50,7 +50,8 @@ void LifeHud::determineHudColor() {
       return;
     } 
     default: {
-      hud_color = WHITE;
+      if (player->critical_health) hud_color = COLORS::PALETTE[33];
+      else hud_color = WHITE;
     }
   }
 }

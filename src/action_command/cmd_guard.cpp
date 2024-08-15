@@ -7,7 +7,7 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "sprite_loader.h"
+#include "sys_sprites.h"
 #include "char_player.h"
 #include "utils.h"
 #include "cmd_guard.h"
@@ -33,27 +33,27 @@ Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
   user->current_sprite = charge_sprite;
 }
 
-void Guard::chargeSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::chargeSequence(time_elapsed, delta_time);
+void Guard::chargeSequence(float time_elapsed) {
+  ActionCommand::chargeSequence(time_elapsed);
 
   if (finished_charge) {
     user->current_sprite = guard_sprite;
   }
 }
 
-void Guard::actSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::actSequence(time_elapsed, delta_time);
+void Guard::actSequence(float time_elapsed) {
+  ActionCommand::actSequence(time_elapsed);
 
   if (finished_action) {
     user->current_sprite = charge_sprite;
   }
 }
 
-void Guard::recoverySequence(float time_elapsed, double &delta_time) {
-  ActionCommand::recoverySequence(time_elapsed, delta_time);
+void Guard::recoverySequence(float time_elapsed) {
+  ActionCommand::recoverySequence(time_elapsed);
 
   if (guard_success && user->parried_attack == false) {
-    user->applyKnockback(delta_time, boundary);
+    user->applyKnockback(boundary);
   }
 
   if (finished_recovering && user->parried_attack) {

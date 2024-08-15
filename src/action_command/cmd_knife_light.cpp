@@ -35,8 +35,8 @@ void KnifeLight::setupHurtbox() {
   hurtbox = {x, y, width, height};
 }
 
-void KnifeLight::chargeSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::chargeSequence(time_elapsed, delta_time);
+void KnifeLight::chargeSequence(float time_elapsed) {
+  ActionCommand::chargeSequence(time_elapsed);
 
   if (finished_charge) {
     user->current_sprite = sprites::player[11];
@@ -44,8 +44,8 @@ void KnifeLight::chargeSequence(float time_elapsed, double &delta_time) {
   }
 }
 
-void KnifeLight::actSequence(float time_elapsed, double &delta_time) {
-  ActionCommand::actSequence(time_elapsed, delta_time);
+void KnifeLight::actSequence(float time_elapsed) {
+  ActionCommand::actSequence(time_elapsed);
 
   enemyHitCheck();
 

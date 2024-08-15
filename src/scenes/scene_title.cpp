@@ -63,7 +63,7 @@ void TitleScene::checkInput() {
   }
 }
 
-void TitleScene::updateScene(double &delta_time) {
+void TitleScene::updateScene() {
   float time_elapsed = GetTime() - blink_timestamp;
 
   if (time_elapsed >= blink_interval) {

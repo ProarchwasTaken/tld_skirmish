@@ -13,8 +13,8 @@ class DummyEnemy : public Combatant{
 public:
   DummyEnemy(PlayerCharacter &player, Vector2 position);
 
-  void update(double &delta_time) override;
-  void draw() override;
+  void update() override;
+  void draw(Vector2 &camera_target) override;
 private:
   PlayerCharacter *player;
 };
