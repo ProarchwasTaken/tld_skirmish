@@ -4,6 +4,16 @@ have to survive against multiple waves of enemies. The game features
 controls simple enough that you could play with just an SNES controller.
 
 
+# Discord
+This game marks as the second entry in an Urban Fantasy anthology series 
+about an average human rising up to face the supernatural. If you wish
+to keep track of the game's development, or comsume media that relates to
+the core idea and themes of the series, I suggest that you check out the
+discord server.
+
+https://discord.gg/MB75uMs9De
+
+
 # Controls
 This section gives a basic rundown the game's controls with a keyboard and
 a controller. The controls are simple. I trust that you could figure it 
