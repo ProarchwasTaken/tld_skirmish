@@ -11,7 +11,7 @@ else()
 endif()
 
 project("skirmish" 
-VERSION 0.1.1
+VERSION 0.2.0
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
