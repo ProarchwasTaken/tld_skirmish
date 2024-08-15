@@ -35,6 +35,11 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;
 
+  anim_death = {15, 16};
+  death_frametime = 0.5;
+
+  death_time = 1.0;
+
   movement_speed = 1.75;
   regen_time = 2;
 
@@ -73,7 +78,7 @@ void PlayerCharacter::update() {
       break;
     }
     case DEAD: {
-      awaiting_deletion = true;
+      deathSequence();
       break;
     }
     default: {
@@ -379,6 +384,18 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
     PLOGI << "The player is now in critical health!";
     critical_health = true;
     SoundUtils::play("critical_health");
+  }
+}
+
+void PlayerCharacter::deathSequence() {
+  Animation::play(this, sprites::player, anim_death, death_frametime,
+                  false);
+
+  float time_elapsed = CURRENT_TIME - death_timestamp;
+  bool end_of_animation = current_frame == current_anim->end();
+
+  if (end_of_animation && time_elapsed >= death_time) {
+    awaiting_deletion = true;
   }
 }
 

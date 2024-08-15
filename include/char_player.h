@@ -126,6 +126,8 @@ public:
                   float stun_time, float kb_velocity = 0,
                   uint8_t kb_direction = 0) override;
 
+  void deathSequence();
+
   combatant_list *enemies;
 
   std::unique_ptr<SubWeapon> sub_weapon;
@@ -150,6 +152,11 @@ private:
 
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  std::vector<int> anim_death;
+  float death_frametime;
+
+  float death_time;
 
   float regen_time;
   float regen_timestamp = 0;
