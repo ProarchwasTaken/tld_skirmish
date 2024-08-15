@@ -100,7 +100,8 @@ void DebugScene::debugInputs() {
     num_buffer.pop_back();
   }
 
-  if (IsKeyPressed(KEY_ENTER)) {
+  bool no_awaiting_spawn = wave_manager->enemy_queue.size() == 0;
+  if (IsKeyPressed(KEY_ENTER) && no_awaiting_spawn) {
     int wave_id = std::stoi(num_buffer);
     wave_manager->startWaveByID(wave_id);
     num_buffer.clear();
