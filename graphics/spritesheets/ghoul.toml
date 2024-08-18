@@ -18,15 +18,15 @@ name = "hit_stun"
 area = {x = 192, y = 0, width = 64, height = 64}
 
 [[ghoul.sprites]] # ID: 4
-name = "charge"
+name = "attack_1"
 area = {x = 256, y = 0, width = 64, height = 64}
 
 [[ghoul.sprites]] # ID: 5
-name = "attack_1"
+name = "attack_2"
 area = {x = 0, y = 64, width = 64, height = 64}
 
 [[ghoul.sprites]] # ID: 6
-name = "attack_2"
+name = "attack_3"
 area = {x = 64, y = 64, width = 64, height = 64}
 
 [[ghoul.sprites]] # ID: 7
