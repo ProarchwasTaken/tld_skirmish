@@ -1,0 +1,36 @@
+[weapon_knife]
+path = "graphics/spritesheets/weapon_knife.png"
+id = 4
+
+[[weapon_knife.sprites]] # ID: 0
+name = "projectile_1"
+area = {x = 0, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 1
+name = "projectile_2"
+area = {x = 16, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 2
+name = "projectile_3"
+area = {x = 32, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 3
+name = "projectile_4"
+area = {x = 48, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 4
+name = "projectile_5"
+area = {x = 64, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 5
+name = "projectile_6"
+area = {x = 80, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 6
+name = "projectile_7"
+area = {x = 96, y = 0, width = 16, height = 16}
+
+[[weapon_knife.sprites]] # ID: 7
+name = "projectile_8"
+area = {x = 112, y = 0, width = 16, height = 16}
+
