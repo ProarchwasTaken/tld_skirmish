@@ -21,7 +21,13 @@ SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
 
 SpriteLoader::SpriteLoader() {
   PLOGI << "Loading spritesheet meta data.";
-  meta_data = toml::parse("graphics/spritesheets/sheet_data.toml");
+  loadSpritesheet({
+    "player", 
+    "ghoul", 
+    "hud_life", 
+    "hud_morale", 
+    "weapon_knife"
+  });
 }
 
 SpriteLoader::~SpriteLoader() {
@@ -38,9 +44,10 @@ SpriteLoader::~SpriteLoader() {
 void SpriteLoader::loadSpritesheet(vector<string> name_list) {
   setInitialCapacity(name_list);
 
+  string directory = "graphics/spritesheets/"; 
   for (string sheet_name : name_list) {
     PLOGI << "Attempting to parse spritesheet: " << sheet_name;
-    string file_path = meta_data[sheet_name]["path"].as_string();
+    string file_path = directory + sheet_name + ".png";
 
     PLOGD << sheet_name << " spritesheet path: " << file_path;
     Image spritesheet = LoadImage(file_path.c_str());
@@ -55,6 +62,9 @@ void SpriteLoader::setInitialCapacity(vector<string> &name_list) {
   int sprite_total = 0;
 
   for (string sheet_name : name_list) {  
+    string data_path = "graphics/spritesheets/" + sheet_name + ".toml";
+    toml::value meta_data = toml::parse(data_path);
+
     int sprite_count = meta_data[sheet_name]["sprites"].size();
     sprite_total += sprite_count;
   }
@@ -76,6 +86,9 @@ Rectangle SpriteLoader::getSpriteArea(toml::value &sprite_data) {
 }
 
 void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
+  string data_path = "graphics/spritesheets/" + sheet_name + ".toml";
+  toml::value meta_data = toml::parse(data_path);
+
   int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 

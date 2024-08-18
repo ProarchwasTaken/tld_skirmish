@@ -62,7 +62,6 @@ public:
    * the program.*/
   void allocateSprite(int sheet_id, std::string sprite_name);
 private:  
-  toml::value meta_data;
   std::vector<Texture> sprites; 
   uint16_t latest_index = 0;
 };
