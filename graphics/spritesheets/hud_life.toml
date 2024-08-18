@@ -1,5 +1,4 @@
 [hud_life]
-path = "graphics/spritesheets/hud_life.png"
 id = 2
 
 [[hud_life.sprites]] # ID: 0

@@ -1,5 +1,4 @@
 [weapon_knife]
-path = "graphics/spritesheets/weapon_knife.png"
 id = 4
 
 [[weapon_knife.sprites]] # ID: 0

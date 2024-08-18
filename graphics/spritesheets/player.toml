@@ -1,5 +1,4 @@
 [player]
-path = "graphics/spritesheets/player.png"
 id = 0
 
 [[player.sprites]] # ID: 0

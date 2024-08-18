@@ -1,5 +1,4 @@
 [ghoul]
-path = "graphics/spritesheets/ghoul.png"
 id = 1
 
 [[ghoul.sprites]] # ID: 0
