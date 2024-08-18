@@ -26,7 +26,8 @@ SpriteLoader::SpriteLoader() {
     "ghoul", 
     "hud_life", 
     "hud_morale", 
-    "weapon_knife"
+    "weapon_knife",
+    "wretch"
   });
 }
 
@@ -138,12 +139,17 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
       sprite_list = &sprites::weapon_knife;
       break;
     }
+    case SHEET_WRETCH: {
+      sprite_list = &sprites::wretch;
+      break;
+    }
     default: {
       PLOGE << "Unable to find sprite list associated with sheet id!";
       return;
     }
   }
 
+  PLOGD << "Allocated sprite: '" << sprite_name << "'.";
   sprite_list->push_back(&sprites[latest_index]);
 
   if (data_list != NULL) {
@@ -151,5 +157,4 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
       SpriteMetaData(sprite_name, &sprites[latest_index])
     );
   } 
-  PLOGD << "Allocated sprite: '" << sprite_name << "'.";
 }
