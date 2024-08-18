@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
   Game skirmish(start_scene);
 
   PLOGI << "Everything seems good to go!";
+  PLOGI << "Startup Time: " << GetTime();
   while (EXIT_GAME == false) {
     EXIT_GAME = WindowShouldClose();
     if (IsWindowResized()) {
