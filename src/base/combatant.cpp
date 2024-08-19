@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <memory>
+#include <vector>
 #include <raylib.h>
 #include <cassert>
 #include "globals.h"
@@ -13,7 +14,7 @@
 #include "utils.h"
 #include <plog/Log.h>
 
-using std::string, std::unique_ptr;
+using std::string, std::unique_ptr, std::vector;
 
 
 Combatant::Combatant(string name, uint8_t type, uint16_t max_health,
@@ -220,5 +221,21 @@ void Combatant::stunSequence() {
   } 
   else {
     death();
+  }
+}
+
+void Combatant::deathSequence(vector<Texture*> &sprite_list,
+                              vector<int> &anim_death,
+                              float death_frametime)
+{
+  Animation::play(this, sprite_list, anim_death, death_frametime, false);
+
+  float time_elapsed = CURRENT_TIME - death_timestamp;
+  bool end_of_animation = current_frame == current_anim->end();
+
+  float death_time = death_frametime * anim_death.size();
+
+  if (end_of_animation && time_elapsed >= death_time) {
+    awaiting_deletion = true;
   }
 }
