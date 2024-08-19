@@ -9,8 +9,8 @@
 #define WRH_HP 20
 #define WRH_STABILITY 0.45
 
-#define WRH_MIN_PATIENCE 20
-#define WRH_MAX_PATIENCE 40
+#define WRH_MIN_PATIENCE 60
+#define WRH_MAX_PATIENCE 80
 
 #define WRH_HIT_SCALE (Vector2){18, 56}
 #define WRH_HIT_OFFSET (Vector2){-9, -58}
@@ -25,9 +25,21 @@ public:
 
   void update() override;
   void draw(Vector2 &camera_target) override;
+  void drawDebug() override;
+
+  void neutralBehavior();
+  void pursue();
 
   PlayerCharacter *player;
 private:
+  float movement_speed;
+
+  uint16_t player_dist;
+  uint16_t preferred_dist;
+
+  uint8_t retreat_patience = 0;
+  float tick_timestamp = 0;
+
   std::vector<int> anim_idle;
   float idle_frametime;
 

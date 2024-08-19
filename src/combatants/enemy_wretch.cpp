@@ -1,10 +1,20 @@
 // combatants/enemy_wretch.cpp
+#include <cstdlib>
 #include <raylib.h>
+#include <raymath.h>
+#include <cstdint>
+#include <random>
 #include "globals.h"
 #include "utils.h"
 #include "base/combatant.h"
 #include "char_player.h"
 #include "enemy_wretch.h"
+
+using std::uniform_int_distribution;
+
+uniform_int_distribution<int> wrh_patience_range(
+  WRH_MIN_PATIENCE, WRH_MAX_PATIENCE
+);
 
 
 WretchEnemy::WretchEnemy(PlayerCharacter &player, Vector2 position):
@@ -14,18 +24,74 @@ WretchEnemy::WretchEnemy(PlayerCharacter &player, Vector2 position):
   this->player = &player;
   current_sprite = sprites::wretch[0];
 
+  movement_speed = 0.4;
+  preferred_dist = 64;
+
   anim_idle = {0, 1, 2, 1};
-  idle_frametime = 0.4;
+  idle_frametime = 0.3;
 
   anim_retreat = {3, 4, 5, 4};
-  retreat_frametime = 0.4;
+  retreat_frametime = 0.250;
 
   anim_death = {7, 8};
   death_frametime = 0.5;
 }
 
 void WretchEnemy::update() {
+  switch (state) {
+    case NEUTRAL: {
+      neutralBehavior();
+      break;
+    }
+    case HIT_STUN: {
+      current_sprite = sprites::wretch[6];
 
+      applyKnockback(512);
+      stunSequence();
+      break;
+    }
+    case DEAD: {
+      deathSequence(sprites::wretch, anim_death, death_frametime);
+      break;
+    }
+    default: {
+      commandSequence();
+    } 
+  }
+}
+
+void WretchEnemy::neutralBehavior() {
+  int16_t x_offset = player->position.x - position.x;
+  player_dist = std::abs(x_offset);
+  direction = Clamp(x_offset, -1, 1);
+
+  if (retreat_patience == 0) {
+    Animation::play(this, sprites::wretch, anim_idle, idle_frametime);
+    pursue();
+  }
+  else {
+    Animation::play(this, sprites::wretch, anim_retreat, 
+                    retreat_frametime);
+
+    position.x -= ((movement_speed * 2) * direction) * DELTA_TIME;
+    AIBehavior::tickPatience(retreat_patience, tick_timestamp);
+  }
+
+  hitboxCorrection();
+  texRectCorrection();
+}
+
+void WretchEnemy::pursue() {
+  bool within_range = player_dist <= preferred_dist;
+  bool should_attack = within_range && player->state != DEAD;
+
+  if (should_attack) {
+    // TODO: This is where the enemy's command will be assigned.
+    retreat_patience = wrh_patience_range(RNG::generator);
+    return;
+  }
+
+  position.x += (movement_speed * direction) * DELTA_TIME;
 }
 
 void WretchEnemy::draw(Vector2 &camera_target) {
@@ -44,5 +110,11 @@ void WretchEnemy::draw(Vector2 &camera_target) {
   if (DEBUG_MODE) {
     drawDebug();
   }
+}
+
+void WretchEnemy::drawDebug() {
+  Actor::drawDebug();
+
+  Enemies::drawPatience(this, retreat_patience, BLUE, 0);
 }
 
