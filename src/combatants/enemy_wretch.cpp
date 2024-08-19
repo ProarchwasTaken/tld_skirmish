@@ -30,7 +30,7 @@ void WretchEnemy::update() {
 
 void WretchEnemy::draw(Vector2 &camera_target) {
   Actor::draw(camera_target);
-  if (CameraUtils::onScreen(this, camera_target)) {
+  if (CameraUtils::onScreen(this, camera_target) == false) {
     return;
   }
 
