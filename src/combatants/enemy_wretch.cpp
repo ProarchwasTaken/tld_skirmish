@@ -1,5 +1,6 @@
 // combatants/enemy_wretch.cpp
 #include <cstdlib>
+#include <memory>
 #include <raylib.h>
 #include <raymath.h>
 #include <cstdint>
@@ -7,10 +8,12 @@
 #include "globals.h"
 #include "utils.h"
 #include "base/combatant.h"
+#include "base/action_command.h"
+#include "cmd_wretch_atk.h"
 #include "char_player.h"
 #include "enemy_wretch.h"
 
-using std::uniform_int_distribution;
+using std::uniform_int_distribution, std::make_unique, std::unique_ptr;
 
 uniform_int_distribution<int> wrh_patience_range(
   WRH_MIN_PATIENCE, WRH_MAX_PATIENCE
@@ -86,8 +89,11 @@ void WretchEnemy::pursue() {
   bool should_attack = within_range && player->state != DEAD;
 
   if (should_attack) {
-    // TODO: This is where the enemy's command will be assigned.
     retreat_patience = wrh_patience_range(RNG::generator);
+
+    unique_ptr<ActionCommand> command;
+    command = make_unique<WretchAttack>(this);
+    useCommand(command);
     return;
   }
 
@@ -116,5 +122,9 @@ void WretchEnemy::drawDebug() {
   Actor::drawDebug();
 
   Enemies::drawPatience(this, retreat_patience, BLUE, 0);
+
+  if (isUsingCommand()) {
+    current_command->drawDebug();
+  }
 }
 
