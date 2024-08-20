@@ -8,12 +8,12 @@
 
 
 WretchAttack::WretchAttack(WretchEnemy *user): 
-  ActionCommand(user, "Wretch Attack", CMD_NONE, 0.2, 0.1, 0.6)
+  ActionCommand(user, "Wretch Attack", CMD_NONE, 0.40, 0.1, 0.8)
 {
   damage = 12;
-  guard_pierce = 0.5;
+  guard_pierce = 0.45;
 
-  stun_time = 1.0;
+  stun_time = 0.75;
 
   this->player = user->player;
   user->current_sprite = sprites::wretch[9];
@@ -29,7 +29,7 @@ void WretchAttack::setupHurtbox() {
   float x_offset = half_width * user->direction;
 
   float x = (user->position.x - half_width) + x_offset;
-  float y = user->position.y - 56;
+  float y = user->position.y - 48;
 
   hurtbox = {x, y, width, height};
 }
@@ -44,9 +44,25 @@ void WretchAttack::chargeSequence(float time_elapsed) {
 
 void WretchAttack::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
+  playerHitCheck();
 
   if (finished_action || attack_connected) {
     user->current_sprite = sprites::wretch[11];
+  }
+}
+
+void WretchAttack::playerHitCheck() {
+  if (player->state == DEAD) {
+    return;
+  }
+
+  if (CheckCollisionRecs(hurtbox, player->hitbox)) {
+    player->takeDamage(damage, guard_pierce, stun_time, 1.5, 
+                       user->direction);
+
+    attack_connected = true;
+    user->state = RECOVER;
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 
