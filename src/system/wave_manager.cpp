@@ -47,6 +47,7 @@ WaveManager::~WaveManager() {
 
 void WaveManager::reloadWaveData() {
   wave_metadata = toml::parse("data/enemy_waves.toml")["waves"];
+  PLOGI << "Reloaded wave data";
 }
 
 void WaveManager::startWave(uint8_t difficulty) {

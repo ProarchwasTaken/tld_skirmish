@@ -92,6 +92,10 @@ void DebugScene::debugInputs() {
     player->morale++;
   }
 
+  if (IsKeyPressed(KEY_R)) {
+    wave_manager->reloadWaveData();
+  }
+
   if (num_buffer.size() == 0) {
     return;
   }
