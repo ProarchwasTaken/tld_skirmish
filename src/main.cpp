@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
       skirmish.correctWindow();
     }
 
-    if (IsKeyPressed(KEY_F3)) {
+    if (DEV_BUILD && IsKeyPressed(KEY_F3)) {
       PLOGI << "Toggling Debug Mode";
       DEBUG_MODE = !DEBUG_MODE;
     }
