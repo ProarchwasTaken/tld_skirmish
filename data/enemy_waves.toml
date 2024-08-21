@@ -1,5 +1,5 @@
 # Difficulty - 1
-[[waves]] # ID: 0
+[[waves]]
 name = "First Born"
 id = 0
 
@@ -16,7 +16,7 @@ enemies = [
 
 
 # Difficulty - 2
-[[waves]] # ID: 1
+[[waves]]
 name = "Pace Increase"
 id = 1
 
@@ -34,13 +34,29 @@ enemies = [
   {enemy_id = 0, screen_side = -1, spawn_time = 30.0},
 ]
 
+[[waves]]
+name = "Before You Leap"
+id = 3
+
+difficulty = 2
+time_limit = 80
+
+enemies = [
+  {enemy_id = 1, screen_side = 1, spawn_time = 0.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 1.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 3.0},
+  {enemy_id = 1, screen_side = -1, spawn_time = 12.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 18.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 18.0}, 
+]
+
 # Difficulty - 3
-[[waves]] # ID: 2
+[[waves]]
 name = "Only the Beginning"
 id = 2
 
 difficulty = 3
-time_limit = 120
+time_limit = 90
 
 enemies = [
   {enemy_id = 0, screen_side = -1, spawn_time = 1.0},
@@ -53,4 +69,22 @@ enemies = [
   {enemy_id = 0, screen_side = -1, spawn_time = 40.0},
   {enemy_id = 0, screen_side = 1, spawn_time = 42.0},
   {enemy_id = 0, screen_side = -1, spawn_time = 42.0},
+]
+
+[[waves]]
+name = "Skill Check"
+id = 4
+
+difficulty = 3
+time_limit = 100
+
+enemies = [
+  {enemy_id = 1, screen_side = 1, spawn_time = 1.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 8.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 12.0},
+  {enemy_id = 1, screen_side = -1, spawn_time = 12.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 20.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 24.0},
+  {enemy_id = 1, screen_side = 1, spawn_time = 40.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 42.0},
 ]
