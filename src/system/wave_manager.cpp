@@ -14,6 +14,7 @@
 #include "base/generics.h"
 #include "globals.h"
 #include "enemy_ghoul.h"
+#include "enemy_wretch.h"
 #include "sys_wave_manager.h"
 #include <plog/Log.h>
 
@@ -42,6 +43,10 @@ WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies)
 WaveManager::~WaveManager() {
   enemy_queue.clear();
   used_waves.clear();
+}
+
+void WaveManager::reloadWaveData() {
+  wave_metadata = toml::parse("data/enemy_waves.toml")["waves"];
 }
 
 void WaveManager::startWave(uint8_t difficulty) {
@@ -178,6 +183,10 @@ void WaveManager::spawnEnemy(uint8_t enemy_id, int8_t spawn_side) {
   switch (enemy_id) {
     case ENEMY_GHOUL: {
       enemies->push_back(make_shared<GhoulEnemy>(*player, position));
+      break;
+    }
+    case ENEMY_WRETCH: {
+      enemies->push_back(make_shared<WretchEnemy>(*player, position));
       break;
     }
     default: {

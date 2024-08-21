@@ -8,6 +8,7 @@
 #include "char_player.h"
 
 #define ENEMY_GHOUL 0
+#define ENEMY_WRETCH 1
 
 
 struct EnemyMetadata {
@@ -28,6 +29,8 @@ class WaveManager {
 public:
   WaveManager(PlayerCharacter &player, combatant_list &enemies);
   ~WaveManager();
+
+  void reloadWaveData();
 
   void startWave(uint8_t difficulty);
   void startWaveByID(int wave_id);
