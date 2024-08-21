@@ -75,3 +75,11 @@ path = "audio/sfx/parry.wav"
 [[sfx]]
 name = "gol_warning"
 path = "audio/sfx/gol_warning.wav"
+
+[[sfx]]
+name = "wrh_warning"
+path = "audio/sfx/wrh_warning.wav"
+
+[[sfx]]
+name = "wrh_attack"
+path = "audio/sfx/wrh_attack.wav"

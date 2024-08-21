@@ -1,6 +1,7 @@
 // action_command/cmd_wretch_atk.cpp
 #include <raylib.h>
 #include "globals.h"
+#include "utils.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "enemy_wretch.h"
@@ -8,7 +9,7 @@
 
 
 WretchAttack::WretchAttack(WretchEnemy *user): 
-  ActionCommand(user, "Wretch Attack", CMD_NONE, 0.40, 0.1, 0.8)
+  ActionCommand(user, "Wretch Attack", CMD_NONE, 0.4, 0.1, 0.8)
 {
   damage = 12;
   guard_pierce = 0.45;
@@ -18,6 +19,8 @@ WretchAttack::WretchAttack(WretchEnemy *user):
   this->player = user->player;
   user->current_sprite = sprites::wretch[9];
   setupHurtbox();
+
+  SoundUtils::play("wrh_warning");
 }
 
 void WretchAttack::setupHurtbox() {
@@ -39,6 +42,7 @@ void WretchAttack::chargeSequence(float time_elapsed) {
 
   if (finished_charge) {
     user->current_sprite = sprites::wretch[10];
+    SoundUtils::play("wrh_attack");
   }
 }
 
