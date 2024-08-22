@@ -1,10 +1,10 @@
 // utils/camera.cpp
+#include <cstdlib>
 #include <raylib.h>
 #include <raymath.h>
 #include "defaults.h"
 #include "globals.h"
 #include "utils.h"
-#include "char_player.h"
 
 
 Camera2D CameraUtils::setupCamera() {
@@ -18,14 +18,14 @@ Camera2D CameraUtils::setupCamera() {
 }
 
 
-void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player) 
+void CameraUtils::follow(Camera2D &camera, float x_position) 
 {
-  bool player_offCenter = camera.target.x != player.position.x;
-  if (player_offCenter == false) {
+  bool off_center = std::abs(camera.target.x - x_position) > 0.01;
+  if (off_center == false) {
     return;
   }
 
-  float x_difference = player.position.x - camera.target.x;
+  float x_difference = x_position - camera.target.x;
   float next_x = x_difference / 8;
   int direction;
 
@@ -57,9 +57,6 @@ void CameraUtils::followPlayer(Camera2D &camera, PlayerCharacter &player)
   }
   else {
     camera.target.x += next_x * DELTA_TIME;
-    if (FloatEquals(camera.target.x, player.position.x)) {
-      camera.target.x = player.position.x;
-    }
   }
 }
 

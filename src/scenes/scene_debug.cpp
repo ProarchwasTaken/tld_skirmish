@@ -122,7 +122,7 @@ void DebugScene::appendNumBuffer(int unicode) {
 
 void DebugScene::updateScene() {
   player->update();
-  CameraUtils::followPlayer(camera, *player);
+  CameraUtils::follow(camera, player->position.x);
 
   for (auto enemy : enemies) {
     enemy->update();
@@ -193,6 +193,15 @@ void DebugScene::drawDebugInfo() {
   DrawTextEx(*fonts::skirmish, 
              TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 32}, text_size, -3, GREEN);
+
+  bool off_center = camera.target.x != player->position.x;
+  DrawTextEx(*fonts::skirmish, TextFormat("Off Center: %i", off_center),
+             {0, 40}, text_size, -3, GREEN);
+
+  float x_difference = player->position.x - camera.target.x;
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("Cam Difference: %f", x_difference), 
+             {0, 48}, text_size, -3, GREEN);
 }
 
 void DebugScene::drawNumBuffer() {

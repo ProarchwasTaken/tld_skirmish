@@ -108,7 +108,7 @@ void GameplayScene::updateScene() {
   tickTimer();
 
   player->update();
-  CameraUtils::followPlayer(camera, *player);
+  CameraUtils::follow(camera, player->position.x);
 
   for (auto enemy : enemies) {
     enemy->update();

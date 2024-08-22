@@ -10,15 +10,13 @@
 #include "sys_sprites.h"
 #include "base/generics.h"
 #include "base/actor.h"
-#include "char_player.h"
 
 namespace CameraUtils {
   Camera2D setupCamera();
 
-  /* For having the camera follow the player whenever they are off center.
-   * This process only stops when the player is at the center of the 
-   * screen again, or the camera has hit a boundary.*/
-  void followPlayer(Camera2D &camera, PlayerCharacter &player);
+  /* For having the camera follow a specific x position if its outside
+   * a certain threshold.*/
+  void follow(Camera2D &camera, float x_position);
 
   /* Returns true if the specified actor's tex rect on is on screen. This
    * function is mainly used to check if actor should be drawn.*/
