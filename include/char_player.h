@@ -126,6 +126,15 @@ public:
                   float stun_time, float kb_velocity = 0,
                   uint8_t kb_direction = 0) override;
 
+  /* For checking if the player has reached or exited critical health, and
+   * acting accordingly. Should be called right after the player's health
+   * has been altered in some way.*/
+  void healthCheck();
+
+  /* This method does nothing important. Only serves to delay the 
+   * inevitable. Even so, it could make all the difference...*/
+  void endureSequence();
+
   combatant_list *enemies;
 
   std::unique_ptr<SubWeapon> sub_weapon;
@@ -137,6 +146,7 @@ public:
   float movement_speed;
 
   bool critical_health = false;
+  bool endure = false;
 
   std::vector<uint8_t> input_buffer;
 private:
@@ -153,6 +163,9 @@ private:
 
   std::vector<int> anim_death;
   float death_frametime;
+
+  std::vector<int> anim_endure;
+  float endure_frametime;
 
   float regen_time;
   float regen_timestamp = 0;
