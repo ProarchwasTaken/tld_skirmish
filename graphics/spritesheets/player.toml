@@ -69,4 +69,10 @@ area = {x = 0, y = 192, width = 64, height = 64}
 name = "death_2"
 area = {x = 64, y = 192, width = 64, height = 64}
 
+[[player.sprites]] # ID: 17
+name = "endure_1"
+area = {x = 128, y = 192, width = 64, height = 64}
 
+[[player.sprites]] # ID: 18
+name = "endure_2"
+area = {x = 192, y = 192, width = 64, height = 64}
