@@ -65,7 +65,10 @@ void GhoulEnemy::neutralBehavior() {
   player_dist = std::abs(x_offset);
   direction = Clamp(x_offset, -1, 1);
 
-  if (player_dist > preferred_dist) {
+  if (player->state == DEAD) {
+    return;
+  }
+  else if (player_dist > preferred_dist) {
     movement();
     Animation::play(this, sprites::ghoul, anim_walk, walk_frametime);
     return;

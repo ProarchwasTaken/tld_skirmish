@@ -86,9 +86,11 @@ void WretchEnemy::neutralBehavior() {
 
 void WretchEnemy::pursue() {
   bool within_range = player_dist <= preferred_dist;
-  bool should_attack = within_range && player->state != DEAD;
 
-  if (should_attack) {
+  if (player->state == DEAD) {
+    return;
+  }
+  else if (within_range) {
     retreat_patience = wrh_patience_range(RNG::generator);
 
     unique_ptr<ActionCommand> command;
