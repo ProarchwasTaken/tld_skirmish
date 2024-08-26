@@ -2,14 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
-option(BUILD_DEBUG "Build the game for debugging." OFF)
-
-if(${BUILD_DEBUG})
-  set(PROJECT_STAGE "Developer")
-else()
-  set(PROJECT_STAGE "Alpha")
-endif()
-
 project("skirmish" 
 VERSION 0.2.0
 DESCRIPTION "A short wave based fighter."
@@ -17,9 +9,29 @@ HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
 )
 
+option(BUILD_DEBUG "Build the game for debugging." OFF)
+
+if(${BUILD_DEBUG})
+  set(PROJECT_STAGE "Developer")
+  set(COMPILE_OPTIONS --debug -O0)
+  set(LINK_OPTIONS "")
+else()
+  set(PROJECT_STAGE "Alpha")
+  set(COMPILE_OPTIONS -DNDEBUG)
+  set(LINK_OPTIONS -mwindows)
+endif()
+
 include_directories("include")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(EXECUTABLE_OUTPUT_PATH "../")
+
+set(RAYLIB -lraylib -lopengl32 -lgdi32 -lwinmm)
+set(META_DATA 
+-DVERSION="${CMAKE_PROJECT_VERSION}" 
+-DVER_STAGE="${PROJECT_STAGE}"
+-DAUTHOR="Tyler Dillard"
+-DHOME_URL="${CMAKE_PROJECT_HOMEPAGE_URL}"
+)
 
 set(SOURCE_FILES 
 "src/main.cpp"
@@ -102,26 +114,8 @@ set(HEADER_FILES
 "include/fx_dmg_number.h"
 )
 
-if(WIN32)
-  message(STATUS "OS detected: Windows")
-  set(RAYLIB -lraylib -lopengl32 -lgdi32 -lwinmm)
-elseif(LINUX OR UNIX)
-  message(STATUS "OS detected: Linux")
-  set(RAYLIB -lraylib -lGL -lm -lpthread -ldl -lrt -lX11)
-endif()
-
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries("skirmish" PRIVATE ${RAYLIB})
-target_compile_options("skirmish" PRIVATE 
--DVERSION="${CMAKE_PROJECT_VERSION}" 
--DVER_STAGE="${PROJECT_STAGE}"
--DAUTHOR="Tyler Dillard"
--DHOME_URL="${CMAKE_PROJECT_HOMEPAGE_URL}"
-)
+target_compile_options("skirmish" PRIVATE ${COMPILE_OPTIONS} ${META_DATA})
+target_link_options("skirmish" PRIVATE ${LINK_OPTIONS})
 
-if(${BUILD_DEBUG})
-  target_compile_options("skirmish" PRIVATE --debug -O0)
-else()
-  target_compile_options("skirmish" PRIVATE -DNDEBUG)
-  target_link_options("skirmish" PRIVATE -mwindows)
-endif()
