@@ -391,8 +391,12 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
   float endure_chance = (morale_percent * life_percent) / 1.25;  
   uniform_real_distribution<float> range(0.0, 1.0);
 
-  if (range(RNG::generator) <= endure_chance) {
+  bool eligible = dmg_magnitude > (max_health * 2);
+  if (eligible && range(RNG::generator) <= endure_chance) {
     endure = true;
+  }
+  else {
+    endure = false;
   }
 }
 
