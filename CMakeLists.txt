@@ -65,7 +65,8 @@ set(SOURCE_FILES
 "src/combatants/enemy_dummy.cpp"
 "src/combatants/enemy_ghoul.cpp"
 "src/combatants/enemy_wretch.cpp"
-"src/projectiles/proj_knife.cpp"
+"src/sub-weapons/weapon_knife.cpp"
+"src/sub-weapons/weapon_ball.cpp"
 "src/action_command/cmd_light_atk.cpp"
 "src/action_command/cmd_heavy_atk.cpp"
 "src/action_command/cmd_guard.cpp"
@@ -73,7 +74,7 @@ set(SOURCE_FILES
 "src/action_command/cmd_knife_heavy.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/action_command/cmd_wretch_atk.cpp"
-"src/sub-weapons/weapon_knife.cpp"
+"src/projectiles/proj_knife.cpp"
 "src/effects/fx_dmg_number.cpp"
 )
 
@@ -102,7 +103,8 @@ set(HEADER_FILES
 "include/enemy_dummy.h"
 "include/enemy_ghoul.h"
 "include/enemy_wretch.h"
-"include/proj_knife.h"
+"include/weapon_knife.h"
+"include/weapon_ball.h"
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
@@ -110,7 +112,7 @@ set(HEADER_FILES
 "include/cmd_knife_heavy.h"
 "include/cmd_ghoul_atk.h"
 "include/cmd_wretch_atk.h"
-"include/weapon_knife.h"
+"include/proj_knife.h"
 "include/fx_dmg_number.h"
 )
 
