@@ -54,8 +54,10 @@ public:
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
-   * Prevents the player from moving out of bounds when needed.*/
-  void movement();
+   * Prevents the player from moving out of bounds when needed. You could
+   * set it so the player would move automatically but that could cause
+   * issues if you don't know what you're doing.*/
+  void movement(float speed, bool automatic);
 
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when

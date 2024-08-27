@@ -67,7 +67,7 @@ void PlayerCharacter::update() {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
-      movement();
+      movement(movement_speed, false);
 
       interpretBuffer();
       break;
@@ -304,8 +304,8 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::movement() {
-  if (!moving) {
+void PlayerCharacter::movement(float speed, bool automatic) {
+  if (!moving && automatic == false) {
     return;
   }
   else if (moving_right) {
@@ -315,7 +315,7 @@ void PlayerCharacter::movement() {
     direction = LEFT;
   }
 
-  float magnitude = (movement_speed * direction) * DELTA_TIME;
+  float magnitude = (speed * direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
