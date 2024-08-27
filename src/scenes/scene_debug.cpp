@@ -11,9 +11,6 @@
 #include "sys_wave_manager.h"
 #include "scene_debug.h"
 #include "scene_gameplay.h"
-#include "char_player.h"
-#include "hud_life.h"
-#include "hud_morale.h"
 #include "enemy_dummy.h"
 #include <plog/Log.h>
 
@@ -28,16 +25,12 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
 
   phase = PHASE_ACTION;
 
-  player = make_shared<PlayerCharacter>(enemies, phase);
   enemies = {
-    make_shared<DummyEnemy>(*player, (Vector2){-96, 152}),
+    make_shared<DummyEnemy>(player, (Vector2){-96, 152}),
   };
   
-  life_hud = make_unique<LifeHud>(*player, phase);
-  morale_hud = make_unique<MoraleHud>(*player);
-
   camera = CameraUtils::setupCamera();
-  wave_manager = make_unique<WaveManager>(*player, enemies);
+  wave_manager = make_unique<WaveManager>(player, enemies);
   PLOGI << "Debug scene has loaded successfully!";
 }
 
@@ -46,12 +39,6 @@ DebugScene::~DebugScene() {
   UnloadTexture(background);
   UnloadTexture(overlay);
   UnloadTexture(debug_overlay);
-
-  life_hud.reset();
-  morale_hud.reset();
-  wave_manager.reset();
-
-  player.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -63,6 +50,7 @@ DebugScene::~DebugScene() {
   }
   dynamic_actors.clear();
 
+  wave_manager.reset();
   num_buffer.clear();
   PLOGI << "Debug scene has unloaded succesfully.";
 }
@@ -70,8 +58,8 @@ DebugScene::~DebugScene() {
 void DebugScene::checkInput() {
   debugInputs();
 
-  player->inputPressed();
-  player->inputReleased();
+  player.inputPressed();
+  player.inputReleased();
 }
 
 void DebugScene::debugInputs() {
@@ -85,11 +73,11 @@ void DebugScene::debugInputs() {
     phase = !phase;
   }
 
-  if (player->morale != 0 && IsKeyPressed(KEY_W)) {
-    player->morale--;
+  if (player.morale != 0 && IsKeyPressed(KEY_W)) {
+    player.morale--;
   }
-  if (player->morale != player->max_morale && IsKeyPressed(KEY_E)) {
-    player->morale++;
+  if (player.morale != player.max_morale && IsKeyPressed(KEY_E)) {
+    player.morale++;
   }
 
   if (IsKeyPressed(KEY_R)) {
@@ -121,8 +109,8 @@ void DebugScene::appendNumBuffer(int unicode) {
 }
 
 void DebugScene::updateScene() {
-  player->update();
-  CameraUtils::follow(camera, player->position.x);
+  player.update();
+  CameraUtils::follow(camera, player.position.x);
 
   for (auto enemy : enemies) {
     enemy->update();
@@ -132,15 +120,15 @@ void DebugScene::updateScene() {
     d_actor->update();
   }
 
-  life_hud->update();
-  morale_hud->update();
+  life_hud.update();
+  morale_hud.update();
   wave_manager->waveSequence();
 
   Dynamic::moveFromQueue(dynamic_actors);
   Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
 
-  if (player->awaiting_deletion) {
+  if (player.awaiting_deletion) {
     PLOGD << "Reloading scene...";
     load_scene(SCENE_DEBUG);
   }
@@ -155,7 +143,7 @@ void DebugScene::drawScene() {
       enemy->draw(camera.target);
     }
 
-    player->draw(camera.target);
+    player.draw(camera.target);
 
     for (auto &d_actor : dynamic_actors) {
       d_actor->draw(camera.target);
@@ -169,8 +157,8 @@ void DebugScene::drawScene() {
   }
   EndMode2D();
 
-  life_hud->draw();
-  morale_hud->draw();
+  life_hud.draw();
+  morale_hud.draw();
 
   drawNumBuffer();
 }
@@ -180,8 +168,8 @@ void DebugScene::drawDebugInfo() {
   DrawTextEx(*fonts::skirmish, TextFormat("FPS: %i", GetFPS()), {0, 0}, 
              text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, TextFormat("Position: (%03.02f, %03.02f)", 
-                                          player->position.x, 
-                                          player->position.y), 
+                                          player.position.x, 
+                                          player.position.y), 
              {0, 8}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, 
              TextFormat("Enemy Queue: %i",
@@ -194,11 +182,11 @@ void DebugScene::drawDebugInfo() {
              TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 32}, text_size, -3, GREEN);
 
-  bool off_center = camera.target.x != player->position.x;
+  bool off_center = camera.target.x != player.position.x;
   DrawTextEx(*fonts::skirmish, TextFormat("Off Center: %i", off_center),
              {0, 40}, text_size, -3, GREEN);
 
-  float x_difference = player->position.x - camera.target.x;
+  float x_difference = player.position.x - camera.target.x;
   DrawTextEx(*fonts::skirmish, 
              TextFormat("Cam Difference: %f", x_difference), 
              {0, 48}, text_size, -3, GREEN);

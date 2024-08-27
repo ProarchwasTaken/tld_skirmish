@@ -42,13 +42,13 @@ private:
   Camera2D camera;
   uint8_t phase;
 
-  std::shared_ptr<PlayerCharacter> player;
+  PlayerCharacter player = PlayerCharacter(enemies, phase);
   combatant_list enemies;
   dynamic_list dynamic_actors;
 
-  std::unique_ptr<WaveManager> wave_manager;
-  std::unique_ptr<LifeHud> life_hud;
-  std::unique_ptr<MoraleHud> morale_hud;
+  LifeHud life_hud = LifeHud(player, phase);
+  MoraleHud morale_hud = MoraleHud(player);
 
+  std::unique_ptr<WaveManager> wave_manager;
   std::string num_buffer;
 };

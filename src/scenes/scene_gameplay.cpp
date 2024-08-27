@@ -10,14 +10,10 @@
 #include "utils.h"
 #include "game.h"
 #include "sys_wave_manager.h"
-#include "hud_life.h"
-#include "hud_morale.h"
-#include "char_player.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::make_unique, std::tie, std::function, 
-std::string;
+using std::make_unique, std::tie, std::function, std::string;
 
 
 GameplayScene::GameplayScene(function<void(int)> load_scene):
@@ -35,12 +31,8 @@ Scene(load_scene)
   tick_interval = 1;
   tick_timestamp = CURRENT_TIME;
 
-  player = make_shared<PlayerCharacter>(enemies, phase);
-  life_hud = make_unique<LifeHud>(*player, phase);
-  morale_hud = make_unique<MoraleHud>(*player);
-
   camera = CameraUtils::setupCamera();
-  wave_manager = make_unique<WaveManager>(*player, enemies);
+  wave_manager = make_unique<WaveManager>(player, enemies);
   PLOGI << "Gameplay scene has loaded successfully!";
 }
 
@@ -48,12 +40,6 @@ GameplayScene::~GameplayScene() {
   PLOGI << "Unloading gameplay scene.";
   UnloadTexture(background);
   UnloadTexture(overlay);
-
-  life_hud.reset();
-  morale_hud.reset();
-  wave_manager.reset();
-
-  player.reset();
 
   for (auto enemy : enemies) {
     enemy.reset();
@@ -65,11 +51,12 @@ GameplayScene::~GameplayScene() {
   }
   dynamic_actors.clear();
 
+  wave_manager.reset();
   PLOGI << "Gameplay scene has unloaded successfully.";
 }
 
 void GameplayScene::checkInput() {
-  bool valid_state = player->state != HIT_STUN && player->state != DEAD;
+  bool valid_state = player.state != HIT_STUN && player.state != DEAD;
   bool valid_phase = phase == PHASE_REST || phase == PHASE_ACTION;
 
   bool can_pause = valid_state && valid_phase;
@@ -78,10 +65,10 @@ void GameplayScene::checkInput() {
   }
 
   if (paused == false) {
-    player->inputPressed();
+    player.inputPressed();
   }
 
-  player->inputReleased();
+  player.inputReleased();
 }
 
 void GameplayScene::checkPauseInput() {
@@ -107,8 +94,8 @@ void GameplayScene::updateScene() {
 
   tickTimer();
 
-  player->update();
-  CameraUtils::follow(camera, player->position.x);
+  player.update();
+  CameraUtils::follow(camera, player.position.x);
 
   for (auto enemy : enemies) {
     enemy->update();
@@ -118,8 +105,8 @@ void GameplayScene::updateScene() {
     d_actor->update();
   }
 
-  life_hud->update();
-  morale_hud->update();
+  life_hud.update();
+  morale_hud.update();
 
   wave_manager->waveSequence();
 
@@ -130,7 +117,7 @@ void GameplayScene::updateScene() {
   phase = determinePhase();
 
   // PLACEHOLDER
-  if (player->awaiting_deletion) {
+  if (player.awaiting_deletion) {
     PLOGW << "A proper fail state hasn't been implemented yet!";
     PLOGI << "Resorting to go back to the title screen for now.";
     load_scene(SCENE_TITLE);
@@ -224,7 +211,7 @@ void GameplayScene::drawScene() {
       enemy->draw(camera.target);
     }
 
-    player->draw(camera.target);
+    player.draw(camera.target);
 
     for (auto &d_actor : dynamic_actors) {
       d_actor->draw(camera.target);
@@ -234,8 +221,8 @@ void GameplayScene::drawScene() {
   }
   EndMode2D();
 
-  life_hud->draw();
-  morale_hud->draw();
+  life_hud.draw();
+  morale_hud.draw();
 
   drawWaveCount();
   drawTimer();
