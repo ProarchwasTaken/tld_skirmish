@@ -1,10 +1,15 @@
 // sub_weapons/weapon_ball.cpp
 #include <memory>
+#include <cstdint>
+#include "globals.h"
+#include "base/combatant.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
 #include "utils.h"
 #include "char_player.h"
 #include "cmd_ball_light.h"
+#include "cmd_heavy_atk.h"
+#include "cmd_guard.h"
 #include "weapon_ball.h"
 #include <plog/Log.h>
 
@@ -33,5 +38,42 @@ unique_ptr<ActionCommand> WeaponBall::lightTechnique() {
     PLOGI << "Player has insufficent morale.";
     SoundUtils::play("weapon_error");
     return nullptr;
+  }
+}
+
+void WeaponBall::lightTechHandling() {
+  uint8_t first_input = player->input_buffer.front();
+  unique_ptr<ActionCommand> command;
+
+  auto *light_ball = static_cast<BallLight*>(
+    player->current_command.get()
+  );
+
+  if (player->state != ACT) {
+    return;
+  }
+
+  switch (first_input) {
+    case BTN_HEAVY_ATK: {
+      command = make_unique<HeavyAttack>(player);
+      break;
+    }
+    case BTN_HEAVY_TECH: {
+      command = heavyTechnique();
+      break;
+    }
+    case BTN_GUARD: {
+      command = make_unique<Guard>(player, sprites::plr_metadata, 
+                                   PLR_BOUNDS, true);
+      break;
+    }
+  }
+
+  if (command != nullptr) {
+    PLOGI << "Chaining command into: " << command->command_name;
+    SoundUtils::play("cmd_cancel");
+
+    player->useCommand(command);
+    player->invulnerable = false;
   }
 }
