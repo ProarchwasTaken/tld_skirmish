@@ -27,6 +27,7 @@ void BallLight::chargeSequence(float time_elapsed) {
 
   if (finished_charge) {
     user->invulnerable = true;
+    SoundUtils::play("ball_light_juke");
   }
 }
 
@@ -39,5 +40,6 @@ void BallLight::actSequence(float time_elapsed) {
   if (finished_action) {
     player->current_sprite = sprites::player[23];
     player->invulnerable = false;
+    SoundUtils::play("ball_light_break");
   }
 }

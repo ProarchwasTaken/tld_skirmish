@@ -57,6 +57,14 @@ name = "knife_heavy"
 path = "audio/sfx/knife_heavy.wav"
 
 [[sfx]]
+name = "ball_light_juke"
+path = "audio/sfx/ball_light_juke.wav"
+
+[[sfx]]
+name = "ball_light_break"
+path = "audio/sfx/ball_light_break.wav"
+
+[[sfx]]
 name = "death"
 path = "audio/sfx/death.wav"
 
