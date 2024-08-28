@@ -132,6 +132,7 @@ void GameplayScene::updateScene() {
 void GameplayScene::pauseGame() {
   PLOGI << "Pausing the game.";
   paused = true;
+  SoundUtils::pause();
   pause_timestamp = GetTime();
 }
 
@@ -145,6 +146,7 @@ void GameplayScene::resumeGame() {
   PLOGD << "Time Paused: " << time_paused;
 
   PAUSE_PENALTY += time_paused;
+  SoundUtils::resume();
   PLOGD << "Pause Penalty: " << PAUSE_PENALTY;
 }
 

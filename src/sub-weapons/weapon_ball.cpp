@@ -71,6 +71,7 @@ void WeaponBall::lightTechHandling() {
 
   if (command != nullptr) {
     PLOGI << "Chaining command into: " << command->command_name;
+    SoundUtils::stop("ball_light_juke");
     SoundUtils::play("cmd_cancel");
 
     player->useCommand(command);

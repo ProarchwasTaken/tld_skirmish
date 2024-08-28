@@ -34,6 +34,47 @@ void SoundUtils::play(string sound_name) {
 }
 
 
+void SoundUtils::stop(std::string sound_name) {
+  SoundMetaData *meta_data = getMetaData(sound_name);
+
+  if (meta_data == NULL) {
+    PLOGE << "Unable to find meta data for sound: " << sound_name << "!"; 
+  }
+
+  Sound *sound = meta_data->sound;
+  if (IsSoundPlaying(*sound)) {
+    StopSound(*sound);
+  }
+  else {
+    PLOGW << "Sound: " << sound_name << " is not playing!";
+  }
+}
+
+void SoundUtils::pause() {
+  PLOGI << "Pausing all sounds...";
+  int pause_count = 0;
+
+  for (SoundMetaData data : audio::sfx_metadata) {
+    Sound *sound = data.sound;
+
+    if (IsSoundPlaying(*sound)) {
+      PauseSound(*sound);
+      pause_count++;
+    }
+  }
+
+  PLOGD << "Paused: " << pause_count << " sounds.";
+}
+
+void SoundUtils::resume() {
+  PLOGI << "Resuming all sounds...";
+
+  for (SoundMetaData data : audio::sfx_metadata) {
+    Sound *sound = data.sound;
+    ResumeSound(*sound);
+  }
+}
+
 SoundMetaData *SoundUtils::getMetaData(string &sound_name) {
   SoundMetaData *meta_data = NULL;
 

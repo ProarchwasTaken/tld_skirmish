@@ -32,6 +32,19 @@ namespace SoundUtils {
    * sound metadata associated with the given name is not found.*/
   void play(std::string sound_name);
 
+  /* Stops a specific sound by it's name. Gives a warning if the sound 
+   * was not playing at the time of this function being called.*/
+  void stop(std::string sound_name);
+
+  /* Pauses all sounds that are currently player. The other function could
+   * be called to resume them.*/
+  void pause();
+
+  /* Resumes all sounds. Due to raylib not having a function that checks
+   * if a sound is paused, I had to go with the nuclear option, and have
+   * the function 'resume' every sound in the game for now.*/
+  void resume();
+
   /* This is a helper function written for retrieving metadata associated
    * with a specific sound name. Returns a NULL pointer if no metadata
    * associated with the string given is found.*/
