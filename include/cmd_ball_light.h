@@ -9,6 +9,7 @@
 class BallLight : public ActionCommand {
 public:
   BallLight(PlayerCharacter *player);
+  ~BallLight();
 
   void setupHurtbox();
   void chargeSequence(float time_elapsed) override;

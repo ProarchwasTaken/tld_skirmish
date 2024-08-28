@@ -24,6 +24,7 @@ class ActionCommand {
 public:
   ActionCommand(Combatant *user, std::string command_name, uint8_t type,
                 float charge_time, float act_time, float recovery_time);
+  virtual ~ActionCommand() {};
 
   virtual void chargeSequence(float time_elapsed);
 

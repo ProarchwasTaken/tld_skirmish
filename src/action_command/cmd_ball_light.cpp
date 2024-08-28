@@ -9,13 +9,17 @@
 BallLight::BallLight(PlayerCharacter *user):
   ActionCommand(user, "Ball Light", CMD_TECH_LIGHT, 0.1,  0.8, 0.6)
 {
-  // PS: It's very important to set the player's current animation to NULL
-  // after this is used. Not gonna sugarcoat it: segfaults.
   anim_juke = {20, 21, 22, 21};
   juke_frametime = 0.15;
 
   player = user;
   player->current_sprite = sprites::player[19];
+}
+
+BallLight::~BallLight() {
+  // PS: It's very important to set the player's current animation to NULL
+  // after this is used. Not gonna sugarcoat it: segfaults.
+  player->current_anim = NULL;
 }
 
 void BallLight::chargeSequence(float time_elapsed) {
@@ -35,6 +39,5 @@ void BallLight::actSequence(float time_elapsed) {
   if (finished_action) {
     player->current_sprite = sprites::player[23];
     player->invulnerable = false;
-    player->current_anim = NULL;
   }
 }
