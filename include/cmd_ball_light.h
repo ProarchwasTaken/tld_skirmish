@@ -16,4 +16,6 @@ public:
 private:
   std::vector<int> anim_juke;
   float juke_frametime;
+
+  PlayerCharacter *player;
 };
