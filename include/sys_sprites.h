@@ -12,6 +12,7 @@
 #define SHEET_MORALE 3
 #define SHEET_KNIFE 4
 #define SHEET_WRETCH 5
+#define SHEET_BALL 6
 
 
 /* For storing information about a specific sprite. Making it possible to

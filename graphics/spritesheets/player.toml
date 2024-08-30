@@ -96,3 +96,19 @@ area = {x = 128, y = 256, width = 64, height = 64}
 [[player.sprites]] # ID: 23
 name = "ball_light5"
 area = {x = 192, y = 256, width = 64, height = 64}
+
+[[player.sprites]] # ID: 24
+name = "ball_heavy1"
+area = {x = 256, y = 256, width = 64, height = 64}
+
+[[player.sprites]] # ID: 25
+name = "ball_heavy1_alt"
+area = {x = 0, y = 320, width = 64, height = 64}
+
+[[player.sprites]] # ID: 26
+name = "ball_heavy2"
+area = {x = 64, y = 320, width = 64, height = 64}
+
+[[player.sprites]] # ID: 27
+name = "ball_heavy3"
+area = {x = 128, y = 320, width = 64, height = 64}

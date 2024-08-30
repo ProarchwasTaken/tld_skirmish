@@ -40,6 +40,8 @@ namespace sprites {
   extern std::vector<Texture*> wretch;
 
   extern std::vector<Texture*> weapon_knife;
+  extern std::vector<Texture*> weapon_ball;
+
   extern std::vector<Texture*> hud_life;
   extern std::vector<Texture*> hud_morale;
 }

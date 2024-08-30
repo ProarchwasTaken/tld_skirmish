@@ -29,6 +29,7 @@ namespace sprites {
   vector<Texture*> hud_morale;
   vector<Texture*> weapon_knife;
   vector<Texture*> wretch;
+  vector<Texture*> weapon_ball;
 
   vector<SpriteMetaData> plr_metadata;
 }
