@@ -13,7 +13,7 @@
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
-#include "weapon_knife.h"
+#include "weapon_ball.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -28,7 +28,7 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   current_sprite = sprites::player[1];
   game_phase = &phase;
 
-  sub_weapon = make_unique<WeaponKnife>(this);
+  sub_weapon = make_unique<WeaponBall>(this);
 
   morale = 10;
   max_morale = 50;

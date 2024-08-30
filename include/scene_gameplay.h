@@ -1,6 +1,5 @@
 // scene_gameplay.h
 #pragma once
-#include <memory>
 #include <functional>
 #include <raylib.h>
 #include <cstdint>
@@ -51,7 +50,7 @@ private:
   LifeHud life_hud = LifeHud(player, phase);
   MoraleHud morale_hud = MoraleHud(player);
 
-  std::unique_ptr<WaveManager> wave_manager;
+  WaveManager wave_manager = WaveManager(player, enemies);
   Camera2D camera;
 
   bool paused = false;

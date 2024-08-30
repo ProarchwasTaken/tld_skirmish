@@ -8,13 +8,12 @@
 #include "globals.h"
 #include "game.h"
 #include "utils.h"
-#include "sys_wave_manager.h"
-#include "scene_debug.h"
 #include "scene_gameplay.h"
 #include "enemy_dummy.h"
+#include "scene_debug.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::make_unique, std::function, std::tie;
+using std::make_shared, std::function, std::tie;
 
 
 DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
@@ -30,7 +29,6 @@ DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
   };
   
   camera = CameraUtils::setupCamera();
-  wave_manager = make_unique<WaveManager>(player, enemies);
   PLOGI << "Debug scene has loaded successfully!";
 }
 
@@ -50,7 +48,6 @@ DebugScene::~DebugScene() {
   }
   dynamic_actors.clear();
 
-  wave_manager.reset();
   num_buffer.clear();
   PLOGI << "Debug scene has unloaded succesfully.";
 }
@@ -81,7 +78,7 @@ void DebugScene::debugInputs() {
   }
 
   if (IsKeyPressed(KEY_R)) {
-    wave_manager->reloadWaveData();
+    wave_manager.reloadWaveData();
   }
 
   if (num_buffer.size() == 0) {
@@ -92,10 +89,10 @@ void DebugScene::debugInputs() {
     num_buffer.pop_back();
   }
 
-  bool no_awaiting_spawn = wave_manager->enemy_queue.size() == 0;
+  bool no_awaiting_spawn = wave_manager.enemy_queue.size() == 0;
   if (IsKeyPressed(KEY_ENTER) && no_awaiting_spawn) {
     int wave_id = std::stoi(num_buffer);
-    wave_manager->startWaveByID(wave_id);
+    wave_manager.startWaveByID(wave_id);
     num_buffer.clear();
   }
 }
@@ -122,7 +119,7 @@ void DebugScene::updateScene() {
 
   life_hud.update();
   morale_hud.update();
-  wave_manager->waveSequence();
+  wave_manager.waveSequence();
 
   Dynamic::moveFromQueue(dynamic_actors);
   Dynamic::clearAwaitingDeletion(dynamic_actors);
@@ -173,7 +170,7 @@ void DebugScene::drawDebugInfo() {
              {0, 8}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, 
              TextFormat("Enemy Queue: %i",
-                        wave_manager->enemy_queue.size()),
+                        wave_manager.enemy_queue.size()),
              {0, 16}, text_size, -3, GREEN);
   DrawTextEx(*fonts::skirmish, 
              TextFormat("Enemies Active: %i", enemies.size()), 

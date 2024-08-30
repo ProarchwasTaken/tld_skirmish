@@ -4,16 +4,14 @@
 #include <functional>
 #include <string>
 #include <tuple>
-#include <memory>
 #include "base/combatant.h"
 #include "globals.h"
 #include "utils.h"
 #include "game.h"
-#include "sys_wave_manager.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::make_unique, std::tie, std::function, std::string;
+using std::tie, std::function, std::string;
 
 
 GameplayScene::GameplayScene(function<void(int)> load_scene):
@@ -32,7 +30,6 @@ Scene(load_scene)
   tick_timestamp = CURRENT_TIME;
 
   camera = CameraUtils::setupCamera();
-  wave_manager = make_unique<WaveManager>(player, enemies);
   PLOGI << "Gameplay scene has loaded successfully!";
 }
 
@@ -50,8 +47,6 @@ GameplayScene::~GameplayScene() {
     d_actor.reset();
   }
   dynamic_actors.clear();
-
-  wave_manager.reset();
   PLOGI << "Gameplay scene has unloaded successfully.";
 }
 
@@ -108,7 +103,7 @@ void GameplayScene::updateScene() {
   life_hud.update();
   morale_hud.update();
 
-  wave_manager->waveSequence();
+  wave_manager.waveSequence();
 
   Dynamic::moveFromQueue(dynamic_actors);
   Dynamic::clearAwaitingDeletion(dynamic_actors);
@@ -168,18 +163,18 @@ void GameplayScene::tickTimer() {
     wave++;
     difficulty++;
 
-    wave_manager->startWave(difficulty);
+    wave_manager.startWave(difficulty);
     SoundUtils::play("wave_next");
   }
 
   if (wave != max_wave) {
-    timer = wave_manager->wave_timer;
+    timer = wave_manager.wave_timer;
   }
 }
 
 uint8_t GameplayScene::determinePhase() {
   bool no_enemies = enemies.size() == 0;
-  bool no_awaiting_spawn = wave_manager->enemy_queue.size() == 0;
+  bool no_awaiting_spawn = wave_manager.enemy_queue.size() == 0;
 
   if (no_enemies && no_awaiting_spawn) {
     return PHASE_REST;
