@@ -21,7 +21,7 @@ public:
   void drawDebug() override;
 
   bool normal_proc;
-  bool attack_connected;
+  bool attack_connected = false;
 
   Rectangle hurtbox;
 private:

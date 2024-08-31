@@ -94,6 +94,7 @@ void BallHeavy::enemyHitCheck() {
   }
 
   if (attack_connected) {
+    finished_action = true;
     user->state = RECOVER;
     sequence_timestamp = CURRENT_TIME;
   }
