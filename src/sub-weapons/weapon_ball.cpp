@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "char_player.h"
 #include "cmd_ball_light.h"
+#include "cmd_ball_heavy.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
 #include "weapon_ball.h"
@@ -33,6 +34,20 @@ unique_ptr<ActionCommand> WeaponBall::lightTechnique() {
   if (sufficent_morale) {
     player->morale -= mp_cost1;
     return make_unique<BallLight>(player);
+  }
+  else {
+    PLOGI << "Player has insufficent morale.";
+    SoundUtils::play("weapon_error");
+    return nullptr;
+  }
+}
+
+unique_ptr<ActionCommand> WeaponBall::heavyTechnique() {
+  bool sufficent_morale = player->morale >= mp_cost2;
+
+  if (sufficent_morale) {
+    player->morale -= mp_cost2;
+    return make_unique<BallHeavy>(player);
   }
   else {
     PLOGI << "Player has insufficent morale.";

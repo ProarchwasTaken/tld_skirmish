@@ -11,5 +11,6 @@ public:
   WeaponBall(PlayerCharacter *player);
 
   std::unique_ptr<ActionCommand> lightTechnique() override;
+  std::unique_ptr<ActionCommand> heavyTechnique() override;
   void lightTechHandling() override;
 };
