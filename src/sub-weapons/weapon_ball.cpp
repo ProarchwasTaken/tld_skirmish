@@ -45,7 +45,10 @@ unique_ptr<ActionCommand> WeaponBall::lightTechnique() {
 unique_ptr<ActionCommand> WeaponBall::heavyTechnique() {
   bool sufficent_morale = player->morale >= mp_cost2;
 
-  if (sufficent_morale) {
+  if (usable == false) {
+    return make_unique<BallHeavy>(player);
+  }
+  else if (sufficent_morale) {
     player->morale -= mp_cost2;
     return make_unique<BallHeavy>(player);
   }
