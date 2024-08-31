@@ -1,10 +1,13 @@
 // projectiles/proj_ball.cpp
 #include <raylib.h>
+#include "base/action_command.h"
 #include "globals.h"
 #include "base/generics.h"
+#include "base/combatant.h"
 #include "base/dynamic_actor.h"
 #include "utils.h"
 #include "char_player.h"
+#include "cmd_ball_heavy.h"
 #include "proj_ball.h"
 
 
@@ -17,6 +20,12 @@ BallProjectile::BallProjectile(Vector2 position, PlayerCharacter *player,
   this->enemies = enemies;
   this->direction = player->direction;
 
+  damage = 2;
+  stun_time = 0.2;
+
+  velocity = 2.0;
+  bounce_limit = 5;
+
   anim_spin = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   spin_frametime = 0.025;
 
@@ -25,6 +34,76 @@ BallProjectile::BallProjectile(Vector2 position, PlayerCharacter *player,
 
 void BallProjectile::update() {
   Animation::play(this, sprites::weapon_ball, anim_spin, spin_frametime);
+  movement();
+
+  if (kickable == false) {
+    enemyHitCheck();
+  }
+  else {
+    playerKickCheck();
+  }
+}
+
+void BallProjectile::movement() {
+  position.x += (velocity * DELTA_TIME) * direction;
+
+  if (position.x < -CAMERA_BOUNDS || position.x > CAMERA_BOUNDS) {
+    awaiting_deletion = true;
+  }
+
+  hitboxCorrection();
+  texRectCorrection();
+}
+
+void BallProjectile::enemyHitCheck() {
+  bool hit_enemy = false;
+
+  for (auto &enemy : *enemies) {
+    if (enemy->state == DEAD || enemy->state == HIT_STUN) {
+      continue;
+    }
+
+    if (CheckCollisionRecs(hitbox, enemy->hitbox)) {
+      enemy->takeDamage(damage, guard_pierce, stun_time);
+      hit_enemy = true;
+      break;
+    }
+  }
+
+  if (hit_enemy == false || can_bounce == false) {
+    return;
+  }
+
+  bounce_count++;
+
+  if (bounce_count == bounce_limit) {
+    can_bounce = false;
+  }
+  else {
+    kickable = true;
+    direction *= -1;
+  }
+}
+
+void BallProjectile::playerKickCheck() {
+  if (player->state != ACT) {
+    return;
+  }
+
+  auto command_type = player->current_command->type;
+  bool using_heavy_tech = command_type == CMD_TECH_HEAVY;
+  if (using_heavy_tech != true) {
+    return;
+  }
+
+  auto *command = static_cast<BallHeavy*>(player->current_command.get());
+  if (CheckCollisionRecs(hitbox, command->hurtbox)) {
+    direction = player->direction;
+    kickable = false;
+
+    damage++;
+    velocity += 0.25;
+  }
 }
 
 void BallProjectile::draw(Vector2 &camera_target) {
