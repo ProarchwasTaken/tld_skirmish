@@ -11,13 +11,16 @@ class BallHeavy : public ActionCommand {
 public:
   BallHeavy(PlayerCharacter *player);
 
+  void setupHurtbox();
   void chargeSequence(float time_elasped) override;
   void actSequence(float time_elasped) override;
 
   void enemyHitCheck();
   void createProjectile();
 
-  bool normal_kick = false;
+  void drawDebug() override;
+
+  bool normal_proc;
   bool attack_connected;
 
   Rectangle hurtbox;
