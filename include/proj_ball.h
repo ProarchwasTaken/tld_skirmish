@@ -9,8 +9,8 @@
 
 class BallProjectile : public DynamicActor {
 public:
-  BallProjectile(Vector2 position, int8_t direction,
-                 PlayerCharacter *player, combatant_list *enemies);
+  BallProjectile(Vector2 position, PlayerCharacter *player, 
+                 combatant_list *enemies);
 
   void update() override;
   void draw(Vector2 &camera_target) override;

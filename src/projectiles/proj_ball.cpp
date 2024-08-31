@@ -1,6 +1,5 @@
 // projectiles/proj_ball.cpp
 #include <raylib.h>
-#include <cstdint>
 #include "globals.h"
 #include "base/generics.h"
 #include "base/dynamic_actor.h"
@@ -9,15 +8,14 @@
 #include "proj_ball.h"
 
 
-BallProjectile::BallProjectile(Vector2 position, int8_t direction,
-                               PlayerCharacter *player, 
+BallProjectile::BallProjectile(Vector2 position, PlayerCharacter *player, 
                                combatant_list *enemies):
   DynamicActor(position, TYPE_PROJECTILE, {9, 9}, {13, 13}, {-4, -4.5}, 
                {-6, -6})
 {
   this->player = player;
   this->enemies = enemies;
-  this->direction = direction;
+  this->direction = player->direction;
 
   anim_spin = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   spin_frametime = 0.025;
