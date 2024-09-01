@@ -18,7 +18,7 @@ using std::unique_ptr, std::make_unique;
 
 
 WeaponBall::WeaponBall(PlayerCharacter *player) :
-  SubWeapon(player, "Basket Ball", 0, 0) 
+  SubWeapon(player, "Basket Ball", 5, 5) 
 {
   cooldown_time = 2.0;
 }
