@@ -20,7 +20,20 @@ using std::unique_ptr, std::make_unique;
 WeaponBall::WeaponBall(PlayerCharacter *player) :
   SubWeapon(player, "Basket Ball", 0, 0) 
 {
+  cooldown_time = 2.0;
+}
 
+void WeaponBall::update() {
+  if (usable) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - disabled_timestamp;
+  if (player->state == NEUTRAL && time_elapsed >= cooldown_time) {
+    PLOGI << "Basketball is now off cooldown.";
+    SoundUtils::play("weapon_ready");
+    usable = true;
+  }
 }
 
 unique_ptr<ActionCommand> WeaponBall::lightTechnique() {

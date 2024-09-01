@@ -42,6 +42,10 @@ void BallProjectile::update() {
   else {
     playerKickCheck();
   }
+
+  if (awaiting_deletion == false && can_bounce == true) {
+    player->sub_weapon->disabled_timestamp = CURRENT_TIME;
+  }
 }
 
 void BallProjectile::movement() {
