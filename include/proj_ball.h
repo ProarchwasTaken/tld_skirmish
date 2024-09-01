@@ -33,6 +33,8 @@ private:
   uint16_t damage;
   float velocity;
 
+  float sound_pitch = 1.0;
+
   float stun_time;
   float guard_pierce;
 

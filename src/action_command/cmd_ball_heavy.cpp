@@ -63,6 +63,7 @@ void BallHeavy::chargeSequence(float time_elapsed) {
     createProjectile();
 
     sub_weapon->disable();
+    SoundUtils::play("ball_heavy_kick");
   }
 }
 

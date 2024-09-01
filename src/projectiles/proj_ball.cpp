@@ -9,6 +9,7 @@
 #include "char_player.h"
 #include "cmd_ball_heavy.h"
 #include "proj_ball.h"
+#include <plog/Log.h>
 
 
 BallProjectile::BallProjectile(Vector2 position, PlayerCharacter *player, 
@@ -74,7 +75,12 @@ void BallProjectile::enemyHitCheck() {
     }
   }
 
-  if (hit_enemy == false || can_bounce == false) {
+  if (hit_enemy == false) {
+    return;
+  }
+
+  if (can_bounce == false) {
+    SoundUtils::play("ball_heavy_chain", sound_pitch);
     return;
   }
 
@@ -82,6 +88,9 @@ void BallProjectile::enemyHitCheck() {
 
   if (bounce_count == bounce_limit) {
     can_bounce = false;
+
+    SoundUtils::play("ball_heavy_chain", sound_pitch);
+    PLOGI << "Bounce limit reached.";
   }
   else {
     kickable = true;
@@ -107,6 +116,11 @@ void BallProjectile::playerKickCheck() {
 
     damage++;
     velocity += 0.25;
+
+    SoundUtils::play("ball_heavy_chain", sound_pitch);
+    sound_pitch += 0.1;
+
+    SoundUtils::play("ball_heavy_kick");
   }
 }
 
