@@ -45,7 +45,8 @@ public:
 
   uint8_t mp_cost1;
   uint8_t mp_cost2;
+
+  float disabled_timestamp = 0;
 protected:
   PlayerCharacter *player;
-  float disabled_timestamp = 0;
 };
