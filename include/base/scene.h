@@ -1,6 +1,6 @@
 // scene.h
 #pragma once
-#include <functional>
+#include "base/generics.h"
 
 
 /* A scene is more like an collection of game elements. A enclosed space
@@ -10,12 +10,12 @@
  * comparison.)*/
 class Scene {
 public:
-  Scene(std::function<void(int)> load_scene) {
-    this->load_scene = load_scene;
+  Scene(Game &skirmish) {
+    this->skirmish = &skirmish;
   };
   virtual ~Scene() {};
 
-  std::function<void(int)> load_scene;
+  Game *skirmish;
 
   virtual void checkInput() {};
   virtual void updateScene() {};

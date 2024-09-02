@@ -1,14 +1,11 @@
 // scenes/scene_subweapon.cpp
-#include <functional>
+#include "game.h"
 #include "base/scene.h"
 #include "scene_subweapon.h"
 
-using std::function;
 
 
-SubWeaponScene::SubWeaponScene(function<void(int)> load_scene):
-  Scene(load_scene)
-{
+SubWeaponScene::SubWeaponScene(Game &skirmish) : Scene(skirmish) {
 
 }
 

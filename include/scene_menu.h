@@ -1,9 +1,9 @@
 // scene_menu.h
 #pragma once
 #include <raylib.h>
-#include <functional>
 #include "base/generics.h"
 #include "base/scene.h"
+#include "game.h"
 
 #define OPT_PLAY 0
 #define OPT_SETTINGS 1
@@ -17,7 +17,7 @@
  * circumstances.*/
 class MenuScene : public Scene {
 public:
-  MenuScene(std::function<void(int)> load_scene);
+  MenuScene(Game &skirmish);
   ~MenuScene();
 
   void drawMenuOptions();

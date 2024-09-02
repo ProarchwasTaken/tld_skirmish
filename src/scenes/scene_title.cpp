@@ -1,6 +1,5 @@
 // scenes/scene_title.cpp
 #include <raylib.h>
-#include <functional>
 #include <string>
 #include "defaults.h"
 #include "globals.h"
@@ -9,10 +8,10 @@
 #include "scene_title.h"
 #include <plog/Log.h>
 
-using std::function, std::string;
+using std::string;
 
 
-TitleScene::TitleScene(function<void(int)> load_scene) : Scene(load_scene) 
+TitleScene::TitleScene(Game &skirmish) : Scene(skirmish) 
 {
   PLOGI << "Loading Title scene.";
   setupTitle();
@@ -58,7 +57,7 @@ void TitleScene::checkInput() {
   }
 
   if (key_enter || btn_start) {
-    load_scene(SCENE_MENU);
+    skirmish->loadScene(SCENE_MENU);
     return;
   }
 }

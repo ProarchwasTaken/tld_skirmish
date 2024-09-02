@@ -96,30 +96,26 @@ void Game::loadScene(int scene_id) {
     scene.reset();
   }
 
-  function<void(int)> load_func = [this](int scene_id){
-    this->loadScene(scene_id);
-  };
-
   PLOGI << "Attempting to load scene correlated with id: " << scene_id;
   switch (scene_id) {
     case SCENE_DEBUG: {
-      scene = make_unique<DebugScene>(load_func);
+      scene = make_unique<DebugScene>(*this);
       break;
     }
     case SCENE_TITLE: {
-      scene = make_unique<TitleScene>(load_func);
+      scene = make_unique<TitleScene>(*this);
       break;
     }
     case SCENE_MENU: {
-      scene = make_unique<MenuScene>(load_func);
+      scene = make_unique<MenuScene>(*this);
       break;
     }
     case SCENE_SUBWEAPON: {
-      scene = make_unique<SubWeaponScene>(load_func);
+      scene = make_unique<SubWeaponScene>(*this);
       break;
     }
     case SCENE_GAMEPLAY: {
-      scene = make_unique<GameplayScene>(load_func);
+      scene = make_unique<GameplayScene>(*this);
       break;
     }
     case SCENE_STARTUP: 

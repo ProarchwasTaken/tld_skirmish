@@ -8,6 +8,8 @@
 #include <cstdint>
 #include "dynamic_actor.h"
 
+class Game;
+
 class Combatant;
 class PlayerCharacter;
 class ActionCommand;

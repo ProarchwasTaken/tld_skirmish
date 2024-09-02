@@ -1,7 +1,6 @@
 // scenes/scene_debug.cpp
 #include <cctype>
 #include <raylib.h>
-#include <functional>
 #include <string>
 #include <tuple>
 #include <memory>
@@ -13,10 +12,10 @@
 #include "scene_debug.h"
 #include <plog/Log.h>
 
-using std::make_shared, std::function, std::tie;
+using std::make_shared, std::tie;
 
 
-DebugScene::DebugScene(function<void(int)> load_scene) : Scene(load_scene)
+DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
 {
   PLOGI << "Loading Debug scene.";
   tie(background, overlay) = Stages::loadStage("debug");
@@ -127,7 +126,7 @@ void DebugScene::updateScene() {
 
   if (player.awaiting_deletion) {
     PLOGD << "Reloading scene...";
-    load_scene(SCENE_DEBUG);
+    skirmish->loadScene(SCENE_DEBUG);
   }
 }
 

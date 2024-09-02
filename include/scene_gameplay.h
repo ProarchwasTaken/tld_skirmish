@@ -1,10 +1,10 @@
 // scene_gameplay.h
 #pragma once
-#include <functional>
 #include <raylib.h>
 #include <cstdint>
 #include "base/generics.h"
 #include "base/scene.h"
+#include "game.h"
 #include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
@@ -19,7 +19,7 @@
  * There are many important components that make up this scene.*/
 class GameplayScene : public Scene {
 public:
-  GameplayScene(std::function<void(int)> load_scene);
+  GameplayScene(Game &skirmish);
   ~GameplayScene() override;
 
   void tickTimer();

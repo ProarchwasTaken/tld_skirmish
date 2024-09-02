@@ -1,11 +1,11 @@
 // scene_debug.h
 #pragma once
-#include <functional>
 #include <raylib.h>
 #include <cstdint>
 #include <string>
-#include "base/scene.h"
 #include "base/generics.h"
+#include "base/scene.h"
+#include "game.h"
 #include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
@@ -20,7 +20,7 @@
  * argument.*/
 class DebugScene : public Scene {
 public:
-  DebugScene(std::function<void(int)> load_scene);
+  DebugScene(Game &skirmish);
   ~DebugScene() override;
 
   void checkInput() override;

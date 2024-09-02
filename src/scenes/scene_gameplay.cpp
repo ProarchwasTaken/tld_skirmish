@@ -1,7 +1,6 @@
 // scene/scene_gameplay.cpp
 #include <cstdint>
 #include <raylib.h>
-#include <functional>
 #include <string>
 #include <tuple>
 #include "base/combatant.h"
@@ -11,11 +10,10 @@
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::tie, std::function, std::string;
+using std::tie, std::string;
 
 
-GameplayScene::GameplayScene(function<void(int)> load_scene):
-Scene(load_scene)
+GameplayScene::GameplayScene(Game &skirmish) : Scene(skirmish)
 {
   PLOGI << "Loading Gameplay scene.";
   tie(background, overlay) = Stages::loadStage("arisen");
@@ -115,12 +113,12 @@ void GameplayScene::updateScene() {
   if (player.awaiting_deletion) {
     PLOGW << "A proper fail state hasn't been implemented yet!";
     PLOGI << "Resorting to go back to the title screen for now.";
-    load_scene(SCENE_TITLE);
+    skirmish->loadScene(SCENE_TITLE);
   }
   else if (phase == PHASE_REST && wave == max_wave) {
     PLOGW << "A proper win state hasn't been implemented yet!";
     PLOGI << "Sorry for the inconvenience!";
-    load_scene(SCENE_TITLE);
+    skirmish->loadScene(SCENE_TITLE);
   }
 }
 
