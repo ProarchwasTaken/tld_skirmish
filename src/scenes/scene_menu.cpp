@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "utils.h"
 #include "scene_menu.h"
+#include "scene_subweapon.h"
 #include <plog/Log.h>
 
 using std::string;
@@ -68,7 +69,7 @@ void MenuScene::checkInput() {
 void MenuScene::selectOption() {
   switch (*selected_option) {
     case OPT_PLAY: {
-      skirmish->loadScene(SCENE_SUBWEAPON);
+      skirmish->loadScene<SubWeaponScene>();
       break;
     }
     case OPT_QUIT: {

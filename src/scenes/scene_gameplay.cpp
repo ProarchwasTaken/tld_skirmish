@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "game.h"
 #include "scene_gameplay.h"
+#include "scene_title.h"
 #include <plog/Log.h>
 
 using std::tie, std::string;
@@ -113,12 +114,12 @@ void GameplayScene::updateScene() {
   if (player.awaiting_deletion) {
     PLOGW << "A proper fail state hasn't been implemented yet!";
     PLOGI << "Resorting to go back to the title screen for now.";
-    skirmish->loadScene(SCENE_TITLE);
+    skirmish->loadScene<TitleScene>();
   }
   else if (phase == PHASE_REST && wave == max_wave) {
     PLOGW << "A proper win state hasn't been implemented yet!";
     PLOGI << "Sorry for the inconvenience!";
-    skirmish->loadScene(SCENE_TITLE);
+    skirmish->loadScene<TitleScene>();
   }
 }
 

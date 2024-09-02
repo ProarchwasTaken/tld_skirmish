@@ -126,7 +126,7 @@ void DebugScene::updateScene() {
 
   if (player.awaiting_deletion) {
     PLOGD << "Reloading scene...";
-    skirmish->loadScene(SCENE_DEBUG);
+    skirmish->loadScene<DebugScene>();
   }
 }
 

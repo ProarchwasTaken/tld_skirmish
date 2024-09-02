@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "game.h"
 #include "utils.h"
+#include "scene_menu.h"
 #include "scene_title.h"
 #include <plog/Log.h>
 
@@ -57,7 +58,7 @@ void TitleScene::checkInput() {
   }
 
   if (key_enter || btn_start) {
-    skirmish->loadScene(SCENE_MENU);
+    skirmish->loadScene<MenuScene>();
     return;
   }
 }

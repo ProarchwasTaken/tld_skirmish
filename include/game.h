@@ -6,20 +6,6 @@
 #include "sys_audio.h"
 #include "base/scene.h"
 
-#define SCENE_STARTUP 0
-#define SCENE_TITLE 1
-#define SCENE_MENU 2
-#define SCENE_SETTINGS 3
-#define SCENE_CONTROLS 4
-#define SCENE_SUBWEAPON 5
-#define SCENE_PREGAME 6
-
-#define SCENE_GAMEPLAY 7
-#define SCENE_DEBUG 8
-
-
-#define SCENE_NOT_FOUND 4205
-#define SCENE_NOT_IMPLEMENTED 9537
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties
@@ -27,7 +13,7 @@
  * and pointers to other important systems, and game objects.*/
 class Game {
 public:
-  Game(int start_scene);
+  Game(bool debug_scene);
   ~Game();
 
   /* For correcting the dimensions of the canvas to the correct window
@@ -56,7 +42,14 @@ public:
    * scene will be loaded and every scene is identified by a number.
    * Throws an error when the scene the function tries to load doesn't
    * exist, or it hasn't been implemented yet.*/
-  void loadScene(int scene_id);
+  template<class SceneType>
+  void loadScene() {
+    if (scene != nullptr) {
+      scene.reset();
+    }
+
+    scene = std::make_unique<SceneType>(*this); 
+  }
 
   /* The root function for checking for inputs, updating all active game
    * elements, and drawing the screen. All based on the game's current
