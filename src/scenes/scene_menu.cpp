@@ -69,7 +69,7 @@ void MenuScene::checkInput() {
 void MenuScene::selectOption() {
   switch (*selected_option) {
     case OPT_PLAY: {
-      load_scene(SCENE_GAMEPLAY);
+      load_scene(SCENE_SUBWEAPON);
       break;
     }
     case OPT_QUIT: {

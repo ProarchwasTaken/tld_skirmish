@@ -11,6 +11,7 @@
 #include "scene_debug.h"
 #include "scene_title.h"
 #include "scene_menu.h"
+#include "scene_subweapon.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
@@ -111,6 +112,10 @@ void Game::loadScene(int scene_id) {
     }
     case SCENE_MENU: {
       scene = make_unique<MenuScene>(load_func);
+      break;
+    }
+    case SCENE_SUBWEAPON: {
+      scene = make_unique<SubWeaponScene>(load_func);
       break;
     }
     case SCENE_GAMEPLAY: {
