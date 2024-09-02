@@ -38,10 +38,9 @@ public:
    * discern by just reading it's name.*/
   void loadGameFonts();
 
-  /* Loads a specific scene into memory. A integer is used to specify what
-   * scene will be loaded and every scene is identified by a number.
-   * Throws an error when the scene the function tries to load doesn't
-   * exist, or it hasn't been implemented yet.*/
+  /* A function template for loading a specific scene into memory, while
+   * also clearing the currently loaded scene beforehand. This holds
+   * the potential of each scene having their distinct parameters*/
   template<class SceneType>
   void loadScene() {
     if (scene != nullptr) {
