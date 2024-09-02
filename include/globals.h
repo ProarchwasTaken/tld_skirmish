@@ -44,6 +44,8 @@ namespace sprites {
 
   extern std::vector<Texture*> hud_life;
   extern std::vector<Texture*> hud_morale;
+
+  extern std::vector<Texture*> weapon_select;
 }
 
 namespace RNG {

@@ -13,6 +13,7 @@
 #define SHEET_KNIFE 4
 #define SHEET_WRETCH 5
 #define SHEET_BALL 6
+#define SHEET_WPN_SELECT 7
 
 
 /* For storing information about a specific sprite. Making it possible to

@@ -28,7 +28,8 @@ SpriteLoader::SpriteLoader() {
     "hud_morale", 
     "weapon_knife",
     "wretch",
-    "weapon_ball"
+    "weapon_ball",
+    "weapon_select"
   });
 }
 
@@ -146,6 +147,10 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
     }
     case SHEET_BALL: {
       sprite_list = &sprites::weapon_ball;
+      break;
+    }
+    case SHEET_WPN_SELECT: {
+      sprite_list = &sprites::weapon_select;
       break;
     }
     default: {
