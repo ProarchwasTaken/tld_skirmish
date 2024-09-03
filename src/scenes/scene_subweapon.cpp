@@ -89,12 +89,41 @@ void SubWeaponScene::drawWeaponName() {
              COLORS::PALETTE[42]);
 }
 
+void SubWeaponScene::drawTechniqueData() {
+  int index = *selected_option;
+
+  SubWeaponData *data = &weapon_data[index];
+
+  Vector2 base_position = {100, 153};
+  drawTechLine(data->tech_light, base_position);
+
+  base_position.y += 23;
+  drawTechLine(data->tech_heavy, base_position);
+}
+
+void SubWeaponScene::drawTechLine(TechData &tech, Vector2 position) {
+  int size = fonts::skirmish->baseSize;
+
+  DrawTextEx(*fonts::skirmish, tech.name, position, size, -3, 
+             COLORS::PALETTE[42]);
+
+  position.x = 180;
+  DrawTextEx(*fonts::skirmish, TextFormat("%i MP", tech.mp_cost), 
+             position, size, -3, COLORS::PALETTE[42]);
+
+  position.x = 229;
+  DrawTextEx(*fonts::skirmish, tech.description, position, size, -3, 
+             COLORS::PALETTE[42]);
+}
+
 void SubWeaponScene::drawScene() {
   DrawTexture(*sprites::weapon_select[0], 0, 80, WHITE);
   DrawTexture(*sprites::weapon_select[1], 96, 144, WHITE);
 
   drawWeaponIcons();
   drawSelectionArrow();
+
   drawWeaponName();
+  drawTechniqueData();
 }
 
