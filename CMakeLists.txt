@@ -97,6 +97,7 @@ set(HEADER_FILES
 "include/base/combatant.h"
 "include/base/action_command.h"
 "include/base/sub-weapon.h"
+"include/data/data_weapon.h"
 "include/scene_title.h"
 "include/scene_menu.h"
 "include/scene_subweapon.h"
