@@ -46,7 +46,7 @@ void SubWeaponScene::checkInput() {
 
   if (gamepad_detected) {
     btn_right = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-    btn_right = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+    btn_left = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
   }
 
   if (key_right || btn_right) {
