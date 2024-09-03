@@ -4,7 +4,7 @@
 #include <cstring>
 
 struct TechData {
-  char name[11];
+  char name[16];
   char description[34];
   uint8_t mp_cost;
 };

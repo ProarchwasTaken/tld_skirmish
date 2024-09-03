@@ -21,8 +21,8 @@ SubWeaponScene::SubWeaponScene(Game &skirmish) : Scene(skirmish) {
   };
 
   option_name = {
-    "Knife",
-    "Basket Ball"
+    "Birthright",
+    "Cornerman"
   };
 
   selected_option = options.begin();
@@ -83,9 +83,9 @@ void SubWeaponScene::drawWeaponName() {
 
   string *name = &option_name[index];
   Vector2 position = Text::alignCenter(fonts::skirmish, *name, 
-                                       {213, 124}, 1, -3);
+                                       {213, 124}, 1, -1);
 
-  DrawTextEx(*fonts::skirmish, name->c_str(), position, size, -3, 
+  DrawTextEx(*fonts::skirmish, name->c_str(), position, size, -1, 
              COLORS::PALETTE[42]);
 }
 

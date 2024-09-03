@@ -36,12 +36,12 @@ private:
 
   std::array<SubWeaponData, 2> weapon_data {
     SubWeaponData(
-      {"AAAAAAAAAA", "AAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAA", 3},
-      {"BBBBBBBBBB", "BBBBBBBBBBBBBBBB\nBBBBBBBBBBBBBBBB", 5}
+      {"<Cleave>", "Perform a quick\nslash attack.", 3},
+      {"<Heave>", "Throw the knife.\nCooldown on use.", 5}
     ),
     SubWeaponData(
-      {"CCCCCCCCCC", "CCCCCCCCCCCCCCCC\nCCCCCCCCCCCCCCCC", 5},
-      {"DDDDDDDDDD", "DDDDDDDDDDDDDDDD\nDDDDDDDDDDDDDDDD", 5}
+      {"<Backcourt>", "Perform a juking\nmaneuver.", 5},
+      {"<Foul Play>", "Kick the ball.\nCan be repeated.", 5}
     )
   };
 
