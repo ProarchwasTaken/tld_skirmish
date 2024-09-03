@@ -5,7 +5,7 @@
 
 struct TechData {
   char name[11];
-  char description[33];
+  char description[34];
   uint8_t mp_cost;
 };
 
