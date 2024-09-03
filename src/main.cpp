@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
   SetTargetFPS(TARGET_FRAMERATE);
   InitAudioDevice();
+  SetTextLineSpacing(11);
 
   Game skirmish(debug_scene);
 
