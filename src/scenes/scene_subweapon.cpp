@@ -9,6 +9,7 @@
 #include "utils.h"
 #include "base/scene.h"
 #include "scene_menu.h"
+#include "scene_gameplay.h"
 #include "scene_subweapon.h"
 #include <plog/Log.h>
 
@@ -98,11 +99,14 @@ void SubWeaponScene::checkConfirmInput(array<bool, 4> key_input,
 void SubWeaponScene::selectConfirmOption() {
   switch (*selected_confirm) {
     case OPT_YES: {
+      SoundUtils::play("opt_confirm");
+      skirmish->loadScene<GameplayScene>(*selected_weapon);
       break;
     }
     case OPT_NO: {
       SoundUtils::play("opt_cancel");
       confirm = false;
+      break;
     }
   }
 }
