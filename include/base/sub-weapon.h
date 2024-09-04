@@ -16,6 +16,7 @@ class SubWeapon {
 public:
   SubWeapon(PlayerCharacter *player, std::string name, uint8_t mp_cost1, 
             uint8_t mp_cost2);
+  ~SubWeapon();
 
   virtual void update() {}
 
