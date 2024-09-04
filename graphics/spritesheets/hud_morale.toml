@@ -1,0 +1,18 @@
+[hud_morale]
+id = 3
+
+[[hud_morale.sprites]] # ID: 0
+name = "frame"
+area = {x = 0, y = 0, width = 79, height = 17}
+
+[[hud_morale.sprites]] # ID: 1
+name = "empty"
+area = {x = 7, y = 18, width = 70, height = 6}
+
+[[hud_morale.sprites]] # ID: 2
+name = "gauge"
+area = {x = 7, y = 25, width = 70, height = 6}
+
+[[hud_morale.sprites]] # ID: 3
+name = "empty_grey"
+area = {x = 7, y = 32, width = 70, height = 6}

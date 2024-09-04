@@ -24,6 +24,10 @@ SubWeapon::SubWeapon(PlayerCharacter *player, string name,
   PLOGD << "Assigned sub-weapon: '" << name << "' to the player.";
 }
 
+SubWeapon::~SubWeapon() {
+  PLOGD << name << " sub-weapon is cleared from memory.";
+}
+
 void SubWeapon::disable() {
   PLOGI << "Disabling: " << name;
   usable = false;

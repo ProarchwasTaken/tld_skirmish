@@ -31,11 +31,6 @@ public:
    * an attack once the player is within their preferred distance.*/
   void neutralBehavior();
 
-  /* The ghoul will play an animation upon death. When that animation is
-   * over and a certain amount of time as passed, the enemy will await
-   * deletion.*/
-  void deathSequence();
-
   /* Moves the Ghoul Enemy in a specific direction while correcting their
    * hitbox and tex_rect. Called one every frame of which the player is 
    * outside their preferred distance.*/
@@ -50,7 +45,6 @@ private:
 
   std::vector<int> anim_death;
   float death_frametime;
-  float death_time;
 
   uint16_t player_dist;
   uint16_t preferred_dist;

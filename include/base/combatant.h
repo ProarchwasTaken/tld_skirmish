@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <raylib.h>
+#include <vector>
 #include "actor.h"
 #include "action_command.h"
 
@@ -96,6 +97,13 @@ public:
    * damage during that time, a death check will be made. If the check 
    * returns false, the combatant's state will be set back to neutral.*/
   void stunSequence();
+
+  /* A sort of wrapper for Animation::play. A common method used by those
+   * deriving from combatant to play death animations. Automatically 
+   * deleting themselves once they've reached the end of that animation.*/
+  void deathSequence(std::vector<Texture*> &sprite_list, 
+                     std::vector<int> &anim_death,
+                     float death_frametime);
 
   std::string name;
   uint16_t max_health;

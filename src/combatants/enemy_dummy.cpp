@@ -8,7 +8,8 @@
 
 
 DummyEnemy::DummyEnemy(PlayerCharacter &player, Vector2 position):
-  Combatant("Dummy", TYPE_ENEMY, 9999, 1.0,position)
+  Combatant("Dummy", TYPE_ENEMY, 9999, 1.0, position, {16, 56}, {64, 64},
+            {-8, -58})
 {
   this->player = &player;
 }

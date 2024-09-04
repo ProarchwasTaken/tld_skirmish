@@ -1,18 +1,18 @@
 // scenes/scene_menu.cpp
 #include <raylib.h>
 #include <string>
-#include <functional>
 #include <cstdint>
 #include "game.h"
 #include "globals.h"
 #include "utils.h"
 #include "scene_menu.h"
+#include "scene_subweapon.h"
 #include <plog/Log.h>
 
-using std::function, std::string;
+using std::string;
 
 
-MenuScene::MenuScene(function<void(int)> load_scene) : Scene(load_scene) {
+MenuScene::MenuScene(Game &skirmish) : Scene(skirmish) {
   PLOGI << "Loading MainMenu scene.";
   options = {
     OPT_PLAY,
@@ -69,7 +69,7 @@ void MenuScene::checkInput() {
 void MenuScene::selectOption() {
   switch (*selected_option) {
     case OPT_PLAY: {
-      load_scene(SCENE_GAMEPLAY);
+      skirmish->loadScene<SubWeaponScene>();
       break;
     }
     case OPT_QUIT: {

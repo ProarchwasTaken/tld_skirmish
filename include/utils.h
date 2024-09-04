@@ -10,15 +10,13 @@
 #include "sys_sprites.h"
 #include "base/generics.h"
 #include "base/actor.h"
-#include "char_player.h"
 
 namespace CameraUtils {
   Camera2D setupCamera();
 
-  /* For having the camera follow the player whenever they are off center.
-   * This process only stops when the player is at the center of the 
-   * screen again, or the camera has hit a boundary.*/
-  void followPlayer(Camera2D &camera, PlayerCharacter &player);
+  /* For having the camera follow a specific x position if its outside
+   * a certain threshold.*/
+  void follow(Camera2D &camera, float x_position);
 
   /* Returns true if the specified actor's tex rect on is on screen. This
    * function is mainly used to check if actor should be drawn.*/
@@ -33,6 +31,23 @@ namespace SoundUtils {
   /* For playing a given sound by it's name. Prints an error when the
    * sound metadata associated with the given name is not found.*/
   void play(std::string sound_name);
+
+  /* Basically plays a sound at a set pitch. An overload of the previous
+   * function.*/
+  void play(std::string sound_name, float pitch);
+
+  /* Stops a specific sound by it's name. Gives a warning if the sound 
+   * was not playing at the time of this function being called.*/
+  void stop(std::string sound_name);
+
+  /* Pauses all sounds that are currently player. The other function could
+   * be called to resume them.*/
+  void pause();
+
+  /* Resumes all sounds. Due to raylib not having a function that checks
+   * if a sound is paused, I had to go with the nuclear option, and have
+   * the function 'resume' every sound in the game for now.*/
+  void resume();
 
   /* This is a helper function written for retrieving metadata associated
    * with a specific sound name. Returns a NULL pointer if no metadata

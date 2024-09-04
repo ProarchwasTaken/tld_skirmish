@@ -1,0 +1,42 @@
+[weapon_ball]
+id = 6
+
+[[weapon_ball.sprites]] # ID: 0
+name = "projectile_1"
+area = {x = 0, y = 0, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 1
+name = "projectile_2"
+area = {x = 13, y = 0, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 2
+name = "projectile_3"
+area = {x = 26, y = 0, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 3
+name = "projectile_4"
+area = {x = 39, y = 0, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 4
+name = "projectile_5"
+area = {x = 52, y = 0, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 5
+name = "projectile_6"
+area = {x = 0, y = 13, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 6
+name = "projectile_7"
+area = {x = 13, y = 13, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 7
+name = "projectile_8"
+area = {x = 26, y = 13, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 8
+name = "projectile_9"
+area = {x = 39, y = 13, width = 13, height = 13}
+
+[[weapon_ball.sprites]] # ID: 9
+name = "projectile_10"
+area = {x = 52, y = 13, width = 13, height = 13}

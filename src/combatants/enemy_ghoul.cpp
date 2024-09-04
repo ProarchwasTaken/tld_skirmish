@@ -31,8 +31,6 @@ GhoulEnemy::GhoulEnemy(PlayerCharacter &player, Vector2 position):
   anim_death = {7, 8};
   death_frametime = 0.5;
 
-  death_time = 1.0;
-
   preferred_dist = 28;
   movement_speed = 0.5;
 
@@ -53,7 +51,7 @@ void GhoulEnemy::update() {
       break;
     }
     case DEAD: {
-      deathSequence();
+      deathSequence(sprites::ghoul, anim_death, death_frametime);
       break;
     }
     default: {
@@ -67,7 +65,10 @@ void GhoulEnemy::neutralBehavior() {
   player_dist = std::abs(x_offset);
   direction = Clamp(x_offset, -1, 1);
 
-  if (player_dist > preferred_dist) {
+  if (player->state == DEAD) {
+    return;
+  }
+  else if (player_dist > preferred_dist) {
     movement();
     Animation::play(this, sprites::ghoul, anim_walk, walk_frametime);
     return;
@@ -93,18 +94,6 @@ void GhoulEnemy::movement() {
   position.x += (movement_speed * direction) * DELTA_TIME; 
   hitboxCorrection();
   texRectCorrection();
-}
-
-void GhoulEnemy::deathSequence() {
-  Animation::play(this, sprites::ghoul, anim_death, death_frametime,
-                  false);
-
-  float time_elapsed = CURRENT_TIME - death_timestamp;
-  bool end_of_animation = current_frame == current_anim->end();
-
-  if (end_of_animation && time_elapsed >= death_time) {
-    awaiting_deletion = true;
-  }
 }
 
 void GhoulEnemy::draw(Vector2 &camera_target) {

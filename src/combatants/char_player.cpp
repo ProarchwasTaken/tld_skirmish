@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <raylib.h>
+#include <random>
 #include <cassert>
 #include "globals.h"
 #include "utils.h"
@@ -13,10 +14,11 @@
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
 #include "weapon_knife.h"
+#include "weapon_ball.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
-using std::make_unique, std::unique_ptr;
+using std::make_unique, std::unique_ptr, std::uniform_real_distribution;
 
 
 PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
@@ -27,13 +29,17 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   current_sprite = sprites::player[1];
   game_phase = &phase;
 
-  sub_weapon = make_unique<WeaponKnife>(this);
-
   morale = 10;
   max_morale = 50;
 
   anim_walk = {1, 2, 3, 2};
   walk_frametime = 0.15;
+
+  anim_death = {15, 16};
+  death_frametime = 0.5;
+
+  anim_endure = {15, 17, 18};
+  endure_frametime = 1.0;
 
   movement_speed = 1.75;
   regen_time = 2;
@@ -50,7 +56,29 @@ PlayerCharacter::~PlayerCharacter() {
   sub_weapon.reset();
 }
 
+void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
+  PLOGI << "Assigning Sub-Weapon associated with id: " << int(weapon_id);
+  switch (weapon_id) {
+    case WEAPON_KNIFE: {
+      sub_weapon.reset();
+      sub_weapon = make_unique<WeaponKnife>(this);
+      break;
+    }
+    case WEAPON_BALL: {
+      sub_weapon.reset();
+      sub_weapon = make_unique<WeaponBall>(this);
+      break;
+    }
+    default: {
+      PLOGE << "Invalid Weapon ID!";
+    }
+  }
+
+  assert(sub_weapon != nullptr && "Invalid Weapon ID!");
+}
+
 void PlayerCharacter::update() {
+  assert(sub_weapon != nullptr && "You forgot to call assignSubWeapon()");
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {
@@ -60,7 +88,7 @@ void PlayerCharacter::update() {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
-      movement();
+      movement(movement_speed, false);
 
       interpretBuffer();
       break;
@@ -73,7 +101,12 @@ void PlayerCharacter::update() {
       break;
     }
     case DEAD: {
-      awaiting_deletion = true;
+      if (endure) {
+        endureSequence();
+      }
+      else {
+        deathSequence(sprites::player, anim_death, death_frametime);
+      }
       break;
     }
     default: {
@@ -292,8 +325,8 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::movement() {
-  if (!moving) {
+void PlayerCharacter::movement(float speed, bool automatic) {
+  if (!moving && automatic == false) {
     return;
   }
   else if (moving_right) {
@@ -303,7 +336,7 @@ void PlayerCharacter::movement() {
     direction = LEFT;
   }
 
-  float magnitude = (movement_speed * direction) * DELTA_TIME;
+  float magnitude = (speed * direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
   float offset = position.x + magnitude + (half_scaleX * direction);
 
@@ -335,14 +368,8 @@ void PlayerCharacter::regeneration() {
   createDamageNumber(1, COLORS::PALETTE[14]);
   regen_timestamp = CURRENT_TIME;
 
-  if (critical_health == false) {
-    return;
-  }
-
-  float percentage = static_cast<float>(health) / max_health;
-  if (percentage > PLR_HP_CRITICAL) {
-    PLOGI << "The player has reached safe levels of HP!";
-    critical_health = false;
+  if (critical_health) {
+    healthCheck();
   }
 }
 
@@ -366,19 +393,62 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
                                  float kb_velocity,
                                  uint8_t kb_direction)
 {
+  float old_health = health;
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
 
-  if (critical_health) {
+  if (critical_health == false) {
+    healthCheck();
+  }
+
+  bool fatal_damage = health == 0;
+  if (fatal_damage == false) {
     return;
   }
 
-  float percentage = static_cast<float>(health) / max_health;
-  PLOGD << "Percentage of health remaining: " << percentage;
-  if (percentage <= PLR_HP_CRITICAL) {
+  float morale_percent = static_cast<float>(morale) / max_morale;
+  float life_percent = old_health / max_health;
+
+  float endure_chance = (morale_percent * life_percent) / 1.25;  
+  uniform_real_distribution<float> range(0.0, 1.0);
+
+  bool eligible = dmg_magnitude > (max_health * 2);
+  if (eligible && range(RNG::generator) <= endure_chance) {
+    endure = true;
+  }
+  else {
+    endure = false;
+  }
+}
+
+void PlayerCharacter::healthCheck() {
+  float life_percentage = static_cast<float>(health) / max_health;
+
+  if (critical_health == false && life_percentage <= PLR_HP_CRITICAL) {
     PLOGI << "The player is now in critical health!";
     critical_health = true;
     SoundUtils::play("critical_health");
+  }
+  else if (critical_health && life_percentage > PLR_HP_CRITICAL) {
+    PLOGI << "The player has reached safe levels of HP!";
+    critical_health = false;
+  }
+}
+
+void PlayerCharacter::endureSequence() {
+  Animation::play(this, sprites::player, anim_endure, endure_frametime,
+                  false);
+
+  float time_elapsed = CURRENT_TIME - death_timestamp;
+  bool end_of_animation = current_frame == current_anim->end();
+
+  float death_time = endure_frametime * anim_endure.size();
+
+  if (end_of_animation && time_elapsed >= death_time) {
+    PLOGI << "The player endured the attack through sheer willpower!";
+    endure = false;
+    health = 1;
+    state = NEUTRAL;
   }
 }
 

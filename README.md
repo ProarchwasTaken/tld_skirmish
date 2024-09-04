@@ -4,6 +4,16 @@ have to survive against multiple waves of enemies. The game features
 controls simple enough that you could play with just an SNES controller.
 
 
+# Discord
+This game marks as the second entry in an Urban Fantasy anthology series 
+about an average human rising up to face the supernatural. If you wish
+to keep track of the game's development, or comsume media that relates to
+the core idea and themes of the series, I suggest that you check out the
+discord server.
+
+https://discord.gg/MB75uMs9De
+
+
 # Controls
 This section gives a basic rundown the game's controls with a keyboard and
 a controller. The controls are simple. I trust that you could figure it 
@@ -13,15 +23,15 @@ out with a bit of experimenting.
 
 ### Menu
 * **Arrow Keys** - Menu Navigation
-* **Z Key** - Confirm
-* **X Key** - Cancel/Go Back
+* **Z** - Confirm
+* **X** - Cancel/Go Back
 
 ### Gameplay
 * **Arrow Keys** - Movement
-* **Z Key** - Light Attack
-* **X Key** - Heavy Attack
-* **A Key** - Light Technique
-* **S Key** - Heavy Technique
+* **Z** - Light Attack
+* **X** - Heavy Attack
+* **A** - Light Technique
+* **S** - Heavy Technique
 * **Space Bar** - Guard
 
 * **Tab Key** - Pause/Resume
@@ -38,18 +48,18 @@ this besides letting this be known.
 
 ### Menu
 * **D-Pad** - Menu Navigation
-* **A Button** - Confirm
-* **B Button** - Cancel/Go Back
+* **A** - Confirm
+* **B** - Cancel/Go Back
 
 ### Gameplay
 * **D-Pad** - Movement
-* **A Button** - Light Attack
-* **B Button** - Heavy Attack
-* **X Button** - Light Technique
-* **Y Button** - Heavy Technique
-* **L or R Button** - Guard
+* **A** - Light Attack
+* **B** - Heavy Attack
+* **X** - Light Technique
+* **Y** - Heavy Technique
+* **L or R Buttons** - Guard
 
-* **Start Button** - Pause/Resume
+* **Start** - Pause/Resume
 
 
 # Credits and Contacts

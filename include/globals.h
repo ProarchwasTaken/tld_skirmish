@@ -37,10 +37,15 @@ namespace sprites {
   extern std::vector<SpriteMetaData> plr_metadata;
 
   extern std::vector<Texture*> ghoul;
+  extern std::vector<Texture*> wretch;
 
   extern std::vector<Texture*> weapon_knife;
+  extern std::vector<Texture*> weapon_ball;
+
   extern std::vector<Texture*> hud_life;
   extern std::vector<Texture*> hud_morale;
+
+  extern std::vector<Texture*> weapon_select;
 }
 
 namespace RNG {

@@ -2,8 +2,8 @@
 #pragma once
 #include <raylib.h>
 #include <string>
-#include <functional>
 #include "base/scene.h"
+#include "game.h"
 
 
 /* The standard issue title screen. As you may have guessed, It displays 
@@ -11,7 +11,7 @@
  * second scene to be loaded in regular circumstances.*/
 class TitleScene : public Scene {
 public:
-  TitleScene(std::function<void(int)> load_scene);
+  TitleScene(Game &skirmish);
   ~TitleScene();
 
   void setupTitle();

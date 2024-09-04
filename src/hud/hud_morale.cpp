@@ -13,7 +13,6 @@ using std::string;
 
 MoraleHud::MoraleHud(PlayerCharacter &player) {
   this->player = &player;
-  usable = &player.sub_weapon->usable;
   hud_position = {98, 208};
   
   gauge_width = 70;
@@ -33,7 +32,7 @@ void MoraleHud::update() {
   updateGauge();
   segmentBlinkInterval();
 
-  if (*usable) {
+  if (player->sub_weapon->usable) {
     hud_color = COLORS::PALETTE[42];
   }
   else {

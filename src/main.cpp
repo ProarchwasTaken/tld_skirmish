@@ -15,21 +15,23 @@ using plog::RollingFileAppender, plog::TxtFormatter, std::string,
 plog::ColorConsoleAppender;
 
 void setupCustomLogger();
-int parseArguments(int argc, char *argv[]);
+bool parseArguments(int argc, char *argv[]);
 
 
 int main(int argc, char *argv[]) {
   setupCustomLogger();
-  int start_scene = parseArguments(argc, argv);
+  bool debug_scene = parseArguments(argc, argv);
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT 2: Skirmish");
+  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
   SetTargetFPS(TARGET_FRAMERATE);
   InitAudioDevice();
+  SetTextLineSpacing(11);
 
-  Game skirmish(start_scene);
+  Game skirmish(debug_scene);
 
   PLOGI << "Everything seems good to go!";
+  PLOGI << "Startup Time: " << GetTime();
   while (EXIT_GAME == false) {
     EXIT_GAME = WindowShouldClose();
     if (IsWindowResized()) {
@@ -42,7 +44,7 @@ int main(int argc, char *argv[]) {
       skirmish.correctWindow();
     }
 
-    if (IsKeyPressed(KEY_F3)) {
+    if (DEV_BUILD && IsKeyPressed(KEY_F3)) {
       PLOGI << "Toggling Debug Mode";
       DEBUG_MODE = !DEBUG_MODE;
     }
@@ -68,15 +70,15 @@ void setupCustomLogger() {
 }
 
 
-int parseArguments(int argc, char *argv[]) {
+bool parseArguments(int argc, char *argv[]) {
   PLOGI << "Parsing command line arguments.";
-  int start_scene = SCENE_TITLE;
+  bool debug_scene = false;
 
   for (int x = 0; x < argc; x++) {
     string arg = argv[x];
     if (DEV_BUILD && arg == "--debug_scene") {
       PLOGI << "Starting the game in the debug scene.";
-      start_scene = SCENE_DEBUG;
+      debug_scene = true;
     }
     if (arg == "-v") {
       plog::get()->setMaxSeverity(plog::verbose); 
@@ -84,6 +86,6 @@ int parseArguments(int argc, char *argv[]) {
     }
   }
 
-  return start_scene;
+  return debug_scene;
 }
 

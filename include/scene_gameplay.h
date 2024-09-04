@@ -1,11 +1,10 @@
 // scene_gameplay.h
 #pragma once
-#include <memory>
-#include <functional>
 #include <raylib.h>
 #include <cstdint>
 #include "base/generics.h"
 #include "base/scene.h"
+#include "game.h"
 #include "sys_wave_manager.h"
 #include "hud_life.h"
 #include "hud_morale.h"
@@ -20,7 +19,7 @@
  * There are many important components that make up this scene.*/
 class GameplayScene : public Scene {
 public:
-  GameplayScene(std::function<void(int)> load_scene);
+  GameplayScene(Game &skirmish, uint8_t weapon_id);
   ~GameplayScene() override;
 
   void tickTimer();
@@ -43,14 +42,15 @@ private:
   Texture background;
   Texture overlay;
 
-  std::shared_ptr<PlayerCharacter> player;
+  PlayerCharacter player = PlayerCharacter(enemies, phase);
 
   combatant_list enemies;
   dynamic_list dynamic_actors;
 
-  std::unique_ptr<WaveManager> wave_manager;
-  std::unique_ptr<LifeHud> life_hud;
-  std::unique_ptr<MoraleHud> morale_hud;
+  LifeHud life_hud = LifeHud(player, phase);
+  MoraleHud morale_hud = MoraleHud(player);
+
+  WaveManager wave_manager = WaveManager(player, enemies);
   Camera2D camera;
 
   bool paused = false;

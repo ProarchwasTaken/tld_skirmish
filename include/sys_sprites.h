@@ -11,6 +11,9 @@
 #define SHEET_LIFE 2
 #define SHEET_MORALE 3
 #define SHEET_KNIFE 4
+#define SHEET_WRETCH 5
+#define SHEET_BALL 6
+#define SHEET_WPN_SELECT 7
 
 
 /* For storing information about a specific sprite. Making it possible to
@@ -62,7 +65,6 @@ public:
    * the program.*/
   void allocateSprite(int sheet_id, std::string sprite_name);
 private:  
-  toml::value meta_data;
   std::vector<Texture> sprites; 
   uint16_t latest_index = 0;
 };

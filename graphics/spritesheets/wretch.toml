@@ -1,0 +1,51 @@
+[wretch]
+id = 5
+
+[[wretch.sprites]] # ID: 0
+name = "idle_1"
+area = {x = 0, y = 0, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 1
+name = "idle_2"
+area = {x = 128, y = 0, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 2
+name = "idle_3"
+area = {x = 256, y = 0, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 3
+name = "retreat_1"
+area = {x = 384, y = 0, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 4
+name = "retreat_2"
+area = {x = 0, y = 64, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 5
+name = "retreat_3"
+area = {x = 128, y = 64, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 6
+name = "hit_stun"
+area = {x = 256, y = 64, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 7
+name = "death_1"
+area = {x = 384, y = 64, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 8
+name = "death_2"
+area = {x = 0, y = 128, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 9
+name = "attack_1"
+area = {x = 128, y = 128, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 10
+name = "attack_2"
+area = {x = 256, y = 128, width = 128, height = 64}
+
+[[wretch.sprites]] # ID: 11
+name = "attack_3"
+area = {x = 384, y = 128, width = 128, height = 64}
+

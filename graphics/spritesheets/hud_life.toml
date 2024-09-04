@@ -1,0 +1,19 @@
+[hud_life]
+id = 2
+
+[[hud_life.sprites]] # ID: 0
+name = "frame"
+area = {x = 0, y = 0, width = 80, height = 21}
+
+[[hud_life.sprites]] # ID: 1
+name = "gauge"
+area = {x = 8, y = 22, width = 69, height = 9}
+
+[[hud_life.sprites]] # ID: 2
+name = "empty_white"
+area = {x = 8, y = 32, width = 69, height = 9}
+
+[[hud_life.sprites]] # ID: 3
+name = "empty_red"
+area = {x = 8, y = 42, width = 69, height = 9}
+

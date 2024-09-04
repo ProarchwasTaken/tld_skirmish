@@ -4,6 +4,7 @@
 #include "defaults.h"
 #include "globals.h"
 #include "base/generics.h"
+#include "base/combatant.h"
 #include "base/dynamic_actor.h"
 #include "utils.h"
 #include "proj_knife.h"

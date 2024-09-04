@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
-#include <functional>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
@@ -10,26 +9,25 @@
 #include "sys_audio.h"
 #include "scene_debug.h"
 #include "scene_title.h"
-#include "scene_menu.h"
-#include "scene_gameplay.h"
 #include <plog/Log.h>
 
-using std::make_unique, std::function;
+using std::make_unique;
 
 
-Game::Game(int start_scene) {
+Game::Game(bool debug_scene) {
   setupCanvas();
   defineColorPalette();
   loadGameFonts();
 
   sprite_loader = make_unique<SpriteLoader>();
-  sprite_loader->loadSpritesheet({
-    "hud_life", "hud_morale", "player", "ghoul", "weapon_knife"
-  });
-
   audio_manager = make_unique<AudioManager>();
 
-  loadScene(start_scene);
+  if (debug_scene) {
+    loadScene<DebugScene>();
+  }
+  else {
+    loadScene<TitleScene>();
+  }
 }
 
 Game::~Game() {
@@ -92,48 +90,6 @@ void Game::defineColorPalette() {
 void Game::loadGameFonts() {
   skirmish_font = LoadFont("graphics/fonts/skirmish_font.png");
   fonts::skirmish = &skirmish_font;
-}
-
-void Game::loadScene(int scene_id) {
-  if (scene != nullptr) {
-    scene.reset();
-  }
-
-  function<void(int)> load_func = [this](int scene_id){
-    this->loadScene(scene_id);
-  };
-
-  PLOGI << "Attempting to load scene correlated with id: " << scene_id;
-  switch (scene_id) {
-    case SCENE_DEBUG: {
-      scene = make_unique<DebugScene>(load_func);
-      break;
-    }
-    case SCENE_TITLE: {
-      scene = make_unique<TitleScene>(load_func);
-      break;
-    }
-    case SCENE_MENU: {
-      scene = make_unique<MenuScene>(load_func);
-      break;
-    }
-    case SCENE_GAMEPLAY: {
-      scene = make_unique<GameplayScene>(load_func);
-      break;
-    }
-    case SCENE_STARTUP: 
-    case SCENE_SETTINGS:
-    case SCENE_CONTROLS:
-    case SCENE_PREGAME: {
-      PLOGE << "Scene is not implemented yet!";
-      throw SCENE_NOT_IMPLEMENTED;
-    }
-    default: {
-      PLOGE << "The scene correlated with ID: " << scene_id << " doesn't"
-        " exist!";
-      throw SCENE_NOT_FOUND;
-    }
-  }
 }
 
 void Game::refresh() {

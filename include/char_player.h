@@ -23,6 +23,9 @@
 #define BTN_HEAVY_TECH 3
 #define BTN_GUARD 4
 
+#define WEAPON_KNIFE 0
+#define WEAPON_BALL 1
+
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.
@@ -45,6 +48,8 @@ public:
   PlayerCharacter(combatant_list &enemies, uint8_t &phase);
   ~PlayerCharacter() override;
 
+  void assignSubWeapon(uint8_t weapon_id);
+
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
   void update() override;
@@ -54,8 +59,10 @@ public:
 
   /* For moving the player left or right. The direction the player moves
    * in is determined by two booleans which can be altered by user input.
-   * Prevents the player from moving out of bounds when needed.*/
-  void movement();
+   * Prevents the player from moving out of bounds when needed. You could
+   * set it so the player would move automatically but that could cause
+   * issues if you don't know what you're doing.*/
+  void movement(float speed, bool automatic);
 
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
@@ -126,9 +133,18 @@ public:
                   float stun_time, float kb_velocity = 0,
                   uint8_t kb_direction = 0) override;
 
+  /* For checking if the player has reached or exited critical health, and
+   * acting accordingly. Should be called right after the player's health
+   * has been altered in some way.*/
+  void healthCheck();
+
+  /* This method does nothing important. Only serves to delay the 
+   * inevitable. Even so, it could make all the difference...*/
+  void endureSequence();
+
   combatant_list *enemies;
 
-  std::unique_ptr<SubWeapon> sub_weapon;
+  std::unique_ptr<SubWeapon> sub_weapon = nullptr;
 
   uint8_t morale;
   uint8_t max_morale;
@@ -137,6 +153,7 @@ public:
   float movement_speed;
 
   bool critical_health = false;
+  bool endure = false;
 
   std::vector<uint8_t> input_buffer;
 private:
@@ -150,6 +167,12 @@ private:
 
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  std::vector<int> anim_death;
+  float death_frametime;
+
+  std::vector<int> anim_endure;
+  float endure_frametime;
 
   float regen_time;
   float regen_timestamp = 0;

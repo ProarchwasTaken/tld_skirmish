@@ -16,6 +16,7 @@ class SubWeapon {
 public:
   SubWeapon(PlayerCharacter *player, std::string name, uint8_t mp_cost1, 
             uint8_t mp_cost2);
+  ~SubWeapon();
 
   virtual void update() {}
 
@@ -45,7 +46,8 @@ public:
 
   uint8_t mp_cost1;
   uint8_t mp_cost2;
+
+  float disabled_timestamp = 0;
 protected:
   PlayerCharacter *player;
-  float disabled_timestamp = 0;
 };
