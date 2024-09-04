@@ -10,6 +10,9 @@
 #define OPT_KNIFE 0
 #define OPT_BALL 1
 
+#define OPT_YES 0
+#define OPT_NO 1
+
 
 class SubWeaponScene : public Scene {
 public:
@@ -23,7 +26,14 @@ public:
   void drawTechniqueData();
   void drawTechLine(TechData &tech, Vector2 position);
 
+  void drawWarningText();
+  void drawConfirmOptions();
+
   void checkInput() override;
+  void checkConfirmInput(std::array<bool, 4> key_input,
+                         std::array<bool, 4> btn_input);
+  void selectConfirmOption();
+
   void drawScene() override;
 
 private:
@@ -31,8 +41,9 @@ private:
 
   float start_timestamp = 0;
 
-  menu_options options;
-  menu_options_txt option_name;
+  menu_options weapon_options;
+  menu_options_txt weapon_name;
+  menu_options::iterator selected_weapon;
 
   std::array<SubWeaponData, 2> weapon_data {
     SubWeaponData(
@@ -45,5 +56,9 @@ private:
     )
   };
 
-  menu_options::iterator selected_option;
+  menu_options confirm_options;
+  menu_options_txt confirm_names;
+  menu_options::iterator selected_confirm;
+
+  bool confirm = false;
 };
