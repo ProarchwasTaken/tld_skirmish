@@ -14,10 +14,12 @@
 using std::tie, std::string;
 
 
-GameplayScene::GameplayScene(Game &skirmish) : Scene(skirmish)
+GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id): 
+  Scene(skirmish)
 {
   PLOGI << "Loading Gameplay scene.";
   tie(background, overlay) = Stages::loadStage("arisen");
+  player.assignSubWeapon(weapon_id);
 
   phase = PHASE_REST;
 

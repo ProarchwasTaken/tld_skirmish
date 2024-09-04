@@ -19,7 +19,7 @@
  * There are many important components that make up this scene.*/
 class GameplayScene : public Scene {
 public:
-  GameplayScene(Game &skirmish);
+  GameplayScene(Game &skirmish, uint8_t weapon_id);
   ~GameplayScene() override;
 
   void tickTimer();
