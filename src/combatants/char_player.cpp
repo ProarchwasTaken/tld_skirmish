@@ -13,6 +13,7 @@
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_guard.h"
+#include "weapon_knife.h"
 #include "weapon_ball.h"
 #include "char_player.h"
 #include <plog/Log.h>
@@ -27,8 +28,6 @@ PlayerCharacter::PlayerCharacter(combatant_list &enemies, uint8_t &phase):
   PLOGI << "Initializing the player character.";
   current_sprite = sprites::player[1];
   game_phase = &phase;
-
-  sub_weapon = make_unique<WeaponBall>(this);
 
   morale = 10;
   max_morale = 50;
@@ -57,7 +56,24 @@ PlayerCharacter::~PlayerCharacter() {
   sub_weapon.reset();
 }
 
+void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
+  PLOGI << "Assigning Sub-Weapon associated with id: " << int(weapon_id);
+  switch (weapon_id) {
+    case WEAPON_KNIFE: {
+      sub_weapon = make_unique<WeaponKnife>(this);
+      break;
+    }
+    case WEAPON_BALL: {
+      sub_weapon = make_unique<WeaponBall>(this);
+      break;
+    }
+  }
+
+  assert(sub_weapon != nullptr && "Invalid Weapon ID!");
+}
+
 void PlayerCharacter::update() {
+  assert(sub_weapon != nullptr && "You forgot to call assignSubWeapon()");
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {

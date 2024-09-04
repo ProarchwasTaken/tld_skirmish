@@ -23,6 +23,9 @@
 #define BTN_HEAVY_TECH 3
 #define BTN_GUARD 4
 
+#define WEAPON_KNIFE 0
+#define WEAPON_BALL 1
+
 
 /* The playable character, the controllable avatar for the user. The most
  * important game object as it wouldn't be a game without one.
@@ -44,6 +47,8 @@ class PlayerCharacter : public Combatant {
 public:
   PlayerCharacter(combatant_list &enemies, uint8_t &phase);
   ~PlayerCharacter() override;
+
+  void assignSubWeapon(uint8_t weapon_id);
 
   /* Is called once every frame. Typically all of the player logic goes
    * in here.*/
@@ -139,7 +144,7 @@ public:
 
   combatant_list *enemies;
 
-  std::unique_ptr<SubWeapon> sub_weapon;
+  std::unique_ptr<SubWeapon> sub_weapon = nullptr;
 
   uint8_t morale;
   uint8_t max_morale;
