@@ -41,13 +41,13 @@ public:
   /* A function template for loading a specific scene into memory, while
    * also clearing the currently loaded scene beforehand. This holds
    * the potential of each scene having their distinct parameters*/
-  template<class SceneType>
-  void loadScene() {
+  template<class SceneType, typename... Args>
+  void loadScene(Args&&... args) {
     if (scene != nullptr) {
       scene.reset();
     }
 
-    scene = std::make_unique<SceneType>(*this); 
+    scene = std::make_unique<SceneType>(*this, args...); 
   }
 
   /* The root function for checking for inputs, updating all active game
