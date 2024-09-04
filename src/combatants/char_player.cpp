@@ -60,12 +60,17 @@ void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
   PLOGI << "Assigning Sub-Weapon associated with id: " << int(weapon_id);
   switch (weapon_id) {
     case WEAPON_KNIFE: {
+      sub_weapon.reset();
       sub_weapon = make_unique<WeaponKnife>(this);
       break;
     }
     case WEAPON_BALL: {
+      sub_weapon.reset();
       sub_weapon = make_unique<WeaponBall>(this);
       break;
+    }
+    default: {
+      PLOGE << "Invalid Weapon ID!";
     }
   }
 
