@@ -28,6 +28,7 @@ DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
   };
   
   camera = CameraUtils::setupCamera();
+  player.assignSubWeapon(WEAPON_KNIFE);
   PLOGI << "Debug scene has loaded successfully!";
 }
 
