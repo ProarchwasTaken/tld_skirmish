@@ -7,8 +7,8 @@
 #include "globals.h"
 #include "game.h"
 #include "utils.h"
-#include "scene_gameplay.h"
 #include "enemy_dummy.h"
+#include "scene_gameplay.h"
 #include "scene_debug.h"
 #include <plog/Log.h>
 
@@ -93,6 +93,12 @@ void DebugScene::debugInputs() {
   if (IsKeyPressed(KEY_ENTER) && no_awaiting_spawn) {
     int wave_id = std::stoi(num_buffer);
     wave_manager.startWaveByID(wave_id);
+    num_buffer.clear();
+  }
+
+  if (IsKeyPressed(KEY_RIGHT_SHIFT)) {
+    int weapon_id = std::stoi(num_buffer);
+    player.assignSubWeapon(weapon_id);
     num_buffer.clear();
   }
 }
