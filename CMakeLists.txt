@@ -64,7 +64,6 @@ set(SOURCE_FILES
 "src/hud/hud_life.cpp"
 "src/hud/hud_morale.cpp"
 "src/combatants/char_player.cpp"
-"src/combatants/enemy_dummy.cpp"
 "src/combatants/enemy_ghoul.cpp"
 "src/combatants/enemy_wretch.cpp"
 "src/sub-weapons/weapon_knife.cpp"
@@ -106,7 +105,6 @@ set(HEADER_FILES
 "include/hud_life.h"
 "include/hud_morale.h"
 "include/char_player.h"
-"include/enemy_dummy.h"
 "include/enemy_ghoul.h"
 "include/enemy_wretch.h"
 "include/weapon_knife.h"
@@ -127,8 +125,14 @@ set(HEADER_FILES
 
 if(${BUILD_DEBUG})
   message(STATUS "Including debug source and headers files.")
-  list(APPEND SOURCE_FILES "src/scenes/scene_debug.cpp")
-  list(APPEND HEADER_FILES "include/scene_debug.h")
+  list(APPEND SOURCE_FILES 
+  "src/scenes/scene_debug.cpp" 
+  "src/combatants/enemy_dummy.cpp"
+  )
+  list(APPEND HEADER_FILES 
+  "include/scene_debug.h"
+  "include/enemy_dummy.h"
+  )
 endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
