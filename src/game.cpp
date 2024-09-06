@@ -7,8 +7,10 @@
 #include "game.h"
 #include "sys_sprites.h"
 #include "sys_audio.h"
-#include "scene_debug.h"
 #include "scene_title.h"
+#if DEV_BUILD
+#include "scene_debug.h"
+#endif // DEV_BUILD
 #include <plog/Log.h>
 
 using std::make_unique;
@@ -22,12 +24,13 @@ Game::Game(bool debug_scene) {
   sprite_loader = make_unique<SpriteLoader>();
   audio_manager = make_unique<AudioManager>();
 
+#if DEV_BUILD
   if (debug_scene) {
     loadScene<DebugScene>();
+    return;
   }
-  else {
-    loadScene<TitleScene>();
-  }
+#endif // DEV_BUILD
+  loadScene<TitleScene>();
 }
 
 Game::~Game() {

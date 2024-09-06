@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
 project("skirmish" 
-VERSION 0.2.0
+VERSION 0.2.1
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
@@ -20,6 +20,8 @@ else()
   set(COMPILE_OPTIONS -DNDEBUG)
   set(LINK_OPTIONS -mwindows)
 endif()
+
+message(STATUS "Generating build system for: " ${PROJECT_STAGE})
 
 include_directories("include")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -59,7 +61,6 @@ set(SOURCE_FILES
 "src/scenes/scene_menu.cpp"
 "src/scenes/scene_subweapon.cpp"
 "src/scenes/scene_gameplay.cpp"
-"src/scenes/scene_debug.cpp"
 "src/hud/hud_life.cpp"
 "src/hud/hud_morale.cpp"
 "src/combatants/char_player.cpp"
@@ -102,7 +103,6 @@ set(HEADER_FILES
 "include/scene_menu.h"
 "include/scene_subweapon.h"
 "include/scene_gameplay.h"
-"include/scene_debug.h"
 "include/hud_life.h"
 "include/hud_morale.h"
 "include/char_player.h"
@@ -124,6 +124,12 @@ set(HEADER_FILES
 "include/proj_ball.h"
 "include/fx_dmg_number.h"
 )
+
+if(${BUILD_DEBUG})
+  message(STATUS "Including debug source and headers files.")
+  list(APPEND SOURCE_FILES "src/scenes/scene_debug.cpp")
+  list(APPEND HEADER_FILES "include/scene_debug.h")
+endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries("skirmish" PRIVATE ${RAYLIB})
