@@ -7,6 +7,13 @@
 #include "base/dynamic_actor.h"
 
 
+/* DynamicActor created when the player successfully uses BallHeavy while
+ * their sub-weapon is enabled. It moves in the direction the player has
+ * kicked it, and bounces off the first enemy it hits, inflicting damage.
+ * After that the player could kick it back. which increases it's speed
+ * and damage potential. This could only be done a number of times before
+ * the ball won't bounce off enemies anymore, and just pierces through
+ * them.*/
 class BallProjectile : public DynamicActor {
 public:
   BallProjectile(Vector2 position, PlayerCharacter *player, 

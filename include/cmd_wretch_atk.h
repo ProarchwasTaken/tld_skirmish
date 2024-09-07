@@ -7,6 +7,9 @@
 #include "base/action_command.h"
 
 
+/* Attack exclusive to the Wretch Enemy. Has a low charge time, and deals
+ * a large amount of damage and hit stun in exchange for a high recovery
+ * time to balance it out.*/
 class WretchAttack : public ActionCommand {
 public:
   WretchAttack(WretchEnemy *user);

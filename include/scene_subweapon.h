@@ -14,6 +14,9 @@
 #define OPT_NO 1
 
 
+/* The Scene where the player will select a sub-weapon to equip before
+ * starting the game. This scene also makes use of menu utility functions,
+ * in oddly creatives ways to make it work.*/
 class SubWeaponScene : public Scene {
 public:
   SubWeaponScene(Game &skirmish);
