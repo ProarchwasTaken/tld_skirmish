@@ -4,8 +4,8 @@
 #include <random>
 #include "globals.h"
 #include "base/generics.h"
-#include "sys_audio.h"
-#include "sys_sprites.h"
+#include "data/data_sprites.h"
+#include "data/data_sound.h"
 
 using std::vector, std::mt19937, std::random_device;
 

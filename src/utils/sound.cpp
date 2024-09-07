@@ -3,7 +3,7 @@
 #include <random>
 #include <raylib.h>
 #include "globals.h"
-#include "sys_audio.h"
+#include "data/data_sound.h"
 #include "utils.h"
 #include <plog/Log.h>
 

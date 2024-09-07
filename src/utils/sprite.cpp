@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cassert>
 #include <vector>
-#include "sys_sprites.h"
+#include "data/data_sprites.h"
 #include "utils.h"
 #include <plog/Log.h>
 

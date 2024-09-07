@@ -7,16 +7,11 @@
 #include <string>
 #include <vector>
 #include "globals.h"
+#include "data/data_sprites.h"
 #include "sys_sprites.h"
 #include <plog/Log.h>
 
 using std::string, std::vector;
-
-
-SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
-  this->name = name;
-  this->sprite = sprite;
-}
 
 
 SpriteLoader::SpriteLoader() {
@@ -163,8 +158,6 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
   sprite_list->push_back(&sprites[latest_index]);
 
   if (data_list != NULL) {
-    data_list->push_back(
-      SpriteMetaData(sprite_name, &sprites[latest_index])
-    );
+    data_list->push_back({sprite_name, &sprites[latest_index]});
   } 
 }

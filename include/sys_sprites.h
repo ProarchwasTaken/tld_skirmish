@@ -16,17 +16,6 @@
 #define SHEET_WPN_SELECT 7
 
 
-/* For storing information about a specific sprite. Making it possible to
- * search for them by name rather than just remembering the index.*/
-class SpriteMetaData {
-public:
-  SpriteMetaData(std::string name, Texture *sprite);
-
-  std::string name;
-  Texture *sprite;
-};
-
-
 /* The sprite loader is responsible for loading all the game's sprites
  * for use. This process is usually done by taking a spritesheet, and
  * parsing every individual sprite within it into it's own texture.

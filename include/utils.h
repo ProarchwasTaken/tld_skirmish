@@ -5,11 +5,11 @@
 #include <tuple>
 #include <string>
 #include <vector>
-#include <globals.h>
-#include "sys_audio.h"
-#include "sys_sprites.h"
+#include "globals.h"
 #include "base/generics.h"
 #include "base/actor.h"
+#include "data/data_sprites.h"
+#include "data/data_sound.h"
 
 namespace CameraUtils {
   Camera2D setupCamera();

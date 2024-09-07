@@ -13,6 +13,7 @@
 #include <cassert>
 #include "base/generics.h"
 #include "globals.h"
+#include "data/data_enemy.h"
 #include "enemy_ghoul.h"
 #include "enemy_wretch.h"
 #include "sys_wave_manager.h"
@@ -20,15 +21,6 @@
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 
 std::string, std::find, std::optional;
-
-
-EnemyMetadata::EnemyMetadata(uint8_t enemy_id, int8_t screen_side, 
-                             float spawn_time)
-{
-  this->enemy_id = enemy_id;
-  this->screen_side = screen_side;
-  this->spawn_time = spawn_time;
-}
 
 
 WaveManager::WaveManager(PlayerCharacter &player, combatant_list &enemies) 
@@ -153,7 +145,7 @@ void WaveManager::assignWave(toml::value wave) {
     int8_t screen_side = enemy_data["screen_side"].as_integer();
     float spawn_time = enemy_data["spawn_time"].as_floating();
 
-    enemy_queue.push_back(EnemyMetadata(id, screen_side, spawn_time));
+    enemy_queue.push_back({id, screen_side, spawn_time});
   }
 }
 

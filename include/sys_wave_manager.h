@@ -5,19 +5,11 @@
 #include <list>
 #include <toml/value.hpp>
 #include "base/generics.h"
+#include "data/data_enemy.h"
 #include "char_player.h"
 
 #define ENEMY_GHOUL 0
 #define ENEMY_WRETCH 1
-
-
-struct EnemyMetadata {
-  EnemyMetadata(uint8_t enemy_id, int8_t screen_side, float spawn_time);
-
-  uint8_t enemy_id;
-  int8_t screen_side;
-  float spawn_time;
-};
 
 
 /* The WaveManager is primarily responsible for handling the spawning of
