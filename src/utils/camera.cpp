@@ -26,7 +26,7 @@ void CameraUtils::follow(Camera2D &camera, const float x_position)
   }
 
   const float boundary = CAMERA_BOUNDS * direction;
-  const float half_width = CANVAS_WIDTH / 2.0;
+  const float half_width = CANVAS_WIDTH / 2;
   const float screen_side = camera.target.x + (half_width * direction);
 
   bool already_at_boundary = screen_side == boundary; 
@@ -48,8 +48,8 @@ void CameraUtils::follow(Camera2D &camera, const float x_position)
 
 bool CameraUtils::onScreen(const Actor *actor, const Vector2 &target) {
   Rectangle screen;
-  screen.x = target.x - (CANVAS_WIDTH / 2.0);
-  screen.y = target.y - (CANVAS_HEIGHT / 2.0);
+  screen.x = target.x - (CANVAS_WIDTH / 2);
+  screen.y = target.y - (CANVAS_HEIGHT / 2);
   screen.width = CANVAS_WIDTH;
   screen.height = CANVAS_HEIGHT;
 
