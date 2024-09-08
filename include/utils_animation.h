@@ -14,7 +14,7 @@ namespace Animation {
    * and set their sprite to the first frame of said animation. This
    * usually happens when the Actor changes animations or it doesn't
    * have an animation set to begin with.*/
-  void check(Actor *actor, std::vector<Texture*> &sprite_list,
+  void check(Actor *actor, const std::vector<Texture*> &sprite_list,
              std::vector<int> &frame_order);
 
   /* Updates an actor's sprite by using an index gotten from an
@@ -22,14 +22,15 @@ namespace Animation {
    * timestamp of the last time this function was called. The timestamp
    * will be used to check if enough time is passed to move on to the
    * next frame in the animation.*/
-  void updateSprite(Actor *actor, std::vector<Texture*> &sprite_list);
+  void updateSprite(Actor *actor, 
+                    const std::vector<Texture*> &sprite_list);
 
   /* The root function for playing any animation for Actors and 
    * classes that derive from them. Setting looping to false will cause
    * actor to be left on the last frame of a animation unless they switch
    * to a new one.*/
-  void play(Actor *actor, std::vector<Texture*> &sprite_list,
-            std::vector<int> &frame_order, float frame_time, 
-            bool looping = true);
+  void play(Actor *actor, const std::vector<Texture*> &sprite_list,
+            std::vector<int> &frame_order, const float frame_time, 
+            const bool looping = true);
 }
 

@@ -8,7 +8,7 @@
 using std::vector;
 
 
-void Animation::check(Actor *actor, vector<Texture*> &sprite_list, 
+void Animation::check(Actor *actor, const vector<Texture*> &sprite_list, 
                       vector<int> &frame_order)
 {
   bool no_animation = actor->current_anim == NULL;
@@ -23,18 +23,20 @@ void Animation::check(Actor *actor, vector<Texture*> &sprite_list,
   }
 }
 
-void Animation::updateSprite(Actor *actor, vector<Texture*> &sprite_list){
+void Animation::updateSprite(Actor *actor, 
+                             const vector<Texture*> &sprite_list)
+{
   int sprite_index = *actor->current_frame;
   actor->current_sprite = sprite_list[sprite_index];
 
   actor->frame_timestamp = CURRENT_TIME;
 }
 
-void Animation::play(Actor *actor, vector<Texture*> &sprite_list, 
-                     vector<int> &frame_order, float frame_time, 
-                     bool looping) 
+void Animation::play(Actor *actor, const vector<Texture*> &sprite_list, 
+                     vector<int> &frame_order, const float frame_time, 
+                     const bool looping) 
 {
-  float time_elapsed = CURRENT_TIME - actor->frame_timestamp;
+  const float time_elapsed = CURRENT_TIME - actor->frame_timestamp;
   if (time_elapsed < frame_time) {
     return;
   }
