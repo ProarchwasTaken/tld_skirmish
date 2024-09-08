@@ -5,10 +5,12 @@
 #include <random>
 #include <cassert>
 #include "globals.h"
-#include "utils.h"
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils_animation.h"
+#include "utils_camera.h"
+#include "utils_sound.h"
 #include "scene_gameplay.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"

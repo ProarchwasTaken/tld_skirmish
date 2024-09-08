@@ -6,8 +6,10 @@
 #include <array>
 #include "game.h"
 #include "globals.h"
-#include "utils.h"
 #include "base/scene.h"
+#include "utils_text.h"
+#include "utils_menu.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_gameplay.h"
 #include "scene_subweapon.h"

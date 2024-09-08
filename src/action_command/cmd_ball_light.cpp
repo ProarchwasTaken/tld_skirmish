@@ -1,7 +1,8 @@
 // action_command/cmd_ball_light.cpp
 #include "globals.h"
 #include "base/action_command.h"
-#include "utils.h"
+#include "utils_animation.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_ball_light.h"
 

@@ -7,7 +7,7 @@
 #include "globals.h"
 #include "base/generics.h"
 #include "base/combatant.h"
-#include "utils.h"
+#include "utils_enemies.h"
 #include <plog/Log.h>
 
 using std::vector, std::shared_ptr, std::find;

@@ -3,7 +3,7 @@
 #include <vector>
 #include "base/actor.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_animation.h"
 
 using std::vector;
 

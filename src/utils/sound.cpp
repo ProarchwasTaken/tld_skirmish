@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include "globals.h"
 #include "data/data_sound.h"
-#include "utils.h"
+#include "utils_sound.h"
 #include <plog/Log.h>
 
 using std::uniform_real_distribution, std::string;

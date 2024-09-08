@@ -5,7 +5,7 @@
 #include <cassert>
 #include <vector>
 #include "data/data_sprites.h"
-#include "utils.h"
+#include "utils_sprite.h"
 #include <plog/Log.h>
 
 using std::string, std::vector;

@@ -4,7 +4,9 @@
 #include <cstdint>
 #include "game.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_text.h"
+#include "utils_menu.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_subweapon.h"
 #include <plog/Log.h>

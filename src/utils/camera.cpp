@@ -4,7 +4,7 @@
 #include <raymath.h>
 #include "defaults.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_camera.h"
 
 
 Camera2D CameraUtils::setupCamera() {

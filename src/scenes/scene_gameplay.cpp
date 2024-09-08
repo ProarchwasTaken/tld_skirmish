@@ -5,7 +5,12 @@
 #include <tuple>
 #include "base/combatant.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_stages.h"
+#include "utils_camera.h"
+#include "utils_sound.h"
+#include "utils_dynamic.h"
+#include "utils_enemies.h"
+#include "utils_text.h"
 #include "game.h"
 #include "scene_gameplay.h"
 #include "scene_title.h"

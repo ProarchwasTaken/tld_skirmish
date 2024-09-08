@@ -9,9 +9,11 @@
 #include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils_sound.h"
+#include "utils_dynamic.h"
+#include "utils_animation.h"
 #include "cmd_guard.h"
 #include "fx_dmg_number.h"
-#include "utils.h"
 #include <plog/Log.h>
 
 using std::string, std::unique_ptr, std::vector;

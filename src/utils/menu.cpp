@@ -1,6 +1,7 @@
 // utils/menu.cpp
 #include "base/generics.h"
-#include "utils.h"
+#include "utils_sound.h"
+#include "utils_menu.h"
 
 
 void Menu::nextOption(menu_options &options, 

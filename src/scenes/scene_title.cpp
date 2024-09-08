@@ -3,8 +3,8 @@
 #include <string>
 #include "defaults.h"
 #include "globals.h"
+#include "utils_text.h"
 #include "game.h"
-#include "utils.h"
 #include "scene_menu.h"
 #include "scene_title.h"
 #include <plog/Log.h>

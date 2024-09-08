@@ -1,7 +1,7 @@
 // utils/ai_behavior.cpp
 #include <raylib.h>
 #include <cstdint>
-#include "utils.h"
+#include "utils_ai_behavior.h"
 #include "globals.h"
 
 
