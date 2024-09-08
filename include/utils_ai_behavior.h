@@ -10,7 +10,7 @@ namespace AIBehavior {
    * determine whether or not they should act depending on it's value.
    * By default, this function is for automatically decrementing that 
    * value 20 times per second. Stopping at 0.*/
-  void tickPatience(uint8_t &patience, float tick_timestamp, 
-                    float tick_rate = 0.05);
+  void tickPatience(uint8_t &patience, float &tick_timestamp, 
+                    const float tick_rate = 0.05);
 }
 
