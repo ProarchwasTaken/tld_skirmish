@@ -15,7 +15,7 @@ namespace SoundUtils {
 
   /* Basically plays a sound at a set pitch. An overload of the previous
    * function.*/
-  void play(std::string sound_name, float pitch);
+  void play(std::string sound_name, const float pitch);
 
   /* Stops a specific sound by it's name. Gives a warning if the sound 
    * was not playing at the time of this function being called.*/
@@ -33,6 +33,6 @@ namespace SoundUtils {
   /* This is a helper function written for retrieving metadata associated
    * with a specific sound name. Returns a NULL pointer if no metadata
    * associated with the string given is found.*/
-  SoundMetaData *getMetaData(std::string &sound_name);
+  SoundMetaData *getMetaData(const std::string &sound_name);
 }
 

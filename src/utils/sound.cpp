@@ -11,14 +11,14 @@ using std::uniform_real_distribution, std::string;
 
 
 void SoundUtils::play(string sound_name) {
-  SoundMetaData *meta_data = getMetaData(sound_name);
+  const SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {
     PLOGE << "Unable to find meta data for sound: " << sound_name << "!";
     return;
   }
 
-  Sound *sound = meta_data->sound;
+  const Sound *sound = meta_data->sound;
   float pitch = 1.0;
 
   if (meta_data->random_pitch) {
@@ -33,15 +33,15 @@ void SoundUtils::play(string sound_name) {
   PlaySound(*sound);
 }
 
-void SoundUtils::play(std::string sound_name, float pitch) {
-  SoundMetaData *meta_data = getMetaData(sound_name);
+void SoundUtils::play(std::string sound_name, const float pitch) {
+  const SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {
     PLOGE << "Unable to find meta data for sound: " << sound_name << "!";
     return;
   }
 
-  Sound *sound = meta_data->sound;
+  const Sound *sound = meta_data->sound;
   SetSoundPitch(*sound, pitch);
   PlaySound(*sound);
 }
@@ -66,8 +66,9 @@ void SoundUtils::pause() {
   PLOGI << "Pausing all sounds...";
   int pause_count = 0;
 
+  // Really wish there was a function for checking if a sound is paused..
   for (SoundMetaData data : audio::sfx_metadata) {
-    Sound *sound = data.sound;
+    const Sound *sound = data.sound;
 
     if (IsSoundPlaying(*sound)) {
       PauseSound(*sound);
@@ -82,12 +83,12 @@ void SoundUtils::resume() {
   PLOGI << "Resuming all sounds...";
 
   for (SoundMetaData data : audio::sfx_metadata) {
-    Sound *sound = data.sound;
+    const Sound *sound = data.sound;
     ResumeSound(*sound);
   }
 }
 
-SoundMetaData *SoundUtils::getMetaData(string &sound_name) {
+SoundMetaData *SoundUtils::getMetaData(const string &sound_name) {
   SoundMetaData *meta_data = NULL;
 
   for (SoundMetaData data : audio::sfx_metadata) {
