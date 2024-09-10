@@ -9,8 +9,8 @@
 #define WRH_HP 20
 #define WRH_STABILITY 0.45
 
-#define WRH_MIN_PATIENCE 60
-#define WRH_MAX_PATIENCE 80
+#define WRH_MIN_PATIENCE 20
+#define WRH_MAX_PATIENCE 40
 
 #define WRH_HIT_SCALE (Vector2){18, 56}
 #define WRH_HIT_OFFSET (Vector2){-9, -58}

@@ -9,7 +9,7 @@
 #define GOL_HP 15
 #define GOL_STABILITY 0.35
 #define GOL_MIN_PATIENCE 1
-#define GOL_MAX_PATIENCE 15
+#define GOL_MAX_PATIENCE 8
 
 #define GOL_HITBOX_SCALE (Vector2){18, 56} 
 #define GOL_HITBOX_OFFSET (Vector2){-9, -58}
