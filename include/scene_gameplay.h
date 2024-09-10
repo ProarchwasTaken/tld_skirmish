@@ -56,14 +56,14 @@ private:
   bool paused = false;
   float pause_timestamp = 0;
 
-  uint8_t phase;
-  uint8_t difficulty;
+  uint8_t phase = PHASE_REST;
+  uint8_t difficulty = 0;
 
   uint8_t max_wave;
   uint8_t wave = 0;
 
-  uint16_t timer;
-  float tick_interval;
+  uint16_t timer = 20;
+  const float tick_interval = 1;
   float tick_timestamp = 0;
 
 };

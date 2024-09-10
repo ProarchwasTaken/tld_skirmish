@@ -14,17 +14,14 @@ using std::string;
 
 TitleScene::TitleScene(Game &skirmish) : Scene(skirmish) 
 {
-  PLOGI << "Loading Title scene.";
   setupTitle();
   setupCopyright();
   setupEnter();
-
-  blink_interval = 0.5;
-  PLOGI << "Title scene has been successfully loaded.";
+  PLOGI << "Successfully loaded Title scene.";
 }
 
 TitleScene::~TitleScene() {
-  PLOGI << "Unloading title scene";
+  PLOGI << "Successfully unloaded Title scene.";
 }
 
 void TitleScene::setupTitle() {

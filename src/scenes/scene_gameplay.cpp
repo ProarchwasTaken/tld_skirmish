@@ -22,25 +22,17 @@ using std::tie, std::string;
 GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id): 
   Scene(skirmish)
 {
-  PLOGI << "Loading Gameplay scene.";
   tie(background, overlay) = Stages::loadStage("arisen");
   player.assignSubWeapon(weapon_id);
 
-  phase = PHASE_REST;
-
   max_wave = 3;
-  difficulty = 0;
-
-  timer = 20;
-  tick_interval = 1;
-  tick_timestamp = CURRENT_TIME;
 
   camera = CameraUtils::setupCamera();
-  PLOGI << "Gameplay scene has loaded successfully!";
+  tick_timestamp = CURRENT_TIME;
+  PLOGI << "Loaded Gameplay scene.";
 }
 
 GameplayScene::~GameplayScene() {
-  PLOGI << "Unloading gameplay scene.";
   UnloadTexture(background);
   UnloadTexture(overlay);
 
@@ -53,7 +45,7 @@ GameplayScene::~GameplayScene() {
     d_actor.reset();
   }
   dynamic_actors.clear();
-  PLOGI << "Gameplay scene has unloaded successfully.";
+  PLOGI << "Successfully unloaded Gameplay scene.";
 }
 
 void GameplayScene::checkInput() {

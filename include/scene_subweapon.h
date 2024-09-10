@@ -40,13 +40,13 @@ public:
   void drawScene() override;
 
 private:
-  std::array<int, 2> icon_ids;
+  std::array<int, 2> icon_ids = {4, 5};
 
   float start_timestamp = 0;
 
-  menu_options weapon_options;
-  menu_options_txt weapon_name;
-  menu_options::iterator selected_weapon;
+  menu_options weapon_options = {OPT_KNIFE, OPT_BALL};
+  menu_options_txt weapon_name = {"Birthright", "Cornerman"};
+  menu_options::iterator selected_weapon = weapon_options.begin();
 
   std::array<SubWeaponData, 2> weapon_data {
     SubWeaponData(
@@ -59,9 +59,9 @@ private:
     )
   };
 
-  menu_options confirm_options;
-  menu_options_txt confirm_names;
-  menu_options::iterator selected_confirm;
+  menu_options confirm_options = {OPT_YES, OPT_NO};
+  menu_options_txt confirm_names = {"YES", "NO"};
+  menu_options::iterator selected_confirm = confirm_options.begin();
 
   bool confirm = false;
 };

@@ -21,7 +21,6 @@ using std::make_shared, std::tie;
 
 DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
 {
-  PLOGI << "Loading Debug scene.";
   tie(background, overlay) = Stages::loadStage("debug");
   debug_overlay = LoadTexture("graphics/stages/debug/debug_overlay.png");
 
@@ -33,11 +32,10 @@ DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
   
   camera = CameraUtils::setupCamera();
   player.assignSubWeapon(WEAPON_KNIFE);
-  PLOGI << "Debug scene has loaded successfully!";
+  PLOGI << "Loaded Debug scene.";
 }
 
 DebugScene::~DebugScene() {
-  PLOGI << "Unloading Debug scene.";
   UnloadTexture(background);
   UnloadTexture(overlay);
   UnloadTexture(debug_overlay);
@@ -53,7 +51,7 @@ DebugScene::~DebugScene() {
   dynamic_actors.clear();
 
   num_buffer.clear();
-  PLOGI << "Debug scene has unloaded succesfully.";
+  PLOGI << "Successfully unloaded Debug scene.";
 }
 
 void DebugScene::checkInput() {

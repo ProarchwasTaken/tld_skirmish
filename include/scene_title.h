@@ -33,6 +33,6 @@ private:
   int enter_size;
   Vector2 enter_position;
 
-  float blink_interval;
+  float blink_interval = 0.5;
   float blink_timestamp = 0;
 };
