@@ -34,7 +34,6 @@ SpriteLoader::~SpriteLoader() {
     UnloadTexture(sprite);
   }
 
-  sprites::player.clear();
   sprites.clear();
   PLOGI << "Sprites have been unloaded.";
 }
@@ -87,10 +86,10 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   string data_path = "graphics/spritesheets/" + sheet_name + ".toml";
   toml::value meta_data = toml::parse(data_path);
 
-  int sprite_count = meta_data[sheet_name]["sprites"].size();
+  const int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
-  int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
+  const int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
   PLOGD << "Now proceeding to parse and allocate sprites.";
   for (int sprite = 0; sprite < sprite_count; sprite++) {
     toml::value sprite_data = meta_data[sheet_name]["sprites"][sprite];
@@ -110,7 +109,8 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   }
 }
 
-void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
+void SpriteLoader::allocateSprite(const int sheet_id, string sprite_name) 
+{
   vector<Texture*> *sprite_list;
   vector<SpriteMetaData> *data_list = NULL;
 

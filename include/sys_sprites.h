@@ -52,7 +52,7 @@ public:
   /* Allocates a sprite and it's data to one of the many global sprite
    * lists. This makes it so the sprite is accessible from any part of
    * the program.*/
-  void allocateSprite(int sheet_id, std::string sprite_name);
+  void allocateSprite(const int sheet_id, std::string sprite_name);
 private:  
   std::vector<Texture> sprites; 
   uint16_t latest_index = 0;

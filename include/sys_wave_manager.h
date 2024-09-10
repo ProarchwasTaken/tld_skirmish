@@ -37,11 +37,11 @@ public:
    * returns a list of them. Also makes sure not to add any waves that
    * were already used in the WaveManager's lifetime, and it returns
    * an empty list if no valid waves were found.*/
-  std::vector<toml::value> waveSearch(uint8_t difficulty);
+  std::vector<toml::value> waveSearch(const uint8_t difficulty);
 
   /* This method is used for testing specific waves more often than not.
    * Has similar functionality to startWave.*/
-  void startWaveByID(int wave_id);
+  void startWaveByID(const int wave_id);
 
   /* The Coup de grace towards starting waves, and it's functions as a
    * helper method for the two startWave methods. It basically reads the

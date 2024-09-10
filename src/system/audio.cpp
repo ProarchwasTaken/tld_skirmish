@@ -30,7 +30,7 @@ AudioManager::~AudioManager() {
 
 void AudioManager::loadSoundEffects() {
   PLOGI << "Loading sound effects.";
-  int count = meta_data["sfx"].size();
+  const int count = meta_data["sfx"].size();
 
   PLOGI << "Sound effect detected: " << count;
   sound_effects.reserve(count);
@@ -42,7 +42,8 @@ void AudioManager::loadSoundEffects() {
     string sound_path = data["path"].as_string();
     PLOGD << "Attempting to set up sound effect: " << sound_name;
 
-    bool use_random_pitch = toml::find_or(data, "pitch_random", false);
+    const bool use_random_pitch = toml::find_or(data, "pitch_random", 
+                                                false);
 
     float min_pitch, max_pitch = 1.0;
     if (use_random_pitch) {

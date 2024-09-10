@@ -61,7 +61,7 @@ void WaveManager::startWave(uint8_t difficulty) {
 
   PLOGD << "Found waves of identical difficulty level.";
   PLOGD << "Proceeding to choose random wave.";
-  int count = waves_found.size();
+  const int count = waves_found.size();
   uniform_int_distribution<int> range(0, count - 1);
 
   int wave_index = range(RNG::generator);
@@ -73,10 +73,10 @@ void WaveManager::startWave(uint8_t difficulty) {
   wave_timestamp = CURRENT_TIME;
 }
 
-void WaveManager::startWaveByID(int wave_id) {
+void WaveManager::startWaveByID(const int wave_id) {
   PLOGI << "Attempting to start wave by ID: " << wave_id;
 
-  int wave_count = wave_metadata.size();
+  const int wave_count = wave_metadata.size();
   optional<toml::value> found_wave;
 
   for (int index = 0; index < wave_count; index++) {
@@ -101,7 +101,7 @@ void WaveManager::startWaveByID(int wave_id) {
   wave_timestamp = CURRENT_TIME;
 }
 
-vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
+vector<toml::value> WaveManager::waveSearch(const uint8_t difficulty) {
   vector<toml::value> waves_found;
   int wave_count = wave_metadata.size();
   vector<int>::iterator result;
@@ -128,8 +128,9 @@ vector<toml::value> WaveManager::waveSearch(uint8_t difficulty) {
 
 void WaveManager::assignWave(toml::value wave) {
   wave_timer = wave["time_limit"].as_integer();
-  int wave_id = wave["id"].as_integer();
-  int enemy_count = wave["enemies"].size();
+
+  const int wave_id = wave["id"].as_integer();
+  const int enemy_count = wave["enemies"].size();
 
   used_waves.push_back(wave_id);
 
@@ -154,8 +155,8 @@ void WaveManager::waveSequence() {
     return;
   }
 
-  EnemyMetadata *enemy = &enemy_queue.front();
-  float time_elapsed = CURRENT_TIME - wave_timestamp;
+  const EnemyMetadata *enemy = &enemy_queue.front();
+  const float time_elapsed = CURRENT_TIME - wave_timestamp;
 
   if (time_elapsed >= enemy->spawn_time) {
     uint8_t enemy_id = enemy->enemy_id;
