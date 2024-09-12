@@ -90,6 +90,7 @@ void PlayerCharacter::update() {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
+      updateDirection();
       movement(movement_speed, false);
 
       interpretBuffer();
@@ -138,6 +139,38 @@ bool PlayerCharacter::isMoving() {
     }
   }
   return false;
+}
+
+void PlayerCharacter::updateDirection() {
+  if (moving_right) {
+    direction = RIGHT;
+  }
+  else if (moving_left) {
+    direction = LEFT;
+  }
+}
+
+void PlayerCharacter::movement(float speed, bool automatic) {
+  if (!moving && automatic == false) {
+    return;
+  }
+
+  float magnitude = (speed * direction) * DELTA_TIME;
+  int half_scaleX = hitbox_scale.x / 2;
+  float offset = position.x + magnitude + (half_scaleX * direction);
+
+  if (offset < -PLR_BOUNDS) {
+    position.x = -PLR_BOUNDS + half_scaleX;
+  }
+  else if (offset > PLR_BOUNDS) {
+    position.x = PLR_BOUNDS - half_scaleX;
+  }
+  else {
+    position.x += magnitude;
+  }
+
+  hitboxCorrection();
+  texRectCorrection();
 }
 
 void PlayerCharacter::bufferTimerCheck() {
@@ -325,35 +358,6 @@ void PlayerCharacter::heavyAttackHanding() {
     SoundUtils::play("cmd_cancel");
     useCommand(command);
   }
-}
-
-void PlayerCharacter::movement(float speed, bool automatic) {
-  if (!moving && automatic == false) {
-    return;
-  }
-  else if (moving_right) {
-    direction = RIGHT;
-  }
-  else if (moving_left) {
-    direction = LEFT;
-  }
-
-  float magnitude = (speed * direction) * DELTA_TIME;
-  int half_scaleX = hitbox_scale.x / 2;
-  float offset = position.x + magnitude + (half_scaleX * direction);
-
-  if (offset < -PLR_BOUNDS) {
-    position.x = -PLR_BOUNDS + half_scaleX;
-  }
-  else if (offset > PLR_BOUNDS) {
-    position.x = PLR_BOUNDS - half_scaleX;
-  }
-  else {
-    position.x += magnitude;
-  }
-
-  hitboxCorrection();
-  texRectCorrection();
 }
 
 void PlayerCharacter::regeneration() {

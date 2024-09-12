@@ -36,6 +36,7 @@ void BallLight::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
   Animation::play(user, sprites::player, anim_juke, juke_frametime);
+  player->updateDirection();
   player->movement(player->movement_speed * 2, true);
 
   if (finished_action) {
