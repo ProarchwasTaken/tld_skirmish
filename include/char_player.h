@@ -70,6 +70,12 @@ public:
    * This could be easily broken if you don't know what to do.*/
   void movement(float speed, bool automatic);
 
+  /* This could be referred as a versitile wrapper for the movement 
+   * method. It decelerates the player's movement through the use of a 
+   * lerp function depending on the arguments given.*/
+  void decelerate(float &percentage, const float time, 
+                  const float max_speed);
+
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
    * the player reaches max health.*/

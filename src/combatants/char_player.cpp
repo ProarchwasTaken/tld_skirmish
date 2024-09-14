@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <raylib.h>
+#include <raymath.h>
 #include <random>
 #include <cassert>
 #include "globals.h"
@@ -171,6 +172,20 @@ void PlayerCharacter::movement(float speed, bool automatic) {
 
   hitboxCorrection();
   texRectCorrection();
+}
+
+void PlayerCharacter::decelerate(float &percentage, const float time,
+                                 const float max_speed)
+{
+  if (percentage == 0.0) {
+    return;
+  }
+
+  const float speed = Lerp(0, max_speed, percentage);
+  movement(speed, true);
+
+  percentage -= GetFrameTime() / time;
+  percentage = Clamp(percentage, 0, max_speed);
 }
 
 void PlayerCharacter::bufferTimerCheck() {

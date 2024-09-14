@@ -40,4 +40,7 @@ private:
   uint16_t damage;
   float guard_pierce;
   float stun_time;
+
+  bool decelerate = false;
+  float percentage = 1.0;
 };

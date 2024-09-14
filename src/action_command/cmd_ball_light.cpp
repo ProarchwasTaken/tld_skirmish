@@ -52,9 +52,5 @@ void BallLight::recoverySequence(float time_elapsed) {
   ActionCommand::recoverySequence(time_elapsed);
 
   float max_speed = player->movement_speed * 2;
-  float speed = Lerp(0, max_speed, speed_percentage);
-  player->movement(speed, true);
-
-  speed_percentage -= GetFrameTime() / recovery_time;
-  speed_percentage = Clamp(speed_percentage, 0.0, max_speed);
+  player->decelerate(speed_percentage, recovery_time, max_speed);
 }
