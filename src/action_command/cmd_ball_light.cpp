@@ -1,4 +1,6 @@
 // action_command/cmd_ball_light.cpp
+#include <raylib.h>
+#include <raymath.h>
 #include "globals.h"
 #include "base/action_command.h"
 #include "utils_animation.h"
@@ -44,4 +46,15 @@ void BallLight::actSequence(float time_elapsed) {
     player->invulnerable = false;
     SoundUtils::play("ball_light_break");
   }
+}
+
+void BallLight::recoverySequence(float time_elapsed) {
+  ActionCommand::recoverySequence(time_elapsed);
+
+  float max_speed = player->movement_speed * 2;
+  float speed = Lerp(0, max_speed, speed_percentage);
+  player->movement(speed, true);
+
+  speed_percentage -= GetFrameTime() / recovery_time;
+  speed_percentage = Clamp(speed_percentage, 0.0, max_speed);
 }

@@ -20,9 +20,12 @@ public:
   void setupHurtbox();
   void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
+  void recoverySequence(float time_elapsed) override;
+
 private:
   std::vector<int> anim_juke;
   float juke_frametime;
 
+  float speed_percentage = 1.0;
   PlayerCharacter *player;
 };
