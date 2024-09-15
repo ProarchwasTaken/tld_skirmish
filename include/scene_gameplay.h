@@ -41,6 +41,7 @@ public:
 private:
   Texture background;
   Texture overlay;
+  Color sky_color = BLACK;
 
   PlayerCharacter player = PlayerCharacter(enemies, phase);
 

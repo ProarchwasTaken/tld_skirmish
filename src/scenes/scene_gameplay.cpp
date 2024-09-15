@@ -175,9 +175,11 @@ uint8_t GameplayScene::determinePhase() {
   bool no_awaiting_spawn = wave_manager.enemy_queue.size() == 0;
 
   if (no_enemies && no_awaiting_spawn) {
+    sky_color = COLORS::PALETTE[40];
     return PHASE_REST;
   }
   else {
+    sky_color = COLORS::PALETTE[32];
     return PHASE_ACTION;
   }
 }
@@ -198,6 +200,7 @@ void GameplayScene::drawTimer() {
 
 
 void GameplayScene::drawScene() {
+  ClearBackground(sky_color);
   BeginMode2D(camera);
   {
     DrawTexture(background, -512, 0, WHITE);
