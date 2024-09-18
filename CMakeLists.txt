@@ -110,6 +110,7 @@ set(HEADER_FILES
 "include/utils_stages.h"
 "include/utils_text.h"
 "include/utils_menu.h"
+"include/utils_sequence.h"
 "include/scene_title.h"
 "include/scene_menu.h"
 "include/scene_subweapon.h"
