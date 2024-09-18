@@ -6,6 +6,7 @@
 #include "base/scene.h"
 #include "game.h"
 #include "sys_wave_manager.h"
+#include "utils_sequence.h"
 #include "hud_life.h"
 #include "hud_morale.h"
 #include "char_player.h"
@@ -23,7 +24,9 @@ public:
   ~GameplayScene() override;
 
   void tickTimer();
+
   uint8_t determinePhase();
+  void phaseChanged(const uint8_t new_phase);
 
   void pauseGame();
   void resumeGame();
@@ -35,6 +38,7 @@ public:
   void checkPauseInput();
 
   void updateScene() override;
+  void phaseUpdate();
 
   void drawScene() override;
   void drawPauseMenu();
@@ -53,11 +57,14 @@ private:
 
   WaveManager wave_manager = WaveManager(player, enemies);
   Camera2D camera;
+  
+  Sequence<int, 3> seq_color = Sequence<int, 3>({0, 0, 0});
 
   bool paused = false;
   float pause_timestamp = 0;
 
   uint8_t phase = PHASE_REST;
+  bool updated_phase = false;
   uint8_t difficulty = 0;
 
   uint8_t max_wave;

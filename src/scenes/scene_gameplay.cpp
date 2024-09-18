@@ -11,6 +11,7 @@
 #include "utils_dynamic.h"
 #include "utils_enemies.h"
 #include "utils_text.h"
+#include "utils_sequence.h"
 #include "game.h"
 #include "scene_gameplay.h"
 #include "scene_title.h"
@@ -26,6 +27,7 @@ GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id):
   player.assignSubWeapon(weapon_id);
 
   max_wave = 3;
+  sky_color = COLORS::PALETTE[40];
 
   camera = CameraUtils::setupCamera();
   tick_timestamp = CURRENT_TIME;
@@ -108,6 +110,9 @@ void GameplayScene::updateScene() {
   Enemies::deleteDeadEnemies(enemies);
 
   phase = determinePhase();
+  if (updated_phase) {
+    phaseUpdate();
+  }
 
   // PLACEHOLDER
   if (player.awaiting_deletion) {
@@ -120,6 +125,11 @@ void GameplayScene::updateScene() {
     PLOGI << "Sorry for the inconvenience!";
     skirmish->loadScene<TitleScene>();
   }
+}
+
+void GameplayScene::phaseUpdate() {
+  seq_color.play(0.5, false);
+  sky_color = COLORS::PALETTE[*seq_color.iterator];
 }
 
 void GameplayScene::pauseGame() {
@@ -174,14 +184,38 @@ uint8_t GameplayScene::determinePhase() {
   bool no_enemies = enemies.size() == 0;
   bool no_awaiting_spawn = wave_manager.enemy_queue.size() == 0;
 
+  uint8_t old_phase = phase;
+  uint8_t new_phase = 0;
+
   if (no_enemies && no_awaiting_spawn) {
-    sky_color = COLORS::PALETTE[40];
-    return PHASE_REST;
+    new_phase = PHASE_REST;
   }
   else {
-    sky_color = COLORS::PALETTE[32];
-    return PHASE_ACTION;
+    new_phase = PHASE_ACTION;
   }
+
+  if (old_phase != new_phase) {
+    phaseChanged(new_phase);
+    return new_phase;
+  }
+  else {
+    return old_phase;
+  }
+}
+
+void GameplayScene::phaseChanged(const uint8_t new_phase) {
+  switch (phase) {
+    case PHASE_REST: {
+      seq_color.newSequence({40, 36, 32});
+      break;
+    }
+    case PHASE_ACTION: {
+      seq_color.newSequence({32, 36, 40});
+      break;
+    }
+  }
+
+  updated_phase = true;
 }
 
 void GameplayScene::drawWaveCount() {
