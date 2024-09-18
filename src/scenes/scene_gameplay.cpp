@@ -128,7 +128,7 @@ void GameplayScene::updateScene() {
 }
 
 void GameplayScene::phaseUpdate() {
-  seq_color.play(0.5, false);
+  seq_color.play(0.25, false);
   sky_color = COLORS::PALETTE[*seq_color.iterator];
 }
 
@@ -204,13 +204,14 @@ uint8_t GameplayScene::determinePhase() {
 }
 
 void GameplayScene::phaseChanged(const uint8_t new_phase) {
-  switch (phase) {
+  PLOGD << "Phase has been changed to: " << int(new_phase);
+  switch (new_phase) {
     case PHASE_REST: {
-      seq_color.newSequence({40, 36, 32});
+      seq_color.newSequence({32, 36, 40});
       break;
     }
     case PHASE_ACTION: {
-      seq_color.newSequence({32, 36, 40});
+      seq_color.newSequence({40, 36, 32});
       break;
     }
   }
