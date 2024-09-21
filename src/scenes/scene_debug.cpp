@@ -83,6 +83,10 @@ void DebugScene::debugInputs() {
     wave_manager.reloadWaveData();
   }
 
+  if (IsKeyPressed(KEY_K)) {
+    player.takeDamage(19, 0.0, 0.2);
+  }
+
   if (num_buffer.size() == 0) {
     return;
   }
