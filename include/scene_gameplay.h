@@ -23,9 +23,21 @@ public:
   GameplayScene(Game &skirmish, uint8_t weapon_id);
   ~GameplayScene() override;
 
+  /* Basically the main function that makes the gameloop progress, and
+   * it's logic is relatively simple at first glance. This decrements the
+   * timer variable every second or so, and starts a new wave once it
+   * hits zero. Resetting back to the default time of the started wave.
+   * This continues until the final wave has been reached.*/
   void tickTimer();
 
+  /* For determining what phase the game should be in depend on multiple
+   * different factors. Capable of detecting if the current phase has
+   * changed, and calls another function in response.*/
   uint8_t determinePhase();
+
+  /* This function gets called every time the current phase changes. This
+   * is for reseting and changing the color sequence so it matches the
+   * phase given.*/
   void phaseChanged(const uint8_t new_phase);
 
   void pauseGame();
@@ -38,6 +50,12 @@ public:
   void checkPauseInput();
 
   void updateScene() override;
+
+  /* Goes through the color sequence, assigning the current color to
+   * sky_color. Only stopping when the end of the sequence has be reached
+   * Ideally, this function should only be called after the phase has
+   * been changed at least once, other than that, this function is called
+   * once every frame.*/
   void phaseUpdate();
 
   void drawScene() override;

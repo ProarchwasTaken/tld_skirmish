@@ -128,6 +128,10 @@ void GameplayScene::updateScene() {
 }
 
 void GameplayScene::phaseUpdate() {
+  if (seq_color.end_of_sequence) {
+    return;
+  }
+
   seq_color.play(0.25, false);
   sky_color = COLORS::PALETTE[*seq_color.iterator];
 }
