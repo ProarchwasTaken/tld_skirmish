@@ -48,11 +48,15 @@ void LifeHud::determineHudColor() {
     case DEAD: {
       hud_color = COLORS::PALETTE[32];
       return;
-    } 
-    default: {
-      if (player->critical_health) hud_color = COLORS::PALETTE[33];
-      else hud_color = WHITE;
-    }
+    }  
+  }
+
+  if (player->critical_health) {
+    seq_critical.play(0.15, true);
+    hud_color = COLORS::PALETTE[*seq_critical.iterator];
+  }
+  else {
+    hud_color = WHITE;
   }
 }
 
