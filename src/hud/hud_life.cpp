@@ -52,7 +52,7 @@ void LifeHud::determineHudColor() {
   }
 
   if (player->critical_health) {
-    seq_critical.play(0.15, true);
+    seq_critical.play(0.1, true);
     hud_color = COLORS::PALETTE[*seq_critical.iterator];
   }
   else {

@@ -58,5 +58,5 @@ private:
   float blink_interval;
   float blink_timestamp = 0;
 
-  Sequence<int, 3> seq_critical = Sequence<int, 3>({33, 34, 35});
+  Sequence<int, 2> seq_critical = Sequence<int, 2>({33, 34});
 };
