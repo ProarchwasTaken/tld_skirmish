@@ -1,7 +1,10 @@
 // action_command/cmd_ball_light.cpp
+#include <raylib.h>
+#include <raymath.h>
 #include "globals.h"
 #include "base/action_command.h"
-#include "utils.h"
+#include "utils_animation.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_ball_light.h"
 
@@ -35,6 +38,7 @@ void BallLight::actSequence(float time_elapsed) {
   ActionCommand::actSequence(time_elapsed);
 
   Animation::play(user, sprites::player, anim_juke, juke_frametime);
+  player->updateDirection();
   player->movement(player->movement_speed * 2, true);
 
   if (finished_action) {
@@ -42,4 +46,11 @@ void BallLight::actSequence(float time_elapsed) {
     player->invulnerable = false;
     SoundUtils::play("ball_light_break");
   }
+}
+
+void BallLight::recoverySequence(float time_elapsed) {
+  ActionCommand::recoverySequence(time_elapsed);
+
+  float max_speed = player->movement_speed * 2;
+  player->decelerate(speed_percentage, recovery_time, max_speed);
 }

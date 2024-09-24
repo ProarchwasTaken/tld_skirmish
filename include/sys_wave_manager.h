@@ -5,19 +5,11 @@
 #include <list>
 #include <toml/value.hpp>
 #include "base/generics.h"
+#include "data/data_enemy.h"
 #include "char_player.h"
 
 #define ENEMY_GHOUL 0
 #define ENEMY_WRETCH 1
-
-
-struct EnemyMetadata {
-  EnemyMetadata(uint8_t enemy_id, int8_t screen_side, float spawn_time);
-
-  uint8_t enemy_id;
-  int8_t screen_side;
-  float spawn_time;
-};
 
 
 /* The WaveManager is primarily responsible for handling the spawning of
@@ -45,11 +37,11 @@ public:
    * returns a list of them. Also makes sure not to add any waves that
    * were already used in the WaveManager's lifetime, and it returns
    * an empty list if no valid waves were found.*/
-  std::vector<toml::value> waveSearch(uint8_t difficulty);
+  std::vector<toml::value> waveSearch(const uint8_t difficulty);
 
   /* This method is used for testing specific waves more often than not.
    * Has similar functionality to startWave.*/
-  void startWaveByID(int wave_id);
+  void startWaveByID(const int wave_id);
 
   /* The Coup de grace towards starting waves, and it's functions as a
    * helper method for the two startWave methods. It basically reads the

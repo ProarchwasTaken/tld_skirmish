@@ -9,9 +9,8 @@
 #include <random>
 #include "defaults.h"
 #include "base/generics.h"
-#include "sys_audio.h"
-#include "sys_sprites.h"
-
+#include "data/data_sprites.h"
+#include "data/data_sound.h"
 
 extern bool DEBUG_MODE;
 extern bool EXIT_GAME;

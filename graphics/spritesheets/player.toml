@@ -23,92 +23,92 @@ area = {x = 256, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 5
 name = "light_atk"
-area = {x = 0, y = 64, width = 64, height = 64}
+area = {x = 320, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 6
 name = "heavy_atk"
-area = {x = 64, y = 64, width = 64, height = 64}
+area = {x = 384, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 7
 name = "hit_stun"
-area = {x = 128, y = 64, width = 64, height = 64}
+area = {x = 448, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 8
 name = "guard"
-area = {x = 192, y = 64, width = 64, height = 64}
+area = {x = 512, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 9
 name = "parry"
-area = {x = 256, y = 64, width = 64, height = 64}
+area = {x = 576, y = 0, width = 64, height = 64}
 
 [[player.sprites]] # ID: 10
 name = "knife_light1"
-area = {x = 0, y = 128, width = 64, height = 64}
+area = {x = 0, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 11
 name = "knife_light2"
-area = {x = 64, y = 128, width = 64, height = 64}
+area = {x = 64, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 12
 name = "knife_light3"
-area = {x = 128, y = 128, width = 64, height = 64}
+area = {x = 128, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 13
 name = "knife_heavy1"
-area = {x = 192, y = 128, width = 64, height = 64}
+area = {x = 192, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 14
 name = "knife_heavy2"
-area = {x = 256, y = 128, width = 64, height = 64}
+area = {x = 256, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 15
 name = "death_1"
-area = {x = 0, y = 192, width = 64, height = 64}
+area = {x = 320, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 16
 name = "death_2"
-area = {x = 64, y = 192, width = 64, height = 64}
+area = {x = 384, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 17
 name = "endure_1"
-area = {x = 128, y = 192, width = 64, height = 64}
+area = {x = 448, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 18
 name = "endure_2"
-area = {x = 192, y = 192, width = 64, height = 64}
+area = {x = 512, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 19
 name = "ball_light1"
-area = {x = 256, y = 192, width = 64, height = 64}
+area = {x = 576, y = 64, width = 64, height = 64}
 
 [[player.sprites]] # ID: 20
 name = "ball_light2"
-area = {x = 0, y = 256, width = 64, height = 64}
+area = {x = 0, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 21
 name = "ball_light3"
-area = {x = 64, y = 256, width = 64, height = 64}
+area = {x = 64, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 22
 name = "ball_light4"
-area = {x = 128, y = 256, width = 64, height = 64}
+area = {x = 128, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 23
 name = "ball_light5"
-area = {x = 192, y = 256, width = 64, height = 64}
+area = {x = 192, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 24
 name = "ball_heavy1"
-area = {x = 256, y = 256, width = 64, height = 64}
+area = {x = 256, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 25
 name = "ball_heavy1_alt"
-area = {x = 0, y = 320, width = 64, height = 64}
+area = {x = 320, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 26
 name = "ball_heavy2"
-area = {x = 64, y = 320, width = 64, height = 64}
+area = {x = 384, y = 128, width = 64, height = 64}
 
 [[player.sprites]] # ID: 27
 name = "ball_heavy3"
-area = {x = 128, y = 320, width = 64, height = 64}
+area = {x = 448, y = 128, width = 64, height = 64}

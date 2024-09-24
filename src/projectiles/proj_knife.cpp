@@ -6,7 +6,8 @@
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/dynamic_actor.h"
-#include "utils.h"
+#include "utils_animation.h"
+#include "utils_camera.h"
 #include "proj_knife.h"
 #include <plog/Log.h>
 

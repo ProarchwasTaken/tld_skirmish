@@ -6,8 +6,10 @@
 #include <array>
 #include "game.h"
 #include "globals.h"
-#include "utils.h"
 #include "base/scene.h"
+#include "utils_text.h"
+#include "utils_menu.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_gameplay.h"
 #include "scene_subweapon.h"
@@ -17,16 +19,6 @@ using std::string, std::array;
 
 
 SubWeaponScene::SubWeaponScene(Game &skirmish) : Scene(skirmish) {
-  icon_ids = {4, 5};
-
-  weapon_options = {OPT_KNIFE, OPT_BALL};
-  weapon_name = {"Birthright", "Cornerman"};
-  selected_weapon = weapon_options.begin();
-
-  confirm_options = {OPT_YES, OPT_NO};
-  confirm_names = {"YES", "NO"};
-  selected_confirm = confirm_options.begin();
-
   start_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Sub-Weapon Selection scene";
 }

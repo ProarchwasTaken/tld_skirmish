@@ -12,20 +12,6 @@
 using std::string, std::tuple, std::make_tuple, std::tie;
 
 
-SoundMetaData::SoundMetaData(string name, Sound *sound, bool random_pitch,
-                             float min_pitch, float max_pitch) 
-{
-  this->name = name;
-  this->sound = sound;
-
-  this->random_pitch = random_pitch;
-  this->min_pitch = min_pitch;
-  this->max_pitch = max_pitch;
-
-  PLOGD << "Saved sound data for: " << name;
-}
-
-
 AudioManager::AudioManager() {
   meta_data = toml::parse("audio/audio_data.toml");
   loadSoundEffects();
@@ -44,7 +30,7 @@ AudioManager::~AudioManager() {
 
 void AudioManager::loadSoundEffects() {
   PLOGI << "Loading sound effects.";
-  int count = meta_data["sfx"].size();
+  const int count = meta_data["sfx"].size();
 
   PLOGI << "Sound effect detected: " << count;
   sound_effects.reserve(count);
@@ -56,7 +42,8 @@ void AudioManager::loadSoundEffects() {
     string sound_path = data["path"].as_string();
     PLOGD << "Attempting to set up sound effect: " << sound_name;
 
-    bool use_random_pitch = toml::find_or(data, "pitch_random", false);
+    const bool use_random_pitch = toml::find_or(data, "pitch_random", 
+                                                false);
 
     float min_pitch, max_pitch = 1.0;
     if (use_random_pitch) {
@@ -70,8 +57,7 @@ void AudioManager::loadSoundEffects() {
     Sound *sound_ptr = &sound_effects[index];
 
     audio::sfx_metadata.push_back(
-      SoundMetaData(sound_name, sound_ptr, use_random_pitch, 
-                    min_pitch, max_pitch)
+      {sound_name, sound_ptr, use_random_pitch, min_pitch, max_pitch}
     );
   }
 

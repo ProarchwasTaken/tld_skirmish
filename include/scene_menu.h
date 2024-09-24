@@ -28,7 +28,18 @@ public:
   void drawScene() override;
 
 private:
-  menu_options options;
-  menu_options_txt options_text;
-  menu_options::iterator selected_option;
+  menu_options options = {
+    OPT_PLAY,
+    OPT_SETTINGS,
+    OPT_CONTROLS,
+    OPT_QUIT
+  };
+  menu_options_txt options_text = {
+    "PLAY GAME",
+    "SETTINGS",
+    "CONTROLS",
+    "QUIT GAME"
+  };
+
+  menu_options::iterator selected_option = options.begin();
 };

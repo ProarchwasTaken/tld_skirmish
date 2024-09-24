@@ -6,7 +6,11 @@
 #include <memory>
 #include "globals.h"
 #include "game.h"
-#include "utils.h"
+#include "utils_stages.h"
+#include "utils_camera.h"
+#include "utils_enemies.h"
+#include "utils_dynamic.h"
+#include "utils_text.h"
 #include "enemy_dummy.h"
 #include "scene_gameplay.h"
 #include "scene_debug.h"
@@ -17,7 +21,6 @@ using std::make_shared, std::tie;
 
 DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
 {
-  PLOGI << "Loading Debug scene.";
   tie(background, overlay) = Stages::loadStage("debug");
   debug_overlay = LoadTexture("graphics/stages/debug/debug_overlay.png");
 
@@ -29,11 +32,10 @@ DebugScene::DebugScene(Game &skirmish) : Scene(skirmish)
   
   camera = CameraUtils::setupCamera();
   player.assignSubWeapon(WEAPON_KNIFE);
-  PLOGI << "Debug scene has loaded successfully!";
+  PLOGI << "Loaded Debug scene.";
 }
 
 DebugScene::~DebugScene() {
-  PLOGI << "Unloading Debug scene.";
   UnloadTexture(background);
   UnloadTexture(overlay);
   UnloadTexture(debug_overlay);
@@ -49,7 +51,7 @@ DebugScene::~DebugScene() {
   dynamic_actors.clear();
 
   num_buffer.clear();
-  PLOGI << "Debug scene has unloaded succesfully.";
+  PLOGI << "Successfully unloaded Debug scene.";
 }
 
 void DebugScene::checkInput() {
@@ -79,6 +81,10 @@ void DebugScene::debugInputs() {
 
   if (IsKeyPressed(KEY_R)) {
     wave_manager.reloadWaveData();
+  }
+
+  if (IsKeyPressed(KEY_K)) {
+    player.takeDamage(19, 0.0, 0.2);
   }
 
   if (num_buffer.size() == 0) {

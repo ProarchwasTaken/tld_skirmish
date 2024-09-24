@@ -7,9 +7,9 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "sys_sprites.h"
+#include "utils_sprite.h"
+#include "utils_sound.h"
 #include "char_player.h"
-#include "utils.h"
 #include "cmd_guard.h"
 #include <plog/Log.h>
 

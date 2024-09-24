@@ -57,12 +57,24 @@ public:
   void draw(Vector2 &camera_target) override;
   void drawDebug() override;
 
-  /* For moving the player left or right. The direction the player moves
-   * in is determined by two booleans which can be altered by user input.
-   * Prevents the player from moving out of bounds when needed. You could
-   * set it so the player would move automatically but that could cause
-   * issues if you don't know what you're doing.*/
+  /* Returns true if the player character should be moving. The outcome is
+   * determined by user input.*/
+  bool isMoving();
+
+  /* Updates the player's direction depending on user input.*/
+  void updateDirection();
+
+  /* For moving the player towards the direction they're facing while
+   * also preventing them from going out of bounds. If you want the player
+   * to move automatically for whatever reason, set the boolean to true.
+   * This could be easily broken if you don't know what to do.*/
   void movement(float speed, bool automatic);
+
+  /* This could be referred as a versitile wrapper for the movement 
+   * method. It decelerates the player's movement through the use of a 
+   * lerp function depending on the arguments given.*/
+  void decelerate(float &percentage, const float time, 
+                  const float max_speed);
 
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
@@ -74,10 +86,6 @@ public:
    * through certain actions, and this method is typically used for the
    * most part rather than just incrementing the value directly.*/
   void incrementMorale(uint8_t value);
-
-  /* Returns true if the player character should be moving. The outcome is
-   * determined by user input.*/
-  bool isMoving();
 
   /* These use methods are for checking for input from the user, whether
    * the button was pressed or released, and doing stuff based on that.

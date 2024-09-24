@@ -2,13 +2,16 @@
 #include <cstdint>
 #include <memory>
 #include <raylib.h>
+#include <raymath.h>
 #include <random>
 #include <cassert>
 #include "globals.h"
-#include "utils.h"
 #include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils_animation.h"
+#include "utils_camera.h"
+#include "utils_sound.h"
 #include "scene_gameplay.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
@@ -88,6 +91,7 @@ void PlayerCharacter::update() {
   switch (state) {
     case NEUTRAL: {
       moving = isMoving();
+      updateDirection();
       movement(movement_speed, false);
 
       interpretBuffer();
@@ -136,6 +140,52 @@ bool PlayerCharacter::isMoving() {
     }
   }
   return false;
+}
+
+void PlayerCharacter::updateDirection() {
+  if (moving_right) {
+    direction = RIGHT;
+  }
+  else if (moving_left) {
+    direction = LEFT;
+  }
+}
+
+void PlayerCharacter::movement(float speed, bool automatic) {
+  if (!moving && automatic == false) {
+    return;
+  }
+
+  float magnitude = (speed * direction) * DELTA_TIME;
+  int half_scaleX = hitbox_scale.x / 2;
+  float offset = position.x + magnitude + (half_scaleX * direction);
+
+  if (offset < -PLR_BOUNDS) {
+    position.x = -PLR_BOUNDS + half_scaleX;
+  }
+  else if (offset > PLR_BOUNDS) {
+    position.x = PLR_BOUNDS - half_scaleX;
+  }
+  else {
+    position.x += magnitude;
+  }
+
+  hitboxCorrection();
+  texRectCorrection();
+}
+
+void PlayerCharacter::decelerate(float &percentage, const float time,
+                                 const float max_speed)
+{
+  if (percentage == 0.0) {
+    return;
+  }
+
+  const float speed = Lerp(0, max_speed, percentage);
+  movement(speed, true);
+
+  percentage -= GetFrameTime() / time;
+  percentage = Clamp(percentage, 0, max_speed);
 }
 
 void PlayerCharacter::bufferTimerCheck() {
@@ -323,35 +373,6 @@ void PlayerCharacter::heavyAttackHanding() {
     SoundUtils::play("cmd_cancel");
     useCommand(command);
   }
-}
-
-void PlayerCharacter::movement(float speed, bool automatic) {
-  if (!moving && automatic == false) {
-    return;
-  }
-  else if (moving_right) {
-    direction = RIGHT;
-  }
-  else if (moving_left) {
-    direction = LEFT;
-  }
-
-  float magnitude = (speed * direction) * DELTA_TIME;
-  int half_scaleX = hitbox_scale.x / 2;
-  float offset = position.x + magnitude + (half_scaleX * direction);
-
-  if (offset < -PLR_BOUNDS) {
-    position.x = -PLR_BOUNDS + half_scaleX;
-  }
-  else if (offset > PLR_BOUNDS) {
-    position.x = PLR_BOUNDS - half_scaleX;
-  }
-  else {
-    position.x += magnitude;
-  }
-
-  hitboxCorrection();
-  texRectCorrection();
 }
 
 void PlayerCharacter::regeneration() {

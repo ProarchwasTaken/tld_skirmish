@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 #include "globals.h"
-#include "utils.h"
+#include "utils_text.h"
 #include "char_player.h"
 #include "hud_morale.h"
 #include <plog/Log.h>

@@ -2,7 +2,7 @@
 #include <cmath>
 #include <raylib.h>
 #include <string>
-#include "utils.h"
+#include "utils_text.h"
 
 
 Vector2 Text::alignCenter(Font *font, std::string text, Vector2 position, 

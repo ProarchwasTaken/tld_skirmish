@@ -6,7 +6,10 @@
 #include <cstdint>
 #include <random>
 #include "globals.h"
-#include "utils.h"
+#include "utils_animation.h"
+#include "utils_camera.h"
+#include "utils_ai_behavior.h"
+#include "utils_enemies.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "cmd_wretch_atk.h"

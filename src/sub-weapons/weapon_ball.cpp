@@ -5,7 +5,7 @@
 #include "base/combatant.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
-#include "utils.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_ball_light.h"
 #include "cmd_ball_heavy.h"

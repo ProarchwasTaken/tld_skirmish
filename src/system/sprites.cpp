@@ -7,16 +7,11 @@
 #include <string>
 #include <vector>
 #include "globals.h"
+#include "data/data_sprites.h"
 #include "sys_sprites.h"
 #include <plog/Log.h>
 
 using std::string, std::vector;
-
-
-SpriteMetaData::SpriteMetaData(string name, Texture *sprite) {
-  this->name = name;
-  this->sprite = sprite;
-}
 
 
 SpriteLoader::SpriteLoader() {
@@ -39,7 +34,6 @@ SpriteLoader::~SpriteLoader() {
     UnloadTexture(sprite);
   }
 
-  sprites::player.clear();
   sprites.clear();
   PLOGI << "Sprites have been unloaded.";
 }
@@ -92,10 +86,10 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   string data_path = "graphics/spritesheets/" + sheet_name + ".toml";
   toml::value meta_data = toml::parse(data_path);
 
-  int sprite_count = meta_data[sheet_name]["sprites"].size();
+  const int sprite_count = meta_data[sheet_name]["sprites"].size();
   PLOGI << sheet_name << " sprites detected: " << sprite_count;
 
-  int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
+  const int sheet_id = toml::find<int>(meta_data[sheet_name], "id");
   PLOGD << "Now proceeding to parse and allocate sprites.";
   for (int sprite = 0; sprite < sprite_count; sprite++) {
     toml::value sprite_data = meta_data[sheet_name]["sprites"][sprite];
@@ -115,7 +109,8 @@ void SpriteLoader::parseSprites(string sheet_name, Image &spritesheet) {
   }
 }
 
-void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
+void SpriteLoader::allocateSprite(const int sheet_id, string sprite_name) 
+{
   vector<Texture*> *sprite_list;
   vector<SpriteMetaData> *data_list = NULL;
 
@@ -163,8 +158,6 @@ void SpriteLoader::allocateSprite(int sheet_id, string sprite_name) {
   sprite_list->push_back(&sprites[latest_index]);
 
   if (data_list != NULL) {
-    data_list->push_back(
-      SpriteMetaData(sprite_name, &sprites[latest_index])
-    );
+    data_list->push_back({sprite_name, &sprites[latest_index]});
   } 
 }

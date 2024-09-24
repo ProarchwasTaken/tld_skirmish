@@ -5,7 +5,13 @@
 #include <tuple>
 #include "base/combatant.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_stages.h"
+#include "utils_camera.h"
+#include "utils_sound.h"
+#include "utils_dynamic.h"
+#include "utils_enemies.h"
+#include "utils_text.h"
+#include "utils_sequence.h"
 #include "game.h"
 #include "scene_gameplay.h"
 #include "scene_title.h"
@@ -17,25 +23,18 @@ using std::tie, std::string;
 GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id): 
   Scene(skirmish)
 {
-  PLOGI << "Loading Gameplay scene.";
-  tie(background, overlay) = Stages::loadStage("arisen");
+  tie(background, overlay) = Stages::loadRandomStage();
   player.assignSubWeapon(weapon_id);
 
-  phase = PHASE_REST;
-
   max_wave = 3;
-  difficulty = 0;
-
-  timer = 20;
-  tick_interval = 1;
-  tick_timestamp = CURRENT_TIME;
+  sky_color = COLORS::PALETTE[40];
 
   camera = CameraUtils::setupCamera();
-  PLOGI << "Gameplay scene has loaded successfully!";
+  tick_timestamp = CURRENT_TIME;
+  PLOGI << "Loaded Gameplay scene.";
 }
 
 GameplayScene::~GameplayScene() {
-  PLOGI << "Unloading gameplay scene.";
   UnloadTexture(background);
   UnloadTexture(overlay);
 
@@ -48,7 +47,7 @@ GameplayScene::~GameplayScene() {
     d_actor.reset();
   }
   dynamic_actors.clear();
-  PLOGI << "Gameplay scene has unloaded successfully.";
+  PLOGI << "Successfully unloaded Gameplay scene.";
 }
 
 void GameplayScene::checkInput() {
@@ -111,6 +110,9 @@ void GameplayScene::updateScene() {
   Enemies::deleteDeadEnemies(enemies);
 
   phase = determinePhase();
+  if (updated_phase) {
+    phaseUpdate();
+  }
 
   // PLACEHOLDER
   if (player.awaiting_deletion) {
@@ -123,6 +125,15 @@ void GameplayScene::updateScene() {
     PLOGI << "Sorry for the inconvenience!";
     skirmish->loadScene<TitleScene>();
   }
+}
+
+void GameplayScene::phaseUpdate() {
+  if (seq_color.end_of_sequence) {
+    return;
+  }
+
+  seq_color.play(0.25, false);
+  sky_color = COLORS::PALETTE[*seq_color.iterator];
 }
 
 void GameplayScene::pauseGame() {
@@ -177,12 +188,39 @@ uint8_t GameplayScene::determinePhase() {
   bool no_enemies = enemies.size() == 0;
   bool no_awaiting_spawn = wave_manager.enemy_queue.size() == 0;
 
+  uint8_t old_phase = phase;
+  uint8_t new_phase = 0;
+
   if (no_enemies && no_awaiting_spawn) {
-    return PHASE_REST;
+    new_phase = PHASE_REST;
   }
   else {
-    return PHASE_ACTION;
+    new_phase = PHASE_ACTION;
   }
+
+  if (old_phase != new_phase) {
+    phaseChanged(new_phase);
+    return new_phase;
+  }
+  else {
+    return old_phase;
+  }
+}
+
+void GameplayScene::phaseChanged(const uint8_t new_phase) {
+  PLOGD << "Phase has been changed to: " << int(new_phase);
+  switch (new_phase) {
+    case PHASE_REST: {
+      seq_color.newSequence({32, 36, 40});
+      break;
+    }
+    case PHASE_ACTION: {
+      seq_color.newSequence({40, 36, 32});
+      break;
+    }
+  }
+
+  updated_phase = true;
 }
 
 void GameplayScene::drawWaveCount() {
@@ -201,6 +239,7 @@ void GameplayScene::drawTimer() {
 
 
 void GameplayScene::drawScene() {
+  ClearBackground(sky_color);
   BeginMode2D(camera);
   {
     DrawTexture(background, -512, 0, WHITE);

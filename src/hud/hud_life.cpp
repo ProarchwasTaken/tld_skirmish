@@ -5,7 +5,7 @@
 #include <string>
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils.h"
+#include "utils_text.h"
 #include "scene_gameplay.h"
 #include "char_player.h"
 #include "hud_life.h"
@@ -48,11 +48,15 @@ void LifeHud::determineHudColor() {
     case DEAD: {
       hud_color = COLORS::PALETTE[32];
       return;
-    } 
-    default: {
-      if (player->critical_health) hud_color = COLORS::PALETTE[33];
-      else hud_color = WHITE;
-    }
+    }  
+  }
+
+  if (player->critical_health) {
+    seq_critical.play(0.1, true);
+    hud_color = COLORS::PALETTE[*seq_critical.iterator];
+  }
+  else {
+    hud_color = WHITE;
   }
 }
 

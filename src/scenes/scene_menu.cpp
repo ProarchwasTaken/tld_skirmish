@@ -4,7 +4,9 @@
 #include <cstdint>
 #include "game.h"
 #include "globals.h"
-#include "utils.h"
+#include "utils_text.h"
+#include "utils_menu.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_subweapon.h"
 #include <plog/Log.h>
@@ -13,29 +15,13 @@ using std::string;
 
 
 MenuScene::MenuScene(Game &skirmish) : Scene(skirmish) {
-  PLOGI << "Loading MainMenu scene.";
-  options = {
-    OPT_PLAY,
-    OPT_SETTINGS,
-    OPT_CONTROLS,
-    OPT_QUIT
-  };
-  options_text = {
-    "PLAY GAME",
-    "SETTINGS",
-    "CONTROLS",
-    "QUIT GAME"
-  };
-
-  selected_option = options.begin();
   PLOGI << "Loaded MainMenu scene.";
 }
 
 MenuScene::~MenuScene() {
-  PLOGI << "Unloading Main Menu scene.";
   options.clear();
   options_text.clear();
-  PLOGI << "Main Menu scene unloaded.";
+  PLOGI << "Successfully unloaded MainMenu scene.";
 }
 
 void MenuScene::checkInput() {

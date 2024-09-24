@@ -1,5 +1,6 @@
 // action_command/cmd_light_atk.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include "globals.h"
 #include "base/generics.h"
 #include "base/combatant.h"
@@ -19,7 +20,10 @@ LightAttack::LightAttack(PlayerCharacter *user):
   this->enemies = user->enemies;
   this->player = user;
   user->current_sprite = sprites::player[4];
-  setupHurtbox();
+
+  if (player->moving) {
+    decelerate = true;
+  }
 }
 
 void LightAttack::setupHurtbox() {
@@ -39,8 +43,14 @@ void LightAttack::setupHurtbox() {
 void LightAttack::chargeSequence(float time_elapsed) {
   ActionCommand::chargeSequence(time_elapsed);
 
+  if (decelerate) {
+    const float max_speed = player->movement_speed;
+    player->decelerate(percentage, charge_time, max_speed);
+  }
+
   if (finished_charge) {
     user->current_sprite = sprites::player[5];
+    setupHurtbox();
   }
 }
 

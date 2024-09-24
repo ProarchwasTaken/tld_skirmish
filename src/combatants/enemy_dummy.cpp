@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils.h"
+#include "utils_camera.h"
 #include "char_player.h"
 #include "enemy_dummy.h"
 

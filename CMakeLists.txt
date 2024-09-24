@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
 project("skirmish" 
-VERSION 0.2.0
+VERSION 0.2.1
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
@@ -20,6 +20,8 @@ else()
   set(COMPILE_OPTIONS -DNDEBUG)
   set(LINK_OPTIONS -mwindows)
 endif()
+
+message(STATUS "Generating build system for: " ${PROJECT_STAGE})
 
 include_directories("include")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -59,11 +61,9 @@ set(SOURCE_FILES
 "src/scenes/scene_menu.cpp"
 "src/scenes/scene_subweapon.cpp"
 "src/scenes/scene_gameplay.cpp"
-"src/scenes/scene_debug.cpp"
 "src/hud/hud_life.cpp"
 "src/hud/hud_morale.cpp"
 "src/combatants/char_player.cpp"
-"src/combatants/enemy_dummy.cpp"
 "src/combatants/enemy_ghoul.cpp"
 "src/combatants/enemy_wretch.cpp"
 "src/sub-weapons/weapon_knife.cpp"
@@ -86,7 +86,6 @@ set(HEADER_FILES
 "include/defaults.h"
 "include/globals.h"
 "include/game.h"
-"include/utils.h"
 "include/sys_sprites.h"
 "include/sys_audio.h"
 "include/sys_wave_manager.h"
@@ -97,16 +96,28 @@ set(HEADER_FILES
 "include/base/combatant.h"
 "include/base/action_command.h"
 "include/base/sub-weapon.h"
+"include/data/data_sprites.h"
+"include/data/data_sound.h"
+"include/data/data_enemy.h"
 "include/data/data_weapon.h"
+"include/utils_camera.h"
+"include/utils_sound.h"
+"include/utils_sprite.h"
+"include/utils_animation.h"
+"include/utils_ai_behavior.h"
+"include/utils_enemies.h"
+"include/utils_dynamic.h"
+"include/utils_stages.h"
+"include/utils_text.h"
+"include/utils_menu.h"
+"include/utils_sequence.h"
 "include/scene_title.h"
 "include/scene_menu.h"
 "include/scene_subweapon.h"
 "include/scene_gameplay.h"
-"include/scene_debug.h"
 "include/hud_life.h"
 "include/hud_morale.h"
 "include/char_player.h"
-"include/enemy_dummy.h"
 "include/enemy_ghoul.h"
 "include/enemy_wretch.h"
 "include/weapon_knife.h"
@@ -124,6 +135,18 @@ set(HEADER_FILES
 "include/proj_ball.h"
 "include/fx_dmg_number.h"
 )
+
+if(${BUILD_DEBUG})
+  message(STATUS "Including debug source and headers files.")
+  list(APPEND SOURCE_FILES 
+  "src/scenes/scene_debug.cpp" 
+  "src/combatants/enemy_dummy.cpp"
+  )
+  list(APPEND HEADER_FILES 
+  "include/scene_debug.h"
+  "include/enemy_dummy.h"
+  )
+endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries("skirmish" PRIVATE ${RAYLIB})
