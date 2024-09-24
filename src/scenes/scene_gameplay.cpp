@@ -23,7 +23,7 @@ using std::tie, std::string;
 GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id): 
   Scene(skirmish)
 {
-  tie(background, overlay) = Stages::loadStage("arisen");
+  tie(background, overlay) = Stages::loadRandomStage();
   player.assignSubWeapon(weapon_id);
 
   max_wave = 3;
