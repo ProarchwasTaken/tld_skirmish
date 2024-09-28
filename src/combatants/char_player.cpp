@@ -98,8 +98,6 @@ void PlayerCharacter::update() {
       break;
     }
     case HIT_STUN: {
-      current_sprite = sprites::player[7];
-
       applyKnockback(PLR_BOUNDS);
       stunSequence();
       break;
@@ -417,6 +415,10 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
   float old_health = health;
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
+
+  if (state == HIT_STUN) {
+    current_sprite = sprites::player[7];
+  }
 
   if (critical_health == false) {
     healthCheck();
