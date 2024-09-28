@@ -412,7 +412,6 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
                                  float kb_velocity,
                                  uint8_t kb_direction)
 {
-  float old_health = health;
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
 
@@ -425,22 +424,20 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
   }
 
   bool fatal_damage = health == 0;
-  if (fatal_damage == false) {
+  bool reached_combo_limit = combo > 5;
+  if (fatal_damage == false || reached_combo_limit) {
     return;
   }
 
   float morale_percent = static_cast<float>(morale) / max_morale;
-  float life_percent = old_health / max_health;
+  float endure_chance = morale_percent / (2 - (combo / 5.0));  
 
-  float endure_chance = (morale_percent * life_percent) / 1.25;  
   uniform_real_distribution<float> range(0.0, 1.0);
+  float random_value = range(RNG::generator);
+  bool eligible = dmg_magnitude < (max_health * 2);
 
-  bool eligible = dmg_magnitude > (max_health * 2);
-  if (eligible && range(RNG::generator) <= endure_chance) {
+  if (eligible && random_value <= endure_chance) {
     endure = true;
-  }
-  else {
-    endure = false;
   }
 }
 
@@ -467,12 +464,21 @@ void PlayerCharacter::endureSequence() {
 
   float death_time = endure_frametime * anim_endure.size();
 
-  if (end_of_animation && time_elapsed >= death_time) {
-    PLOGI << "The player endured the attack through sheer willpower!";
-    endure = false;
-    health = 1;
-    state = NEUTRAL;
+  if (end_of_animation == false && time_elapsed < death_time) {
+    return;
   }
+
+  PLOGI << "The player endured the attack through sheer willpower!";
+
+  health = 1;
+
+  float decrement = morale * 0.50;
+  if (decrement > 0) {
+    morale -= decrement;
+  }
+
+  state = NEUTRAL;
+  endure = false;
 }
 
 void PlayerCharacter::inputPressed() {
