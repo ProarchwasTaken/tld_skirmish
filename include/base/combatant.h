@@ -118,6 +118,7 @@ public:
 
   float stability;
   bool parried_attack = false;
+  uint16_t combo = 0;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:

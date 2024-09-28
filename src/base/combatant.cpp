@@ -140,6 +140,9 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   if (state != HIT_STUN && health <= 0) {
     death();
   }
+  else {
+    combo++;
+  }
 }
 
 void Combatant::createDamageNumber(int value, Color color) {
@@ -217,6 +220,7 @@ void Combatant::stunSequence() {
   PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
+    combo = 0;
 
     kb_velocity = 0;
     kb_direction = 0;

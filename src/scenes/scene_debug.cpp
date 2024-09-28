@@ -195,9 +195,7 @@ void DebugScene::drawDebugInfo() {
   DrawTextEx(*fonts::skirmish, TextFormat("Off Center: %i", off_center),
              {0, 40}, text_size, -3, GREEN);
 
-  float x_difference = player.position.x - camera.target.x;
-  DrawTextEx(*fonts::skirmish, 
-             TextFormat("Cam Difference: %f", x_difference), 
+  DrawTextEx(*fonts::skirmish, TextFormat("Combo: %i", player.combo), 
              {0, 48}, text_size, -3, GREEN);
 }
 
