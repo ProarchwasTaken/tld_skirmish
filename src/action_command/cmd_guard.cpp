@@ -1,4 +1,5 @@
 // action_command/cmd_guard.cpp
+#include <cassert>
 #include <cmath>
 #include <cstdint>
 #include <raylib.h>
@@ -30,6 +31,9 @@ Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
     parry_sprite = Sprite::getSprite("parry", data_list);
   }
 
+  if (user->type == TYPE_PLAYER) {
+    act_time = 0.05;
+  }
   user->current_sprite = charge_sprite;
 }
 
@@ -42,6 +46,10 @@ void Guard::chargeSequence(float time_elapsed) {
 }
 
 void Guard::actSequence(float time_elapsed) {
+  if (user->type == TYPE_PLAYER) {
+    stallCheck();
+  }
+
   ActionCommand::actSequence(time_elapsed);
 
   if (finished_action) {
@@ -62,6 +70,25 @@ void Guard::recoverySequence(float time_elapsed) {
 
   if (finished_recovering && guard_success) {
     user->invulnerable = false;
+  }
+}
+
+void Guard::stallCheck() {
+  assert(user->type == TYPE_PLAYER);
+  bool key_space = IsKeyDown(KEY_SPACE);
+
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_shoulder = false;
+  if (gamepad_detected) {
+    btn_shoulder = IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
+  }
+
+  bool guard_held = key_space || btn_shoulder;
+  if (guard_held) {
+    sequence_timestamp = CURRENT_TIME;
   }
 }
 

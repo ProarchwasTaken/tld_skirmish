@@ -5,7 +5,7 @@
 #include <vector>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "sys_sprites.h"
+#include "data/data_sprites.h"
 
 #define DEF_PARRY_WINDOW 0.20
 
@@ -24,6 +24,11 @@ public:
   void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
   void recoverySequence(float time_elapsed) override;
+
+  /* This method should only be called when the player is the user of this
+   * action command. It allows the player to stall the active phase for as
+   * long as they hold the guard button.*/
+  void stallCheck();
 
   /* This method is automatically called when the user takes damage while
    * they are using this action command. Contains the majority of the 
