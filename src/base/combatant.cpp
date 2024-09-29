@@ -220,10 +220,6 @@ void Combatant::stunSequence() {
     return;
   }
 
-  if (stability < 0) {
-    stability = max_stability;
-  }
-
   PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
   if (health > 0) {
     state = NEUTRAL;
@@ -244,7 +240,7 @@ void Combatant::stabilityRegen() {
   }
 
   float time_elapsed = CURRENT_TIME - stability_timestamp;
-  if (time_elapsed >= 0.05) {
+  if (time_elapsed >= 0.1) {
     stability += 0.01;
     stability_timestamp = CURRENT_TIME;
   }
