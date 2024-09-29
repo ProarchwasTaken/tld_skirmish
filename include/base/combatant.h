@@ -98,6 +98,8 @@ public:
    * returns false, the combatant's state will be set back to neutral.*/
   void stunSequence();
 
+  void stabilityRegen();
+
   /* A sort of wrapper for Animation::play. A common method used by those
    * deriving from combatant to play death animations. Automatically 
    * deleting themselves once they've reached the end of that animation.*/
@@ -117,6 +119,7 @@ public:
   int8_t direction;
 
   float stability;
+  float max_stability;
   bool parried_attack = false;
   uint16_t combo = 0;
 
@@ -124,6 +127,8 @@ public:
 protected:
   float stun_time = 0;
   float stun_timestamp = 0;
+
+  float stability_timestamp = 0;
 
   int8_t kb_direction = 0;
   float kb_velocity = 0;

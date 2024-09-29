@@ -32,6 +32,7 @@ Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset)
   health = max_health;
 
   this->stability = stability;
+  this->max_stability = stability;
 
   state = NEUTRAL;
   direction = RIGHT;
@@ -143,6 +144,8 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   else {
     combo++;
   }
+
+  stability_timestamp = CURRENT_TIME;
 }
 
 void Combatant::createDamageNumber(int value, Color color) {
@@ -224,9 +227,22 @@ void Combatant::stunSequence() {
 
     kb_velocity = 0;
     kb_direction = 0;
+    stability_timestamp = CURRENT_TIME;
   } 
   else {
     death();
+  }
+}
+
+void Combatant::stabilityRegen() {
+  if (stability < max_stability) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - stability_timestamp;
+  if (time_elapsed >= 0.05) {
+    stability += 0.01;
+    stability_timestamp = CURRENT_TIME;
   }
 }
 
