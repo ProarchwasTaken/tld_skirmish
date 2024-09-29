@@ -96,8 +96,9 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
                        float stun_time, float kb_velocity, 
                        uint8_t kb_direction)
 {
-  if (user->state == RECOVER) {
-    PLOGI << "Guard failed due to the user being in the recovery phase.";
+  if (user->state == RECOVER || user->stability < 0) {
+    PLOGI << "Guard failed due to the user being in the recovery phase or"
+    " their stability is in the negatives.";
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
     return;
@@ -120,30 +121,32 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
   dmg_magnitude = static_cast<int>(reduced_damage);
   PLOGI << "Reduced incoming damage to: " << dmg_magnitude;
 
-  if (guardFailed(guard_pierce, stun_time, kb_velocity, kb_direction)) {
-    SoundUtils::play("guard_fail");
-    return;
-  }
+  PLOGI << "Comparing the user's stability and the attack's guard pierce";
+  bool failed = guardFailed(guard_pierce);
 
-  PLOGI << "Guard Successful! Now applying bonuses.";
-  deathProtection(dmg_magnitude);
-  applyGuardBonus(stun_time, kb_velocity, kb_direction);
-
-  SoundUtils::play("guard_success");
-  user->state = RECOVER;
-  sequence_timestamp = CURRENT_TIME;
-}
-
-bool Guard::guardFailed(float guard_pierce, float stun_time,
-                        float kb_velocity, uint8_t kb_direction)
-{
-  if (guard_pierce > user->stability) {
+  if (failed) {
     PLOGI << "Guard failed because the guard_pierce of the attack is " 
       "greater than user's stability.";
-
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
+    SoundUtils::play("guard_fail");
+  }
+  else {
+    PLOGI << "Guard Successful! Now applying bonuses.";
+    deathProtection(dmg_magnitude);
+    applyGuardBonus(stun_time, kb_velocity, kb_direction);
 
+    SoundUtils::play("guard_success");
+
+    user->state = RECOVER;
+    sequence_timestamp = CURRENT_TIME; 
+  }
+
+  user->stability -= guard_pierce * 0.5;
+}
+
+bool Guard::guardFailed(float guard_pierce) {
+  if (guard_pierce > user->stability) {
     return true;
   }
   else {
@@ -189,6 +192,8 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
     PLOGI << user->name << " parried the attack! All damage nullified!";
     user->current_sprite = parry_sprite;
     user->parried_attack = true;
+
+    user->stability += user->max_stability * 0.25;
 
     applyGuardBonus(stun_time);
     return true;

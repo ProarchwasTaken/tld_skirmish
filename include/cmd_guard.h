@@ -40,8 +40,7 @@ public:
 
   /* Every combatant has a variable called "guard_stability". It's
    * primarily used to check if the user's guard is successful or not.*/
-  bool guardFailed(float guard_pierce, float stun_time, float kb_velocity,
-                   uint8_t kb_direction);
+  bool guardFailed(float guard_pierce);
 
   /* For applying the usual bonuses from successfully performing a guard
    * or parrying an attack. Most of these bonuses would be automatically 
