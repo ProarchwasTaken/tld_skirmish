@@ -98,6 +98,9 @@ public:
    * returns false, the combatant's state will be set back to neutral.*/
   void stunSequence();
 
+  /* For slowly regenerating a combatant's stability back to full at the
+   * same rate of which an enemy's patience would tick down. The game use
+   * case for this method is when the Combatant is in the NEUTRAL state.*/
   void stabilityRegen();
 
   /* A sort of wrapper for Animation::play. A common method used by those
@@ -109,6 +112,7 @@ public:
 
   std::string name;
   uint16_t max_health;
+  float max_stability;
   uint8_t type;
 
   bool awaiting_deletion = false;
@@ -119,7 +123,6 @@ public:
   int8_t direction;
 
   float stability;
-  float max_stability;
   bool parried_attack = false;
   uint16_t combo = 0;
 

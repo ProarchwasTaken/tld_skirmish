@@ -85,11 +85,13 @@ void PlayerCharacter::update() {
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {
-    regeneration();
+    lifeRegen();
   }
 
   switch (state) {
     case NEUTRAL: {
+      stabilityRegen();
+
       moving = isMoving();
       updateDirection();
       movement(movement_speed, false);
@@ -373,7 +375,7 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::regeneration() {
+void PlayerCharacter::lifeRegen() {
   if (health == max_health) {
     return;
   }

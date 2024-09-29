@@ -79,7 +79,7 @@ public:
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
    * the player reaches max health.*/
-  void regeneration();
+  void lifeRegen();
 
   /* Makes sure that the value that the player's morale is incremented to
    * doesn't go past the maximum. The player's morale will increase
