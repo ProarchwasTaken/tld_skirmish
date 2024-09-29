@@ -235,7 +235,7 @@ void Combatant::stunSequence() {
 }
 
 void Combatant::stabilityRegen() {
-  if (stability < max_stability) {
+  if (stability >= max_stability) {
     return;
   }
 

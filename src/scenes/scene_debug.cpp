@@ -191,8 +191,8 @@ void DebugScene::drawDebugInfo() {
              TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 32}, text_size, -3, GREEN);
 
-  bool off_center = camera.target.x != player.position.x;
-  DrawTextEx(*fonts::skirmish, TextFormat("Off Center: %i", off_center),
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("Stability: %01.02f", player.stability),
              {0, 40}, text_size, -3, GREEN);
 
   DrawTextEx(*fonts::skirmish, TextFormat("Combo: %i", player.combo), 
