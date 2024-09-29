@@ -141,7 +141,7 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   if (state != HIT_STUN && health <= 0) {
     death();
   }
-  else {
+  else if (state == HIT_STUN) {
     combo++;
   }
 
@@ -218,6 +218,10 @@ void Combatant::stunSequence() {
   float time_elapsed = CURRENT_TIME - stun_timestamp;
   if (time_elapsed < stun_time) {
     return;
+  }
+
+  if (stability < 0) {
+    stability = max_stability;
   }
 
   PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
