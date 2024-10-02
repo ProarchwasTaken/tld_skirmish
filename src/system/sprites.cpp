@@ -24,7 +24,8 @@ SpriteLoader::SpriteLoader() {
     "weapon_knife",
     "wretch",
     "weapon_ball",
-    "weapon_select"
+    "weapon_select",
+    "damned"
   });
 }
 
@@ -146,6 +147,10 @@ void SpriteLoader::allocateSprite(const int sheet_id, string sprite_name)
     }
     case SHEET_WPN_SELECT: {
       sprite_list = &sprites::weapon_select;
+      break;
+    }
+    case SHEET_DAMNED: {
+      sprite_list = &sprites::damned;
       break;
     }
     default: {

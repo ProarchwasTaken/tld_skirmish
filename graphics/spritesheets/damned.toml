@@ -1,0 +1,15 @@
+[damned]
+id = 8
+
+[[damned.sprites]] # ID: 0
+name = "walk_1"
+area = {x = 0, y = 0, width = 64, height = 64}
+
+[[damned.sprites]] # ID: 1
+name = "walk_2"
+area = {x = 64, y = 0, width = 64, height = 64}
+
+[[damned.sprites]] # ID: 2
+name = "walk_3"
+area = {x = 128, y = 0, width = 64, height = 64}
+

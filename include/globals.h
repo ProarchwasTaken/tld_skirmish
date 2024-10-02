@@ -37,6 +37,7 @@ namespace sprites {
 
   extern std::vector<Texture*> ghoul;
   extern std::vector<Texture*> wretch;
+  extern std::vector<Texture*> damned;
 
   extern std::vector<Texture*> weapon_knife;
   extern std::vector<Texture*> weapon_ball;
