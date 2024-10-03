@@ -1,6 +1,7 @@
 // enemy_damned.h
 #include <raylib.h>
 #include <vector>
+#include <cstdint>
 #include "base/combatant.h"
 #include "char_player.h"
 
@@ -16,6 +17,9 @@ public:
   DamnedEnemy(PlayerCharacter &player, Vector2 position);
   void update() override;
 
+  void neutralBehavior();
+  void stepForward();
+
   void draw(Vector2 &camera_target) override;
   void drawDebug() override;
 
@@ -23,4 +27,9 @@ public:
 private:
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  uint16_t player_dist;
+  uint16_t preferred_dist;
+  
+  float step_distance;
 };

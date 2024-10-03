@@ -1,5 +1,6 @@
 // combatants/enemy_damned.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include "globals.h"
 #include "base/combatant.h"
 #include "utils_camera.h"
@@ -17,12 +18,15 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
 
   anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.5;
+
+  step_distance = 10;
+  preferred_dist = 35;
 }
 
 void DamnedEnemy::update() {
   switch (state) {
     case NEUTRAL: {
-      Animation::play(this, sprites::damned, anim_walk, walk_frametime);
+      neutralBehavior();
       break;
     } 
     case HIT_STUN: {
@@ -38,6 +42,29 @@ void DamnedEnemy::update() {
       commandSequence();
     }
   }
+}
+
+void DamnedEnemy::neutralBehavior() {
+  float time_elapsed = CURRENT_TIME - frame_timestamp;
+
+  if (time_elapsed < walk_frametime) {
+    return;
+  }
+
+  int16_t x_offset = player->position.x - position.x;
+  direction = Clamp(x_offset, -1, 1);
+  player_dist = std::abs(x_offset);
+
+  if (player_dist > preferred_dist) {
+    stepForward();
+    Animation::play(this, sprites::damned, anim_walk, walk_frametime);
+  }
+}
+
+void DamnedEnemy::stepForward() {
+  position.x += step_distance * direction;
+  hitboxCorrection();
+  texRectCorrection();
 }
 
 void DamnedEnemy::draw(Vector2 &camera_target) {
