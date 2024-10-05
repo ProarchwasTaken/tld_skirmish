@@ -28,6 +28,9 @@ private:
   std::vector<int> anim_walk;
   float walk_frametime;
 
+  std::vector<int> anim_death;
+  float death_frametime;
+
   uint16_t player_dist;
   uint16_t preferred_dist;
   

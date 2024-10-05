@@ -19,6 +19,9 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
   anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.5;
 
+  anim_death = {4, 5};
+  death_frametime = 0.5;
+
   step_distance = 10;
   preferred_dist = 35;
 }
@@ -30,12 +33,14 @@ void DamnedEnemy::update() {
       break;
     } 
     case HIT_STUN: {
+      current_sprite = sprites::damned[3];
+
       applyKnockback(512);
       stunSequence();
       break;
     }
     case DEAD: {
-      awaiting_deletion = true;
+      deathSequence(sprites::damned, anim_death, death_frametime);
       break;
     }
     default: {
