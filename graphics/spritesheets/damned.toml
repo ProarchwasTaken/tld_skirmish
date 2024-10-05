@@ -13,3 +13,15 @@ area = {x = 64, y = 0, width = 64, height = 64}
 name = "walk_3"
 area = {x = 128, y = 0, width = 64, height = 64}
 
+[[damned.sprites]] # ID: 3
+name = "hit_stun"
+area = {x = 192, y = 0, width = 64, height = 64}
+
+[[damned.sprites]] # ID: 4
+name = "death_1"
+area = {x = 256, y = 0, width = 64, height = 64}
+
+[[damned.sprites]] # ID: 5
+name = "death_2"
+area = {x = 0, y = 64, width = 64, height = 64}
+
