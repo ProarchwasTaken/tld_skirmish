@@ -3,25 +3,45 @@ id = 8
 
 [[damned.sprites]] # ID: 0
 name = "walk_1"
-area = {x = 0, y = 0, width = 64, height = 64}
+area = {x = 0, y = 0, width = 96, height = 64}
 
 [[damned.sprites]] # ID: 1
 name = "walk_2"
-area = {x = 64, y = 0, width = 64, height = 64}
+area = {x = 96, y = 0, width = 96, height = 64}
 
 [[damned.sprites]] # ID: 2
 name = "walk_3"
-area = {x = 128, y = 0, width = 64, height = 64}
+area = {x = 192, y = 0, width = 96, height = 64}
 
 [[damned.sprites]] # ID: 3
 name = "hit_stun"
-area = {x = 192, y = 0, width = 64, height = 64}
+area = {x = 288, y = 0, width = 96, height = 64}
 
 [[damned.sprites]] # ID: 4
 name = "death_1"
-area = {x = 256, y = 0, width = 64, height = 64}
+area = {x = 0, y = 64, width = 96, height = 64}
 
 [[damned.sprites]] # ID: 5
 name = "death_2"
-area = {x = 0, y = 64, width = 64, height = 64}
+area = {x = 96, y = 64, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 6
+name = "grab_1"
+area = {x = 192, y = 64, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 7
+name = "grab_2"
+area = {x = 288, y = 64, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 8
+name = "grab_3"
+area = {x = 0, y = 128, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 9
+name = "grab_4"
+area = {x = 96, y = 128, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 10
+name = "grab_4_alt"
+area = {x = 192, y = 128, width = 96, height = 64}
 
