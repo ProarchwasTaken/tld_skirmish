@@ -593,7 +593,12 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw(Vector2 &camera_target) {
-  Actor::draw(camera_target);
+  if (current_sprite == NULL && state != NEUTRAL) {
+    return;
+  }
+  else {
+    Actor::draw(camera_target); 
+  }
   if (CameraUtils::onScreen(this, camera_target) == false) {
     return;
   }
