@@ -8,8 +8,11 @@
 #define DAM_HP 25
 #define DAM_STABILITY 0.50
 
-#define DAM_HITBOX_SCALE (Vector2){18, 56}
-#define DAM_HITBOX_OFFSET (Vector2){-9, -58}
+#define DAM_HIT_SCALE (Vector2){18, 56}
+#define DAM_HIT_OFFSET (Vector2){-9, -58}
+
+#define DAM_TEX_SCALE (Vector2){96, 64}
+#define DAM_TEX_OFFSET (Vector2){-48, -64}
 
 
 class DamnedEnemy : public Combatant {

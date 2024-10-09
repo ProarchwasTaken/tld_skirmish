@@ -11,7 +11,7 @@
 
 DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
   Combatant("Damned", TYPE_ENEMY, DAM_HP, DAM_STABILITY, position,
-            DAM_HITBOX_SCALE, {64, 64}, DAM_HITBOX_OFFSET)
+            DAM_HIT_SCALE, DAM_TEX_SCALE, DAM_HIT_OFFSET, DAM_TEX_OFFSET)
 {
   this->player = &player;
   current_sprite = sprites::damned[1];
