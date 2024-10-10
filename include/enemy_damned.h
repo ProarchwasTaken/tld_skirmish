@@ -1,4 +1,5 @@
 // enemy_damned.h
+#pragma once
 #include <raylib.h>
 #include <vector>
 #include <cstdint>
