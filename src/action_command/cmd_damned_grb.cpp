@@ -22,6 +22,20 @@ DamnedGrab::~DamnedGrab() {
   user->current_anim = NULL;
 }
 
+void DamnedGrab::setupHurtbox() {
+  float width = 35;
+  float half_width = width / 2;
+
+  float height = 32;
+
+  float x_offset = half_width * user->direction;
+
+  float x = (user->position.x - half_width) + x_offset;
+  float y = user->position.y - 56;
+
+  hurtbox = {x, y, width, height};
+}
+
 void DamnedGrab::chargeSequence(float time_elapsed) {
   ActionCommand::chargeSequence(time_elapsed);
 
@@ -30,6 +44,7 @@ void DamnedGrab::chargeSequence(float time_elapsed) {
 
   if (finished_charge) {
     user->current_sprite = sprites::damned[8];
+    setupHurtbox();
   }
 }
 
@@ -48,5 +63,11 @@ void DamnedGrab::recoverySequence(float time_elapsed) {
     uniform_int_distribution<int> range(5, 10);
     auto *enemy = static_cast<DamnedEnemy*>(user);
     enemy->cooldown_patience = range(RNG::generator);
+  }
+}
+
+void DamnedGrab::drawDebug() {
+  if (user->state == ACT) {
+    DrawRectangleLinesEx(hurtbox, 1, MAROON);
   }
 }

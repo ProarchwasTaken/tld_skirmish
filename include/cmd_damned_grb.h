@@ -17,7 +17,10 @@ public:
   void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
   void recoverySequence(float time_elapsed) override;
+
+  void drawDebug() override;
 private:
+  Rectangle hurtbox;
   PlayerCharacter *player;
 
   std::vector<int> anim_charge = {6, 7};
