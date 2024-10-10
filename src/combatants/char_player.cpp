@@ -414,10 +414,14 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
                                  float kb_velocity,
                                  uint8_t kb_direction)
 {
+  if (stun_time <= this->stun_time) {
+    stun_time = 0;
+  }
+
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
 
-  if (state == HIT_STUN) {
+  if (state == HIT_STUN && stun_time != 0) {
     current_sprite = sprites::player[7];
   }
 
