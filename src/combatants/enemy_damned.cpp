@@ -57,9 +57,8 @@ void DamnedEnemy::update() {
 }
 
 void DamnedEnemy::neutralBehavior() {
-  AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
-
   if (cooldown_patience != 0 || player->state == DEAD) {
+    AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
     current_sprite = sprites::damned[6];
     return;
   }
