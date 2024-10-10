@@ -221,6 +221,8 @@ void Combatant::stunSequence() {
   }
 
   PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
+  stun_time = 0;
+
   if (health > 0) {
     state = NEUTRAL;
     combo = 0;
