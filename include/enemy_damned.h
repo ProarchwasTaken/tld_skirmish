@@ -28,7 +28,11 @@ public:
   void drawDebug() override;
 
   PlayerCharacter *player;
+
+  uint8_t cooldown_patience = 0;
 private:
+  float tick_timestamp = 0;
+
   std::vector<int> anim_walk;
   float walk_frametime;
 

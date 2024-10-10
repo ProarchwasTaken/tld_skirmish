@@ -13,8 +13,10 @@ public:
   ~DamnedGrab();
 
   void setupHurtbox();
+
   void chargeSequence(float time_elapsed) override;
   void actSequence(float time_elapsed) override;
+  void recoverySequence(float time_elapsed) override;
 private:
   PlayerCharacter *player;
 

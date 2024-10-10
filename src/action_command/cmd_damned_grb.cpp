@@ -1,12 +1,15 @@
 // action_command/cmd_damned_grb.cpp
 #include <cstddef>
 #include <raylib.h>
+#include <random>
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "utils_animation.h"
 #include "enemy_damned.h"
 #include "cmd_damned_grb.h"
+
+using std::uniform_int_distribution;
 
 
 DamnedGrab::DamnedGrab(DamnedEnemy *user):
@@ -35,5 +38,15 @@ void DamnedGrab::actSequence(float time_elapsed) {
 
   if (finished_action) {
     user->current_sprite = sprites::damned[9];
+  }
+}
+
+void DamnedGrab::recoverySequence(float time_elapsed) {
+  ActionCommand::recoverySequence(time_elapsed);
+
+  if (finished_recovering) {
+    uniform_int_distribution<int> range(5, 10);
+    auto *enemy = static_cast<DamnedEnemy*>(user);
+    enemy->cooldown_patience = range(RNG::generator);
   }
 }

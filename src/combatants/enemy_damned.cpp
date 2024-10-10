@@ -5,8 +5,10 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include "utils_ai_behavior.h"
 #include "utils_camera.h"
 #include "utils_animation.h"
+#include "utils_enemies.h"
 #include "char_player.h"
 #include "cmd_damned_grb.h"
 #include "enemy_damned.h"
@@ -55,13 +57,14 @@ void DamnedEnemy::update() {
 }
 
 void DamnedEnemy::neutralBehavior() {
-  if (player->state == DEAD) {
+  AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
+
+  if (cooldown_patience != 0 || player->state == DEAD) {
     current_sprite = sprites::damned[6];
     return;
   }
 
   float time_elapsed = CURRENT_TIME - frame_timestamp;
-
   if (time_elapsed < walk_frametime) {
     return;
   }
@@ -107,6 +110,8 @@ void DamnedEnemy::draw(Vector2 &camera_target) {
 
 void DamnedEnemy::drawDebug() {
   Actor::drawDebug();
+
+  Enemies::drawPatience(this, cooldown_patience, BLUE, 0);
 
   if (isUsingCommand()) {
     current_command->drawDebug();
