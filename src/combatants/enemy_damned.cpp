@@ -1,12 +1,17 @@
 // combatants/enemy_damned.cpp
+#include <memory>
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
 #include "base/combatant.h"
+#include "base/action_command.h"
 #include "utils_camera.h"
 #include "utils_animation.h"
 #include "char_player.h"
+#include "cmd_damned_grb.h"
 #include "enemy_damned.h"
+
+using std::unique_ptr, std::make_unique;
 
 
 DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
@@ -50,6 +55,11 @@ void DamnedEnemy::update() {
 }
 
 void DamnedEnemy::neutralBehavior() {
+  if (player->state == DEAD) {
+    current_sprite = sprites::damned[6];
+    return;
+  }
+
   float time_elapsed = CURRENT_TIME - frame_timestamp;
 
   if (time_elapsed < walk_frametime) {
@@ -63,6 +73,11 @@ void DamnedEnemy::neutralBehavior() {
   if (player_dist > preferred_dist) {
     stepForward();
     Animation::play(this, sprites::damned, anim_walk, walk_frametime);
+  }
+  else {
+    unique_ptr<ActionCommand> command;
+    command = make_unique<DamnedGrab>(this);
+    useCommand(command);
   }
 }
 
