@@ -18,6 +18,11 @@ public:
   void actSequence(float time_elapsed) override;
   void playerHitCheck();
 
+  /* The main method for checking if the enemy has successfully grabbed
+   * the player. The results determines the rest of this ActionCommand's
+   * functionality.*/
+  bool grabCheck();
+
   void recoverySequence(float time_elapsed) override;
 
   void drawDebug() override;
