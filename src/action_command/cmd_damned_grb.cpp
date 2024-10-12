@@ -23,6 +23,10 @@ DamnedGrab::DamnedGrab(DamnedEnemy *user):
 
 DamnedGrab::~DamnedGrab() {
   user->current_anim = NULL;
+
+  if (player->visible == false) {
+    player->visible = true;
+  }
 }
 
 void DamnedGrab::setupHurtbox() {
@@ -59,7 +63,7 @@ void DamnedGrab::actSequence(float time_elapsed) {
   if (grabbed_player) {
     // I'm starting to think this line is more error prone than I
     // expected.
-    player->current_sprite = NULL;
+    player->visible = false;
 
     user->current_sprite = sprites::damned[10];
     recovery_time = grab_time;
@@ -105,7 +109,7 @@ void DamnedGrab::recoverySequence(float time_elapsed) {
     minimum_ticks = 15;
     maximum_ticks = 20;
 
-    player->current_sprite = sprites::player[7];
+    player->visible = true;
     player->setKnockback(1.0, user->direction);
   }
   else {

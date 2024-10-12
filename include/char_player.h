@@ -163,6 +163,7 @@ public:
   bool critical_health = false;
   bool endure = false;
 
+  bool visible = true;
   std::vector<uint8_t> input_buffer;
 private:
   uint8_t *game_phase;
