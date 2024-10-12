@@ -216,11 +216,15 @@ void Combatant::stunSequence() {
          "Method called while combatant is not in hit stun!");
 
   float time_elapsed = CURRENT_TIME - stun_timestamp;
-  if (time_elapsed < stun_time) {
-    return;
+  if (time_elapsed >= stun_time) {
+    PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
+    endStunSequence();
   }
+}
 
-  PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
+void Combatant::endStunSequence() {
+  assert(state == HIT_STUN && 
+         "Method called while combatant is not in hit stun!");
   stun_time = 0;
 
   if (health > 0) {

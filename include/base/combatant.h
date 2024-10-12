@@ -84,19 +84,25 @@ public:
    * makes sure that the combatant won't move past any boundaries.*/
   void applyKnockback(uint16_t boundary);
 
-  /* If a combatant's HP reaches 0, and the appropriate check is made,
-   * they are legally considered dead. When that happens, this method is 
-   * called. The death check is usually made after the combatant exits 
-   * HIT_STUN, or right after they received damaged to inflicts no hit 
-   * stun. What happens after the combatant dies is completely up to the 
-   * class that inherits from it.*/
+  /* Every now and then, the combatant makes a check to see if they are 
+   * legally considered dead. If so, this method is called to 
+   * "Seal the deal" so to speak. The death check is usually made after 
+   * the combatant exits HIT_STUN, or right after they received damage 
+   * that doesn't cause them to get sent into HIT_STUN. What happens 
+   * after the combatant dies is completely up to the class that 
+   * inherits from it.*/
   void death();
 
   /* Called once every frame of which the combatant is in hit stun. If a
-   * certain amount of time as passed and the combatant didn't take 
-   * damage during that time, a death check will be made. If the check 
-   * returns false, the combatant's state will be set back to neutral.*/
+   * certain amount of time has passed and the combatant didn't take 
+   * damage that doesn't cause their stun_timestamp to reset, they will
+   * automatically be taken out of hitstun.*/
   void stunSequence();
+
+  /* Recommended method for taking a combatant out of hit stun. Resets
+   * specific variables back to their default values, and it's one of
+   * a few places where the death check is made*/
+  void endStunSequence();
 
   /* For slowly regenerating a combatant's stability back to full at the
    * same rate of which an enemy's patience would tick down. The game use
