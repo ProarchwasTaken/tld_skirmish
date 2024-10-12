@@ -113,6 +113,13 @@ bool DamnedGrab::grabCheck() {
 void DamnedGrab::recoverySequence(float time_elapsed) {
   ActionCommand::recoverySequence(time_elapsed);
 
+  bool overkill = player->health == 0 && player->combo > 5;
+  if (overkill && player->state == HIT_STUN) {
+    finished_recovering = true;
+    player->endStunSequence();
+    user->state = NEUTRAL;
+  }
+
   if (finished_recovering == false) {
     return;
   }

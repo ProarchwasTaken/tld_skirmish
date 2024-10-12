@@ -32,6 +32,7 @@ private:
 
   // Never forget to define your variables kids.
   bool grabbed_player = false;
+
   float grab_time = 10.0;
   float stun_time;
 
