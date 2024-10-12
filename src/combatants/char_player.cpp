@@ -447,6 +447,10 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
   }
 }
 
+float PlayerCharacter::getStunTime() {
+  return this->stun_time;
+}
+
 void PlayerCharacter::healthCheck() {
   float life_percentage = static_cast<float>(health) / max_health;
 

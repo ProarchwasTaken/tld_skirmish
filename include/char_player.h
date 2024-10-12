@@ -150,6 +150,8 @@ public:
    * inevitable. Even so, it could make all the difference...*/
   void endureSequence();
 
+  float getStunTime();
+
   combatant_list *enemies;
 
   std::unique_ptr<SubWeapon> sub_weapon = nullptr;
