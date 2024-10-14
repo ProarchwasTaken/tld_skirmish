@@ -61,6 +61,7 @@ void DamnedGrab::actSequence(float time_elapsed) {
 
     user->current_sprite = sprites::damned[10];
     recovery_time = grab_time;
+    tick_timestamp = CURRENT_TIME;
   }
   else if (finished_action || player->parried_attack) {
     user->current_sprite = sprites::damned[9];
@@ -120,7 +121,11 @@ void DamnedGrab::repositionPlayer() {
 void DamnedGrab::recoverySequence(float time_elapsed) {
   ActionCommand::recoverySequence(time_elapsed);
 
-  bool overkill = player->health == 0 && player->combo >= 8;
+  if (grabbed_player) {
+    tickDamage();
+  }
+
+  bool overkill = player->health == 0 && player->combo >= 5;
   if (overkill && player->state == HIT_STUN) {
     finished_recovering = true;
     player->endStunSequence();
@@ -129,6 +134,14 @@ void DamnedGrab::recoverySequence(float time_elapsed) {
 
   if (finished_recovering) {
     resetCooldown();
+  }
+}
+
+void DamnedGrab::tickDamage() {
+  float time_elapsed = CURRENT_TIME - tick_timestamp;
+  if (time_elapsed >= tick_time) {
+    player->takeDamage(tick_damage, 0.0, 0.0);
+    tick_timestamp = CURRENT_TIME;
   }
 }
 

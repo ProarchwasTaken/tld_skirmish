@@ -26,6 +26,7 @@ public:
   void repositionPlayer();
 
   void recoverySequence(float time_elapsed) override;
+  void tickDamage();
   void resetCooldown();
 
   void drawDebug() override;
@@ -35,6 +36,10 @@ private:
 
   // Never forget to define your variables kids.
   bool grabbed_player = false;
+
+  float tick_damage = 2;
+  float tick_time = 1.5;
+  float tick_timestamp;
 
   float grab_time = 10.0;
   float stun_time;
