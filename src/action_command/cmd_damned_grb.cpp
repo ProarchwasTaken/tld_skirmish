@@ -8,6 +8,7 @@
 #include "utils_animation.h"
 #include "enemy_damned.h"
 #include "cmd_damned_grb.h"
+#include <plog/Log.h>
 
 using std::uniform_int_distribution;
 
@@ -123,6 +124,7 @@ void DamnedGrab::recoverySequence(float time_elapsed) {
 
   if (grabbed_player) {
     tickDamage();
+    struggleCheck();
   }
 
   bool overkill = player->health == 0 && player->combo >= 5;
@@ -142,6 +144,29 @@ void DamnedGrab::tickDamage() {
   if (time_elapsed >= tick_time) {
     player->takeDamage(tick_damage, 0.0, 0.0);
     tick_timestamp = CURRENT_TIME;
+  }
+}
+
+void DamnedGrab::struggleCheck() {
+  if (player->health == 0) {
+    return;
+  } 
+
+  float time_elapsed = CURRENT_TIME - input_timestamp;
+  if (time_elapsed < input_delay) {
+    return;
+  }
+
+  int input = GetKeyPressed() || GetGamepadButtonPressed();
+  if (input != 0) {
+    progress++;
+    input_timestamp = CURRENT_TIME;
+  }
+
+  if (progress >= threshold) {
+    player->enterHitStun(0.25);
+    resetCooldown();
+    user->enterHitStun(2.0);
   }
 }
 

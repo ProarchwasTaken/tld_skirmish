@@ -1,5 +1,6 @@
 // cmd_damned_grb.h
 #pragma once
+#include <cstdint>
 #include <raylib.h>
 #include <vector>
 #include "enemy_damned.h"
@@ -27,6 +28,11 @@ public:
 
   void recoverySequence(float time_elapsed) override;
   void tickDamage();
+
+  /* This method is for allowing the player to break free from being 
+   * grabbed early by mashing buttons. There's a input delay to prevent
+   * players from using macros or turbo buttons.*/
+  void struggleCheck();
   void resetCooldown();
 
   void drawDebug() override;
@@ -40,6 +46,12 @@ private:
   float tick_damage = 2;
   float tick_time = 1.5;
   float tick_timestamp;
+
+  uint8_t progress = 0;
+  uint8_t threshold = 30;
+
+  float input_delay = 0.05;
+  float input_timestamp = 0;
 
   float grab_time = 10.0;
   float stun_time;
