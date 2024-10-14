@@ -161,18 +161,27 @@ void Combatant::enterHitStun(float stun_time) {
   stun_timestamp = CURRENT_TIME;
 }
 
-void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
+void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction, 
+                             bool force) 
+{
+  if (force) {
+    PLOGW << "Knockback has been forcefully set on: " << name;
+    this->kb_velocity = kb_velocity;
+    this->kb_direction = kb_direction;
+    return;
+  }
+
   bool different_direction = this->kb_direction != kb_direction;
   bool greater_velocity = this->kb_velocity < kb_velocity;
 
-  if (greater_velocity) {
+  if (kb_velocity != 0 && greater_velocity) {
     PLOGD << "Updating knockback velocity to: " << kb_velocity;
     // I hope the decision of having both lines within this if statement 
     // won't come back to bite me later.
     this->kb_velocity = kb_velocity;
   } 
 
-  if (different_direction && kb_direction != 0) {
+  if (kb_direction != 0 && different_direction) {
     PLOGD << "Updated knockback direction.";
     this->kb_direction = kb_direction;
   }

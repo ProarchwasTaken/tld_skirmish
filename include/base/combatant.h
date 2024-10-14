@@ -78,7 +78,8 @@ public:
   /* What a function named "setKnockback" would do is beyond me. An 
    * absolute mystery. To be real, this function only updates the
    * knockback variables when certain conditions apply.*/
-  void setKnockback(float kb_velocity, uint8_t kb_direction);
+  void setKnockback(float kb_velocity, uint8_t kb_direction, 
+                    bool force = false);
 
   /* For applying knockback primarily, during the stun sequence. Also
    * makes sure that the combatant won't move past any boundaries.*/
