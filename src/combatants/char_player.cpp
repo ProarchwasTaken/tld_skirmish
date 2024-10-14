@@ -418,6 +418,12 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
     stun_time = 0;
   }
 
+  bool is_grabbed = this->stun_time >= 10.0;
+  if (is_grabbed) {
+    kb_velocity = 0.0;
+    kb_direction = 0.0;
+  }
+
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
 
