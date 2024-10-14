@@ -17,8 +17,7 @@ DamnedGrab::DamnedGrab(DamnedEnemy *user):
 {
   this->player = user->player;
 
-  // This is here so it would be consistant across all FPS ranges.
-  stun_time = (grab_time + 0.5) * DELTA_TIME;
+  stun_time = grab_time + 0.5;
 }
 
 DamnedGrab::~DamnedGrab() {
@@ -80,6 +79,7 @@ void DamnedGrab::playerHitCheck() {
   bool grab_successful = grabCheck();
   if (grab_successful) {
     player->enterHitStun(stun_time);
+    player->setKnockback(0, user->direction, true);
     grabbed_player = true;
   }
   else if (player->parried_attack) { 
@@ -92,7 +92,7 @@ void DamnedGrab::playerHitCheck() {
 }
 
 bool DamnedGrab::grabCheck() {
-  bool sufficent_stun = player->getStunTime() >= grab_time * DELTA_TIME;
+  bool sufficent_stun = player->getStunTime() >= stun_time;
   bool already_grabbed = player->state == HIT_STUN && sufficent_stun;
 
   if (already_grabbed) {
@@ -120,7 +120,7 @@ void DamnedGrab::repositionPlayer() {
 void DamnedGrab::recoverySequence(float time_elapsed) {
   ActionCommand::recoverySequence(time_elapsed);
 
-  bool overkill = player->health == 0 && player->combo > 10;
+  bool overkill = player->health == 0 && player->combo >= 8;
   if (overkill && player->state == HIT_STUN) {
     finished_recovering = true;
     player->endStunSequence();
