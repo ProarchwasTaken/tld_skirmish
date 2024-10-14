@@ -19,11 +19,14 @@ public:
   void playerHitCheck();
 
   /* The main method for checking if the enemy has successfully grabbed
-   * the player. The results determines the rest of this ActionCommand's
+   * the player.The results determines the rest of this ActionCommand's
    * functionality.*/
   bool grabCheck();
 
+  void repositionPlayer();
+
   void recoverySequence(float time_elapsed) override;
+  void resetCooldown();
 
   void drawDebug() override;
 private:
