@@ -99,3 +99,23 @@ path = "audio/sfx/wrh_warning.wav"
 [[sfx]]
 name = "wrh_attack"
 path = "audio/sfx/wrh_attack.wav"
+
+[[sfx]]
+name = "dam_damage_tick"
+path = "audio/sfx/dam_damage_tick.wav"
+
+[[sfx]]
+name = "dam_alert"
+path = "audio/sfx/dam_alert.wav"
+
+[[sfx]]
+name = "dam_release"
+path = "audio/sfx/dam_release.wav"
+
+[[sfx]]
+name = "dam_struggle"
+path = "audio/sfx/dam_struggle.wav"
+
+[[sfx]]
+name = "dam_struggle_free"
+path = "audio/sfx/dam_struggle_free.wav"

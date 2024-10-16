@@ -9,6 +9,7 @@
 #include "utils_camera.h"
 #include "utils_animation.h"
 #include "utils_enemies.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_damned_grb.h"
 #include "enemy_damned.h"
@@ -78,6 +79,8 @@ void DamnedEnemy::neutralBehavior() {
   }
   else {
     unique_ptr<ActionCommand> command;
+
+    SoundUtils::play("dam_alert");
     command = make_unique<DamnedGrab>(this);
     useCommand(command);
   }

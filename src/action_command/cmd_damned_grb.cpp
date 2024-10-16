@@ -6,6 +6,7 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "utils_animation.h"
+#include "utils_sound.h"
 #include "enemy_damned.h"
 #include "cmd_damned_grb.h"
 #include <plog/Log.h>
@@ -144,6 +145,8 @@ void DamnedGrab::tickDamage() {
   float time_elapsed = CURRENT_TIME - tick_timestamp;
   if (time_elapsed >= tick_time) {
     player->takeDamage(tick_damage, 0.0, 0.0);
+    SoundUtils::play("dam_damage_tick");
+
     tick_timestamp = CURRENT_TIME;
   }
 }
@@ -161,6 +164,8 @@ void DamnedGrab::struggleCheck() {
   int input = GetKeyPressed() || GetGamepadButtonPressed();
   if (input != 0) {
     progress++;
+
+    SoundUtils::play("dam_struggle");
     input_timestamp = CURRENT_TIME;
   }
 
@@ -168,6 +173,8 @@ void DamnedGrab::struggleCheck() {
     PLOGD << "Player has successfully broken free of grab.";
     player->enterHitStun(0.25);
     resetCooldown();
+    
+    SoundUtils::play("dam_struggle_free");
     user->enterHitStun(2.0);
   }
 }
@@ -192,6 +199,7 @@ void DamnedGrab::resetCooldown() {
 
     player->visible = true;
     player->setKnockback(1.0, user->direction);
+    SoundUtils::play("dam_release");
   }
   else {
     minimum_ticks = 5;
