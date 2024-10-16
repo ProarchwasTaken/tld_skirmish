@@ -78,13 +78,17 @@ void DamnedGrab::playerHitCheck() {
     return;
   }
 
+  PLOGD << "Hurtbox has collided with player hitbox.";
+
   bool grab_successful = grabCheck();
   if (grab_successful) {
+    PLOGD << "Successfully grabbed the player.";
     player->enterHitStun(stun_time);
     player->setKnockback(0, user->direction, true);
     grabbed_player = true;
   }
   else if (player->parried_attack) { 
+    PLOGD << "Player has parried the grab. Applying penalty.";
     recovery_time = recovery_time * 2;
     player->incrementMorale(3);
   }
@@ -94,10 +98,13 @@ void DamnedGrab::playerHitCheck() {
 }
 
 bool DamnedGrab::grabCheck() {
+  PLOGD << "Performing grab check.";
   bool sufficent_stun = player->getStunTime() >= stun_time;
   bool already_grabbed = player->state == HIT_STUN && sufficent_stun;
 
   if (already_grabbed) {
+    PLOGD << "Player is already grabbed."
+    " Proceeding to inflict basic damage.";
     player->takeDamage(6, 0.0, 0.0);
     return false;
   }
@@ -125,13 +132,7 @@ void DamnedGrab::recoverySequence(float time_elapsed) {
   if (grabbed_player) {
     tickDamage();
     struggleCheck();
-  }
-
-  bool overkill = player->health == 0 && player->combo >= 5;
-  if (overkill && player->state == HIT_STUN) {
-    finished_recovering = true;
-    player->endStunSequence();
-    user->state = NEUTRAL;
+    overkillCheck();
   }
 
   if (finished_recovering) {
@@ -164,9 +165,20 @@ void DamnedGrab::struggleCheck() {
   }
 
   if (progress >= threshold) {
+    PLOGD << "Player has successfully broken free of grab.";
     player->enterHitStun(0.25);
     resetCooldown();
     user->enterHitStun(2.0);
+  }
+}
+
+void DamnedGrab::overkillCheck() {
+  bool overkill = player->health == 0 && player->combo >= 5;
+  if (overkill && player->state == HIT_STUN) {
+    PLOGD << "Overkill condition reached.";
+    finished_recovering = true;
+    player->endStunSequence();
+    user->state = NEUTRAL;
   }
 }
 

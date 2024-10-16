@@ -17,22 +17,44 @@ public:
   void setupHurtbox();
 
   void actSequence(float time_elapsed) override;
+
+  /* The first step in the sequence would be checking if the hurtbox
+   * collides with the player's hitbox. Basically every other enemy
+   * ActionCommand has a method like this, and this is where the grabCheck
+   * is made if certain conditions are met.*/
   void playerHitCheck();
 
   /* The main method for checking if the enemy has successfully grabbed
-   * the player.The results determines the rest of this ActionCommand's
+   * the player. The results determines the rest of this ActionCommand's
    * functionality.*/
   bool grabCheck();
 
+  /* Should only be called after the enemy has successfully grabbed the
+   * player. Basically repositions the player to be in a certain distance
+   * in front of the Damned to match up with a certain sprite it uses.*/
   void repositionPlayer();
 
   void recoverySequence(float time_elapsed) override;
+
+  /* Responsible for having the player continuously take damage at a set 
+   * rate. Should only be called while if the enemy has successfully 
+   * grabbed the player.*/
   void tickDamage();
 
   /* This method is for allowing the player to break free from being 
    * grabbed early by mashing buttons. There's a input delay to prevent
    * players from using macros or turbo buttons.*/
   void struggleCheck();
+
+  /* For ending the recovery sequence early when the damage the
+   * player is taking while grabbed is starting to be a little "overkill"
+   * so to speak.*/
+  void overkillCheck();
+
+  /* This could be refered as a "wrap up" method that called right before
+   * the ActionCommand ends, and DamnedEnemy is set back to neutral. Reset
+   * the DamnedEnemy's cooldown_patience to a random value. The range is
+   * determined by a couple of factors.*/
   void resetCooldown();
 
   void drawDebug() override;
