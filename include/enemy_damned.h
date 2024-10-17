@@ -25,6 +25,7 @@ public:
   void stepForward();
 
   void draw(Vector2 &camera_target) override;
+  void shakeEffect(Rectangle &dest);
   void drawDebug() override;
 
   PlayerCharacter *player;

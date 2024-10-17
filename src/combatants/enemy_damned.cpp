@@ -1,4 +1,6 @@
 // combatants/enemy_damned.cpp
+#include <cassert>
+#include <cmath>
 #include <memory>
 #include <raylib.h>
 #include <raymath.h>
@@ -103,10 +105,25 @@ void DamnedEnemy::draw(Vector2 &camera_target) {
     source.width *= -1;
   }
 
-  DrawTexturePro(*current_sprite, source, tex_rect, {0, 0}, 0, WHITE);
+  Rectangle dest = tex_rect;
+  if (state == RECOVER) {
+    shakeEffect(dest);
+  }
+
+  DrawTexturePro(*current_sprite, source, dest, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE) {
     drawDebug();
+  }
+}
+
+void DamnedEnemy::shakeEffect(Rectangle &dest) {
+  assert(state == RECOVER);
+
+  auto *command = static_cast<DamnedGrab*>(current_command.get());
+  if (command->grabbed_player) {
+    float sinY = std::sin(CURRENT_TIME * 10) * 0.75;
+    dest.x += sinY;
   }
 }
 
