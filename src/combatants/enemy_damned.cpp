@@ -122,7 +122,8 @@ void DamnedEnemy::shakeEffect(Rectangle &dest) {
 
   auto *command = static_cast<DamnedGrab*>(current_command.get());
   if (command->grabbed_player) {
-    float sinY = std::sin(CURRENT_TIME * 10) * 0.75;
+    float time_elapsed = CURRENT_TIME - command->sequence_timestamp;
+    float sinY = std::sin(time_elapsed * 20) * 0.55;
     dest.x += sinY;
   }
 }
