@@ -60,7 +60,11 @@ void DamnedEnemy::update() {
 }
 
 void DamnedEnemy::neutralBehavior() {
-  if (cooldown_patience != 0 || player->state == DEAD) {
+  if (player->state == DEAD) {
+    current_sprite = sprites::damned[6];
+    return;
+  } 
+  else if (cooldown_patience != 0) {
     AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
     current_sprite = sprites::damned[6];
     return;
@@ -119,6 +123,10 @@ void DamnedEnemy::draw(Vector2 &camera_target) {
 
 void DamnedEnemy::shakeEffect(Rectangle &dest) {
   assert(state == RECOVER);
+
+  if (player->health == 0) {
+    return;
+  }
 
   auto *command = static_cast<DamnedGrab*>(current_command.get());
   if (command->grabbed_player) {
