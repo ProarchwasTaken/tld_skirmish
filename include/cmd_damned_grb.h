@@ -58,12 +58,13 @@ public:
   void resetCooldown();
 
   void drawDebug() override;
+
+  // Never forget to define your variables kids.
+  bool grabbed_player = false;
 private:
   PlayerCharacter *player;
   Rectangle hurtbox;
 
-  // Never forget to define your variables kids.
-  bool grabbed_player = false;
 
   float tick_damage = 2;
   float tick_time = 1.5;
