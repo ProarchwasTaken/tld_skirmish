@@ -81,6 +81,7 @@ void DamnedEnemy::neutralBehavior() {
 
   if (player_dist > preferred_dist) {
     stepForward();
+    SoundUtils::play("dam_footstep");
     Animation::play(this, sprites::damned, anim_walk, walk_frametime);
   }
   else {

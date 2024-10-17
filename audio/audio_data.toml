@@ -101,12 +101,16 @@ name = "wrh_attack"
 path = "audio/sfx/wrh_attack.wav"
 
 [[sfx]]
-name = "dam_damage_tick"
-path = "audio/sfx/dam_damage_tick.wav"
+name = "dam_footstep"
+path = "audio/sfx/dam_footstep.wav"
 
 [[sfx]]
 name = "dam_alert"
 path = "audio/sfx/dam_alert.wav"
+
+[[sfx]]
+name = "dam_damage_tick"
+path = "audio/sfx/dam_damage_tick.wav"
 
 [[sfx]]
 name = "dam_release"
