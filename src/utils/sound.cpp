@@ -58,8 +58,8 @@ void SoundUtils::playPro(std::string sound_name, const float volume,
 
   const Sound *sound = meta_data->sound;
   SetSoundVolume(*sound, volume);
-  SetSoundPitch(*sound, volume);
-  SetSoundPitch(*sound, pan);
+  SetSoundPitch(*sound, pitch);
+  SetSoundPan(*sound, pan);
   PlaySound(*sound);
 }
 
