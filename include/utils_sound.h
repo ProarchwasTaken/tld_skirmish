@@ -17,6 +17,10 @@ namespace SoundUtils {
    * function.*/
   void play(std::string sound_name, const float pitch);
 
+  /* For having full control over the sound's volumn, pitch, and pan.*/
+  void playPro(std::string sound_name, const float volume, 
+               const float pitch, const float pan);
+
   /* Stops a specific sound by it's name. Gives a warning if the sound 
    * was not playing at the time of this function being called.*/
   void stop(std::string sound_name);
