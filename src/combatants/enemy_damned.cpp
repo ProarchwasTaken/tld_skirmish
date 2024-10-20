@@ -70,6 +70,27 @@ void DamnedEnemy::neutralBehavior() {
     return;
   }
 
+  bool moving_away = player->direction == direction && player->moving;
+  bool states_apply = crashing_out == false && player->state == NEUTRAL;
+  if (moving_away && states_apply) {
+    AIBehavior::tickPatience(crashout_patience, tick_timestamp);
+  }
+
+  if (crashing_out == false && crashout_patience == 0) {
+    crashing_out = true;
+    current_sprite = sprites::damned[3];
+    crashout_timestamp = CURRENT_TIME;
+  }
+
+  if (crashing_out == false) {
+    normalProcedure();
+  }
+  else {
+    crashoutProcedure();
+  }
+}
+
+void DamnedEnemy::normalProcedure() {
   float time_elapsed = CURRENT_TIME - frame_timestamp;
   if (time_elapsed < walk_frametime) {
     return;
@@ -101,6 +122,10 @@ void DamnedEnemy::stepForward() {
   position.x += step_distance * direction;
   hitboxCorrection();
   texRectCorrection();
+}
+
+void DamnedEnemy::crashoutProcedure() {
+
 }
 
 void DamnedEnemy::draw(Vector2 &camera_target) {
@@ -145,6 +170,7 @@ void DamnedEnemy::drawDebug() {
   Actor::drawDebug();
 
   Enemies::drawPatience(this, cooldown_patience, BLUE, 0);
+  Enemies::drawPatience(this, crashout_patience, ORANGE, 10);
 
   if (isUsingCommand()) {
     current_command->drawDebug();

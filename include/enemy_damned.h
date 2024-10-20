@@ -22,7 +22,11 @@ public:
   void update() override;
 
   void neutralBehavior();
+
+  void normalProcedure();
   void stepForward();
+
+  void crashoutProcedure();
 
   void draw(Vector2 &camera_target) override;
   void shakeEffect(Rectangle &dest);
@@ -32,6 +36,10 @@ public:
 
   uint8_t cooldown_patience = 0;
 private:
+  uint8_t crashout_patience = 60;
+  bool crashing_out = false;
+  float crashout_timestamp = 0;
+
   float tick_timestamp = 0;
 
   std::vector<int> anim_walk;
