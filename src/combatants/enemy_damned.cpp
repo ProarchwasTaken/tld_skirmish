@@ -34,6 +34,7 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
 
   step_distance = 10;
   preferred_dist = 35;
+  crashout_dist = 175;
 }
 
 void DamnedEnemy::update() {
@@ -76,9 +77,15 @@ void DamnedEnemy::neutralBehavior() {
     AIBehavior::tickPatience(crashout_patience, tick_timestamp);
   }
 
-  if (crashing_out == false && crashout_patience == 0) {
+  if (crashing_out == false && shouldCrashout()) {
     crashing_out = true;
     current_sprite = sprites::damned[3];
+
+    int16_t x_offset = player->position.x - position.x;
+    float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
+    float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
+
+    SoundUtils::playPro("dam_screech", volume, 1.0, pan);
     crashout_timestamp = CURRENT_TIME;
   }
 
@@ -122,6 +129,22 @@ void DamnedEnemy::stepForward() {
   position.x += step_distance * direction;
   hitboxCorrection();
   texRectCorrection();
+}
+
+bool DamnedEnemy::shouldCrashout() {
+  if (crashout_patience != 0) {
+    return false;
+  }
+
+  int16_t x_offset = player->position.x - position.x;
+  float distance = std::abs(x_offset);
+
+  if (distance > crashout_dist) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 void DamnedEnemy::crashoutProcedure() {

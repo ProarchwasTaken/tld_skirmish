@@ -26,6 +26,7 @@ public:
   void normalProcedure();
   void stepForward();
 
+  bool shouldCrashout();
   void crashoutProcedure();
 
   void draw(Vector2 &camera_target) override;
@@ -50,6 +51,7 @@ private:
 
   uint16_t player_dist;
   uint16_t preferred_dist;
+  uint16_t crashout_dist;
   
   float step_distance;
 };
