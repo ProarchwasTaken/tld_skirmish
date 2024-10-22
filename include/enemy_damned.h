@@ -32,6 +32,10 @@ public:
   bool shouldCrashout();
   void crashoutProcedure();
 
+  void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
+                  float stun_time, float kb_velocity = 0, 
+                  int8_t kb_direction = 0) override;
+
   void draw(Vector2 &camera_target) override;
   void shakeEffect(Rectangle &dest);
   void drawDebug() override;

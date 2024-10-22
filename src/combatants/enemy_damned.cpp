@@ -193,6 +193,18 @@ void DamnedEnemy::crashoutProcedure() {
   }
 }
 
+void DamnedEnemy::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
+                             float stun_time, float kb_velocity, 
+                             int8_t kb_direction) 
+{
+  Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
+                        kb_velocity, kb_direction);
+
+  if (crashing_out && state == HIT_STUN) {
+    player->incrementMorale(1);
+  }
+}
+
 void DamnedEnemy::draw(Vector2 &camera_target) {
   Actor::draw(camera_target);
   if (CameraUtils::onScreen(this, camera_target) == false) {
