@@ -28,14 +28,14 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
 
   anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.5;
-  run_frametime = 0.2;
+  run_frametime = 0.01;
 
   anim_death = {4, 5};
   death_frametime = 0.5;
 
   step_distance = 10;
   preferred_dist = 35;
-  crashout_dist = 175;
+  crashout_dist = 75;
 }
 
 void DamnedEnemy::update() {
@@ -124,11 +124,7 @@ void DamnedEnemy::normalProcedure() {
     Animation::play(this, sprites::damned, anim_walk, walk_frametime);
   }
   else {
-    unique_ptr<ActionCommand> command;
-
-    SoundUtils::play("dam_alert");
-    command = make_unique<DamnedGrab>(this);
-    useCommand(command);
+    attemptGrab();
   }
 }
 
@@ -141,6 +137,14 @@ void DamnedEnemy::stepForward() {
 
   hitboxCorrection();
   texRectCorrection();
+}
+
+void DamnedEnemy::attemptGrab() {
+  unique_ptr<ActionCommand> command;
+
+  SoundUtils::play("dam_alert");
+  command = make_unique<DamnedGrab>(this);
+  useCommand(command);
 }
 
 bool DamnedEnemy::shouldCrashout() {
@@ -163,6 +167,29 @@ void DamnedEnemy::crashoutProcedure() {
   float since_crashout = CURRENT_TIME - crashout_timestamp;
   if (since_crashout < crashout_time) {
     return;
+  }
+
+  float time_elapsed = CURRENT_TIME - frame_timestamp;
+  if (time_elapsed < run_frametime) {
+    return;
+  }
+
+  int8_t old_direction = direction;
+
+  x_offset = player->position.x - position.x;
+  direction = Clamp(x_offset, -1, 1);
+  player_dist = std::abs(x_offset);
+
+  bool passed_player = old_direction != direction;
+  if (passed_player) {
+    attemptGrab();
+
+    crashing_out = false;
+    crashout_patience = 30;
+  }
+  else {
+    stepForward();
+    Animation::play(this, sprites::damned, anim_walk, run_frametime);
   }
 }
 

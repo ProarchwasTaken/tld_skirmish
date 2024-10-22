@@ -27,6 +27,7 @@ public:
 
   void normalProcedure();
   void stepForward();
+  void attemptGrab();
 
   bool shouldCrashout();
   void crashoutProcedure();
@@ -39,7 +40,7 @@ public:
 
   uint8_t cooldown_patience = 0;
 private:
-  uint8_t crashout_patience = 60;
+  uint8_t crashout_patience = 20;
 
   bool crashing_out = false;
   float crashout_time = 1.0;
