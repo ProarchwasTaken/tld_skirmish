@@ -22,6 +22,8 @@ public:
   void update() override;
 
   void neutralBehavior();
+  bool shouldProceed();
+  void crashout();
 
   void normalProcedure();
   void stepForward();
@@ -38,18 +40,23 @@ public:
   uint8_t cooldown_patience = 0;
 private:
   uint8_t crashout_patience = 60;
+
   bool crashing_out = false;
+  float crashout_time = 1.0;
   float crashout_timestamp = 0;
 
   float tick_timestamp = 0;
 
   std::vector<int> anim_walk;
   float walk_frametime;
+  float run_frametime;
 
   std::vector<int> anim_death;
   float death_frametime;
 
   uint16_t player_dist;
+  int16_t x_offset = 512;
+
   uint16_t preferred_dist;
   uint16_t crashout_dist;
   

@@ -28,6 +28,7 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
 
   anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.5;
+  run_frametime = 0.2;
 
   anim_death = {4, 5};
   death_frametime = 0.5;
@@ -61,12 +62,7 @@ void DamnedEnemy::update() {
 }
 
 void DamnedEnemy::neutralBehavior() {
-  if (player->state == DEAD) {
-    current_sprite = sprites::damned[6];
-    return;
-  } 
-  else if (cooldown_patience != 0) {
-    AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
+  if (shouldProceed() == false) {
     current_sprite = sprites::damned[6];
     return;
   }
@@ -78,15 +74,7 @@ void DamnedEnemy::neutralBehavior() {
   }
 
   if (crashing_out == false && shouldCrashout()) {
-    crashing_out = true;
-    current_sprite = sprites::damned[3];
-
-    int16_t x_offset = player->position.x - position.x;
-    float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
-    float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
-
-    SoundUtils::playPro("dam_screech", volume, 1.0, pan);
-    crashout_timestamp = CURRENT_TIME;
+    crashout();
   }
 
   if (crashing_out == false) {
@@ -97,23 +85,42 @@ void DamnedEnemy::neutralBehavior() {
   }
 }
 
+bool DamnedEnemy::shouldProceed() {
+  if (player->state == DEAD) {
+    return false;
+  } 
+  else if (cooldown_patience != 0) {
+    AIBehavior::tickPatience(cooldown_patience, tick_timestamp);
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+void DamnedEnemy::crashout() {
+  crashing_out = true;
+  current_sprite = sprites::damned[3];
+
+  float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
+  float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
+
+  SoundUtils::playPro("dam_screech", volume, 1.0, pan);
+  crashout_timestamp = CURRENT_TIME;
+}
+
 void DamnedEnemy::normalProcedure() {
   float time_elapsed = CURRENT_TIME - frame_timestamp;
   if (time_elapsed < walk_frametime) {
     return;
   }
 
-  int16_t x_offset = player->position.x - position.x;
+  x_offset = player->position.x - position.x;
   direction = Clamp(x_offset, -1, 1);
   player_dist = std::abs(x_offset);
 
   if (player_dist > preferred_dist) {
     stepForward();
-
-    float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
-    float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
-    SoundUtils::playPro("dam_footstep", volume, 1.0, pan);
-
     Animation::play(this, sprites::damned, anim_walk, walk_frametime);
   }
   else {
@@ -127,6 +134,11 @@ void DamnedEnemy::normalProcedure() {
 
 void DamnedEnemy::stepForward() {
   position.x += step_distance * direction;
+
+  float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
+  float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
+  SoundUtils::playPro("dam_footstep", volume, 1.0, pan);
+
   hitboxCorrection();
   texRectCorrection();
 }
@@ -148,7 +160,10 @@ bool DamnedEnemy::shouldCrashout() {
 }
 
 void DamnedEnemy::crashoutProcedure() {
-
+  float since_crashout = CURRENT_TIME - crashout_timestamp;
+  if (since_crashout < crashout_time) {
+    return;
+  }
 }
 
 void DamnedEnemy::draw(Vector2 &camera_target) {
