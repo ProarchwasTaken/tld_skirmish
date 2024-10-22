@@ -94,7 +94,7 @@ void Guard::stallCheck() {
 
 void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                        float stun_time, float kb_velocity, 
-                       uint8_t kb_direction)
+                       int8_t kb_direction)
 {
   if (user->state == RECOVER || user->stability < 0) {
     PLOGI << "Guard failed due to the user being in the recovery phase or"
@@ -155,7 +155,7 @@ bool Guard::guardFailed(float guard_pierce) {
 }
 
 void Guard::applyGuardBonus(float stun_time, float kb_velocity,
-                            uint8_t kb_direction) 
+                            int8_t kb_direction) 
 {
   guard_success = true;
   user->invulnerable = true;

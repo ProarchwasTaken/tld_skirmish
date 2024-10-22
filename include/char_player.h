@@ -139,7 +139,7 @@ public:
    * except it checks if the player is in low health afterwards.*/
   void takeDamage(uint16_t dmg_magnitude, float guard_pierce,
                   float stun_time, float kb_velocity = 0,
-                  uint8_t kb_direction = 0) override;
+                  int8_t kb_direction = 0) override;
 
   /* For checking if the player has reached or exited critical health, and
    * acting accordingly. Should be called right after the player's health

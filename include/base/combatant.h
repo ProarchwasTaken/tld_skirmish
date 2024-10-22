@@ -63,7 +63,7 @@ public:
    * will not be put into hit stun, and a death check will be made.*/
   virtual void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
                           float stun_time, float kb_velocity = 0, 
-                          uint8_t kb_direction = 0);
+                          int8_t kb_direction = 0);
 
   /* Acts as straight forward wrapper for creating a instance of Damage
    * Number, and positioning it right above the combatant's tex_rect.
@@ -78,7 +78,7 @@ public:
   /* What a function named "setKnockback" would do is beyond me. An 
    * absolute mystery. To be real, this function only updates the
    * knockback variables when certain conditions apply.*/
-  void setKnockback(float kb_velocity, uint8_t kb_direction, 
+  void setKnockback(float kb_velocity, int8_t kb_direction, 
                     bool force = false);
 
   /* For applying knockback primarily, during the stun sequence. Also

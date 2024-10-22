@@ -98,7 +98,7 @@ bool Combatant::isUsingCommand() {
 
 void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
                            float stun_time, float kb_velocity, 
-                           uint8_t kb_direction) 
+                           int8_t kb_direction) 
 {
   if (invulnerable || state == DEAD) {
     return;
@@ -161,7 +161,7 @@ void Combatant::enterHitStun(float stun_time) {
   stun_timestamp = CURRENT_TIME;
 }
 
-void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction, 
+void Combatant::setKnockback(float kb_velocity, int8_t kb_direction, 
                              bool force) 
 {
   if (force) {

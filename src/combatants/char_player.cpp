@@ -412,14 +412,12 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
                                  float guard_pierce, 
                                  float stun_time, 
                                  float kb_velocity,
-                                 uint8_t kb_direction)
+                                 int8_t kb_direction)
 {
-  if (stun_time <= this->stun_time) {
-    stun_time = 0;
-  }
-
   bool is_grabbed = this->stun_time >= 10.0;
   if (is_grabbed) {
+    PLOGD << "Detected that the player is grabbed.";
+    stun_time = 0;
     kb_velocity = 0.0;
     kb_direction = 0.0;
   }

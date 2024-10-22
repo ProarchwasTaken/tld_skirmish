@@ -36,7 +36,7 @@ public:
    * function.*/
   void guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                   float stun_time, float kb_velocity, 
-                  uint8_t kb_direction);
+                  int8_t kb_direction);
 
   /* Every combatant has a variable called "guard_stability". It's
    * primarily used to check if the user's guard is successful or not.*/
@@ -47,7 +47,7 @@ public:
    * reverted once the recovery sequence ends. If it wasn't canceled for 
    * any reason.*/
   void applyGuardBonus(float stun_time, float kb_velocity = 0, 
-                       uint8_t kb_direction = 0);
+                       int8_t kb_direction = 0);
 
   /* Returns true if the user has parried the attack. How the method knows
    * this is by checking if the user was hit within a certain timeframe.*/
