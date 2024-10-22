@@ -1,6 +1,7 @@
 // combatants/enemy_damned.cpp
 #include <cassert>
 #include <cmath>
+#include <cstdint>
 #include <memory>
 #include <raylib.h>
 #include <raymath.h>
@@ -109,6 +110,16 @@ void DamnedEnemy::crashout() {
   crashout_timestamp = CURRENT_TIME;
 }
 
+void DamnedEnemy::updateDirection(const float x_offset) {
+  int8_t new_direction = Clamp(x_offset, -1, 1);
+  if (new_direction == 0) {
+    return;
+  }
+  else {
+    direction = new_direction;
+  }
+}
+
 void DamnedEnemy::normalProcedure() {
   float time_elapsed = CURRENT_TIME - frame_timestamp;
   if (time_elapsed < walk_frametime) {
@@ -116,8 +127,8 @@ void DamnedEnemy::normalProcedure() {
   }
 
   x_offset = player->position.x - position.x;
-  direction = Clamp(x_offset, -1, 1);
   player_dist = std::abs(x_offset);
+  updateDirection(x_offset);
 
   if (player_dist > preferred_dist) {
     stepForward();
@@ -174,11 +185,11 @@ void DamnedEnemy::crashoutProcedure() {
     return;
   }
 
-  int8_t old_direction = direction;
-
   x_offset = player->position.x - position.x;
-  direction = Clamp(x_offset, -1, 1);
   player_dist = std::abs(x_offset);
+
+  int8_t old_direction = direction;
+  updateDirection(x_offset);
 
   bool passed_player = old_direction != direction;
   if (passed_player) {

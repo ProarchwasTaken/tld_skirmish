@@ -25,6 +25,8 @@ public:
   bool shouldProceed();
   void crashout();
 
+  void updateDirection(const float x_offset);
+
   void normalProcedure();
   void stepForward();
   void attemptGrab();
@@ -42,11 +44,11 @@ public:
 
   PlayerCharacter *player;
 
+  bool crashing_out = false;
   uint8_t cooldown_patience = 0;
 private:
   uint8_t crashout_patience = 20;
 
-  bool crashing_out = false;
   float crashout_time = 1.0;
   float crashout_timestamp = 0;
 
