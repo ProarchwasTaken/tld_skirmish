@@ -153,7 +153,10 @@ void DamnedEnemy::stepForward() {
 void DamnedEnemy::attemptGrab() {
   unique_ptr<ActionCommand> command;
 
-  SoundUtils::play("dam_alert");
+  if (crashing_out == false) {
+    SoundUtils::play("dam_alert");
+  }
+
   command = make_unique<DamnedGrab>(this);
   useCommand(command);
 }

@@ -16,6 +16,15 @@ public:
   void chargeSequence(float time_elapsed) override;
   void setupHurtbox();
 
+  /* If this ActionCommand is initialized while the enemy is
+   * "crashing out" various adjustments will be made so the charge
+   * sequence will function slightly differently.*/
+  void performAdjustments();
+
+  /* While crashing out, enemy will slowly decelerate to a halt during
+   * the charge phase. This method makes this functionality possible.*/
+  void decelerate();
+
   void actSequence(float time_elapsed) override;
 
   /* The first step in the sequence would be checking if the hurtbox
@@ -65,6 +74,10 @@ private:
   PlayerCharacter *player;
   Rectangle hurtbox;
 
+  bool crashing_out = false;
+  float max_momentum = 4.0;
+  int8_t momentum_direction = 0;
+  float percentage = 1.0;
 
   float tick_damage = 2;
   float tick_time = 1.5;

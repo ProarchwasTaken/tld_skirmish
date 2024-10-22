@@ -1,6 +1,9 @@
 // action_command/cmd_damned_grb.cpp
 #include <cstddef>
+#include <assert.h>
+#include <cstdint>
 #include <raylib.h>
+#include <raymath.h>
 #include <random>
 #include "globals.h"
 #include "base/combatant.h"
@@ -20,10 +23,29 @@ DamnedGrab::DamnedGrab(DamnedEnemy *user):
   this->player = user->player;
 
   stun_time = grab_time + 0.5;
+
+  crashing_out = user->crashing_out;
+  if (crashing_out) {
+    performAdjustments();
+  }
 }
 
 DamnedGrab::~DamnedGrab() {
   user->current_anim = NULL;
+}
+
+void DamnedGrab::performAdjustments() {
+  momentum_direction = user->direction * -1;
+  assert(momentum_direction != 0);
+
+  charge_time = 0.4;
+
+  if (player->state != NEUTRAL || player->moving == false) {
+    max_momentum = 2.5;
+  } 
+
+  user->invulnerable = true;
+  user->current_sprite = sprites::damned[7];
 }
 
 void DamnedGrab::setupHurtbox() {
@@ -43,13 +65,33 @@ void DamnedGrab::setupHurtbox() {
 void DamnedGrab::chargeSequence(float time_elapsed) {
   ActionCommand::chargeSequence(time_elapsed);
 
-  Animation::play(this->user, sprites::damned, anim_charge, 
-                  charge_frametime);
+  if (crashing_out) {
+    decelerate();
+  }
+  else {
+    Animation::play(this->user, sprites::damned, anim_charge, 
+                    charge_frametime);
+  }
 
   if (finished_charge) {
     user->current_sprite = sprites::damned[8];
+    user->invulnerable = false;
     setupHurtbox();
   }
+}
+
+void DamnedGrab::decelerate() {
+  if (percentage == 0.0) {
+    return;
+  }
+
+  const float momentum = Lerp(0, max_momentum, percentage);
+  user->position.x += (momentum * momentum_direction) * DELTA_TIME;
+  user->hitboxCorrection();
+  user->texRectCorrection();
+
+  percentage -= GetFrameTime() / charge_time;
+  percentage = Clamp(percentage, 0, max_momentum);
 }
 
 void DamnedGrab::actSequence(float time_elapsed) {
@@ -80,6 +122,11 @@ void DamnedGrab::playerHitCheck() {
   }
 
   PLOGD << "Hurtbox has collided with player hitbox.";
+  uint8_t morale_bonus = 3;
+
+  if (crashing_out) {
+    morale_bonus += 3;
+  }
 
   bool grab_successful = grabCheck();
   if (grab_successful) {
@@ -91,7 +138,7 @@ void DamnedGrab::playerHitCheck() {
   else if (player->parried_attack) { 
     PLOGD << "Player has parried the grab. Applying penalty.";
     recovery_time = recovery_time * 2;
-    player->incrementMorale(3);
+    player->incrementMorale(morale_bonus);
   }
 
   user->state = RECOVER;
