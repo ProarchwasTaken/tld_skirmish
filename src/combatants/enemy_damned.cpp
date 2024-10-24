@@ -156,6 +156,9 @@ void DamnedEnemy::attemptGrab() {
   if (crashing_out == false) {
     SoundUtils::play("dam_alert");
   }
+  else {
+    SoundUtils::play("dam_alert_alt");
+  }
 
   command = make_unique<DamnedGrab>(this);
   useCommand(command);

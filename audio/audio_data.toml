@@ -109,6 +109,10 @@ name = "dam_alert"
 path = "audio/sfx/dam_alert.wav"
 
 [[sfx]]
+name = "dam_alert_alt"
+path = "audio/sfx/dam_alert_alt.wav"
+
+[[sfx]]
 name = "dam_damage_tick"
 path = "audio/sfx/dam_damage_tick.wav"
 
