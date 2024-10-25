@@ -29,6 +29,8 @@ DamnedEnemy::DamnedEnemy(PlayerCharacter &player, Vector2 position):
 
   anim_walk = {0, 1, 2, 1};
   walk_frametime = 0.5;
+
+  anim_run = {11, 12, 13, 12};
   run_frametime = 0.01;
 
   anim_death = {4, 5};
@@ -206,7 +208,7 @@ void DamnedEnemy::crashoutProcedure() {
   }
   else {
     stepForward();
-    Animation::play(this, sprites::damned, anim_walk, run_frametime);
+    Animation::play(this, sprites::damned, anim_run, run_frametime);
   }
 }
 

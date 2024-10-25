@@ -45,3 +45,14 @@ area = {x = 96, y = 128, width = 96, height = 64}
 name = "grab_4_alt"
 area = {x = 192, y = 128, width = 96, height = 64}
 
+[[damned.sprites]] # ID: 11
+name = "walk_1_alt"
+area = {x = 288, y = 128, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 12
+name = "walk_2_alt"
+area = {x = 0, y = 192, width = 96, height = 64}
+
+[[damned.sprites]] # ID: 13
+name = "walk_3_alt"
+area = {x = 96, y = 192, width = 96, height = 64}

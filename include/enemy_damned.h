@@ -56,6 +56,8 @@ private:
 
   std::vector<int> anim_walk;
   float walk_frametime;
+
+  std::vector<int> anim_run;
   float run_frametime;
 
   std::vector<int> anim_death;
