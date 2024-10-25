@@ -62,7 +62,7 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::debugInputs() {
-  int unicode = GetKeyPressed();
+  int unicode = GetCharPressed();
   if (unicode != 0) {
     appendNumBuffer(unicode);
   }
