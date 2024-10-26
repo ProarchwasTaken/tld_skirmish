@@ -101,17 +101,6 @@ bool DamnedEnemy::shouldProceed() {
   }
 }
 
-void DamnedEnemy::crashout() {
-  crashing_out = true;
-  current_sprite = sprites::damned[3];
-
-  float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
-  float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
-
-  SoundUtils::playPro("dam_screech", volume, 1.0, pan);
-  crashout_timestamp = CURRENT_TIME;
-}
-
 void DamnedEnemy::updateDirection(const float x_offset) {
   int8_t new_direction = Clamp(x_offset, -1, 1);
   if (new_direction == 0) {
@@ -180,6 +169,17 @@ bool DamnedEnemy::shouldCrashout() {
   else {
     return false;
   }
+}
+
+void DamnedEnemy::crashout() {
+  crashing_out = true;
+  current_sprite = sprites::damned[3];
+
+  float volume = Clamp((x_offset / 512.0) + 1.1, 0, 1);
+  float pan = Clamp((x_offset / 512.0) + 0.5, 0, 1);
+
+  SoundUtils::playPro("dam_screech", volume, 1.0, pan);
+  crashout_timestamp = CURRENT_TIME;
 }
 
 void DamnedEnemy::crashoutProcedure() {

@@ -8,6 +8,17 @@
 #include "base/action_command.h"
 
 
+/* If the Damned could be considered the most complicated enemy in the
+ * game in terms of programming, then DamnedGrab would probably be the
+ * ActionCommand equivalent. I've recently came to realize that the 
+ * enemy and respective their action command are like two halfs of the 
+ * same whole.
+ *
+ * This ActionCommand is exclusive to the DamnedEnemy if you haven't
+ * figured it out. It's an unblockable attack that upon hitting, will
+ * cause the player to be grabbed, and dealt continuous damage until
+ * the recovery phase ends, or they successfully struggle out of the
+ * enemy's grasp.*/
 class DamnedGrab : public ActionCommand {
 public:
   DamnedGrab(DamnedEnemy *user);
