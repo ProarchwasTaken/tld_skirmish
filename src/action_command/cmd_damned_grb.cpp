@@ -227,7 +227,7 @@ void DamnedGrab::struggleCheck() {
 }
 
 void DamnedGrab::overkillCheck() {
-  bool overkill = player->health == 0 && player->combo >= 5;
+  bool overkill = player->health == 0 && player->combo >= 10;
   if (overkill && player->state == HIT_STUN) {
     PLOGD << "Overkill condition reached.";
     finished_recovering = true;
