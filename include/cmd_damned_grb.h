@@ -95,7 +95,7 @@ private:
   float tick_timestamp;
 
   uint8_t progress = 0;
-  uint8_t threshold = 30;
+  uint8_t threshold = 20;
 
   float input_delay = 0.05;
   float input_timestamp = 0;
