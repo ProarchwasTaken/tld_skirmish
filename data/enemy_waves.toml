@@ -14,6 +14,21 @@ enemies = [
   {enemy_id = 0, screen_side = 1, spawn_time = 20.0},
 ]
 
+[[waves]]
+name = "Vampires"
+id = 5
+
+difficulty = 1
+time_limit = 60
+
+enemies = [
+  {enemy_id = 2, screen_side = 1, spawn_time = 1.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 10.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 10.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 15.0},
+  {enemy_id = 2, screen_side = -1, spawn_time = 20.0},
+]
+
 
 # Difficulty - 2
 [[waves]]
@@ -49,6 +64,24 @@ enemies = [
   {enemy_id = 0, screen_side = -1, spawn_time = 18.0},
   {enemy_id = 0, screen_side = 1, spawn_time = 18.0}, 
 ]
+
+[[waves]]
+name = "The Coven"
+id = 6
+
+difficulty = 2
+time_limit = 80
+
+enemies = [
+  {enemy_id = 0, screen_side = -1, spawn_time = 2.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 2.5},
+  {enemy_id = 2, screen_side = -1, spawn_time = 10.0},
+  {enemy_id = 1, screen_side = -1, spawn_time = 15.0},
+  {enemy_id = 2, screen_side = 1, spawn_time = 20.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 25.0},
+  {enemy_id = 1, screen_side = 1, spawn_time = 30.0}
+]
+
 
 # Difficulty - 3
 [[waves]]
@@ -87,4 +120,23 @@ enemies = [
   {enemy_id = 0, screen_side = -1, spawn_time = 24.0},
   {enemy_id = 1, screen_side = 1, spawn_time = 40.0},
   {enemy_id = 0, screen_side = 1, spawn_time = 42.0},
+]
+
+
+[[waves]]
+name = "Tribulation"
+id = 7
+
+difficulty = 3
+time_limit = 100
+
+enemies = [
+  {enemy_id = 2, screen_side = 1, spawn_time = 0.0},
+  {enemy_id = 1, screen_side = -1, spawn_time = 3.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 10.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 10.0},
+  {enemy_id = 2, screen_side = -1, spawn_time = 15.0},
+  {enemy_id = 0, screen_side = 1, spawn_time = 28.0},
+  {enemy_id = 2, screen_side = 1, spawn_time = 35.0},
+  {enemy_id = 0, screen_side = -1, spawn_time = 45.0}
 ]

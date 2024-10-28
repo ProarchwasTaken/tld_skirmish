@@ -16,6 +16,7 @@
 #include "data/data_enemy.h"
 #include "enemy_ghoul.h"
 #include "enemy_wretch.h"
+#include "enemy_damned.h"
 #include "sys_wave_manager.h"
 #include <plog/Log.h>
 
@@ -181,6 +182,10 @@ void WaveManager::spawnEnemy(uint8_t enemy_id, int8_t spawn_side) {
     }
     case ENEMY_WRETCH: {
       enemies->push_back(make_shared<WretchEnemy>(*player, position));
+      break;
+    }
+    case ENEMY_DAMNED: {
+      enemies->push_back(make_shared<DamnedEnemy>(*player, position));
       break;
     }
     default: {
