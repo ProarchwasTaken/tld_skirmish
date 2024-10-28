@@ -194,6 +194,7 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
     user->parried_attack = true;
 
     user->stability += user->max_stability * 0.25;
+    user->stability = Clamp(user->stability, 0, user->max_stability);
 
     applyGuardBonus(stun_time);
     return true;
