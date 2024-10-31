@@ -18,6 +18,7 @@
 #include "cmd_guard.h"
 #include "weapon_knife.h"
 #include "weapon_ball.h"
+#include "weapon_gun.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -70,6 +71,11 @@ void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
     case WEAPON_BALL: {
       sub_weapon.reset();
       sub_weapon = make_unique<WeaponBall>(this);
+      break;
+    }
+    case WEAPON_GUN: {
+      sub_weapon.reset();
+      sub_weapon = make_unique<WeaponGun>(this);
       break;
     }
     default: {

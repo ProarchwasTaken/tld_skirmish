@@ -25,6 +25,7 @@
 
 #define WEAPON_KNIFE 0
 #define WEAPON_BALL 1
+#define WEAPON_GUN 2
 
 
 /* The playable character, the controllable avatar for the user. The most
