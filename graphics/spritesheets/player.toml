@@ -112,3 +112,24 @@ area = {x = 384, y = 128, width = 64, height = 64}
 [[player.sprites]] # ID: 27
 name = "ball_heavy3"
 area = {x = 448, y = 128, width = 64, height = 64}
+
+[[player.sprites]] # ID: 28
+name = "gun_light1"
+area = {x = 512, y = 128, width = 64, height = 64}
+
+[[player.sprites]] # ID: 29
+name = "gun_light2"
+area = {x = 576, y = 128, width = 64, height = 64}
+
+[[player.sprites]] # ID: 30
+name = "gun_light3"
+area = {x = 0, y = 192, width = 64, height = 64}
+
+[[player.sprites]] # ID: 31
+name = "gun_light4"
+area = {x = 64, y = 192, width = 64, height = 64}
+
+[[player.sprites]] # ID 32
+name = "gun_light5"
+area = {x = 128, y = 192, width = 64, height = 64}
+
