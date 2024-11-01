@@ -62,14 +62,24 @@ public:
    * determined by user input.*/
   bool isMoving();
 
+  bool isMoving(const std::vector<Texture*> &sprite_list, 
+                std::vector<int> &frame_order, const float frame_time,
+                const bool custom_neutral, 
+                Texture *neutral_sprite = NULL);
+
+  /* Usually this is automatically called when the player isn't doing
+   * anything special. Basically makes the sprite the default sprite that
+   * fits the current game phase.*/
+  void useNeutralSprite();
+
   /* Updates the player's direction depending on user input.*/
   void updateDirection();
 
-  /* For moving the player towards the direction they're facing while
-   * also preventing them from going out of bounds. If you want the player
-   * to move automatically for whatever reason, set the boolean to true.
-   * This could be easily broken if you don't know what to do.*/
-  void movement(float speed, bool automatic);
+  /* The one method that's primarily used for moving the player other than
+   * applyKnockback. With the assistance of other functions, it allows the
+   * player to move freely in both directions. It's also extremely
+   * versatile for a multitude of uses.*/
+  void movement(float speed, bool automatic, int8_t *direction = NULL);
 
   /* This could be referred as a versitile wrapper for the movement 
    * method. It decelerates the player's movement through the use of a 

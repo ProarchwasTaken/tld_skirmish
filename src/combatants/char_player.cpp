@@ -134,7 +134,34 @@ bool PlayerCharacter::isMoving() {
     Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
+  else { 
+    useNeutralSprite();
+    return false;
+  }
+}
 
+bool PlayerCharacter::isMoving(const std::vector<Texture*> &sprite_list, 
+                               std::vector<int> &frame_order, 
+                               const float frame_time, 
+                               const bool custom_neutral, 
+                               Texture *neutral_sprite)
+{
+  if (moving_left != moving_right) {
+    Animation::play(this, sprite_list, frame_order, frame_time);
+    return true;
+  }
+  else if (custom_neutral == false) {
+    useNeutralSprite();
+    return false;
+  }
+  else {
+    assert(neutral_sprite != NULL);
+    current_sprite = neutral_sprite;
+    return false;
+  }
+}
+
+void PlayerCharacter::useNeutralSprite() {
   switch (*game_phase) {
     case PHASE_REST: {
       current_sprite = sprites::player[0];
@@ -145,7 +172,6 @@ bool PlayerCharacter::isMoving() {
       break;
     }
   }
-  return false;
 }
 
 void PlayerCharacter::updateDirection() {
@@ -157,14 +183,24 @@ void PlayerCharacter::updateDirection() {
   }
 }
 
-void PlayerCharacter::movement(float speed, bool automatic) {
+void PlayerCharacter::movement(float speed, bool automatic, 
+                               int8_t *direction) 
+{
   if (!moving && automatic == false) {
     return;
   }
 
-  float magnitude = (speed * direction) * DELTA_TIME;
+  int8_t move_direction;
+  if (direction != NULL) {
+    move_direction = *direction;
+  }
+  else {
+    move_direction = this->direction;
+  }
+
+  float magnitude = (speed * move_direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
-  float offset = position.x + magnitude + (half_scaleX * direction);
+  float offset = position.x + magnitude + (half_scaleX * move_direction);
 
   if (offset < -PLR_BOUNDS) {
     position.x = -PLR_BOUNDS + half_scaleX;
