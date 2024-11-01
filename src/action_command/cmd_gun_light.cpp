@@ -1,5 +1,6 @@
 // action_command/cmd_gun_light.cpp
 #include <cassert>
+#include <cstdint>
 #include <cstdlib>
 #include <raylib.h>
 #include <vector>
@@ -121,6 +122,7 @@ void GunLight::probeClosestEnemy(vector<Combatant*> &detected_enemies) {
 
 void GunLight::actSequence(float time_elapsed) {
   if (hit_enemy && techInputHeldDown()) {
+    slowMovement();
     tickDamage();
     return;
   }
@@ -142,6 +144,23 @@ bool GunLight::techInputHeldDown() {
   }
 
   return key_a || btn_face_left;
+}
+
+void GunLight::slowMovement() {
+  int8_t move_direction = 0;
+  if (player->moving_right) {
+    move_direction = RIGHT;
+  }
+  else if (player->moving_left) {
+    move_direction = LEFT;
+  }
+
+  player->moving = player->isMoving(anim_slow, slow_frametime, true,
+                                    sprites::player[29]);
+  if (move_direction != 0) {
+    player->movement(player->movement_speed * 0.5, false, 
+                     &move_direction);
+  }
 }
 
 void GunLight::tickDamage() {

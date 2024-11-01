@@ -22,7 +22,9 @@ public:
   void probeClosestEnemy(std::vector<Combatant*> &detected_enemies);
 
   void actSequence(float time_elapsed) override;
+
   bool techInputHeldDown();
+  void slowMovement();
   void tickDamage();
 private:
   combatant_list *enemies;
@@ -41,4 +43,7 @@ private:
 
   std::vector<int> anim_charge = {28, 29};
   float charge_frametime = 0.2;
+
+  std::vector<int> anim_slow = {29, 30, 31, 30};
+  float slow_frametime = 0.15;
 };
