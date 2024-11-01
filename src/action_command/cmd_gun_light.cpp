@@ -121,12 +121,13 @@ void GunLight::probeClosestEnemy(vector<Combatant*> &detected_enemies) {
 
 void GunLight::actSequence(float time_elapsed) {
   if (hit_enemy && techInputHeldDown()) {
+    tickDamage();
     return;
   }
 
   ActionCommand::actSequence(time_elapsed);
 
-  if (finished_charge) {
+  if (finished_action) {
     player->current_sprite = sprites::player[32];
   }
 }
@@ -141,4 +142,28 @@ bool GunLight::techInputHeldDown() {
   }
 
   return key_a || btn_face_left;
+}
+
+void GunLight::tickDamage() {
+  float time_elapsed = CURRENT_TIME - tick_timestamp;
+
+  if (time_elapsed < tick_time) {
+    return;
+  }
+
+  assert(probed_enemy != NULL);
+  probed_enemy->takeDamage(tick_damage, 0.25, 1.0);
+
+  if (player->morale < tick_cost) {
+    player->current_sprite = sprites::player[32];
+    finished_action = true;
+
+    player->state = RECOVER;
+    sequence_timestamp = CURRENT_TIME;
+  }
+  else {
+    player->morale -= tick_cost;
+  }
+
+  tick_timestamp = CURRENT_TIME;
 }

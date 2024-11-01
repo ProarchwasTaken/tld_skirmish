@@ -12,7 +12,7 @@ using std::make_unique, std::unique_ptr;
 
 
 WeaponGun::WeaponGun(PlayerCharacter *player) : 
-  SubWeapon(player, "Stun Gun", 0, 0) 
+  SubWeapon(player, "Stun Gun", 2, 0) 
 {
 
 }
