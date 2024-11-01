@@ -62,8 +62,7 @@ public:
    * determined by user input.*/
   bool isMoving();
 
-  bool isMoving(const std::vector<Texture*> &sprite_list, 
-                std::vector<int> &frame_order, const float frame_time,
+  bool isMoving(std::vector<int> &frame_order, const float frame_time,
                 const bool custom_neutral, 
                 Texture *neutral_sprite = NULL);
 
@@ -172,6 +171,8 @@ public:
 
   bool moving;
   float movement_speed;
+  bool moving_right = false;
+  bool moving_left = false;
 
   bool critical_health = false;
   bool endure = false;
@@ -198,7 +199,4 @@ private:
 
   float regen_time;
   float regen_timestamp = 0;
-
-  bool moving_right = false;
-  bool moving_left = false;
 };

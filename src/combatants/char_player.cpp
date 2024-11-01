@@ -140,14 +140,13 @@ bool PlayerCharacter::isMoving() {
   }
 }
 
-bool PlayerCharacter::isMoving(const std::vector<Texture*> &sprite_list, 
-                               std::vector<int> &frame_order, 
+bool PlayerCharacter::isMoving(std::vector<int> &frame_order, 
                                const float frame_time, 
                                const bool custom_neutral, 
                                Texture *neutral_sprite)
 {
   if (moving_left != moving_right) {
-    Animation::play(this, sprite_list, frame_order, frame_time);
+    Animation::play(this, sprites::player, frame_order, frame_time);
     return true;
   }
   else if (custom_neutral == false) {
