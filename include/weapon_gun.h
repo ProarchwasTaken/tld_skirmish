@@ -8,7 +8,9 @@
 class WeaponGun : public SubWeapon {
 public:
   WeaponGun(PlayerCharacter *player);
+
   std::unique_ptr<ActionCommand> lightTechnique() override;
+  void lightTechHandling() override;
 
   float cooldown_time = 0;
 };

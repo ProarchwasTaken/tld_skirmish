@@ -29,13 +29,14 @@ public:
   void slowMovement();
   void tickDamage();
   void rangeCheck();
+
+  bool hit_enemy = false;
 private:
   combatant_list *enemies;
   PlayerCharacter *player;
 
   float max_range = 128;
   Combatant *probed_enemy = NULL;
-  bool hit_enemy = false;
 
   float tick_time = 0.75;
   float tick_timestamp = 0;
