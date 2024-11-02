@@ -124,6 +124,7 @@ void GunLight::actSequence(float time_elapsed) {
   if (hit_enemy && techInputHeldDown()) {
     slowMovement();
     tickDamage();
+    rangeCheck();
     return;
   }
 
@@ -163,6 +164,12 @@ void GunLight::slowMovement() {
   }
 }
 
+void GunLight::detachProbes() {
+  player->current_sprite = sprites::player[32];
+  player->state = RECOVER;
+  sequence_timestamp = CURRENT_TIME;
+}
+
 void GunLight::tickDamage() {
   float time_elapsed = CURRENT_TIME - tick_timestamp;
 
@@ -174,15 +181,20 @@ void GunLight::tickDamage() {
   probed_enemy->takeDamage(tick_damage, 0.25, 1.0);
 
   if (player->morale < tick_cost) {
-    player->current_sprite = sprites::player[32];
-    finished_action = true;
-
-    player->state = RECOVER;
-    sequence_timestamp = CURRENT_TIME;
+    detachProbes();
   }
   else {
     player->morale -= tick_cost;
   }
 
   tick_timestamp = CURRENT_TIME;
+}
+
+void GunLight::rangeCheck() {
+  float x_offset = probed_enemy->position.x - player->position.x;
+  float distance = std::abs(x_offset);
+
+  if (distance > max_range) {
+    detachProbes();
+  }
 }

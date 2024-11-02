@@ -15,8 +15,8 @@ public:
   ~GunLight();
 
   void chargeSequence(float time_elapsed) override;
-
   void enemyHitCheck();
+
   Rectangle setupHurtbox();
   void enemyDetection(std::vector<Combatant*> *detected_enemies);
   void probeClosestEnemy(std::vector<Combatant*> &detected_enemies);
@@ -24,8 +24,11 @@ public:
   void actSequence(float time_elapsed) override;
 
   bool techInputHeldDown();
+
+  void detachProbes();
   void slowMovement();
   void tickDamage();
+  void rangeCheck();
 private:
   combatant_list *enemies;
   PlayerCharacter *player;
@@ -38,8 +41,7 @@ private:
   float tick_timestamp = 0;
 
   uint8_t tick_cost = 2;
-  uint8_t tick_damage = 2;
-  
+  uint8_t tick_damage = 2; 
 
   std::vector<int> anim_charge = {28, 29};
   float charge_frametime = 0.2;
