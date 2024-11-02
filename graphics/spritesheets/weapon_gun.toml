@@ -1,0 +1,6 @@
+[weapon_gun]
+id = 9
+
+[[weapon_gun.sprites]] # ID: 0
+name = "probe"
+area = {x = 0, y = 0, width = 8, height = 5}
