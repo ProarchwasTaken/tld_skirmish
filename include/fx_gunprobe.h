@@ -17,7 +17,6 @@ public:
   void draw(Vector2 &camera_target) override;
   
 private:
-  int8_t direction = RIGHT;
   float y_level = 102;
 
   PlayerCharacter *player;

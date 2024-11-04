@@ -44,17 +44,8 @@ bool GunProbe::shouldDelete() {
 }
 
 void GunProbe::positionCorrection() {
-  float x_offset = probed_enemy->position.x - player->position.x;
-
-  if (x_offset <= 0) {
-    direction = LEFT;
-  }
-  else {
-    direction = RIGHT;
-  }
-
   position.x = probed_enemy->position.x;
-  position.x -= (tex_scale.x / 2) * direction;
+  position.x -= (tex_scale.x / 2) * player->direction;
 
   position.y = y_level;
   texRectCorrection();
@@ -68,10 +59,11 @@ void GunProbe::draw(Vector2 &camera_target) {
   }
 
   float offset = 29 * player->direction;
+
   Vector2 end_position = {player->position.x + offset, y_level};
   DrawLineV(position, end_position, BLACK);
 
-  Rectangle source = {0, 0, tex_scale.x * direction, tex_scale.y};
+  Rectangle source = {0, 0, tex_scale.x * player->direction, tex_scale.y};
   DrawTexturePro(*current_sprite, source, tex_rect, {0, 0}, 0, WHITE);
 
   if (DEBUG_MODE) {
