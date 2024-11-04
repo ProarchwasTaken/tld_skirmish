@@ -131,18 +131,17 @@ void GunLight::probeClosestEnemy(vector<Combatant*> &detected_enemies) {
 void GunLight::actSequence(float time_elapsed) {
   if (hit_enemy && techInputHeldDown()) {
     slowMovement();
+    rangeCheck();
+
     tickDamage();
     moraleDrain();
-    rangeCheck();
     return;
   }
 
   ActionCommand::actSequence(time_elapsed);
 
   if (finished_action) {
-    player->current_sprite = sprites::player[32];
-    SoundUtils::stop("gun_light_tick");
-    SoundUtils::play("gun_light_snap");
+    wrapup();
   }
 }
 
@@ -156,6 +155,25 @@ bool GunLight::techInputHeldDown() {
   }
 
   return key_a || btn_face_left;
+}
+
+void GunLight::wrapup() {
+  player->current_sprite = sprites::player[32];
+  player->camera_position = player->position.x;
+
+  SoundUtils::stop("gun_light_tick");
+  SoundUtils::play("gun_light_snap");
+}
+
+void GunLight::detachProbes() {
+  if (player->state == RECOVER) {
+    return;
+  }
+
+  wrapup();
+
+  player->state = RECOVER;
+  sequence_timestamp = CURRENT_TIME;
 }
 
 void GunLight::slowMovement() {
@@ -173,16 +191,6 @@ void GunLight::slowMovement() {
     player->movement(player->movement_speed * 0.5, false, 
                      &move_direction);
   }
-}
-
-void GunLight::detachProbes() {
-  player->current_sprite = sprites::player[32];
-  player->state = RECOVER;
-
-  SoundUtils::stop("gun_light_tick");
-  SoundUtils::play("gun_light_snap");
-
-  sequence_timestamp = CURRENT_TIME;
 }
 
 void GunLight::tickDamage() {
@@ -215,7 +223,7 @@ void GunLight::moraleDrain() {
 
 void GunLight::rangeCheck() {
   float x_offset = probed_enemy->position.x - player->position.x;
-  float distance = std::abs(x_offset);
+  player->camera_position = player->position.x + (x_offset / 2);
 
   if (x_offset <= -32) {
     player->direction = LEFT;
@@ -224,6 +232,7 @@ void GunLight::rangeCheck() {
     player->direction = RIGHT;
   }
 
+  float distance = std::abs(x_offset);
   if (distance > max_range) {
     detachProbes();
   }

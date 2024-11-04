@@ -25,7 +25,9 @@ public:
 
   bool techInputHeldDown();
 
+  void wrapup();
   void detachProbes();
+
   void slowMovement();
   void tickDamage();
   void moraleDrain();
