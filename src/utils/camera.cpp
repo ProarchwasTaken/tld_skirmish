@@ -7,7 +7,8 @@
 #include "utils_camera.h"
 
 
-void CameraUtils::follow(Camera2D &camera, const float x_position) 
+void CameraUtils::follow(Camera2D &camera, const float x_position,
+                         const float max_speed) 
 {
   bool off_center = std::abs(camera.target.x - x_position) > 0.01;
   if (off_center == false) {
@@ -15,7 +16,7 @@ void CameraUtils::follow(Camera2D &camera, const float x_position)
   }
 
   const float x_difference = x_position - camera.target.x;
-  const float next_x = x_difference / 8;
+  const float next_x = Clamp(x_difference / 8, -max_speed, max_speed);
   int direction;
 
   if (x_difference > 0) {

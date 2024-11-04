@@ -119,7 +119,7 @@ void DebugScene::appendNumBuffer(int unicode) {
 
 void DebugScene::updateScene() {
   player.update();
-  CameraUtils::follow(camera, player.camera_position);
+  CameraUtils::follow(camera, player.camera_position, 2.5);
 
   for (auto enemy : enemies) {
     enemy->update();
