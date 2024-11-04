@@ -80,7 +80,7 @@ void DebugScene::debugInputs() {
   }
 
   if (IsKeyPressed(KEY_R)) {
-    wave_manager.reloadWaveData();
+    player.morale = player.max_morale;
   }
 
   if (IsKeyPressed(KEY_K)) {
