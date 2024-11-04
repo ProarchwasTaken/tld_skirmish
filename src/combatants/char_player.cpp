@@ -107,6 +107,8 @@ void PlayerCharacter::update() {
     }
     case HIT_STUN: {
       applyKnockback(PLR_BOUNDS);
+      camera_position = position.x;
+
       stunSequence();
       break;
     }
@@ -210,6 +212,8 @@ void PlayerCharacter::movement(float speed, bool automatic,
   else {
     position.x += magnitude;
   }
+
+  camera_position = position.x;
 
   hitboxCorrection();
   texRectCorrection();

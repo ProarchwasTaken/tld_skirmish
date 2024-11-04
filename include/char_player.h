@@ -163,8 +163,9 @@ public:
   float getStunTime();
 
   combatant_list *enemies;
-
   std::unique_ptr<SubWeapon> sub_weapon = nullptr;
+  
+  float camera_position = 0;
 
   uint8_t morale;
   uint8_t max_morale;
