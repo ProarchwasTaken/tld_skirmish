@@ -10,8 +10,10 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "base/generics.h"
-#include "char_player.h"
 #include "utils_animation.h"
+#include "utils_dynamic.h"
+#include "char_player.h"
+#include "fx_gunprobe.h"
 #include "cmd_gun_light.h"
 #include <plog/Log.h>
 
@@ -78,6 +80,7 @@ void GunLight::enemyHitCheck() {
   }
 
   assert(probed_enemy != NULL);
+  Dynamic::create<GunProbe>(player, probed_enemy);
   PLOGI << "Probed Enemy: " << probed_enemy->name;
 }
 
@@ -193,6 +196,13 @@ void GunLight::tickDamage() {
 void GunLight::rangeCheck() {
   float x_offset = probed_enemy->position.x - player->position.x;
   float distance = std::abs(x_offset);
+
+  if (x_offset <= -32) {
+    player->direction = LEFT;
+  }
+  else if (x_offset >= 32) {
+    player->direction = RIGHT;
+  }
 
   if (distance > max_range) {
     detachProbes();
