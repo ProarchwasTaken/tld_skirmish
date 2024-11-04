@@ -28,6 +28,7 @@ public:
   void detachProbes();
   void slowMovement();
   void tickDamage();
+  void moraleDrain();
   void rangeCheck();
 
   bool hit_enemy = false;
@@ -40,12 +41,11 @@ private:
 
   float tick_time = 0.75;
   float tick_timestamp = 0;
-
-  uint8_t tick_cost = 2;
   uint8_t tick_damage = 2; 
 
-  std::vector<int> anim_charge = {28, 29};
-  float charge_frametime = 0.2;
+  float drain_time = 0.35;
+  float drain_timestamp = 0;
+  uint8_t drain_magnitude = 2;
 
   std::vector<int> anim_slow = {29, 30, 31, 30};
   float slow_frametime = 0.15;

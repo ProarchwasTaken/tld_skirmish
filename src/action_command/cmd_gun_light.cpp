@@ -10,8 +10,8 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "base/generics.h"
-#include "utils_animation.h"
 #include "utils_dynamic.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "fx_gunprobe.h"
 #include "cmd_gun_light.h"
@@ -27,12 +27,18 @@ GunLight::GunLight(PlayerCharacter *player):
   this->enemies = player->enemies;
 
   player->current_sprite = sprites::player[28];
+  SoundUtils::play("gun_hoister");
 }
 
 GunLight::~GunLight() {
   // I have to reiterate, very important that this is set to NULL upon
   // deletion. I can not stress this enough.
   player->current_anim = NULL;
+
+  if (player->state == HIT_STUN) {
+    SoundUtils::stop("gun_hoister");
+    SoundUtils::stop("gun_light_tick");
+  }
 }
 
 Rectangle GunLight::setupHurtbox() { 
@@ -52,8 +58,6 @@ Rectangle GunLight::setupHurtbox() {
 
 void GunLight::chargeSequence(float time_elapsed) {
   ActionCommand::chargeSequence(time_elapsed);
-
-  Animation::play(player, sprites::player, anim_charge, charge_frametime);
 
   if (finished_charge) {
     player->current_sprite = sprites::player[29];
@@ -81,6 +85,7 @@ void GunLight::enemyHitCheck() {
 
   assert(probed_enemy != NULL);
   Dynamic::create<GunProbe>(player, probed_enemy);
+  drain_timestamp = CURRENT_TIME;
   PLOGI << "Probed Enemy: " << probed_enemy->name;
 }
 
@@ -127,6 +132,7 @@ void GunLight::actSequence(float time_elapsed) {
   if (hit_enemy && techInputHeldDown()) {
     slowMovement();
     tickDamage();
+    moraleDrain();
     rangeCheck();
     return;
   }
@@ -135,6 +141,8 @@ void GunLight::actSequence(float time_elapsed) {
 
   if (finished_action) {
     player->current_sprite = sprites::player[32];
+    SoundUtils::stop("gun_light_tick");
+    SoundUtils::play("gun_light_snap");
   }
 }
 
@@ -170,27 +178,39 @@ void GunLight::slowMovement() {
 void GunLight::detachProbes() {
   player->current_sprite = sprites::player[32];
   player->state = RECOVER;
+
+  SoundUtils::stop("gun_light_tick");
+  SoundUtils::play("gun_light_snap");
+
   sequence_timestamp = CURRENT_TIME;
 }
 
 void GunLight::tickDamage() {
   float time_elapsed = CURRENT_TIME - tick_timestamp;
 
-  if (time_elapsed < tick_time) {
+  if (time_elapsed >= tick_time) {
+    assert(probed_enemy != NULL);
+    probed_enemy->takeDamage(tick_damage, 0.25, 1.0);
+
+    SoundUtils::playPro("gun_light_tick", 0.5, 1.0, 0.5);
+    tick_timestamp = CURRENT_TIME;
+  }
+}
+
+void GunLight::moraleDrain() {
+  float time_elapsed = CURRENT_TIME - drain_timestamp;
+
+  if (time_elapsed < drain_time) {
     return;
   }
 
-  assert(probed_enemy != NULL);
-  probed_enemy->takeDamage(tick_damage, 0.25, 1.0);
-
-  if (player->morale < tick_cost) {
+  if (player->morale < drain_magnitude) {
     detachProbes();
   }
   else {
-    player->morale -= tick_cost;
+    player->morale -= drain_magnitude;
+    drain_timestamp = CURRENT_TIME;
   }
-
-  tick_timestamp = CURRENT_TIME;
 }
 
 void GunLight::rangeCheck() {
