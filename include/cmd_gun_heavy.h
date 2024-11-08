@@ -15,15 +15,18 @@ public:
   ~GunHeavy();
 
   void chargeSequence(float time_elapsed) override;
+  bool techInputHeldDown();
 private:
   combatant_list *enemies;
 
   PlayerCharacter *player;
   SubWeapon *sub_weapon;
 
-  std::vector<int> anim_charge = {33, 34};
-  float flash_interval = 0.25;
+  bool input_released = false;
+
+  std::vector<int> anim_charge = {34, 33};
+  float flash_interval = 0.05;
 
   std::vector<int> anim_shoot = {37, 38};
-  float shoot_frametime = 0.15;
+  float shoot_frametime = 0.10;
 };
