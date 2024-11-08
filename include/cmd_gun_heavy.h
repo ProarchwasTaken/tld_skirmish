@@ -15,7 +15,12 @@ public:
   ~GunHeavy();
 
   void chargeSequence(float time_elapsed) override;
+
+  void chargeAnimation();
+  void charge();
+
   bool techInputHeldDown();
+  void shootAnimation();
 private:
   combatant_list *enemies;
 
@@ -24,9 +29,17 @@ private:
 
   bool input_released = false;
 
+  uint8_t level = 1;
+  uint8_t max_level = 3;
+
+  float level_interval = 1.0;
+  float level_timestamp;
+
   std::vector<int> anim_charge = {34, 33};
-  float flash_interval = 0.05;
+  std::vector<int> anim_altcharge = {36, 35};
+  float charge_frametime = 0.05;
 
   std::vector<int> anim_shoot = {37, 38};
+  std::vector<int> anim_altshoot = {39, 40};
   float shoot_frametime = 0.10;
 };

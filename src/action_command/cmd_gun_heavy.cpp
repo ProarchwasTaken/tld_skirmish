@@ -5,6 +5,8 @@
 #include "utils_animation.h"
 #include "char_player.h"
 #include "cmd_gun_heavy.h"
+#include <plog/Log.h>
+
 
 GunHeavy::GunHeavy(PlayerCharacter *player): 
   ActionCommand(player, "Gun Heavy", CMD_TECH_HEAVY, 0.4, 0.0, 0.7)
@@ -16,6 +18,7 @@ GunHeavy::GunHeavy(PlayerCharacter *player):
 
   player->current_sprite = sprites::player[33];
   player->frame_timestamp = CURRENT_TIME;
+  level_timestamp = CURRENT_TIME;
 }
 
 GunHeavy::~GunHeavy() {
@@ -24,8 +27,8 @@ GunHeavy::~GunHeavy() {
 
 void GunHeavy::chargeSequence(float time_elapsed) {
   if (input_released == false && techInputHeldDown()) {
-    Animation::play(player, sprites::player, anim_charge,
-                    flash_interval);
+    chargeAnimation();
+    charge();
     sequence_timestamp = CURRENT_TIME;
     return;
   }
@@ -34,12 +37,43 @@ void GunHeavy::chargeSequence(float time_elapsed) {
     input_released = true;
   }
 
-
-  Animation::play(player, sprites::player, anim_shoot, shoot_frametime,
-                  false);
-
+  shootAnimation();
   if (finished_charge) {
     player->current_sprite = sprites::player[41];
+  }
+}
+
+void GunHeavy::chargeAnimation() {
+  if (level != max_level) {
+    Animation::play(player, sprites::player, anim_charge,
+                    charge_frametime);
+  }
+  else {
+    Animation::play(player, sprites::player, anim_altcharge,
+                    charge_frametime); 
+  }
+}
+
+void GunHeavy::charge() {
+  if (level == max_level) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - level_timestamp;
+  if (time_elapsed >= level_interval) {
+    level++;
+    level_timestamp = CURRENT_TIME;
+  }
+}
+
+void GunHeavy::shootAnimation() {
+  if (level != max_level) {
+    Animation::play(player, sprites::player, anim_shoot, shoot_frametime,
+                    false);
+  }
+  else {
+    Animation::play(player, sprites::player, anim_altshoot, 
+                    shoot_frametime, false);
   }
 }
 
