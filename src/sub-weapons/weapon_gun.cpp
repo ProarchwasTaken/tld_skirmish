@@ -7,6 +7,7 @@
 #include "utils_sound.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_gun_light.h"
+#include "cmd_gun_heavy.h"
 #include "weapon_gun.h"
 #include <plog/Log.h>
 
@@ -14,7 +15,7 @@ using std::make_unique, std::unique_ptr;
 
 
 WeaponGun::WeaponGun(PlayerCharacter *player) : 
-  SubWeapon(player, "Stun Gun", 2, 0) 
+  SubWeapon(player, "Stun Gun", 2, 4) 
 {
 
 }
@@ -30,6 +31,25 @@ unique_ptr<ActionCommand> WeaponGun::lightTechnique() {
   if (sufficent_morale) {
     player->morale -= mp_cost1;
     return make_unique<GunLight>(player);
+  }
+  else {
+    PLOGI << "Player has insufficent morale.";
+    SoundUtils::play("weapon_error");
+    return nullptr;
+  }
+}
+
+unique_ptr<ActionCommand> WeaponGun::heavyTechnique() {
+  if (usable == false) {
+    PLOGI << "The sub-weapon is not useable at the moment.";
+    SoundUtils::play("weapon_error");
+    return nullptr;
+  }
+
+  bool sufficent_morale = player->morale >= mp_cost2;
+  if (sufficent_morale) {
+    player->morale -= mp_cost2;
+    return make_unique<GunHeavy>(player);
   }
   else {
     PLOGI << "Player has insufficent morale.";
