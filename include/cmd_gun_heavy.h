@@ -18,6 +18,7 @@ public:
 
   void chargeAnimation();
   void charge();
+  void moraleDrain();
 
   bool techInputHeldDown();
   void shootAnimation();
@@ -39,6 +40,9 @@ private:
 
   float level_interval = 1.0;
   float level_timestamp;
+
+  float drain_time = 0.20;
+  float drain_timestamp = 0;
 
   uint8_t min_damage = 4;
   float min_range = 64;

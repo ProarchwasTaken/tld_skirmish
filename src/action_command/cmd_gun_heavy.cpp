@@ -22,6 +22,7 @@ GunHeavy::GunHeavy(PlayerCharacter *player):
 
   player->frame_timestamp = CURRENT_TIME;
   level_timestamp = CURRENT_TIME;
+  drain_timestamp = CURRENT_TIME;
 }
 
 GunHeavy::~GunHeavy() {
@@ -32,6 +33,8 @@ void GunHeavy::chargeSequence(float time_elapsed) {
   if (input_released == false && techInputHeldDown()) {
     chargeAnimation();
     charge();
+    moraleDrain();
+
     sequence_timestamp = CURRENT_TIME;
     return;
   }
@@ -40,7 +43,6 @@ void GunHeavy::chargeSequence(float time_elapsed) {
 
     float offset = 32 * player->direction;
     player->camera_position = player->position.x + offset;
-
     input_released = true;
   }
 
@@ -71,6 +73,22 @@ void GunHeavy::charge() {
   if (time_elapsed >= level_interval) {
     level++;
     level_timestamp = CURRENT_TIME;
+  }
+}
+
+void GunHeavy::moraleDrain() {
+  float time_elapsed = CURRENT_TIME - drain_timestamp;
+
+  if (time_elapsed < drain_time) {
+    return;
+  }
+
+  if (player->morale != 0) {
+    player->morale--;
+    drain_timestamp = CURRENT_TIME;
+  }
+  else {
+    input_released = true;
   }
 }
 
