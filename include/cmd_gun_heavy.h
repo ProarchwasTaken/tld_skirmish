@@ -21,6 +21,11 @@ public:
 
   bool techInputHeldDown();
   void shootAnimation();
+
+  Rectangle setupHurtbox();
+  void shoot();
+
+  void recoverySequence(float time_elapsed) override;
 private:
   combatant_list *enemies;
 
@@ -30,10 +35,14 @@ private:
   bool input_released = false;
 
   uint8_t level = 1;
-  uint8_t max_level = 3;
+  uint8_t max_level = 4;
 
   float level_interval = 1.0;
   float level_timestamp;
+
+  uint8_t min_damage = 2;
+  float min_range = 32;
+  float min_stuntime = 0.4;
 
   std::vector<int> anim_charge = {34, 33};
   std::vector<int> anim_altcharge = {36, 35};
