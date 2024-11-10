@@ -3,6 +3,7 @@
 #include <memory>
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
+#include "globals.h"
 #include "char_player.h"
 #include "utils_sound.h"
 #include "cmd_heavy_atk.h"
@@ -18,6 +19,19 @@ WeaponGun::WeaponGun(PlayerCharacter *player) :
   SubWeapon(player, "Stun Gun", 2, 4) 
 {
 
+}
+
+void WeaponGun::update() {
+  if (usable) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - disabled_timestamp;
+  if (time_elapsed >= cooldown_time) {
+    PLOGI << "Stun Gun is now off cooldown.";
+    SoundUtils::play("weapon_ready");
+    usable = true;
+  }
 }
 
 unique_ptr<ActionCommand> WeaponGun::lightTechnique() {

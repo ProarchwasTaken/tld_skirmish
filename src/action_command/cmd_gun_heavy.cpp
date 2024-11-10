@@ -49,6 +49,7 @@ void GunHeavy::chargeSequence(float time_elapsed) {
   shootAnimation();
   if (finished_charge) {
     shoot();
+    sub_weapon->disable();
     player->current_sprite = sprites::player[41];
   }
 }
