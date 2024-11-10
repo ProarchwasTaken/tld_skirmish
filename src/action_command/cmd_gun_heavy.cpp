@@ -97,7 +97,7 @@ bool GunHeavy::techInputHeldDown() {
 }
 
 Rectangle GunHeavy::setupHurtbox() { 
-  float width = min_range * level;
+  float width = min_range + (32 * level);
   float half_width = width / 2;
 
   float height = 4;
@@ -113,8 +113,8 @@ Rectangle GunHeavy::setupHurtbox() {
 
 void GunHeavy::shoot() {
   Rectangle hurtbox = setupHurtbox();
-  uint8_t damage = min_damage * level;
-  float stun_time = min_stuntime * level;
+  uint8_t damage = min_damage + (2 * level);
+  float stun_time = min_stuntime + (0.25 * level);
 
   for (auto enemy : *enemies) {
     if (CheckCollisionRecs(hurtbox, enemy->hitbox)) {
