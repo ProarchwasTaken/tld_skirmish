@@ -4,3 +4,15 @@ id = 9
 [[weapon_gun.sprites]] # ID: 0
 name = "probe"
 area = {x = 0, y = 0, width = 8, height = 5}
+
+[[weapon_gun.sprites]] # ID: 1
+name = "bolt1"
+area = {x = 0, y = 8, width = 16, height = 16}
+
+[[weapon_gun.sprites]] # ID: 2
+name = "bolt2"
+area = {x = 16, y = 8, width = 16, height = 16}
+
+[[weapon_gun.sprites]] # ID: 3
+name = "bolt3"
+area = {x = 32, y = 8, width = 16, height = 16}
