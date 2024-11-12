@@ -143,7 +143,7 @@ void GunHeavy::shoot() {
     }
   }
 
-  Dynamic::create<GunBolt>(player, min_range + (32 * level));
+  Dynamic::create<GunBolt>(player, (min_range - 30) + (32 * level));
 }
 
 void GunHeavy::recoverySequence(float time_elapsed) {
