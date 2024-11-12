@@ -1,6 +1,7 @@
 // sub-weapons/weapons_gun.cpp
 #include <cstdint>
 #include <memory>
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
 #include "globals.h"
@@ -60,10 +61,17 @@ unique_ptr<ActionCommand> WeaponGun::heavyTechnique() {
     return nullptr;
   }
 
-  bool sufficent_morale = player->morale >= mp_cost2;
+  uint8_t start_level = 0; 
+  uint8_t multiplier = 1;
+  if (player->state != NEUTRAL) {
+    start_level = 1;
+    multiplier = 2;
+  }
+
+  bool sufficent_morale = player->morale >= mp_cost2 * multiplier;
   if (sufficent_morale) {
     player->morale -= mp_cost2;
-    return make_unique<GunHeavy>(player);
+    return make_unique<GunHeavy>(player, start_level);
   }
   else {
     PLOGI << "Player has insufficent morale.";
