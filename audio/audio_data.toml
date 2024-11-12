@@ -85,6 +85,14 @@ name = "gun_light_snap"
 path = "audio/sfx/gun_light_snap.wav"
 
 [[sfx]]
+name = "gun_heavy_charge"
+path = "audio/sfx/gun_heavy_charge.wav"
+
+[[sfx]]
+name = "gun_heavy_shoot"
+path = "audio/sfx/gun_heavy_shoot.wav"
+
+[[sfx]]
 name = "death"
 path = "audio/sfx/death.wav"
 
