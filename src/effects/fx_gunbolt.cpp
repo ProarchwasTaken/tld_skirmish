@@ -10,13 +10,13 @@
 
 
 GunBolt::GunBolt(PlayerCharacter *player, float length): 
-  DynamicActor({0, 0}, TYPE_PARTICLE_FX, {1, 1}, {16 + length, 16},
+  DynamicActor({0, 0}, TYPE_PARTICLE_FX, {1, 1}, {length, 16},
                {0, 0}, {0, -8}) 
 {
   this->player = player;
   this->current_sprite = sprites::weapon_gun[1];
 
-  position.x = player->position.x + (29 * player->direction);
+  position.x = player->position.x + (30 * player->direction);
   position.y = player->position.y - 51;
 
   if (player->direction == LEFT) {

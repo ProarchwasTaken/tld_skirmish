@@ -5,7 +5,9 @@
 #include "globals.h"
 #include "base/action_command.h"
 #include "utils_animation.h"
+#include "utils_dynamic.h"
 #include "char_player.h"
+#include "fx_gunbolt.h"
 #include "cmd_gun_heavy.h"
 #include <plog/Log.h>
 
@@ -48,9 +50,9 @@ void GunHeavy::chargeSequence(float time_elapsed) {
 
   shootAnimation();
   if (finished_charge) {
+    player->current_sprite = sprites::player[41];
     shoot();
     sub_weapon->disable();
-    player->current_sprite = sprites::player[41];
   }
 }
 
@@ -140,6 +142,8 @@ void GunHeavy::shoot() {
       enemy->takeDamage(damage, 0.25, stun_time);
     }
   }
+
+  Dynamic::create<GunBolt>(player, min_range + (32 * level));
 }
 
 void GunHeavy::recoverySequence(float time_elapsed) {
