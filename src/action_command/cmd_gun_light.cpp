@@ -35,7 +35,7 @@ GunLight::~GunLight() {
   // deletion. I can not stress this enough.
   player->current_anim = NULL;
 
-  if (player->state == HIT_STUN) {
+  if (player->current_command.get() != this) {
     SoundUtils::stop("gun_hoister");
     SoundUtils::stop("gun_light_tick");
   }
