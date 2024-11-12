@@ -4,13 +4,17 @@
 #include <cstdint>
 #include <cstddef>
 #include "globals.h"
+#include "base/combatant.h"
 #include "base/action_command.h"
 #include "utils_animation.h"
 #include "utils_dynamic.h"
+#include "utils_sound.h"
 #include "char_player.h"
 #include "fx_gunbolt.h"
 #include "cmd_gun_heavy.h"
 #include <plog/Log.h>
+
+#define PITCH_FORMULA (1.0 + (0.05 * level))
 
 
 GunHeavy::GunHeavy(PlayerCharacter *player, uint8_t start_level): 
@@ -26,6 +30,7 @@ GunHeavy::GunHeavy(PlayerCharacter *player, uint8_t start_level):
   level = start_level;
   assert(level <= max_level);
 
+  SoundUtils::play("gun_heavy_charge", PITCH_FORMULA);
   player->frame_timestamp = CURRENT_TIME;
   level_timestamp = CURRENT_TIME;
   drain_timestamp = CURRENT_TIME;
@@ -33,6 +38,12 @@ GunHeavy::GunHeavy(PlayerCharacter *player, uint8_t start_level):
 
 GunHeavy::~GunHeavy() {
   player->current_anim = NULL;
+
+  bool interrupted = player->state == HIT_STUN;
+  if (interrupted) {
+    SoundUtils::stop("gun_heavy_charge");
+    return;
+  }
 }
 
 void GunHeavy::chargeSequence(float time_elapsed) {
@@ -79,6 +90,7 @@ void GunHeavy::charge() {
   float time_elapsed = CURRENT_TIME - level_timestamp;
   if (time_elapsed >= level_interval) {
     level++;
+    SoundUtils::play("gun_heavy_charge", PITCH_FORMULA);
     level_timestamp = CURRENT_TIME;
   }
 }
@@ -137,7 +149,9 @@ Rectangle GunHeavy::setupHurtbox() {
 }
 
 void GunHeavy::shoot() {
+  SoundUtils::stop("gun_heavy_charge");
   Rectangle hurtbox = setupHurtbox();
+
   uint8_t damage = min_damage + (2 * level);
   float stun_time = min_stuntime + (0.25 * level);
 
@@ -148,6 +162,7 @@ void GunHeavy::shoot() {
   }
 
   Dynamic::create<GunBolt>(player, (min_range - 30) + (32 * level));
+  SoundUtils::play("gun_heavy_shoot");
 }
 
 void GunHeavy::recoverySequence(float time_elapsed) {

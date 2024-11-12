@@ -35,10 +35,12 @@ GunLight::~GunLight() {
   // deletion. I can not stress this enough.
   player->current_anim = NULL;
 
-  if (player->current_command.get() != this) {
+  bool interrupted = player->state == HIT_STUN;
+  if (interrupted) {
     SoundUtils::stop("gun_hoister");
-    SoundUtils::stop("gun_light_tick");
   }
+
+  SoundUtils::stop("gun_light_tick");
 }
 
 Rectangle GunLight::setupHurtbox() { 
