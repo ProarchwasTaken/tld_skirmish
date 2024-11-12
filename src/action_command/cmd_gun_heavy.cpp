@@ -65,9 +65,7 @@ void GunHeavy::chargeSequence(float time_elapsed) {
 
   shootAnimation();
   if (finished_charge) {
-    player->current_sprite = sprites::player[41];
     shoot();
-    sub_weapon->disable();
   }
 }
 
@@ -149,9 +147,10 @@ Rectangle GunHeavy::setupHurtbox() {
 }
 
 void GunHeavy::shoot() {
+  player->current_sprite = sprites::player[41];
   SoundUtils::stop("gun_heavy_charge");
-  Rectangle hurtbox = setupHurtbox();
 
+  Rectangle hurtbox = setupHurtbox();
   uint8_t damage = min_damage + (2 * level);
   float stun_time = min_stuntime + (0.25 * level);
 
@@ -163,6 +162,7 @@ void GunHeavy::shoot() {
 
   Dynamic::create<GunBolt>(player, (min_range - 30) + (32 * level));
   SoundUtils::play("gun_heavy_shoot");
+  sub_weapon->disable();
 }
 
 void GunHeavy::recoverySequence(float time_elapsed) {
