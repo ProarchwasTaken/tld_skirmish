@@ -11,7 +11,7 @@
 
 class GunHeavy : public ActionCommand {
 public:
-  GunHeavy(PlayerCharacter *player);
+  GunHeavy(PlayerCharacter *player, uint8_t start_level);
   ~GunHeavy();
 
   void chargeSequence(float time_elapsed) override;
@@ -35,7 +35,7 @@ private:
 
   bool input_released = false;
 
-  uint8_t level = 0;
+  uint8_t level;
   uint8_t max_level = 3;
 
   float level_interval = 1.0;

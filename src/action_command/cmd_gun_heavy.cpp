@@ -1,4 +1,5 @@
 // action_command/cmd_gun_heavy.cpp
+#include <cassert>
 #include <raylib.h>
 #include <cstdint>
 #include <cstddef>
@@ -12,7 +13,7 @@
 #include <plog/Log.h>
 
 
-GunHeavy::GunHeavy(PlayerCharacter *player): 
+GunHeavy::GunHeavy(PlayerCharacter *player, uint8_t start_level): 
   ActionCommand(player, "Gun Heavy", CMD_TECH_HEAVY, 0.4, 0.0, 0.7)
 {
   this->player = player;
@@ -21,6 +22,9 @@ GunHeavy::GunHeavy(PlayerCharacter *player):
   this->enemies = player->enemies;
 
   player->current_sprite = sprites::player[33];
+
+  level = start_level;
+  assert(level <= max_level);
 
   player->frame_timestamp = CURRENT_TIME;
   level_timestamp = CURRENT_TIME;
