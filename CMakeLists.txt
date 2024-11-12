@@ -86,6 +86,7 @@ set(SOURCE_FILES
 "src/projectiles/proj_ball.cpp"
 "src/effects/fx_dmg_number.cpp"
 "src/effects/fx_gunprobe.cpp"
+"src/effects/fx_gunbolt.cpp"
 )
 
 set(HEADER_FILES
@@ -146,6 +147,7 @@ set(HEADER_FILES
 "include/proj_ball.h"
 "include/fx_dmg_number.h"
 "include/fx_gunprobe.h"
+"include/fx_gunbolt.h"
 )
 
 if(${BUILD_DEBUG})
