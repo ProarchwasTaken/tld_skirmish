@@ -24,3 +24,7 @@ area = {x = 272, y = 64, width = 16, height = 16}
 [[weapon_select.sprites]] # ID: 5
 name = "icon_ball"
 area = {x = 288, y = 64, width = 16, height = 16}
+
+[[weapon_select.sprites]] # ID: 6
+name = "icon_gun"
+area = {x = 304, y = 64, width = 16, height = 16}
