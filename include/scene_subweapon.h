@@ -59,8 +59,8 @@ private:
       {"<Foul Play>", "Kick the ball.\nCan be repeated.", 5}
     ),
     SubWeaponData(
-      {"<Gee Clip>", "Can deal continuous\n damage.", 2},
-      {"<Conduit>", "Shoots a bolt of\n energy.", 4}
+      {"<Gee Clip>", "Deals continuous\ndamage if held.", 2},
+      {"<Conduit>", "Shoots a bolt of\nelectricity.", 4}
     )
   };
 
