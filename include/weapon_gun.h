@@ -6,6 +6,10 @@
 #include "char_player.h"
 
 
+/* The third and final SubWeapon. It could be described as a stun gun 
+ * that's been modified to be a lot more lethal. Each of the sub-weapon's
+ * techniques involve holding the button used to perform them for better
+ * effect.*/
 class WeaponGun : public SubWeapon {
 public:
   WeaponGun(PlayerCharacter *player);

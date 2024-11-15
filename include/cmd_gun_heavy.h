@@ -9,21 +9,38 @@
 #include "char_player.h"
 
 
+/* Heavy Technique that's associated with the Gun SubWeapon. When 
+ * performed, the player will charge and shoot a bolt of electricity, 
+ * damaging all enemies that get hit by it. The longer it's charged, the
+ * more range and damage it has, whilst draining morale. While it is more
+ * simple then GunLight, this ActionCommand dabbles in using multiple 
+ * animations for the player.*/
 class GunHeavy : public ActionCommand {
 public:
   GunHeavy(PlayerCharacter *player, uint8_t start_level);
   ~GunHeavy();
 
+  /* Basically where most of the ActionCommand's functionality takes 
+   * place. It all depends on whether the player has the heavy technique
+   * button held down.*/
   void chargeSequence(float time_elapsed) override;
+  bool techInputHeldDown();
 
-  void chargeAnimation();
+  /* Increments the gun's charge level at a predefined rate, up until it
+   * reaches it's limit.*/
   void charge();
+
+  /* For deciding what animation the player should use while charging.
+   * This is depended on the current charge level.*/
+  void chargeAnimation();
+
+  /* Works just as you would expect. If the player's morale is too low,
+   * they will automatically shoot the gun.*/
   void moraleDrain();
 
-  bool techInputHeldDown();
   void shootAnimation();
-
   Rectangle setupHurtbox();
+
   void shoot();
 
   void recoverySequence(float time_elapsed) override;
