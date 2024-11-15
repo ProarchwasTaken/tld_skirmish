@@ -70,7 +70,7 @@ unique_ptr<ActionCommand> WeaponGun::heavyTechnique() {
 
   bool sufficent_morale = player->morale >= mp_cost2 * multiplier;
   if (sufficent_morale) {
-    player->morale -= mp_cost2;
+    player->morale -= mp_cost2 * multiplier;
     return make_unique<GunHeavy>(player, start_level);
   }
   else {

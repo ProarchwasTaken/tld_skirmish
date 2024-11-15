@@ -52,6 +52,7 @@ void GunHeavy::chargeSequence(float time_elapsed) {
     charge();
     moraleDrain();
 
+    player->updateDirection();
     sequence_timestamp = CURRENT_TIME;
     return;
   }

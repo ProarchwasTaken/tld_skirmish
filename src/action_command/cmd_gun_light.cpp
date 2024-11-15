@@ -200,7 +200,7 @@ void GunLight::tickDamage() {
 
   if (time_elapsed >= tick_time) {
     assert(probed_enemy != NULL);
-    probed_enemy->takeDamage(tick_damage, 0.25, 1.0);
+    probed_enemy->takeDamage(tick_damage, 0.25, 1.25);
 
     SoundUtils::playPro("gun_light_tick", 0.5, 1.0, 0.5);
     tick_timestamp = CURRENT_TIME;

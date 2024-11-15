@@ -58,7 +58,7 @@ private:
   float level_interval = 1.0;
   float level_timestamp;
 
-  float drain_time = 0.20;
+  float drain_time = 0.45;
   float drain_timestamp = 0;
 
   uint8_t min_damage = 4;
