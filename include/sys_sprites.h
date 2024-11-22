@@ -14,6 +14,8 @@
 #define SHEET_WRETCH 5
 #define SHEET_BALL 6
 #define SHEET_WPN_SELECT 7
+#define SHEET_DAMNED 8
+#define SHEET_GUN 9
 
 
 /* The sprite loader is responsible for loading all the game's sprites

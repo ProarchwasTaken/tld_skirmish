@@ -18,6 +18,7 @@
 #include "cmd_guard.h"
 #include "weapon_knife.h"
 #include "weapon_ball.h"
+#include "weapon_gun.h"
 #include "char_player.h"
 #include <plog/Log.h>
 
@@ -72,6 +73,11 @@ void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
       sub_weapon = make_unique<WeaponBall>(this);
       break;
     }
+    case WEAPON_GUN: {
+      sub_weapon.reset();
+      sub_weapon = make_unique<WeaponGun>(this);
+      break;
+    }
     default: {
       PLOGE << "Invalid Weapon ID!";
     }
@@ -85,11 +91,13 @@ void PlayerCharacter::update() {
   bufferTimerCheck();
 
   if (*game_phase == PHASE_REST) {
-    regeneration();
+    lifeRegen();
   }
 
   switch (state) {
     case NEUTRAL: {
+      stabilityRegen();
+
       moving = isMoving();
       updateDirection();
       movement(movement_speed, false);
@@ -98,9 +106,9 @@ void PlayerCharacter::update() {
       break;
     }
     case HIT_STUN: {
-      current_sprite = sprites::player[7];
-
       applyKnockback(PLR_BOUNDS);
+      camera_position = position.x;
+
       stunSequence();
       break;
     }
@@ -128,7 +136,33 @@ bool PlayerCharacter::isMoving() {
     Animation::play(this, sprites::player, anim_walk, walk_frametime);
     return true;
   }
+  else { 
+    useNeutralSprite();
+    return false;
+  }
+}
 
+bool PlayerCharacter::isMoving(std::vector<int> &frame_order, 
+                               const float frame_time, 
+                               const bool custom_neutral, 
+                               Texture *neutral_sprite)
+{
+  if (moving_left != moving_right) {
+    Animation::play(this, sprites::player, frame_order, frame_time);
+    return true;
+  }
+  else if (custom_neutral == false) {
+    useNeutralSprite();
+    return false;
+  }
+  else {
+    assert(neutral_sprite != NULL);
+    current_sprite = neutral_sprite;
+    return false;
+  }
+}
+
+void PlayerCharacter::useNeutralSprite() {
   switch (*game_phase) {
     case PHASE_REST: {
       current_sprite = sprites::player[0];
@@ -139,7 +173,6 @@ bool PlayerCharacter::isMoving() {
       break;
     }
   }
-  return false;
 }
 
 void PlayerCharacter::updateDirection() {
@@ -151,14 +184,24 @@ void PlayerCharacter::updateDirection() {
   }
 }
 
-void PlayerCharacter::movement(float speed, bool automatic) {
+void PlayerCharacter::movement(float speed, bool automatic, 
+                               int8_t *direction) 
+{
   if (!moving && automatic == false) {
     return;
   }
 
-  float magnitude = (speed * direction) * DELTA_TIME;
+  int8_t move_direction;
+  if (direction != NULL) {
+    move_direction = *direction;
+  }
+  else {
+    move_direction = this->direction;
+  }
+
+  float magnitude = (speed * move_direction) * DELTA_TIME;
   int half_scaleX = hitbox_scale.x / 2;
-  float offset = position.x + magnitude + (half_scaleX * direction);
+  float offset = position.x + magnitude + (half_scaleX * move_direction);
 
   if (offset < -PLR_BOUNDS) {
     position.x = -PLR_BOUNDS + half_scaleX;
@@ -169,6 +212,8 @@ void PlayerCharacter::movement(float speed, bool automatic) {
   else {
     position.x += magnitude;
   }
+
+  camera_position = position.x;
 
   hitboxCorrection();
   texRectCorrection();
@@ -375,7 +420,7 @@ void PlayerCharacter::heavyAttackHanding() {
   }
 }
 
-void PlayerCharacter::regeneration() {
+void PlayerCharacter::lifeRegen() {
   if (health == max_health) {
     return;
   }
@@ -412,34 +457,47 @@ void PlayerCharacter::takeDamage(uint16_t dmg_magnitude,
                                  float guard_pierce, 
                                  float stun_time, 
                                  float kb_velocity,
-                                 uint8_t kb_direction)
+                                 int8_t kb_direction)
 {
-  float old_health = health;
+  bool is_grabbed = this->stun_time >= 10.0;
+  if (is_grabbed) {
+    PLOGD << "Detected that the player is grabbed.";
+    stun_time = 0;
+    kb_velocity = 0.0;
+    kb_direction = 0.0;
+  }
+
   Combatant::takeDamage(dmg_magnitude, guard_pierce, stun_time, 
                         kb_velocity, kb_direction);
+
+  if (state == HIT_STUN && stun_time != 0) {
+    current_sprite = sprites::player[7];
+  }
 
   if (critical_health == false) {
     healthCheck();
   }
 
   bool fatal_damage = health == 0;
-  if (fatal_damage == false) {
+  bool reached_combo_limit = combo > 5;
+  if (fatal_damage == false || reached_combo_limit) {
     return;
   }
 
   float morale_percent = static_cast<float>(morale) / max_morale;
-  float life_percent = old_health / max_health;
+  float endure_chance = morale_percent / (2 - (combo / 5.0));  
 
-  float endure_chance = (morale_percent * life_percent) / 1.25;  
   uniform_real_distribution<float> range(0.0, 1.0);
+  float random_value = range(RNG::generator);
+  bool eligible = dmg_magnitude < (max_health * 2);
 
-  bool eligible = dmg_magnitude > (max_health * 2);
-  if (eligible && range(RNG::generator) <= endure_chance) {
+  if (eligible && random_value <= endure_chance) {
     endure = true;
   }
-  else {
-    endure = false;
-  }
+}
+
+float PlayerCharacter::getStunTime() {
+  return this->stun_time;
 }
 
 void PlayerCharacter::healthCheck() {
@@ -465,12 +523,21 @@ void PlayerCharacter::endureSequence() {
 
   float death_time = endure_frametime * anim_endure.size();
 
-  if (end_of_animation && time_elapsed >= death_time) {
-    PLOGI << "The player endured the attack through sheer willpower!";
-    endure = false;
-    health = 1;
-    state = NEUTRAL;
+  if (end_of_animation == false && time_elapsed < death_time) {
+    return;
   }
+
+  PLOGI << "The player endured the attack through sheer willpower!";
+
+  health = 1;
+
+  float decrement = morale * 0.50;
+  if (decrement > 0) {
+    morale -= decrement;
+  }
+
+  state = NEUTRAL;
+  endure = false;
 }
 
 void PlayerCharacter::inputPressed() {
@@ -583,7 +650,13 @@ void PlayerCharacter::inputReleased() {
 }
 
 void PlayerCharacter::draw(Vector2 &camera_target) {
-  Actor::draw(camera_target);
+  if (visible == false) {
+    if (DEBUG_MODE) drawDebug();
+    return;
+  }
+
+  Actor::draw(camera_target); 
+
   if (CameraUtils::onScreen(this, camera_target) == false) {
     return;
   }

@@ -62,7 +62,7 @@ void DebugScene::checkInput() {
 }
 
 void DebugScene::debugInputs() {
-  int unicode = GetKeyPressed();
+  int unicode = GetCharPressed();
   if (unicode != 0) {
     appendNumBuffer(unicode);
   }
@@ -80,7 +80,7 @@ void DebugScene::debugInputs() {
   }
 
   if (IsKeyPressed(KEY_R)) {
-    wave_manager.reloadWaveData();
+    player.morale = player.max_morale;
   }
 
   if (IsKeyPressed(KEY_K)) {
@@ -119,7 +119,7 @@ void DebugScene::appendNumBuffer(int unicode) {
 
 void DebugScene::updateScene() {
   player.update();
-  CameraUtils::follow(camera, player.position.x);
+  CameraUtils::follow(camera, player.camera_position, 2.5);
 
   for (auto enemy : enemies) {
     enemy->update();
@@ -191,13 +191,11 @@ void DebugScene::drawDebugInfo() {
              TextFormat("D Actors: %i", dynamic_actors.size()),
              {0, 32}, text_size, -3, GREEN);
 
-  bool off_center = camera.target.x != player.position.x;
-  DrawTextEx(*fonts::skirmish, TextFormat("Off Center: %i", off_center),
+  DrawTextEx(*fonts::skirmish, 
+             TextFormat("Stability: %01.02f", player.stability),
              {0, 40}, text_size, -3, GREEN);
 
-  float x_difference = player.position.x - camera.target.x;
-  DrawTextEx(*fonts::skirmish, 
-             TextFormat("Cam Difference: %f", x_difference), 
+  DrawTextEx(*fonts::skirmish, TextFormat("Combo: %i", player.combo), 
              {0, 48}, text_size, -3, GREEN);
 }
 

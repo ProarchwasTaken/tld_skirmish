@@ -15,7 +15,8 @@ namespace CameraUtils {
 
   /* For having the camera follow a specific x position if its outside
    * a certain threshold.*/
-  void follow(Camera2D &camera, const float x_position);
+  void follow(Camera2D &camera, const float x_position, 
+              const float max_speed);
 
   /* Returns true if the specified actor's tex rect on is on screen. This
    * function is mainly used to check if actor should be drawn.*/

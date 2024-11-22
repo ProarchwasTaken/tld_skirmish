@@ -63,7 +63,7 @@ public:
    * will not be put into hit stun, and a death check will be made.*/
   virtual void takeDamage(uint16_t dmg_magnitude, float guard_pierce, 
                           float stun_time, float kb_velocity = 0, 
-                          uint8_t kb_direction = 0);
+                          int8_t kb_direction = 0);
 
   /* Acts as straight forward wrapper for creating a instance of Damage
    * Number, and positioning it right above the combatant's tex_rect.
@@ -78,25 +78,37 @@ public:
   /* What a function named "setKnockback" would do is beyond me. An 
    * absolute mystery. To be real, this function only updates the
    * knockback variables when certain conditions apply.*/
-  void setKnockback(float kb_velocity, uint8_t kb_direction);
+  void setKnockback(float kb_velocity, int8_t kb_direction, 
+                    bool force = false);
 
   /* For applying knockback primarily, during the stun sequence. Also
    * makes sure that the combatant won't move past any boundaries.*/
   void applyKnockback(uint16_t boundary);
 
-  /* If a combatant's HP reaches 0, and the appropriate check is made,
-   * they are legally considered dead. When that happens, this method is 
-   * called. The death check is usually made after the combatant exits 
-   * HIT_STUN, or right after they received damaged to inflicts no hit 
-   * stun. What happens after the combatant dies is completely up to the 
-   * class that inherits from it.*/
+  /* Every now and then, the combatant makes a check to see if they are 
+   * legally considered dead. If so, this method is called to 
+   * "Seal the deal" so to speak. The death check is usually made after 
+   * the combatant exits HIT_STUN, or right after they received damage 
+   * that doesn't cause them to get sent into HIT_STUN. What happens 
+   * after the combatant dies is completely up to the class that 
+   * inherits from it.*/
   void death();
 
   /* Called once every frame of which the combatant is in hit stun. If a
-   * certain amount of time as passed and the combatant didn't take 
-   * damage during that time, a death check will be made. If the check 
-   * returns false, the combatant's state will be set back to neutral.*/
+   * certain amount of time has passed and the combatant didn't take 
+   * damage that doesn't cause their stun_timestamp to reset, they will
+   * automatically be taken out of hitstun.*/
   void stunSequence();
+
+  /* Recommended method for taking a combatant out of hit stun. Resets
+   * specific variables back to their default values, and it's one of
+   * a few places where the death check is made*/
+  void endStunSequence();
+
+  /* For slowly regenerating a combatant's stability back to full at the
+   * same rate of which an enemy's patience would tick down. The game use
+   * case for this method is when the Combatant is in the NEUTRAL state.*/
+  void stabilityRegen();
 
   /* A sort of wrapper for Animation::play. A common method used by those
    * deriving from combatant to play death animations. Automatically 
@@ -107,6 +119,7 @@ public:
 
   std::string name;
   uint16_t max_health;
+  float max_stability;
   uint8_t type;
 
   bool awaiting_deletion = false;
@@ -118,11 +131,14 @@ public:
 
   float stability;
   bool parried_attack = false;
+  uint16_t combo = 0;
 
   std::unique_ptr<ActionCommand> current_command;
 protected:
   float stun_time = 0;
   float stun_timestamp = 0;
+
+  float stability_timestamp = 0;
 
   int8_t kb_direction = 0;
   float kb_velocity = 0;

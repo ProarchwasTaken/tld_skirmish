@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
 project("skirmish" 
-VERSION 0.2.1
+VERSION 0.3.0
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
@@ -16,7 +16,7 @@ if(${BUILD_DEBUG})
   set(COMPILE_OPTIONS --debug -O0)
   set(LINK_OPTIONS "")
 else()
-  set(PROJECT_STAGE "Alpha")
+  set(PROJECT_STAGE "Beta")
   set(COMPILE_OPTIONS -DNDEBUG)
   set(LINK_OPTIONS -mwindows)
 endif()
@@ -66,8 +66,10 @@ set(SOURCE_FILES
 "src/combatants/char_player.cpp"
 "src/combatants/enemy_ghoul.cpp"
 "src/combatants/enemy_wretch.cpp"
+"src/combatants/enemy_damned.cpp"
 "src/sub-weapons/weapon_knife.cpp"
 "src/sub-weapons/weapon_ball.cpp"
+"src/sub-weapons/weapon_gun.cpp"
 "src/action_command/cmd_light_atk.cpp"
 "src/action_command/cmd_heavy_atk.cpp"
 "src/action_command/cmd_guard.cpp"
@@ -75,11 +77,16 @@ set(SOURCE_FILES
 "src/action_command/cmd_knife_heavy.cpp"
 "src/action_command/cmd_ball_light.cpp"
 "src/action_command/cmd_ball_heavy.cpp"
+"src/action_command/cmd_gun_light.cpp"
+"src/action_command/cmd_gun_heavy.cpp"
 "src/action_command/cmd_ghoul_atk.cpp"
 "src/action_command/cmd_wretch_atk.cpp"
+"src/action_command/cmd_damned_grb.cpp"
 "src/projectiles/proj_knife.cpp"
 "src/projectiles/proj_ball.cpp"
 "src/effects/fx_dmg_number.cpp"
+"src/effects/fx_gunprobe.cpp"
+"src/effects/fx_gunbolt.cpp"
 )
 
 set(HEADER_FILES
@@ -120,8 +127,10 @@ set(HEADER_FILES
 "include/char_player.h"
 "include/enemy_ghoul.h"
 "include/enemy_wretch.h"
+"include/enemy_damned.h"
 "include/weapon_knife.h"
 "include/weapon_ball.h"
+"include/weapon_gun.h"
 "include/cmd_light_atk.h"
 "include/cmd_heavy_atk.h"
 "include/cmd_guard.h"
@@ -129,11 +138,16 @@ set(HEADER_FILES
 "include/cmd_knife_heavy.h"
 "include/cmd_ball_light.h"
 "include/cmd_ball_heavy.h"
+"include/cmd_gun_light.h"
+"include/cmd_gun_heavy.h"
 "include/cmd_ghoul_atk.h"
 "include/cmd_wretch_atk.h"
+"include/cmd_damned_grb.h"
 "include/proj_knife.h"
 "include/proj_ball.h"
 "include/fx_dmg_number.h"
+"include/fx_gunprobe.h"
+"include/fx_gunbolt.h"
 )
 
 if(${BUILD_DEBUG})

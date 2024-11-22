@@ -46,6 +46,23 @@ void SoundUtils::play(std::string sound_name, const float pitch) {
   PlaySound(*sound);
 }
 
+void SoundUtils::playPro(std::string sound_name, const float volume, 
+                         const float pitch, const float pan)
+{
+  const SoundMetaData *meta_data = getMetaData(sound_name);
+  
+  if (meta_data == NULL) {
+    PLOGE << "Unable to find meta data for sound: " << sound_name << "!";
+    return;
+  }
+
+  const Sound *sound = meta_data->sound;
+  SetSoundVolume(*sound, volume);
+  SetSoundPitch(*sound, pitch);
+  SetSoundPan(*sound, pan);
+  PlaySound(*sound);
+}
+
 void SoundUtils::stop(std::string sound_name) {
   SoundMetaData *meta_data = getMetaData(sound_name);
 

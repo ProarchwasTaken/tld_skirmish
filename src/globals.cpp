@@ -31,6 +31,8 @@ namespace sprites {
   vector<Texture*> wretch;
   vector<Texture*> weapon_ball;
   vector<Texture*> weapon_select;
+  vector<Texture*> damned;
+  vector<Texture*> weapon_gun;
 
   vector<SpriteMetaData> plr_metadata;
 }

@@ -32,6 +32,7 @@ Actor(position, hitbox_scale, tex_scale, hitbox_offset, tex_offset)
   health = max_health;
 
   this->stability = stability;
+  this->max_stability = stability;
 
   state = NEUTRAL;
   direction = RIGHT;
@@ -97,7 +98,7 @@ bool Combatant::isUsingCommand() {
 
 void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
                            float stun_time, float kb_velocity, 
-                           uint8_t kb_direction) 
+                           int8_t kb_direction) 
 {
   if (invulnerable || state == DEAD) {
     return;
@@ -140,6 +141,11 @@ void Combatant::takeDamage(uint16_t dmg_magnitude, float guard_pierce,
   if (state != HIT_STUN && health <= 0) {
     death();
   }
+  else if (state == HIT_STUN) {
+    combo++;
+  }
+
+  stability_timestamp = CURRENT_TIME;
 }
 
 void Combatant::createDamageNumber(int value, Color color) {
@@ -155,18 +161,27 @@ void Combatant::enterHitStun(float stun_time) {
   stun_timestamp = CURRENT_TIME;
 }
 
-void Combatant::setKnockback(float kb_velocity, uint8_t kb_direction) {
+void Combatant::setKnockback(float kb_velocity, int8_t kb_direction, 
+                             bool force) 
+{
+  if (force) {
+    PLOGW << "Knockback has been forcefully set on: " << name;
+    this->kb_velocity = kb_velocity;
+    this->kb_direction = kb_direction;
+    return;
+  }
+
   bool different_direction = this->kb_direction != kb_direction;
   bool greater_velocity = this->kb_velocity < kb_velocity;
 
-  if (greater_velocity) {
+  if (kb_velocity != 0 && greater_velocity) {
     PLOGD << "Updating knockback velocity to: " << kb_velocity;
     // I hope the decision of having both lines within this if statement 
     // won't come back to bite me later.
     this->kb_velocity = kb_velocity;
   } 
 
-  if (different_direction && kb_direction != 0) {
+  if (kb_direction != 0 && different_direction) {
     PLOGD << "Updated knockback direction.";
     this->kb_direction = kb_direction;
   }
@@ -210,19 +225,39 @@ void Combatant::stunSequence() {
          "Method called while combatant is not in hit stun!");
 
   float time_elapsed = CURRENT_TIME - stun_timestamp;
-  if (time_elapsed < stun_time) {
-    return;
+  if (time_elapsed >= stun_time) {
+    PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
+    endStunSequence();
   }
+}
 
-  PLOGI << "{Combatant: " << name << "} has now finished stun sequence";
+void Combatant::endStunSequence() {
+  assert(state == HIT_STUN && 
+         "Method called while combatant is not in hit stun!");
+  stun_time = 0;
+
   if (health > 0) {
     state = NEUTRAL;
+    combo = 0;
 
     kb_velocity = 0;
     kb_direction = 0;
+    stability_timestamp = CURRENT_TIME;
   } 
   else {
     death();
+  }
+}
+
+void Combatant::stabilityRegen() {
+  if (stability >= max_stability) {
+    return;
+  }
+
+  float time_elapsed = CURRENT_TIME - stability_timestamp;
+  if (time_elapsed >= 0.1) {
+    stability += 0.01;
+    stability_timestamp = CURRENT_TIME;
   }
 }
 

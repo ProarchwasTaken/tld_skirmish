@@ -1,4 +1,5 @@
 // action_command/cmd_guard.cpp
+#include <cassert>
 #include <cmath>
 #include <cstdint>
 #include <raylib.h>
@@ -30,6 +31,9 @@ Guard::Guard(Combatant *user, vector<SpriteMetaData> &data_list,
     parry_sprite = Sprite::getSprite("parry", data_list);
   }
 
+  if (user->type == TYPE_PLAYER) {
+    act_time = 0.05;
+  }
   user->current_sprite = charge_sprite;
 }
 
@@ -42,6 +46,10 @@ void Guard::chargeSequence(float time_elapsed) {
 }
 
 void Guard::actSequence(float time_elapsed) {
+  if (user->type == TYPE_PLAYER) {
+    stallCheck();
+  }
+
   ActionCommand::actSequence(time_elapsed);
 
   if (finished_action) {
@@ -65,12 +73,32 @@ void Guard::recoverySequence(float time_elapsed) {
   }
 }
 
+void Guard::stallCheck() {
+  assert(user->type == TYPE_PLAYER);
+  bool key_space = IsKeyDown(KEY_SPACE);
+
+  bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_shoulder = false;
+  if (gamepad_detected) {
+    btn_shoulder = IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1) 
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2) 
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)
+      || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
+  }
+
+  bool guard_held = key_space || btn_shoulder;
+  if (guard_held) {
+    sequence_timestamp = CURRENT_TIME;
+  }
+}
+
 void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                        float stun_time, float kb_velocity, 
-                       uint8_t kb_direction)
+                       int8_t kb_direction)
 {
-  if (user->state == RECOVER) {
-    PLOGI << "Guard failed due to the user being in the recovery phase.";
+  if (user->state == RECOVER || user->stability < 0) {
+    PLOGI << "Guard failed due to the user being in the recovery phase or"
+    " their stability is in the negatives.";
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
     return;
@@ -93,30 +121,32 @@ void Guard::guardLogic(uint16_t &dmg_magnitude, float guard_pierce,
   dmg_magnitude = static_cast<int>(reduced_damage);
   PLOGI << "Reduced incoming damage to: " << dmg_magnitude;
 
-  if (guardFailed(guard_pierce, stun_time, kb_velocity, kb_direction)) {
-    SoundUtils::play("guard_fail");
-    return;
-  }
+  PLOGI << "Comparing the user's stability and the attack's guard pierce";
+  bool failed = guardFailed(guard_pierce);
 
-  PLOGI << "Guard Successful! Now applying bonuses.";
-  deathProtection(dmg_magnitude);
-  applyGuardBonus(stun_time, kb_velocity, kb_direction);
-
-  SoundUtils::play("guard_success");
-  user->state = RECOVER;
-  sequence_timestamp = CURRENT_TIME;
-}
-
-bool Guard::guardFailed(float guard_pierce, float stun_time,
-                        float kb_velocity, uint8_t kb_direction)
-{
-  if (guard_pierce > user->stability) {
+  if (failed) {
     PLOGI << "Guard failed because the guard_pierce of the attack is " 
       "greater than user's stability.";
-
     user->setKnockback(kb_velocity, kb_direction);
     user->enterHitStun(stun_time);
+    SoundUtils::play("guard_fail");
+  }
+  else {
+    PLOGI << "Guard Successful! Now applying bonuses.";
+    deathProtection(dmg_magnitude);
+    applyGuardBonus(stun_time, kb_velocity, kb_direction);
 
+    SoundUtils::play("guard_success");
+
+    user->state = RECOVER;
+    sequence_timestamp = CURRENT_TIME; 
+  }
+
+  user->stability -= guard_pierce * 0.5;
+}
+
+bool Guard::guardFailed(float guard_pierce) {
+  if (guard_pierce > user->stability) {
     return true;
   }
   else {
@@ -125,7 +155,7 @@ bool Guard::guardFailed(float guard_pierce, float stun_time,
 }
 
 void Guard::applyGuardBonus(float stun_time, float kb_velocity,
-                            uint8_t kb_direction) 
+                            int8_t kb_direction) 
 {
   guard_success = true;
   user->invulnerable = true;
@@ -162,6 +192,9 @@ bool Guard::parriedAttack(float guard_pierce, float stun_time) {
     PLOGI << user->name << " parried the attack! All damage nullified!";
     user->current_sprite = parry_sprite;
     user->parried_attack = true;
+
+    user->stability += user->max_stability * 0.25;
+    user->stability = Clamp(user->stability, 0, user->max_stability);
 
     applyGuardBonus(stun_time);
     return true;

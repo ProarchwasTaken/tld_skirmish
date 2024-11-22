@@ -10,6 +10,7 @@
 
 #define ENEMY_GHOUL 0
 #define ENEMY_WRETCH 1
+#define ENEMY_DAMNED 2
 
 
 /* The WaveManager is primarily responsible for handling the spawning of

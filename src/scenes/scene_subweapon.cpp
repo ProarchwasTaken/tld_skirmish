@@ -105,7 +105,7 @@ void SubWeaponScene::selectConfirmOption() {
 
 void SubWeaponScene::drawWeaponIcons() {
   int icon_spacing = 24;
-  Vector2 position = {195, 105};
+  Vector2 position = {179, 105};
 
   for (int id : icon_ids) {
     DrawTextureV(*sprites::weapon_select[id], position, WHITE);
@@ -122,7 +122,7 @@ void SubWeaponScene::drawSelectionArrow() {
     sinY = sinf(time_elapsed * 2.5) * 0.75;
   }
 
-  Vector2 position = {195 + offset, 95 + sinY};
+  Vector2 position = {179 + offset, 95 + sinY};
   DrawTextureV(*sprites::weapon_select[2], position, WHITE);
 }
 

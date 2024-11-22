@@ -5,7 +5,7 @@
 #include <vector>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "sys_sprites.h"
+#include "data/data_sprites.h"
 
 #define DEF_PARRY_WINDOW 0.20
 
@@ -25,25 +25,29 @@ public:
   void actSequence(float time_elapsed) override;
   void recoverySequence(float time_elapsed) override;
 
+  /* This method should only be called when the player is the user of this
+   * action command. It allows the player to stall the active phase for as
+   * long as they hold the guard button.*/
+  void stallCheck();
+
   /* This method is automatically called when the user takes damage while
    * they are using this action command. Contains the majority of the 
    * logic for guarding and parrying, and it's practically the root
    * function.*/
   void guardLogic(uint16_t &dmg_magnitude, float guard_pierce, 
                   float stun_time, float kb_velocity, 
-                  uint8_t kb_direction);
+                  int8_t kb_direction);
 
   /* Every combatant has a variable called "guard_stability". It's
    * primarily used to check if the user's guard is successful or not.*/
-  bool guardFailed(float guard_pierce, float stun_time, float kb_velocity,
-                   uint8_t kb_direction);
+  bool guardFailed(float guard_pierce);
 
   /* For applying the usual bonuses from successfully performing a guard
    * or parrying an attack. Most of these bonuses would be automatically 
    * reverted once the recovery sequence ends. If it wasn't canceled for 
    * any reason.*/
   void applyGuardBonus(float stun_time, float kb_velocity = 0, 
-                       uint8_t kb_direction = 0);
+                       int8_t kb_direction = 0);
 
   /* Returns true if the user has parried the attack. How the method knows
    * this is by checking if the user was hit within a certain timeframe.*/

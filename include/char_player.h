@@ -12,7 +12,7 @@
 
 #define PLR_HP 30
 #define PLR_HP_CRITICAL 0.40
-#define PLR_STABILITY 0.5
+#define PLR_STABILITY 0.6
 #define PLR_START_POS (Vector2){0, 152}
 #define PLR_HITBOX_SCALE (Vector2){16, 56}
 #define PLR_HITBOX_OFFSET (Vector2){-8, -58}
@@ -25,6 +25,7 @@
 
 #define WEAPON_KNIFE 0
 #define WEAPON_BALL 1
+#define WEAPON_GUN 2
 
 
 /* The playable character, the controllable avatar for the user. The most
@@ -61,14 +62,23 @@ public:
    * determined by user input.*/
   bool isMoving();
 
+  bool isMoving(std::vector<int> &frame_order, const float frame_time,
+                const bool custom_neutral, 
+                Texture *neutral_sprite = NULL);
+
+  /* Usually this is automatically called when the player isn't doing
+   * anything special. Basically makes the sprite the default sprite that
+   * fits the current game phase.*/
+  void useNeutralSprite();
+
   /* Updates the player's direction depending on user input.*/
   void updateDirection();
 
-  /* For moving the player towards the direction they're facing while
-   * also preventing them from going out of bounds. If you want the player
-   * to move automatically for whatever reason, set the boolean to true.
-   * This could be easily broken if you don't know what to do.*/
-  void movement(float speed, bool automatic);
+  /* The one method that's primarily used for moving the player other than
+   * applyKnockback. With the assistance of other functions, it allows the
+   * player to move freely in both directions. It's also extremely
+   * versatile for a multitude of uses.*/
+  void movement(float speed, bool automatic, int8_t *direction = NULL);
 
   /* This could be referred as a versitile wrapper for the movement 
    * method. It decelerates the player's movement through the use of a 
@@ -79,7 +89,7 @@ public:
   /* For regenerating the player's health during the rest phase. Typically
    * increments the player's health by 1 at a set rate. Only stopping when
    * the player reaches max health.*/
-  void regeneration();
+  void lifeRegen();
 
   /* Makes sure that the value that the player's morale is incremented to
    * doesn't go past the maximum. The player's morale will increase
@@ -139,7 +149,7 @@ public:
    * except it checks if the player is in low health afterwards.*/
   void takeDamage(uint16_t dmg_magnitude, float guard_pierce,
                   float stun_time, float kb_velocity = 0,
-                  uint8_t kb_direction = 0) override;
+                  int8_t kb_direction = 0) override;
 
   /* For checking if the player has reached or exited critical health, and
    * acting accordingly. Should be called right after the player's health
@@ -150,19 +160,25 @@ public:
    * inevitable. Even so, it could make all the difference...*/
   void endureSequence();
 
-  combatant_list *enemies;
+  float getStunTime();
 
+  combatant_list *enemies;
   std::unique_ptr<SubWeapon> sub_weapon = nullptr;
+  
+  float camera_position = 0;
 
   uint8_t morale;
   uint8_t max_morale;
 
   bool moving;
   float movement_speed;
+  bool moving_right = false;
+  bool moving_left = false;
 
   bool critical_health = false;
   bool endure = false;
 
+  bool visible = true;
   std::vector<uint8_t> input_buffer;
 private:
   uint8_t *game_phase;
@@ -184,7 +200,4 @@ private:
 
   float regen_time;
   float regen_timestamp = 0;
-
-  bool moving_right = false;
-  bool moving_left = false;
 };

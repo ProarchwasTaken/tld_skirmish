@@ -73,6 +73,26 @@ name = "ball_heavy_kick"
 path = "audio/sfx/ball_heavy_kick.wav"
 
 [[sfx]]
+name = "gun_hoister"
+path = "audio/sfx/gun_hoister.wav"
+
+[[sfx]]
+name = "gun_light_tick"
+path = "audio/sfx/gun_light_tick.wav"
+
+[[sfx]]
+name = "gun_light_snap"
+path = "audio/sfx/gun_light_snap.wav"
+
+[[sfx]]
+name = "gun_heavy_charge"
+path = "audio/sfx/gun_heavy_charge.wav"
+
+[[sfx]]
+name = "gun_heavy_shoot"
+path = "audio/sfx/gun_heavy_shoot.wav"
+
+[[sfx]]
 name = "death"
 path = "audio/sfx/death.wav"
 
@@ -99,3 +119,35 @@ path = "audio/sfx/wrh_warning.wav"
 [[sfx]]
 name = "wrh_attack"
 path = "audio/sfx/wrh_attack.wav"
+
+[[sfx]]
+name = "dam_footstep"
+path = "audio/sfx/dam_footstep.wav"
+
+[[sfx]]
+name = "dam_alert"
+path = "audio/sfx/dam_alert.wav"
+
+[[sfx]]
+name = "dam_alert_alt"
+path = "audio/sfx/dam_alert_alt.wav"
+
+[[sfx]]
+name = "dam_damage_tick"
+path = "audio/sfx/dam_damage_tick.wav"
+
+[[sfx]]
+name = "dam_release"
+path = "audio/sfx/dam_release.wav"
+
+[[sfx]]
+name = "dam_struggle"
+path = "audio/sfx/dam_struggle.wav"
+
+[[sfx]]
+name = "dam_struggle_free"
+path = "audio/sfx/dam_struggle_free.wav"
+
+[[sfx]]
+name = "dam_screech"
+path = "audio/sfx/dam_screech.wav"
