@@ -23,6 +23,10 @@ public:
   SubWeaponScene(Game &skirmish);
   ~SubWeaponScene();
 
+  void updateScene() override;
+  void frameInterpolation();
+  void windowInterpolation();
+
   void drawWeaponIcons();
   void drawSelectionArrow();
 
@@ -41,9 +45,17 @@ public:
   void drawScene() override;
 
 private:
-  std::array<int, 3> icon_ids = {4, 5, 6};
+  bool ready = false;
+  bool going_back = false;
 
+  float ready_time = 0.25;
+  float ready_percentage = 0.0;
   float start_timestamp = 0;
+
+  Rectangle frame_dest;
+  Vector2 window_position = {96, 240};
+  
+  std::array<int, 3> icon_ids = {4, 5, 6};
 
   menu_options weapon_options = {OPT_KNIFE, OPT_BALL, OPT_GUN};
   menu_options_txt weapon_name = {"Birthright", "Cornerman", "Franklin"};

@@ -1,5 +1,6 @@
 // scenes/scene_subweapon.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include <cstdint>
 #include <string>
 #include <cmath>
@@ -16,9 +17,13 @@
 #include <plog/Log.h>
 
 using std::string, std::array;
+constexpr Rectangle default_frame = {0, 108, 426, 56};
+constexpr Rectangle frame_source = {0, 0, 426, 56};
 
 
 SubWeaponScene::SubWeaponScene(Game &skirmish) : Scene(skirmish) {
+  frame_dest = default_frame;
+
   start_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Sub-Weapon Selection scene";
 }
@@ -29,7 +34,52 @@ SubWeaponScene::~SubWeaponScene() {
   PLOGI << "Sub-Weapon Selection scene has been unloaded.";
 }
 
+void SubWeaponScene::updateScene() {
+  if (ready) {
+    return;
+  }
+
+  if (going_back) {
+    ready_percentage -= GetFrameTime() / ready_time;
+  }
+  else {
+    ready_percentage += GetFrameTime() / ready_time;
+  }
+  ready_percentage = Clamp(ready_percentage, 0.0, 1.0);
+
+  frameInterpolation();
+  windowInterpolation();
+
+  float time_elapsed = CURRENT_TIME - start_timestamp;
+  if (time_elapsed < ready_time) {
+    return;
+  }
+  
+  if (going_back) {
+    skirmish->loadScene<MenuScene>();
+  }
+  else {
+    ready = true;
+  }
+}
+
+void SubWeaponScene::frameInterpolation() {
+  float max_height = default_frame.height;
+  frame_dest.height = Lerp(0, max_height, ready_percentage);
+}
+
+void SubWeaponScene::windowInterpolation() {
+  float end_window_y = 144;
+  float percentage = 1.0 - ready_percentage;
+
+  window_position.y = Lerp(end_window_y, 240, percentage);
+}
+
 void SubWeaponScene::checkInput() {
+  if (ready == false) {
+    return;
+  }
+
   bool key_right = IsKeyPressed(KEY_RIGHT);
   bool key_left = IsKeyPressed(KEY_LEFT);
   bool key_z = IsKeyPressed(KEY_Z);
@@ -66,7 +116,10 @@ void SubWeaponScene::checkInput() {
   }
   else if (key_x || btn_b) {
     SoundUtils::play("opt_cancel");
-    skirmish->loadScene<MenuScene>();
+    ready = false;
+    going_back = true;
+
+    start_timestamp = CURRENT_TIME;
   }
 }
 
@@ -197,8 +250,14 @@ void SubWeaponScene::drawConfirmOptions() {
 }
 
 void SubWeaponScene::drawScene() {
-  DrawTexture(*sprites::weapon_select[0], 0, 80, WHITE);
-  DrawTexture(*sprites::weapon_select[1], 96, 144, WHITE);
+  float frame_originY = frame_dest.height / 2;
+  DrawTexturePro(*sprites::weapon_select[0], frame_source, frame_dest,
+                 {0, frame_originY}, 0, WHITE);
+  DrawTextureV(*sprites::weapon_select[1], window_position, WHITE);
+
+  if (ready == false) {
+    return;
+  }
 
   drawWeaponIcons();
   drawSelectionArrow();
