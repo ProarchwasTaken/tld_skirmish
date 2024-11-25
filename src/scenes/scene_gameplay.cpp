@@ -30,6 +30,8 @@ GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id):
   sky_color = COLORS::PALETTE[40];
 
   camera = CameraUtils::setupCamera();
+
+  skirmish.transition.fadein(1.5, BLACK);
   tick_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Gameplay scene.";
 }
@@ -158,6 +160,11 @@ void GameplayScene::resumeGame() {
 }
 
 void GameplayScene::tickTimer() {
+  if (skirmish->transition.active) {
+    tick_timestamp = CURRENT_TIME;
+    return;
+  }
+
   float time_elapsed = CURRENT_TIME - tick_timestamp;
   if (time_elapsed < tick_interval) {
     return;
@@ -258,11 +265,13 @@ void GameplayScene::drawScene() {
   }
   EndMode2D();
 
-  life_hud.draw();
-  morale_hud.draw();
+  if (skirmish->transition.active == false) {
+    life_hud.draw();
+    morale_hud.draw();
 
-  drawWaveCount();
-  drawTimer();
+    drawWaveCount();
+    drawTimer();
+  }
 
   if (paused) {
     drawPauseMenu();

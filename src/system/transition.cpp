@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "defaults.h"
 #include "sys_transition.h"
+#include <plog/Log.h>
 
 void WipeTransition::interpolate() {
   if (active == false) {
@@ -20,9 +21,10 @@ void WipeTransition::interpolate() {
 
   fade_percentage = Clamp(fade_percentage, 0.0, 1.0);
   fade_width = Lerp(0.0, CANVAS_WIDTH / 2, fade_percentage);
-  float time_elapsed = CURRENT_TIME - fade_timestamp;
 
-  if (time_elapsed <= fade_time) {
+  float time_elapsed = CURRENT_TIME - fade_timestamp;
+  if (time_elapsed >= fade_time) {
+    PLOGI << "Transition Complete.";
     active = false;
   }
 }
@@ -34,6 +36,7 @@ void WipeTransition::fadein(float fade_time, Color effect_color) {
   fading_out = false;
   active = true;
 
+  PLOGI << "Fading in...";
   updateProperties(fade_time, effect_color);
 }
 
@@ -44,10 +47,12 @@ void WipeTransition::fadeout(float fade_time, Color effect_color) {
   fading_out = true;
   active = true;
 
+  PLOGI << "Fading out...";
   updateProperties(fade_time, effect_color);
 }
 
 void WipeTransition::updateProperties(float fade_time, Color color) {
+  PLOGD << "Fade Time: " << fade_time;
   this->effect_color = color;
   this->fade_time = fade_time;
   this->fade_timestamp = CURRENT_TIME;
@@ -62,5 +67,5 @@ void WipeTransition::draw() {
   DrawRectangleRec(bar, effect_color);
 
   bar.x = CANVAS_WIDTH;
-  DrawRectanglePro(bar, {-fade_width, 0}, 0, effect_color);
+  DrawRectanglePro(bar, {fade_width, 0}, 0, effect_color);
 }

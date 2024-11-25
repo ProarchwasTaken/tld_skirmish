@@ -96,7 +96,11 @@ void Game::loadGameFonts() {
 }
 
 void Game::refresh() {
-  scene->checkInput();
+  if (transition.active == false) {
+    scene->checkInput();
+  }
+
+  transition.interpolate();
   scene->updateScene();
 
   BeginTextureMode(canvas);
@@ -105,6 +109,7 @@ void Game::refresh() {
     scene->drawScene();
 
     if (DEBUG_MODE) scene->drawDebugInfo();
+    transition.draw();
   }
   EndTextureMode();
 
