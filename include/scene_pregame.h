@@ -31,5 +31,5 @@ private:
 
   std::string message = "";
   Vector2 msg_position = {213, 104};
-  int spacing = -3;
+  int spacing = -2;
 };

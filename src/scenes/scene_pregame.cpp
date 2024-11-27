@@ -14,9 +14,21 @@
 
 using std::array, std::string, std::uniform_int_distribution;
 
-array<string, 2> message_pool = {
+array<string, 14> message_pool = {
   "Resolve allows you to last a little bit longer.",
-  "The will could never surpass the flesh."
+  "The will could never surpass the flesh.",
+  "Watch your Morale, it hard to gain it back once lost.",
+  "You must die with the knowledge that you tried your best.",
+  "Treasure any moment of respite.",
+  "You only lasted this long because of luck.",
+  "Your actions matter, even if it doesn't seem like it.",
+  "The slowest tend to get overwhelmed.",
+  "This is not going to be easy. It never was.",
+  "The hopelessness of this situation is not unbeknownst to you.",
+  "It's our duty to keep moving forward.",
+  "Never try to tank an attack. You don't have that privelege.",
+  "Those who last the longest tend to not be reckless.",
+  "Struggle until the end, even when it's hopeless."
 };
 
 
@@ -76,7 +88,7 @@ void PregameScene::setupFirstMsg() {
 std::string PregameScene::getRandomMsg() {
   PLOGD << "Attempting to get a random message.";
   int end_range = message_pool.size() - 1;
-  assert(end_range > 0);
+  assert(end_range >= 0);
 
   if (end_range == 0) {
     PLOGD << "Detected only one message in message pool.";
