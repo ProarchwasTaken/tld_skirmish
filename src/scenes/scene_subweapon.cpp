@@ -12,7 +12,7 @@
 #include "utils_menu.h"
 #include "utils_sound.h"
 #include "scene_menu.h"
-#include "scene_gameplay.h"
+#include "scene_pregame.h"
 #include "scene_subweapon.h"
 #include <plog/Log.h>
 
@@ -145,7 +145,7 @@ void SubWeaponScene::selectConfirmOption() {
   switch (*selected_confirm) {
     case OPT_YES: {
       SoundUtils::play("opt_confirm");
-      skirmish->loadScene<GameplayScene>(*selected_weapon);
+      skirmish->loadScene<PregameScene>(*selected_weapon);
       break;
     }
     case OPT_NO: {
