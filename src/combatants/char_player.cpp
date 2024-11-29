@@ -87,6 +87,11 @@ void PlayerCharacter::assignSubWeapon(uint8_t weapon_id) {
 }
 
 void PlayerCharacter::update() {
+  if (*game_phase == PHASE_WIN) {
+    current_sprite = sprites::player[42];
+    return;
+  }
+
   assert(sub_weapon != nullptr && "You forgot to call assignSubWeapon()");
   bufferTimerCheck();
 
