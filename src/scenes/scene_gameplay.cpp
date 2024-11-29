@@ -56,7 +56,7 @@ void GameplayScene::checkInput() {
   bool valid_state = player.state != HIT_STUN && player.state != DEAD;
   bool valid_phase = phase == PHASE_REST || phase == PHASE_ACTION;
 
-  bool can_pause = valid_state && valid_phase;
+  bool can_pause = valid_state && valid_phase && awaiting_win == false;
   if (can_pause) {
     checkPauseInput();
   }
@@ -89,10 +89,23 @@ void GameplayScene::updateScene() {
     return;
   }
 
-  tickTimer();
+  updateActors();
 
+  systemUpdate();
+  updateGameState();
+}
+
+void GameplayScene::skyColorUpdate() {
+  if (seq_color.end_of_sequence) {
+    return;
+  }
+
+  seq_color.play(0.25, false);
+  sky_color = COLORS::PALETTE[*seq_color.iterator];
+}
+
+void GameplayScene::updateActors() {
   player.update();
-  CameraUtils::follow(camera, player.camera_position, 2.5);
 
   for (auto enemy : enemies) {
     enemy->update();
@@ -101,6 +114,14 @@ void GameplayScene::updateScene() {
   for (auto &d_actor : dynamic_actors) {
     d_actor->update();
   }
+}
+
+void GameplayScene::systemUpdate() {
+  CameraUtils::follow(camera, player.camera_position, 2.5);
+  if (updated_phase) {
+    skyColorUpdate();
+  }
+  bg_transition.interpolate();
 
   life_hud.update();
   morale_hud.update();
@@ -110,32 +131,63 @@ void GameplayScene::updateScene() {
   Dynamic::moveFromQueue(dynamic_actors);
   Dynamic::clearAwaitingDeletion(dynamic_actors);
   Enemies::deleteDeadEnemies(enemies);
+}
 
-  phase = determinePhase();
-  if (updated_phase) {
-    phaseUpdate();
+void GameplayScene::updateGameState() {
+  if (awaiting_win == false) {
+    tickTimer();
+    phase = determinePhase();
+    endGameCheck();
   }
+  else {
+    endGameProcedures();
+  }
+}
 
-  // PLACEHOLDER
+void GameplayScene::endGameCheck() {
   if (player.awaiting_deletion) {
     PLOGW << "A proper fail state hasn't been implemented yet!";
     PLOGI << "Resorting to go back to the title screen for now.";
     skirmish->loadScene<TitleScene>();
   }
   else if (phase == PHASE_REST && wave == max_wave) {
-    PLOGW << "A proper win state hasn't been implemented yet!";
-    PLOGI << "Sorry for the inconvenience!";
-    skirmish->loadScene<TitleScene>();
+    PLOGI << "Detected that the player has won the game.";
+    awaiting_win = true;
+    win_prevtime = CURRENT_TIME;
   }
 }
 
-void GameplayScene::phaseUpdate() {
-  if (seq_color.end_of_sequence) {
-    return;
+void GameplayScene::endGameProcedures() {
+  if (phase == PHASE_WIN) {
+    winSequence();
+  }
+  else if (awaiting_win) { 
+    winDelay();
+  }
+}
+
+void GameplayScene::winDelay() {
+  float time_elapsed = CURRENT_TIME - win_prevtime;
+  if (time_elapsed >= win_delay && player.state == NEUTRAL) {
+    PLOGI << "Starting win sequence. Nice Job!";
+    phase = PHASE_WIN;
+    phaseChanged(phase);
+
+    win_prevtime = CURRENT_TIME;
+  }
+}
+
+void GameplayScene::winSequence() {
+  float time_elapsed = CURRENT_TIME - win_prevtime;
+
+  if (fading_out == false && time_elapsed >= win_time / 2) {
+    bg_transition.fadeout(2, BLACK);
+    fading_out = true;
   }
 
-  seq_color.play(0.25, false);
-  sky_color = COLORS::PALETTE[*seq_color.iterator];
+  if (time_elapsed >= win_time) {
+    skirmish->loadScene<TitleScene>();
+  }
 }
 
 void GameplayScene::pauseGame() {
@@ -225,6 +277,10 @@ void GameplayScene::phaseChanged(const uint8_t new_phase) {
       seq_color.newSequence({40, 36, 32});
       break;
     }
+    case PHASE_WIN: {
+      seq_color.newSequence({38, 34, 30});
+      break;
+    }
   }
 
   updated_phase = true;
@@ -255,10 +311,13 @@ void GameplayScene::drawScene() {
       enemy->draw(camera.target);
     }
 
+    drawBgTransition();
     player.draw(camera.target);
 
-    for (auto &d_actor : dynamic_actors) {
-      d_actor->draw(camera.target);
+    if (fading_out == false) {
+      for (auto &d_actor : dynamic_actors) {
+        d_actor->draw(camera.target);
+      }
     }
 
     DrawTexture(overlay, -512, 0, WHITE);
@@ -275,6 +334,16 @@ void GameplayScene::drawScene() {
 
   if (paused) {
     drawPauseMenu();
+  }
+}
+
+void GameplayScene::drawBgTransition() {
+  if (fading_out) {
+    EndMode2D();
+
+    bg_transition.draw();
+
+    BeginMode2D(camera);
   }
 }
 

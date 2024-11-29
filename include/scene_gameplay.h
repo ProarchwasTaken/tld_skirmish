@@ -6,6 +6,7 @@
 #include "base/scene.h"
 #include "game.h"
 #include "sys_wave_manager.h"
+#include "sys_transition.h"
 #include "utils_sequence.h"
 #include "hud_life.h"
 #include "hud_morale.h"
@@ -13,6 +14,7 @@
 
 #define PHASE_REST 0
 #define PHASE_ACTION 1
+#define PHASE_WIN 2
 
 
 /* The most vital scene as it's where everything related to the main
@@ -51,14 +53,36 @@ public:
 
   void updateScene() override;
 
+  /* Updates everything entity that derives from the Actor class. This
+   * includes Combatants, DynamicActors, and the PlayerCharacter.*/
+  void updateActors();
+
+  /* Pretty much updates everything else that's vital for the game 
+   * scene. Think of it like miscellaneous update method.*/
+  void systemUpdate();
+
+  void updateGameState();
+
   /* Goes through the color sequence, assigning the current color to
    * sky_color. Only stopping when the end of the sequence has be reached
    * Ideally, this function should only be called after the phase has
    * been changed at least once, other than that, this function is called
    * once every frame.*/
-  void phaseUpdate();
+  void skyColorUpdate();
+
+  /* For determining if the game should end in a lose or a win depending
+   * on certain conditions.*/
+  void endGameCheck();
+  void endGameProcedures();
+
+  /* When the player wins the game, there is a small delay before 
+   * control is taken away from them and the win sequence properly 
+   * starts*/
+  void winDelay();
+  void winSequence();
 
   void drawScene() override;
+  void drawBgTransition();
   void drawPauseMenu();
 private:
   Texture background;
@@ -78,12 +102,22 @@ private:
   
   Sequence<int, 3> seq_color = Sequence<int, 3>({0, 0, 0});
 
+  WipeTransition bg_transition;
+  bool fading_out = false;
+
   bool paused = false;
   float pause_timestamp = 0;
 
   uint8_t phase = PHASE_REST;
   bool updated_phase = false;
   uint8_t difficulty = 0;
+
+  bool awaiting_win = false;
+
+  float win_delay = 3.0;
+  float win_time = 10.0;
+
+  float win_prevtime = 0.0;
 
   uint8_t max_wave;
   uint8_t wave = 0;
