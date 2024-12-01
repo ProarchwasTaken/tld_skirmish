@@ -17,6 +17,8 @@ TitleScene::TitleScene(Game &skirmish) : Scene(skirmish)
   setupTitle();
   setupCopyright();
   setupEnter();
+
+  skirmish.transition.fadein(1.0, BLACK);
   PLOGI << "Successfully loaded Title scene.";
 }
 
