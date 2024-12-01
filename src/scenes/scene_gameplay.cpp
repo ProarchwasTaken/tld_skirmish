@@ -13,8 +13,9 @@
 #include "utils_text.h"
 #include "utils_sequence.h"
 #include "game.h"
-#include "scene_gameplay.h"
 #include "scene_title.h"
+#include "scene_win.h"
+#include "scene_gameplay.h"
 #include <plog/Log.h>
 
 using std::tie, std::string;
@@ -186,7 +187,7 @@ void GameplayScene::winSequence() {
   }
 
   if (time_elapsed >= win_time) {
-    skirmish->loadScene<TitleScene>();
+    skirmish->loadScene<WinScene>();
   }
 }
 
@@ -278,7 +279,7 @@ void GameplayScene::phaseChanged(const uint8_t new_phase) {
       break;
     }
     case PHASE_WIN: {
-      seq_color.newSequence({38, 34, 30});
+      seq_color.newSequence({46, 50, 51});
       break;
     }
   }
