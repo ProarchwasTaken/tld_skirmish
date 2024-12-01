@@ -15,6 +15,7 @@
 #define PHASE_REST 0
 #define PHASE_ACTION 1
 #define PHASE_WIN 2
+#define PHASE_LOSE 3
 
 
 /* The most vital scene as it's where everything related to the main
@@ -81,6 +82,9 @@ public:
   void winDelay();
   void winSequence();
 
+  void loseDelay();
+  void loseSequence();
+
   void drawScene() override;
   void drawBgTransition();
   void drawPauseMenu();
@@ -113,11 +117,15 @@ private:
   uint8_t difficulty = 0;
 
   bool awaiting_win = false;
+  bool awaiting_lose = false;
 
   float win_delay = 3.0;
   float win_time = 10.0;
 
-  float win_prevtime = 0.0;
+  float lose_delay = 0.5;
+  float lose_time = 3.0;
+
+  float end_prevtime = 0.0;
 
   uint8_t max_wave;
   uint8_t wave = 0;
@@ -125,5 +133,4 @@ private:
   uint16_t timer = 20;
   const float tick_interval = 1;
   float tick_timestamp = 0;
-
 };

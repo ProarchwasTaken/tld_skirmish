@@ -1,4 +1,5 @@
 // scene/scene_gameplay.cpp
+#include <cassert>
 #include <cstdint>
 #include <raylib.h>
 #include <string>
@@ -135,7 +136,7 @@ void GameplayScene::systemUpdate() {
 }
 
 void GameplayScene::updateGameState() {
-  if (awaiting_win == false) {
+  if (awaiting_win == awaiting_lose) {
     tickTimer();
     phase = determinePhase();
     endGameCheck();
@@ -147,20 +148,33 @@ void GameplayScene::updateGameState() {
 
 void GameplayScene::endGameCheck() {
   if (player.awaiting_deletion) {
-    PLOGW << "A proper fail state hasn't been implemented yet!";
-    PLOGI << "Resorting to go back to the title screen for now.";
-    skirmish->loadScene<TitleScene>();
+    PLOGI << "Detected that the player has lose the game.";
+    awaiting_lose = true;
+    end_prevtime = CURRENT_TIME;
   }
   else if (phase == PHASE_REST && wave == max_wave) {
     PLOGI << "Detected that the player has won the game.";
     awaiting_win = true;
-    win_prevtime = CURRENT_TIME;
+    end_prevtime = CURRENT_TIME;
   }
 }
 
 void GameplayScene::endGameProcedures() {
-  if (phase == PHASE_WIN) {
-    winSequence();
+  assert(awaiting_win != awaiting_lose);
+
+  switch (phase) {
+    case PHASE_WIN: {
+      winSequence();
+      return;
+    }
+    case PHASE_LOSE: {
+      loseSequence();
+      return;
+    }
+  }
+
+  if (awaiting_lose) {
+    loseDelay();
   }
   else if (awaiting_win) { 
     winDelay();
@@ -168,18 +182,18 @@ void GameplayScene::endGameProcedures() {
 }
 
 void GameplayScene::winDelay() {
-  float time_elapsed = CURRENT_TIME - win_prevtime;
+  float time_elapsed = CURRENT_TIME - end_prevtime;
   if (time_elapsed >= win_delay && player.state == NEUTRAL) {
     PLOGI << "Starting win sequence. Nice Job!";
     phase = PHASE_WIN;
     phaseChanged(phase);
 
-    win_prevtime = CURRENT_TIME;
+    end_prevtime = CURRENT_TIME;
   }
 }
 
 void GameplayScene::winSequence() {
-  float time_elapsed = CURRENT_TIME - win_prevtime;
+  float time_elapsed = CURRENT_TIME - end_prevtime;
 
   if (fading_out == false && time_elapsed >= win_time / 2) {
     bg_transition.fadeout(2, BLACK);
@@ -188,6 +202,30 @@ void GameplayScene::winSequence() {
 
   if (time_elapsed >= win_time) {
     skirmish->loadScene<WinScene>();
+  }
+}
+
+void GameplayScene::loseDelay() {
+  float time_elapsed = CURRENT_TIME - end_prevtime;
+  if (time_elapsed >= lose_delay) {
+    PLOGI << "Starting lose sequence. Tough luck...";
+    phase = PHASE_LOSE;
+
+    player.camera_position = player.position.x;
+    end_prevtime = CURRENT_TIME;
+  }
+}
+
+void GameplayScene::loseSequence() {
+  float time_elapsed = CURRENT_TIME - end_prevtime;
+
+  if (fading_out == false && time_elapsed >= 0.5) {
+    bg_transition.fadeout(1, BLACK);
+    fading_out = true;
+  }
+
+  if (time_elapsed >= lose_time) {
+    skirmish->loadScene<TitleScene>();
   }
 }
 
@@ -279,7 +317,7 @@ void GameplayScene::phaseChanged(const uint8_t new_phase) {
       break;
     }
     case PHASE_WIN: {
-      seq_color.newSequence({46, 50, 51});
+      seq_color.newSequence({45, 50, 51});
       break;
     }
   }
