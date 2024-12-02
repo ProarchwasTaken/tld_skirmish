@@ -14,8 +14,8 @@
 #include "utils_text.h"
 #include "utils_sequence.h"
 #include "game.h"
-#include "scene_title.h"
 #include "scene_win.h"
+#include "scene_gameover.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>
 
@@ -225,7 +225,8 @@ void GameplayScene::loseSequence() {
   }
 
   if (time_elapsed >= lose_time) {
-    skirmish->loadScene<TitleScene>();
+    Image screenshot = LoadImageFromScreen();
+    skirmish->loadScene<GameOverScene>(screenshot);
   }
 }
 
