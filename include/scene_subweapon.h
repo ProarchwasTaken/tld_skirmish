@@ -20,7 +20,7 @@
  * in oddly creatives ways to make it work.*/
 class SubWeaponScene : public Scene {
 public:
-  SubWeaponScene(Game &skirmish);
+  SubWeaponScene(Game &skirmish, bool from_gameover);
   ~SubWeaponScene();
 
   void updateScene() override;
@@ -46,6 +46,7 @@ public:
 
 private:
   bool ready = false;
+  bool from_gameover;
   bool going_back = false;
 
   float ready_time = 0.25;

@@ -10,6 +10,7 @@
 #include "utils_menu.h"
 #include "utils_sound.h"
 #include "scene_title.h"
+#include "scene_subweapon.h"
 #include "scene_gameover.h"
 #include <plog/Log.h>
 
@@ -147,6 +148,7 @@ void GameOverScene::checkInput() {
     Menu::previousOption(options, selected_option, true);
   }
   else if (key_z || btn_a) {
+    SoundUtils::play("opt_select");
     selectOption();
   }
 }
@@ -154,7 +156,7 @@ void GameOverScene::checkInput() {
 void GameOverScene::selectOption() {
   switch (*selected_option) {
     case OPT_RESTART: {
-      SoundUtils::play("opt_error");
+      skirmish->loadScene<SubWeaponScene>(true);
       break;
     }
     default: {

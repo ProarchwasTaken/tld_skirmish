@@ -21,8 +21,11 @@ constexpr Rectangle default_frame = {0, 108, 426, 56};
 constexpr Rectangle frame_source = {0, 0, 426, 56};
 
 
-SubWeaponScene::SubWeaponScene(Game &skirmish) : Scene(skirmish) {
+SubWeaponScene::SubWeaponScene(Game &skirmish, bool from_gameover) : 
+  Scene(skirmish) 
+{
   frame_dest = default_frame;
+  this->from_gameover = from_gameover;
 
   start_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Sub-Weapon Selection scene";
@@ -114,7 +117,7 @@ void SubWeaponScene::checkInput() {
     SoundUtils::play("opt_confirm");
     confirm = true;
   }
-  else if (key_x || btn_b) {
+  else if (from_gameover == false && (key_x || btn_b)) {
     SoundUtils::play("opt_cancel");
     ready = false;
     going_back = true;
