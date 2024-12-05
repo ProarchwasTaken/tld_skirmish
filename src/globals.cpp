@@ -12,6 +12,7 @@ using std::vector, std::mt19937, std::random_device;
 
 bool DEBUG_MODE = false;
 bool EXIT_GAME = false;
+Image GAME_ICON;
 double PAUSE_PENALTY = 0;
 
 namespace COLORS {

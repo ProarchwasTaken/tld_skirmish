@@ -14,6 +14,7 @@
 
 extern bool DEBUG_MODE;
 extern bool EXIT_GAME;
+extern Image GAME_ICON;
 
 extern double PAUSE_PENALTY;
 #define CURRENT_TIME (GetTime() - PAUSE_PENALTY)
