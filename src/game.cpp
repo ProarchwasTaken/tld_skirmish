@@ -7,7 +7,7 @@
 #include "game.h"
 #include "sys_sprites.h"
 #include "sys_audio.h"
-#include "scene_title.h"
+#include "scene_splash.h"
 #if DEV_BUILD
 #include "scene_debug.h"
 #endif // DEV_BUILD
@@ -30,13 +30,14 @@ Game::Game(bool debug_scene) {
     return;
   }
 #endif // DEV_BUILD
-  loadScene<TitleScene>();
+  loadScene<SplashScene>();
 }
 
 Game::~Game() {
   PLOGI << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
+  UnloadImage(GAME_ICON);
 
   UnloadFont(skirmish_font);
 
