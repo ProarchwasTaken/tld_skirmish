@@ -1,3 +1,25 @@
+[[bgm]]
+name = "Postlude"
+path = "audio/bgm/Postlude.mp3"
+
+[[bgm]]
+name = "Regeneration"
+path = "audio/bgm/Regeneration.mp3"
+
+[[bgm]]
+name = "Tribulation"
+path = "audio/bgm/Tribulation.mp3"
+looping = true;
+
+[[bgm]]
+name = "Moment of Truth"
+path = "audio/bgm/Moment of Truth.mp3"
+looping = true;
+
+[[bgm]]
+path = "Life"
+path = "audio/bgm/Life.mp3"
+
 # Menu Sound Effects
 [[sfx]]
 name = "opt_change"
