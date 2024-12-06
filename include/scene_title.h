@@ -11,7 +11,7 @@
  * second scene to be loaded in regular circumstances.*/
 class TitleScene : public Scene {
 public:
-  TitleScene(Game &skirmish);
+  TitleScene(Game &skirmish, bool play_music = false);
   ~TitleScene();
 
   void setupTitle();

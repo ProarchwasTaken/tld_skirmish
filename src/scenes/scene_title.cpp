@@ -3,8 +3,9 @@
 #include <string>
 #include "defaults.h"
 #include "globals.h"
-#include "utils_text.h"
 #include "game.h"
+#include "utils_text.h"
+#include "utils_music.h"
 #include "scene_menu.h"
 #include "scene_title.h"
 #include <plog/Log.h>
@@ -12,13 +13,16 @@
 using std::string;
 
 
-TitleScene::TitleScene(Game &skirmish) : Scene(skirmish) 
+TitleScene::TitleScene(Game &skirmish, bool play_music) : Scene(skirmish) 
 {
   setupTitle();
   setupCopyright();
   setupEnter();
 
   skirmish.transition.fadein(1.0, BLACK);
+  if (play_music) {
+    MusicUtils::play(0);
+  }
   PLOGI << "Successfully loaded Title scene.";
 }
 

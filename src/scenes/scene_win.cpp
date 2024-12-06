@@ -25,7 +25,7 @@ void WinScene::updateScene() {
   }
 
   if (time_elapsed >= scene_time) {
-    skirmish->loadScene<TitleScene>();
+    skirmish->loadScene<TitleScene>(true);
   }
 }
 

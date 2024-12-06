@@ -9,6 +9,7 @@
 #include "utils_text.h"
 #include "utils_menu.h"
 #include "utils_sound.h"
+#include "utils_music.h"
 #include "scene_title.h"
 #include "scene_subweapon.h"
 #include "scene_gameover.h"
@@ -73,7 +74,7 @@ void GameOverScene::exitSequence() {
 void GameOverScene::endExitSequence() {
   switch (*selected_option) {
     case OPT_TITLE: {
-      skirmish->loadScene<TitleScene>();
+      skirmish->loadScene<TitleScene>(true);
       break;
     }
     case OPT_QUIT: {
@@ -94,6 +95,7 @@ void GameOverScene::interpolateSpacing() {
 
   if (spacing_percentage == 0.0) {
     PLOGI << "Text interpolation complete.";
+    MusicUtils::play(2);
     ready = true;
   }
 }
@@ -148,7 +150,7 @@ void GameOverScene::checkInput() {
     Menu::previousOption(options, selected_option, true);
   }
   else if (key_z || btn_a) {
-    SoundUtils::play("opt_select");
+    SoundUtils::play("opt_confirm");
     selectOption();
   }
 }
@@ -164,6 +166,7 @@ void GameOverScene::selectOption() {
       exiting = true;
 
       PLOGI << "Beginning exit sequence.";
+      MusicUtils::fadeout(0.0, 5);
       exit_timestamp = CURRENT_TIME;
     }
   }

@@ -7,6 +7,7 @@
 #include "game.h"
 #include "sys_sprites.h"
 #include "sys_audio.h"
+#include "utils_music.h"
 #include "scene_splash.h"
 #if DEV_BUILD
 #include "scene_debug.h"
@@ -102,6 +103,7 @@ void Game::refresh() {
   }
 
   transition.interpolate();
+  MusicUtils::interpolateVolume();
   scene->updateScene();
 
   BeginTextureMode(canvas);

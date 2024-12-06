@@ -15,10 +15,14 @@ bool MusicUtils::updateStreamData(const int music_id) {
   }
   else if (audio::stream_data->id != music_id) {
     float time_played = GetMusicTimePlayed(audio::music_stream);
-    audio::stream_data->prev_time = time_played;
-    UnloadMusicStream(audio::music_stream);
+    float song_length = GetMusicTimeLength(audio::music_stream);
+    float progress = (time_played / song_length) * 100;
 
+    PLOGD << "Progress on previous song: " << progress;
+    audio::stream_data->prev_time = progress;
     audio::stream_data = &audio::bgm_metadata[music_id]; 
+
+    UnloadMusicStream(audio::music_stream);
     return true;
   }
   else {
@@ -101,6 +105,7 @@ void MusicUtils::interpolateVolume() {
   SetMusicVolume(audio::music_stream, volume);
 
   if (*percentage == 0.0) {
+    StopMusicStream(audio::music_stream);
     lerp_data->active = false;
   }
 }

@@ -12,6 +12,7 @@
 #include "utils_dynamic.h"
 #include "utils_enemies.h"
 #include "utils_text.h"
+#include "utils_music.h"
 #include "utils_sequence.h"
 #include "game.h"
 #include "scene_win.h"
@@ -34,6 +35,7 @@ GameplayScene::GameplayScene(Game &skirmish, uint8_t weapon_id):
   camera = CameraUtils::setupCamera();
 
   skirmish.transition.fadein(1.5, BLACK);
+  MusicUtils::play(1);
   tick_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Gameplay scene.";
 }
@@ -157,6 +159,10 @@ void GameplayScene::endGameCheck() {
     awaiting_win = true;
     end_prevtime = CURRENT_TIME;
   }
+
+  if (awaiting_win != awaiting_lose) {
+    MusicUtils::fadeout(0.0, 1.0);
+  }
 }
 
 void GameplayScene::endGameProcedures() {
@@ -225,6 +231,7 @@ void GameplayScene::loseSequence() {
   }
 
   if (time_elapsed >= lose_time) {
+    StopMusicStream(audio::music_stream);
     Image screenshot = LoadImageFromScreen();
     skirmish->loadScene<GameOverScene>(screenshot);
   }
@@ -311,14 +318,23 @@ void GameplayScene::phaseChanged(const uint8_t new_phase) {
   switch (new_phase) {
     case PHASE_REST: {
       seq_color.newSequence({32, 36, 40});
+      MusicUtils::resume(1);
       break;
     }
     case PHASE_ACTION: {
       seq_color.newSequence({40, 36, 32});
+      if (updated_phase) {
+        MusicUtils::resume(3);
+      }
+      else {
+        MusicUtils::play(3);
+      }
+
       break;
     }
     case PHASE_WIN: {
       seq_color.newSequence({45, 50, 51});
+      MusicUtils::play(4);
       break;
     }
   }

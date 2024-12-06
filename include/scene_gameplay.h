@@ -120,7 +120,7 @@ private:
   bool awaiting_lose = false;
 
   float win_delay = 3.0;
-  float win_time = 10.0;
+  float win_time = 8.5;
 
   float lose_delay = 0.5;
   float lose_time = 3.0;

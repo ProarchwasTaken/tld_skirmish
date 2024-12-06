@@ -22,6 +22,6 @@ private:
   float fade_time = 1.0;
   float percentage = 1.0;
 
-  float scene_time = 4.0;
+  float scene_time = 5.0;
   float scene_timestamp;
 };
