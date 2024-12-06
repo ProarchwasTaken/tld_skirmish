@@ -28,7 +28,7 @@ void MusicUtils::play(const int music_id) {
   auto meta_data = audio::stream_data;
   PLOGI << "Validating music path: " << meta_data->path;
 
-  if (DirectoryExists(meta_data->path.c_str()) == false) {
+  if (FileExists(meta_data->path.c_str()) == false) {
     PLOGE << "Invalid path!";
   }
   else {

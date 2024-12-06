@@ -5,6 +5,7 @@
 #include "base/scene.h"
 #include "utils_text.h"
 #include "game.h"
+#include "utils_music.h"
 #include "scene_title.h"
 #include "scene_splash.h"
 #include <plog/Log.h>
@@ -16,6 +17,7 @@ SplashScene::SplashScene(Game &skirmish) : Scene(skirmish) {
   txt_position = Text::alignCenter(fonts::skirmish, text, txt_position, 
                                    1, -3);
 
+  MusicUtils::play(0);
   start_timestamp = CURRENT_TIME;
   PLOGI << "Loaded Splash Screen.";
 }

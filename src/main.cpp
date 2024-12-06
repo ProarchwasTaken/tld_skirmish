@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
       DEBUG_MODE = !DEBUG_MODE;
     }
 
+    UpdateMusicStream(audio::music_stream);
     skirmish.refresh();
   }
 
