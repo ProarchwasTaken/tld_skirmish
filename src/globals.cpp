@@ -45,6 +45,7 @@ namespace audio {
 
   Music music_stream;
   MusicMetaData *stream_data = NULL;
+  VolumeLerpData bgm_vol_lerp;
 }
 
 namespace RNG {

@@ -35,6 +35,7 @@ namespace audio {
 
   extern Music music_stream;
   extern MusicMetaData *stream_data;
+  extern VolumeLerpData bgm_vol_lerp;
 }
 
 namespace sprites {
