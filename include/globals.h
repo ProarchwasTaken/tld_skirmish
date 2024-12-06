@@ -33,7 +33,7 @@ namespace audio {
   extern std::vector<SoundMetaData> sfx_metadata;
   extern std::vector<MusicMetaData> bgm_metadata;
 
-  extern Music audio_stream;
+  extern Music music_stream;
   extern MusicMetaData *stream_data;
 }
 

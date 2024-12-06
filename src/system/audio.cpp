@@ -28,7 +28,7 @@ AudioManager::~AudioManager() {
   sound_effects.clear();
 
   audio::bgm_metadata.clear();
-  UnloadMusicStream(audio::audio_stream);
+  UnloadMusicStream(audio::music_stream);
   PLOGI << "Sound effects have been unloaded.";
 }
 
@@ -92,7 +92,7 @@ void AudioManager::createMusicMetaData() {
     const bool looping = toml::find_or(data, "looping", false);
 
     PLOGD << "Creating metadata for music: " << music_name;
-    audio::bgm_metadata.push_back({music_path, looping});
+    audio::bgm_metadata.push_back({music_path, index, looping});
   }
 
   PLOGI << "Created music metadata.";

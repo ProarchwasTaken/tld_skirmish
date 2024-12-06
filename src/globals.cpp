@@ -43,8 +43,8 @@ namespace audio {
   vector<SoundMetaData> sfx_metadata;
   vector<MusicMetaData> bgm_metadata;
 
-  Music audio_stream;
-  MusicMetaData *stream_data;
+  Music music_stream;
+  MusicMetaData *stream_data = NULL;
 }
 
 namespace RNG {
