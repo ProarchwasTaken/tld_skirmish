@@ -15,6 +15,7 @@ public:
   ~AudioManager();
 
   void loadSoundEffects();
+  void createMusicMetaData();
   std::tuple<float, float> getPitchValues(toml::value sound_data);
 
 private:

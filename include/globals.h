@@ -11,6 +11,7 @@
 #include "base/generics.h"
 #include "data/data_sprites.h"
 #include "data/data_sound.h"
+#include "data/data_music.h"
 
 extern bool DEBUG_MODE;
 extern bool EXIT_GAME;
@@ -30,6 +31,10 @@ namespace fonts {
 
 namespace audio {
   extern std::vector<SoundMetaData> sfx_metadata;
+  extern std::vector<MusicMetaData> bgm_metadata;
+
+  extern Music audio_stream;
+  extern MusicMetaData *stream_data;
 }
 
 namespace sprites {

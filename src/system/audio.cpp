@@ -15,6 +15,7 @@ using std::string, std::tuple, std::make_tuple, std::tie;
 AudioManager::AudioManager() {
   meta_data = toml::parse("audio/audio_data.toml");
   loadSoundEffects();
+  createMusicMetaData();
 }
 
 AudioManager::~AudioManager() {
@@ -25,6 +26,9 @@ AudioManager::~AudioManager() {
 
   audio::sfx_metadata.clear();
   sound_effects.clear();
+
+  audio::bgm_metadata.clear();
+  UnloadMusicStream(audio::audio_stream);
   PLOGI << "Sound effects have been unloaded.";
 }
 
@@ -32,7 +36,7 @@ void AudioManager::loadSoundEffects() {
   PLOGI << "Loading sound effects.";
   const int count = meta_data["sfx"].size();
 
-  PLOGI << "Sound effect detected: " << count;
+  PLOGI << "Sound effects detected: " << count;
   sound_effects.reserve(count);
 
   for (int index = 0; index < count; index++) {
@@ -72,4 +76,24 @@ tuple<float, float> AudioManager::getPitchValues(toml::value sound_data) {
 
   PLOGD << "Min Pitch: " << min_pitch << ", Max Pitch: " << max_pitch;
   return make_tuple(min_pitch, max_pitch);
+}
+
+void AudioManager::createMusicMetaData() {
+  PLOGI << "Creating music metadata.";
+
+  const int count = meta_data["bgm"].size();
+  PLOGI << "Music detected: " << count;
+
+  for (int index = 0; index < count; index++) {
+    toml::value data = meta_data["bgm"][index];
+
+    string music_name = data["name"].as_string();
+    string music_path = data["path"].as_string();
+    const bool looping = toml::find_or(data, "looping", false);
+
+    PLOGD << "Creating metadata for music: " << music_name;
+    audio::bgm_metadata.push_back({music_path, looping});
+  }
+
+  PLOGI << "Created music metadata.";
 }

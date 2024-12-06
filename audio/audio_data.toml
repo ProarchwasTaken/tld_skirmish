@@ -1,23 +1,23 @@
-[[bgm]]
+[[bgm]] # ID: 0
 name = "Postlude"
 path = "audio/bgm/Postlude.mp3"
 
-[[bgm]]
+[[bgm]] # ID: 1
 name = "Regeneration"
 path = "audio/bgm/Regeneration.mp3"
 
-[[bgm]]
+[[bgm]] # ID: 2
 name = "Tribulation"
 path = "audio/bgm/Tribulation.mp3"
-looping = true;
+looping = true
 
-[[bgm]]
+[[bgm]] # ID: 3
 name = "Moment of Truth"
 path = "audio/bgm/Moment of Truth.mp3"
-looping = true;
+looping = true
 
-[[bgm]]
-path = "Life"
+[[bgm]] # ID: 5
+name = "Life"
 path = "audio/bgm/Life.mp3"
 
 # Menu Sound Effects

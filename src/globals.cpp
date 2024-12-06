@@ -6,6 +6,7 @@
 #include "base/generics.h"
 #include "data/data_sprites.h"
 #include "data/data_sound.h"
+#include "data/data_music.h"
 
 using std::vector, std::mt19937, std::random_device;
 
@@ -40,6 +41,10 @@ namespace sprites {
 
 namespace audio {
   vector<SoundMetaData> sfx_metadata;
+  vector<MusicMetaData> bgm_metadata;
+
+  Music audio_stream;
+  MusicMetaData *stream_data;
 }
 
 namespace RNG {
