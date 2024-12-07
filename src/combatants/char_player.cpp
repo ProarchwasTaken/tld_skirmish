@@ -534,7 +534,7 @@ void PlayerCharacter::endureSequence() {
 
   PLOGI << "The player endured the attack through sheer willpower!";
 
-  health = 1;
+  health = 12;
 
   float decrement = morale * 0.50;
   if (decrement > 0) {
