@@ -240,6 +240,7 @@ void GameplayScene::loseSequence() {
 void GameplayScene::pauseGame() {
   PLOGI << "Pausing the game.";
   paused = true;
+  PauseMusicStream(audio::music_stream);
   SoundUtils::pause();
   pause_timestamp = GetTime();
 }
@@ -254,6 +255,7 @@ void GameplayScene::resumeGame() {
   PLOGD << "Time Paused: " << time_paused;
 
   PAUSE_PENALTY += time_paused;
+  ResumeMusicStream(audio::music_stream);
   SoundUtils::resume();
   PLOGD << "Pause Penalty: " << PAUSE_PENALTY;
 }
