@@ -6,12 +6,14 @@
 #include "base/generics.h"
 #include "data/data_sprites.h"
 #include "data/data_sound.h"
+#include "data/data_music.h"
 
 using std::vector, std::mt19937, std::random_device;
 
 
 bool DEBUG_MODE = false;
 bool EXIT_GAME = false;
+Image GAME_ICON;
 double PAUSE_PENALTY = 0;
 
 namespace COLORS {
@@ -39,6 +41,11 @@ namespace sprites {
 
 namespace audio {
   vector<SoundMetaData> sfx_metadata;
+  vector<MusicMetaData> bgm_metadata;
+
+  Music music_stream;
+  MusicMetaData *stream_data = NULL;
+  VolumeLerpData bgm_vol_lerp;
 }
 
 namespace RNG {

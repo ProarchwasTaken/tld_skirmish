@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include "sys_sprites.h"
 #include "sys_audio.h"
+#include "sys_transition.h"
 #include "base/scene.h"
 
 
@@ -54,6 +55,8 @@ public:
    * elements, and drawing the screen. All based on the game's current
    * gamestate.*/
   void refresh();
+
+  WipeTransition transition;
 private:
   RenderTexture canvas;
   Rectangle canvas_source;

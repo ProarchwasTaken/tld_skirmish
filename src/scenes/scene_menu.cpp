@@ -55,7 +55,7 @@ void MenuScene::checkInput() {
 void MenuScene::selectOption() {
   switch (*selected_option) {
     case OPT_PLAY: {
-      skirmish->loadScene<SubWeaponScene>();
+      skirmish->loadScene<SubWeaponScene>(false);
       break;
     }
     case OPT_QUIT: {

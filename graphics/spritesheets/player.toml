@@ -168,3 +168,7 @@ area = {x = 0, y = 256, width = 64, height = 64}
 [[player.sprites]] # ID: 41
 name = "gun_heavy5"
 area = {x = 64, y = 256, width = 64, height = 64}
+
+[[player.sprites]] # ID: 42
+name = "win"
+area = {x = 128, y = 256, width = 64, height = 64}

@@ -6,7 +6,7 @@
 #include "base/combatant.h"
 #include "char_player.h"
 
-#define DAM_HP 25
+#define DAM_HP 20
 #define DAM_STABILITY 0.50
 
 #define DAM_HIT_SCALE (Vector2){18, 56}

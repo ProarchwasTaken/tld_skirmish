@@ -25,8 +25,11 @@ int main(int argc, char *argv[]) {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
   SetTargetFPS(TARGET_FRAMERATE);
+
   InitAudioDevice();
   SetTextLineSpacing(11);
+  GAME_ICON = LoadImage("graphics/game_icon.png");
+  SetWindowIcon(GAME_ICON);
 
   Game skirmish(debug_scene);
 
@@ -49,6 +52,7 @@ int main(int argc, char *argv[]) {
       DEBUG_MODE = !DEBUG_MODE;
     }
 
+    UpdateMusicStream(audio::music_stream);
     skirmish.refresh();
   }
 

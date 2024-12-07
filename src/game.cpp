@@ -7,7 +7,8 @@
 #include "game.h"
 #include "sys_sprites.h"
 #include "sys_audio.h"
-#include "scene_title.h"
+#include "utils_music.h"
+#include "scene_splash.h"
 #if DEV_BUILD
 #include "scene_debug.h"
 #endif // DEV_BUILD
@@ -30,13 +31,14 @@ Game::Game(bool debug_scene) {
     return;
   }
 #endif // DEV_BUILD
-  loadScene<TitleScene>();
+  loadScene<SplashScene>();
 }
 
 Game::~Game() {
   PLOGI << "Request to terminate program detected.";
   UnloadRenderTexture(canvas);
   UnloadImagePalette(COLORS::PALETTE);
+  UnloadImage(GAME_ICON);
 
   UnloadFont(skirmish_font);
 
@@ -96,7 +98,12 @@ void Game::loadGameFonts() {
 }
 
 void Game::refresh() {
-  scene->checkInput();
+  if (transition.active == false) {
+    scene->checkInput();
+  }
+
+  transition.interpolate();
+  MusicUtils::interpolateVolume();
   scene->updateScene();
 
   BeginTextureMode(canvas);
@@ -105,6 +112,7 @@ void Game::refresh() {
     scene->drawScene();
 
     if (DEBUG_MODE) scene->drawDebugInfo();
+    transition.draw();
   }
   EndTextureMode();
 
