@@ -28,6 +28,8 @@ GameOverScene::GameOverScene(Game &skirmish, Image screenshot):
 
   setupBackground(screenshot);
   UnloadImage(screenshot);
+
+  SoundUtils::play("game_over");
   PLOGI << "Loaded Game Over scene.";
 }
 

@@ -173,3 +173,7 @@ path = "audio/sfx/dam_struggle_free.wav"
 [[sfx]]
 name = "dam_screech"
 path = "audio/sfx/dam_screech.wav"
+
+[[sfx]]
+name = "game_over"
+path = "audio/sfx/game_over.wav"
