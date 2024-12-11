@@ -256,6 +256,10 @@ void SubWeaponScene::drawConfirmOptions() {
 }
 
 void SubWeaponScene::drawScene() {
+  if (from_gameover == false) {
+    DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+  }
+
   float frame_originY = frame_dest.height / 2;
   DrawTexturePro(*sprites::weapon_select[0], frame_source, frame_dest,
                  {0, frame_originY}, 0, WHITE);
