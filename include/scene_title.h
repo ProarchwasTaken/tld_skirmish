@@ -14,7 +14,6 @@ public:
   TitleScene(Game &skirmish, bool play_music = false);
   ~TitleScene();
 
-  void setupTitle();
   void setupCopyright();
   void setupEnter();
 
@@ -22,9 +21,6 @@ public:
   void updateScene() override;
   void drawScene() override;
 private:
-  std::string txt_title;
-  Vector2 title_position;
-
   std::string txt_copyright;
   Vector2 cpr_position;
 

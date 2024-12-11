@@ -15,7 +15,6 @@ using std::string;
 
 TitleScene::TitleScene(Game &skirmish, bool play_music) : Scene(skirmish) 
 {
-  setupTitle();
   setupCopyright();
   setupEnter();
 
@@ -30,13 +29,6 @@ TitleScene::~TitleScene() {
   PLOGI << "Successfully unloaded Title scene.";
 }
 
-void TitleScene::setupTitle() {
-  txt_title = "True Human Tribulation II";
-
-  title_position = Text::alignCenter(fonts::skirmish, txt_title, 
-                                     {213, 32}, 2, -3);
-}
-
 void TitleScene::setupCopyright() {
   txt_copyright = "@2024 Tyler Dillard";
 
@@ -45,22 +37,15 @@ void TitleScene::setupCopyright() {
 }
 
 void TitleScene::setupEnter() {
-  txt_enter = "PRESS ENTER";
-  enter_position = Text::alignCenter(fonts::skirmish, txt_enter.c_str(), 
-                                     {213, 160}, 1, 0);
+  txt_enter = "PRESS ANY BUTTON";
+  enter_position = Text::alignRight(fonts::skirmish, txt_enter.c_str(), 
+                                     {426, 218}, 1, 0);
 }
 
 void TitleScene::checkInput() {
-  bool key_enter = IsKeyPressed(KEY_ENTER);
+  int inputs = GetKeyPressed() + GetGamepadButtonPressed();
 
-  bool gamepad_detected = IsGamepadAvailable(0);
-  bool btn_start = false;
-
-  if (gamepad_detected) {
-    btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
-  }
-
-  if (key_enter || btn_start) {
+  if (inputs != 0) {
     skirmish->loadScene<MenuScene>();
     return;
   }
@@ -76,15 +61,15 @@ void TitleScene::updateScene() {
 }
 
 void TitleScene::drawScene() {
-  int size = fonts::skirmish->baseSize;
-  
-  DrawTextEx(*fonts::skirmish, txt_title.c_str(), title_position, 
-             size * 2, -3, COLORS::PALETTE[42]);
+  DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+  DrawTexture(*sprites::hud_mainmenu[0], 8, 8, WHITE);
+
+  int size = fonts::skirmish->baseSize;  
   DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
              -3, WHITE);
 
   if (draw_enter) {
-    DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, size, 
-               0, WHITE);
+    DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, 
+               size, 0, WHITE);
   }
 }
