@@ -57,12 +57,11 @@ public:
   void refresh();
 
   WipeTransition transition;
+  Texture bg_main;
 private:
   RenderTexture canvas;
   Rectangle canvas_source;
   Rectangle canvas_dest;
-
-  Texture bg_main;
 
   Font skirmish_font;
 
