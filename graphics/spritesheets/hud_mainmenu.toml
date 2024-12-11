@@ -3,7 +3,7 @@ id = 10
 
 [[hud_mainmenu.sprites]] # ID: 0
 name = "title"
-area = {x = 0, y = 0, width = 32, height = 144}
+area = {x = 0, y = 0, width = 144, height = 32}
 
 [[hud_mainmenu.sprites]] # ID: 1
 name = "button_frame"
