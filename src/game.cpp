@@ -22,6 +22,7 @@ Game::Game(bool debug_scene) {
   defineColorPalette();
   loadGameFonts();
 
+  bg_main = LoadTexture("graphics/bg_main.png");
   sprite_loader = make_unique<SpriteLoader>();
   audio_manager = make_unique<AudioManager>();
 
@@ -40,6 +41,7 @@ Game::~Game() {
   UnloadImagePalette(COLORS::PALETTE);
   UnloadImage(GAME_ICON);
 
+  UnloadTexture(bg_main);
   UnloadFont(skirmish_font);
 
   scene.reset();

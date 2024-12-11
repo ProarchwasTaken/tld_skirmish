@@ -62,6 +62,8 @@ private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
+  Texture bg_main;
+
   Font skirmish_font;
 
   std::unique_ptr<SpriteLoader> sprite_loader;
