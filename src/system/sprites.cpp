@@ -26,7 +26,8 @@ SpriteLoader::SpriteLoader() {
     "weapon_ball",
     "weapon_select",
     "damned",
-    "weapon_gun"
+    "weapon_gun",
+    "hud_mainmenu"
   });
 }
 
@@ -156,6 +157,10 @@ void SpriteLoader::allocateSprite(const int sheet_id, string sprite_name)
     }
     case SHEET_GUN: {
       sprite_list = &sprites::weapon_gun;
+      break;
+    }
+    case SHEET_MAINMENU: {
+      sprite_list = &sprites::hud_mainmenu;
       break;
     }
     default: {

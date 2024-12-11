@@ -1,0 +1,22 @@
+[hud_mainmenu]
+id = 10
+
+[[hud_mainmenu.sprites]] # ID: 0
+name = "title"
+area = {x = 0, y = 0, width = 32, height = 144}
+
+[[hud_mainmenu.sprites]] # ID: 1
+name = "button_frame"
+area = {x = 144, y = 0, width = 58, height = 10}
+
+[[hud_mainmenu.sprites]] # ID: 2
+name = "cursor"
+area = {x = 208, y = 0, width = 13, height = 10}
+
+[[hud_mainmenu.sprites]] # ID: 3
+name = "gradient"
+area = {x = 224, y = 0, width = 4, height = 172}
+
+[[hud_mainmenu.sprites]] # ID: 4
+name = "spade"
+area = {x = 229, y = 0, width = 67, height = 172}
