@@ -1,11 +1,13 @@
 // scenes/scene_title.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include <string>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
 #include "utils_text.h"
 #include "utils_music.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_title.h"
 #include <plog/Log.h>
@@ -45,9 +47,9 @@ void TitleScene::setupEnter() {
 void TitleScene::checkInput() {
   int inputs = GetKeyPressed() + GetGamepadButtonPressed();
 
-  if (inputs != 0) {
-    skirmish->loadScene<MenuScene>();
-    return;
+  if (inputs != 0 && fading_out == false) {
+    SoundUtils::play("opt_confirm");
+    fading_out = true;
   }
 }
 
@@ -58,17 +60,37 @@ void TitleScene::updateScene() {
     draw_enter = !draw_enter;
     blink_timestamp = GetTime();
   }
+
+  if (fading_out) {
+    interpolateAlpha();
+  }
+  else {
+    return;
+  }
+
+  if (fade_percentage == 0.0) {
+    skirmish->loadScene<MenuScene>();
+  }
+}
+
+void TitleScene::interpolateAlpha() {
+  if (fade_percentage != 0) {
+    fade_percentage -= GetFrameTime() / fade_time;
+    fade_percentage = Clamp(fade_percentage, 0, 1.0);
+
+    main_tint.a = Lerp(0, 255, fade_percentage);
+  }
 }
 
 void TitleScene::drawScene() {
   DrawTexture(skirmish->bg_main, 0, 0, WHITE);
-  DrawTexture(*sprites::hud_mainmenu[0], 8, 8, WHITE);
+  DrawTexture(*sprites::hud_mainmenu[0], 8, 8, main_tint);
 
   int size = fonts::skirmish->baseSize;  
   DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
-             -3, WHITE);
+             -3, main_tint);
 
-  if (draw_enter) {
+  if (draw_enter && fading_out == false) {
     DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, 
                size, 0, WHITE);
   }

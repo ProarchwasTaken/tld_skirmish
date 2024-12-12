@@ -17,8 +17,10 @@ public:
   void setupCopyright();
   void setupEnter();
 
-  void checkInput() override;
   void updateScene() override;
+  void interpolateAlpha();
+
+  void checkInput() override;
   void drawScene() override;
 private:
   std::string txt_copyright;
@@ -31,4 +33,10 @@ private:
 
   float blink_interval = 0.5;
   float blink_timestamp = 0;
+
+  Color main_tint = WHITE;
+  bool fading_out = false;
+
+  float fade_time = 0.5;
+  float fade_percentage = 1.0;
 };
