@@ -20,3 +20,15 @@ area = {x = 224, y = 0, width = 4, height = 172}
 [[hud_mainmenu.sprites]] # ID: 4
 name = "spade"
 area = {x = 229, y = 0, width = 67, height = 172}
+
+[[hud_mainmenu.sprites]] # ID: 5
+name = "top_bar"
+area = {x = 0, y = 32, width = 128, height = 34}
+
+[[hud_mainmenu.sprites]] # ID: 6
+name = "bottom_bar"
+area = {x = 0, y = 66, width = 32, height = 34}
+
+[[hud_mainmenu.sprites]] # ID: 7
+name = "mainmenu_text"
+area = {x = 128, y = 32, width = 96, height = 10}
