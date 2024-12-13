@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include "base/generics.h"
 #include "base/scene.h"
+#include "hud_menu.h"
 #include "game.h"
 
 #define OPT_PLAY 0
@@ -28,6 +29,8 @@ public:
   void drawScene() override;
 
 private:
+  MenuHud menu_hud = MenuHud(false);
+
   menu_options options = {
     OPT_PLAY,
     OPT_SETTINGS,

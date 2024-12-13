@@ -126,6 +126,8 @@ void MenuScene::drawOptionDescription() {
 
 void MenuScene::drawScene() {
   DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+  menu_hud.draw();
+
   drawMenuOptions();
   drawOptionDescription();
 }
