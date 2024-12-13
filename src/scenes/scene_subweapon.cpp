@@ -26,6 +26,7 @@ SubWeaponScene::SubWeaponScene(Game &skirmish, bool from_gameover) :
   Scene(skirmish) 
 {
   frame_dest = default_frame;
+  frame_dest.height = 0;
   this->from_gameover = from_gameover;
 
   start_timestamp = CURRENT_TIME;
