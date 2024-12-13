@@ -1,4 +1,5 @@
 // hud_menu.h
+#pragma once
 #include <raylib.h>
 
 
