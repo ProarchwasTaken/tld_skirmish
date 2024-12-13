@@ -39,6 +39,8 @@ SubWeaponScene::~SubWeaponScene() {
 }
 
 void SubWeaponScene::updateScene() {
+  menu_hud.update();
+
   if (ready) {
     return;
   }
@@ -60,7 +62,7 @@ void SubWeaponScene::updateScene() {
   }
   
   if (going_back) {
-    skirmish->loadScene<MenuScene>();
+    skirmish->loadScene<MenuScene>(menu_hud);
   }
   else {
     ready = true;
@@ -258,6 +260,7 @@ void SubWeaponScene::drawConfirmOptions() {
 void SubWeaponScene::drawScene() {
   if (from_gameover == false) {
     DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+    menu_hud.draw();
   }
 
   float frame_originY = frame_dest.height / 2;
