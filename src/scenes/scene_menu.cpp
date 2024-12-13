@@ -17,12 +17,14 @@ using std::string;
 
 
 MenuScene::MenuScene(Game &skirmish) : Scene(skirmish) {
+  menu_hud.fadeInSpade();
   PLOGI << "Loaded MainMenu scene.";
 }
 
 MenuScene::MenuScene(Game &skirmish, MenuHud &menu_hud) : Scene(skirmish) 
 {
   this->menu_hud = menu_hud;
+  this->menu_hud.fadeInSpade();
   PLOGI << "Loaded MainMenu scene.";
 }
 
@@ -34,10 +36,14 @@ MenuScene::~MenuScene() {
 
 void MenuScene::updateScene() {
   menu_hud.update();
+
+  if (exiting_scene && menu_hud.spade_state == SPADE_STANDBY) {
+    selectOption();
+  }
 }
 
 void MenuScene::checkInput() {
-  if (menu_hud.opening) {
+  if (menu_hud.opening || menu_hud.spade_state != SPADE_STANDBY) {
     return;
   }
 
@@ -64,7 +70,8 @@ void MenuScene::checkInput() {
   }
   else if (key_z || btn_a) {
     SoundUtils::play("opt_confirm");
-    selectOption();
+    menu_hud.fadeOutSpade();
+    exiting_scene = true;
   }
 }
 
@@ -81,6 +88,7 @@ void MenuScene::selectOption() {
     }
     default: {
       SoundUtils::play("opt_error");
+      exiting_scene = false;
       PLOGI << "Menu option not fully implemented yet!";
     } 
   }

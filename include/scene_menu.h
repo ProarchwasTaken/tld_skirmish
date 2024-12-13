@@ -33,6 +33,7 @@ public:
 
 private:
   MenuHud menu_hud = MenuHud(true);
+  bool exiting_scene = false;
 
   menu_options options = {
     OPT_PLAY,
