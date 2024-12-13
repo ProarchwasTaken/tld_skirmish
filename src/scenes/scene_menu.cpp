@@ -2,13 +2,15 @@
 #include <raylib.h>
 #include <string>
 #include <cstdint>
+#include "base/scene.h"
 #include "game.h"
 #include "globals.h"
 #include "utils_text.h"
 #include "utils_menu.h"
 #include "utils_sound.h"
-#include "scene_menu.h"
+#include "hud_menu.h"
 #include "scene_subweapon.h"
+#include "scene_menu.h"
 #include <plog/Log.h>
 
 using std::string;
@@ -18,13 +20,27 @@ MenuScene::MenuScene(Game &skirmish) : Scene(skirmish) {
   PLOGI << "Loaded MainMenu scene.";
 }
 
+MenuScene::MenuScene(Game &skirmish, MenuHud &menu_hud) : Scene(skirmish) 
+{
+  this->menu_hud = menu_hud;
+  PLOGI << "Loaded MainMenu scene.";
+}
+
 MenuScene::~MenuScene() {
   options.clear();
   options_text.clear();
   PLOGI << "Successfully unloaded MainMenu scene.";
 }
 
+void MenuScene::updateScene() {
+  menu_hud.update();
+}
+
 void MenuScene::checkInput() {
+  if (menu_hud.opening) {
+    return;
+  }
+
   bool key_down = IsKeyPressed(KEY_DOWN);
   bool key_up = IsKeyPressed(KEY_UP);
   bool key_z = IsKeyPressed(KEY_Z);
@@ -128,6 +144,8 @@ void MenuScene::drawScene() {
   DrawTexture(skirmish->bg_main, 0, 0, WHITE);
   menu_hud.draw();
 
-  drawMenuOptions();
-  drawOptionDescription();
+  if (menu_hud.opening == false) {
+    drawMenuOptions();
+    drawOptionDescription();
+  }
 }

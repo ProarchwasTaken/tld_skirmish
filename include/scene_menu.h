@@ -19,7 +19,10 @@
 class MenuScene : public Scene {
 public:
   MenuScene(Game &skirmish);
+  MenuScene(Game &skirmish, MenuHud &menu_hud);
   ~MenuScene();
+
+  void updateScene() override;
 
   void drawMenuOptions();
   void selectOption();
@@ -29,7 +32,7 @@ public:
   void drawScene() override;
 
 private:
-  MenuHud menu_hud = MenuHud(false);
+  MenuHud menu_hud = MenuHud(true);
 
   menu_options options = {
     OPT_PLAY,
