@@ -1,4 +1,5 @@
 // hud/hud_menu.cpp
+#include <cassert>
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
@@ -6,6 +7,9 @@
 
 constexpr float START_TOP_Y = -34;
 constexpr float START_BOTTOM_Y = 240;
+
+constexpr float START_SPADE_X = -15;
+constexpr float DEF_SPADE_X = 15;
 
 
 MenuHud::MenuHud(bool open_sequence) {
@@ -19,11 +23,30 @@ MenuHud::MenuHud(bool open_sequence) {
   shift_timestamp = CURRENT_TIME;
 }
 
+void MenuHud::fadeInSpade() {
+  spade_x = START_SPADE_X;
+  spade_tint.a = 0;
+  spade_percentage = 0.0;
+
+  spade_state = SPADE_FADEIN;
+}
+
+void MenuHud::fadeOutSpade() {
+  spade_x = DEF_SPADE_X;
+  spade_tint.a = 255;
+  spade_percentage = 1.0;
+
+  spade_state = SPADE_FADEOUT;
+}
+
 void MenuHud::update() {
   gradientShifting();
 
   if (opening) {
     openingSequence();
+  }
+  else if (spade_state != SPADE_STANDBY) {
+    spadeSequence(); 
   }
 }
 
@@ -55,6 +78,30 @@ void MenuHud::openingSequence() {
   }
 }
 
+void MenuHud::spadeSequence() {
+  assert(spade_state != SPADE_STANDBY);
+
+  switch (spade_state) {
+    case SPADE_FADEIN: {
+      spade_percentage += GetFrameTime() / spade_lerp_time;
+      break;
+    }
+    case SPADE_FADEOUT: {
+      spade_percentage -= GetFrameTime() / spade_lerp_time;
+      break;
+    }
+  }
+
+  spade_percentage = Clamp(spade_percentage, 0.0, 1.0);
+  spade_x = Lerp(START_SPADE_X, DEF_SPADE_X, spade_percentage);
+  spade_tint.a = Lerp(0, 255, spade_percentage);
+
+  bool finished = spade_percentage == 0.0 || spade_percentage == 1.0;
+  if (finished) {
+    spade_state = SPADE_STANDBY;
+  }
+}
+
 void MenuHud::drawTopBar() {
   Rectangle source = {117, 0, 8, 34};
   Rectangle dest = {128, top_bar_y, 298, 34};
@@ -82,4 +129,6 @@ void MenuHud::draw() {
   drawTopBar();
   drawBottomBar();
   drawGradient();
+
+  DrawTexture(*sprites::hud_mainmenu[4], spade_x, 34, spade_tint);
 }
