@@ -1,7 +1,6 @@
 // scenes/scene_menu.cpp
 #include <raylib.h>
 #include <string>
-#include <cstdint>
 #include "base/scene.h"
 #include "game.h"
 #include "globals.h"
@@ -36,6 +35,7 @@ MenuScene::~MenuScene() {
 
 void MenuScene::updateScene() {
   menu_hud.update();
+  menu_btns.update();
 
   if (exiting_scene && menu_hud.spade_state == SPADE_STANDBY) {
     selectOption();

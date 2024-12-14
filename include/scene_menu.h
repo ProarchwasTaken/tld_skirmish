@@ -53,5 +53,5 @@ private:
 
   menu_options::iterator selected_option = options.begin();
   MenuButtonsHud menu_btns = MenuButtonsHud(options, options_text, 
-                                            selected_option);
+                                            selected_option, menu_hud);
 };
