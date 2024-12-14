@@ -262,6 +262,7 @@ void SubWeaponScene::drawScene() {
   if (from_gameover == false) {
     DrawTexture(skirmish->bg_main, 0, 0, WHITE);
     menu_hud.draw();
+    DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
   }
 
   float frame_originY = frame_dest.height / 2;

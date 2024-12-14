@@ -142,8 +142,8 @@ void MenuScene::drawOptionDescription() {
     }
   }
 
-  Vector2 position = Text::alignCenter(fonts::skirmish, text, {213, 208},
-                                       1, -3);
+  Vector2 position = Text::alignRight(fonts::skirmish, text, {418, 20},
+                                      1, -3);
   DrawTextEx(*fonts::skirmish, text.c_str(), position, size, -3, 
              COLORS::PALETTE[2]);
 }
@@ -153,6 +153,7 @@ void MenuScene::drawScene() {
   menu_hud.draw();
 
   if (menu_hud.opening == false) {
+    DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
     drawMenuOptions();
     drawOptionDescription();
   }
