@@ -24,7 +24,9 @@ public:
   void draw();
 
   bool opening;
+
   int spade_state = SPADE_STANDBY;
+  float spade_percentage;
 private:
   float open_percentage = 0.0;
   float open_time = 0.25;
@@ -35,7 +37,6 @@ private:
   Color gradient_tint = WHITE;
   float gradient_offset = 0;
 
-  float spade_percentage;
   float spade_lerp_time = 0.25;
 
   Color spade_tint = {255, 255, 255, 0};
