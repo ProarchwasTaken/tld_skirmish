@@ -130,5 +130,7 @@ void MenuHud::draw() {
   drawBottomBar();
   drawGradient();
 
-  DrawTexture(*sprites::hud_mainmenu[4], spade_x, 34, spade_tint);
+  if (spade_percentage != 0.0) {
+    DrawTexture(*sprites::hud_mainmenu[4], spade_x, 34, spade_tint);
+  }
 }
