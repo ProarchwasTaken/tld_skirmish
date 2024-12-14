@@ -94,28 +94,6 @@ void MenuScene::selectOption() {
   }
 }
 
-void MenuScene::drawMenuOptions() {
-  int size = fonts::skirmish->baseSize;
-  float current_y = 90;
-
-  for (uint8_t option : options) {
-    string *text = &options_text[option];
-    Vector2 position = Text::alignCenter(fonts::skirmish, *text, 
-                                         {213, current_y}, 1, 0);
-
-    Color color;
-    if (*selected_option == option) {
-      color = COLORS::PALETTE[22];
-    }
-    else {
-      color = WHITE;
-    }
-
-    DrawTextEx(*fonts::skirmish, text->c_str(), position, size, 0, color);
-    current_y += size;
-  }
-}
-
 void MenuScene::drawOptionDescription() {
   int size = fonts::skirmish->baseSize;
   string text;
@@ -133,8 +111,12 @@ void MenuScene::drawOptionDescription() {
       text = "Educate yourself on the game's controls.";
       break;
     }
+    case OPT_INDEX: {
+      text = "The Combatant Index. Written by an third-party.";
+      break;
+    }
     case OPT_QUIT: {
-      text = "Exit the game and take a break.";
+      text = "Close the game and take a break.";
       break;
     }
     default: {
@@ -154,7 +136,7 @@ void MenuScene::drawScene() {
 
   if (menu_hud.opening == false) {
     DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
-    drawMenuOptions();
+    menu_btns.drawMenuButtons();
     drawOptionDescription();
   }
 }

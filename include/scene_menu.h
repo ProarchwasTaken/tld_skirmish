@@ -4,12 +4,14 @@
 #include "base/generics.h"
 #include "base/scene.h"
 #include "hud_menu.h"
+#include "hud_menu_btn.h"
 #include "game.h"
 
 #define OPT_PLAY 0
 #define OPT_SETTINGS 1
 #define OPT_CONTROLS 2
-#define OPT_QUIT 3
+#define OPT_INDEX 3
+#define OPT_QUIT 4
 
 
 /* The Main Menu is the nexus point for almost every other menu in the
@@ -24,7 +26,6 @@ public:
 
   void updateScene() override;
 
-  void drawMenuOptions();
   void selectOption();
   void drawOptionDescription();
 
@@ -39,14 +40,18 @@ private:
     OPT_PLAY,
     OPT_SETTINGS,
     OPT_CONTROLS,
+    OPT_INDEX,
     OPT_QUIT
   };
   menu_options_txt options_text = {
-    "PLAY GAME",
+    "PLAY",
     "SETTINGS",
     "CONTROLS",
-    "QUIT GAME"
+    "INDEX",
+    "QUIT"
   };
 
   menu_options::iterator selected_option = options.begin();
+  MenuButtonsHud menu_btns = MenuButtonsHud(options, options_text, 
+                                            selected_option);
 };
