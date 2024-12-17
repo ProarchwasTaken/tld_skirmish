@@ -9,6 +9,7 @@
 #include "utils_sound.h"
 #include "hud_menu.h"
 #include "scene_subweapon.h"
+#include "scene_control.h"
 #include "scene_menu.h"
 #include <plog/Log.h>
 
@@ -79,6 +80,10 @@ void MenuScene::selectOption() {
   switch (*selected_option) {
     case OPT_PLAY: {
       skirmish->loadScene<SubWeaponScene>(false);
+      break;
+    }
+    case OPT_CONTROLS: {
+      skirmish->loadScene<ControlScene>();
       break;
     }
     case OPT_QUIT: {
