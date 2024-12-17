@@ -36,6 +36,7 @@ namespace sprites {
   vector<Texture*> damned;
   vector<Texture*> weapon_gun;
   vector<Texture*> hud_mainmenu;
+  vector<Texture*> hud_menubox;
 
   vector<SpriteMetaData> plr_metadata;
 }

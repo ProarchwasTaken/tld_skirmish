@@ -1,0 +1,10 @@
+[hud_menubox]
+id = 11
+
+[[hud_menubox.sprites]] # ID: 0
+name = "controls"
+area = {x = 0, y = 0, width = 264, height = 127}
+
+[[hud_menubox.sprites]] # ID: 1
+name = "settings"
+area = {x = 264, y = 0, width = 208, height = 120}

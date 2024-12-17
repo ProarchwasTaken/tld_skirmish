@@ -27,7 +27,8 @@ SpriteLoader::SpriteLoader() {
     "weapon_select",
     "damned",
     "weapon_gun",
-    "hud_mainmenu"
+    "hud_mainmenu",
+    "hud_menubox"
   });
 }
 
@@ -161,6 +162,10 @@ void SpriteLoader::allocateSprite(const int sheet_id, string sprite_name)
     }
     case SHEET_MAINMENU: {
       sprite_list = &sprites::hud_mainmenu;
+      break;
+    }
+    case SHEET_MENUBOX: {
+      sprite_list = &sprites::hud_menubox;
       break;
     }
     default: {

@@ -17,6 +17,7 @@
 #define SHEET_DAMNED 8
 #define SHEET_GUN 9
 #define SHEET_MAINMENU 10
+#define SHEET_MENUBOX 11
 
 
 /* The sprite loader is responsible for loading all the game's sprites
