@@ -1,0 +1,4 @@
+sfx_volume = 1.0
+bgm_volume = 1.0
+framerate = 60
+fullscreen = false

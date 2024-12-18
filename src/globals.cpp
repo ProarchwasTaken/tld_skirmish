@@ -16,6 +16,13 @@ bool EXIT_GAME = false;
 Image GAME_ICON;
 double PAUSE_PENALTY = 0;
 
+namespace settings {
+  float sfx_volume = 1.0;
+  float bgm_volume = 1.0;
+  int framerate = 60;
+  bool fullscreen = false;
+}
+
 namespace COLORS {
   Color *PALETTE;
 }
