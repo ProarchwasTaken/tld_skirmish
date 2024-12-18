@@ -10,6 +10,7 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
+#include "utils_settings.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender;
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]) {
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
-  SetTargetFPS(TARGET_FRAMERATE);
+  Settings::load();
 
   InitAudioDevice();
   SetTextLineSpacing(11);
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
       PLOGI << "Toggling borderless fullscreen.";
       ToggleBorderlessWindowed();
       skirmish.correctWindow();
+      settings::fullscreen = IsWindowFullscreen();
     }
 
     if (DEV_BUILD && IsKeyPressed(KEY_F3)) {

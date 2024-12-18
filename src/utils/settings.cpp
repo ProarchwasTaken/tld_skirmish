@@ -7,43 +7,23 @@
 #include "utils_settings.h"
 #include <plog/Log.h>
 
-float soundFallback() {
-  PLOGE << "Value of 'sfx_volume' not found or invalid!";
-  return settings::sfx_volume;
-}
-
-float musicFallback() {
-  PLOGE << "Value of 'bgm_volume' not found or invalid!";
-  return settings::bgm_volume;
-}
-
-int framerateFallback() {
-  PLOGE << "Value of 'framerate' not found or invalid!";
-  return settings::framerate;
-}
-
-bool fullscreenFallBack() {
-  PLOGE << "Value of 'fullscreen' not found or invalid!";
-  return settings::fullscreen;
-}
-
 
 void Settings::load() {
   PLOGI << "Loading settings...";
 
   if (FileExists("data/settings.toml") == false) {
     PLOGW << "File not found! Sticking with default settings";
+    SetTargetFPS(settings::framerate);
     return;
   }
 
   toml::value file = toml::parse("data/settings.toml");
   PLOGD << "Parsed data/settings.toml";
 
-  float sfx_volume = toml::find_or(file, "sfx_volume", soundFallback());
-  float bgm_volume = toml::find_or(file, "bgm_volume", musicFallback());
-  int framerate = toml::find_or(file, "framerate", framerateFallback());
-  bool fullscreen = toml::find_or(file, "fullscreen", 
-                                  fullscreenFallBack());
+  float sfx_volume = toml::find_or(file, "sfx_volume", 1.0);
+  float bgm_volume = toml::find_or(file, "bgm_volume", 1.0);
+  int framerate = toml::find_or(file, "framerate", 60);
+  bool fullscreen = toml::find_or(file, "fullscreen", false);
 
   PLOGI << "All values have been loaded. Now applying settings.";
   apply(sfx_volume, bgm_volume, framerate, fullscreen);
@@ -52,11 +32,16 @@ void Settings::load() {
 void Settings::apply(float sfx_volume, float bgm_volume, int framerate, 
                      bool fullscreen)
 {
+  PLOGD << "Sound Volume: " << sfx_volume;
   settings::sfx_volume = sfx_volume;
+
+  PLOGD << "Music Volume: " << bgm_volume;
   settings::bgm_volume = bgm_volume;
 
+  PLOGD << "Framerate: " << framerate;
   settings::framerate = framerate;
   SetTargetFPS(settings::framerate);
 
+  PLOGD << "Fullscreen: " << fullscreen;
   settings::fullscreen = fullscreen;
 }
