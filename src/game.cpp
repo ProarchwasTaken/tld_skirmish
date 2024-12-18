@@ -21,6 +21,7 @@ Game::Game(bool debug_scene) {
   setupCanvas();
   defineColorPalette();
   loadGameFonts();
+  fullscreenCheck();
 
   bg_main = LoadTexture("graphics/bg_main.png");
   sprite_loader = make_unique<SpriteLoader>();
@@ -73,6 +74,13 @@ void Game::correctWindow() {
 
   if (lower_than_height || greater_than_height){
     SetWindowSize(screen_width, canvas_dest.height);
+  }
+}
+
+void Game::fullscreenCheck() {
+  if (IsWindowFullscreen() != settings::fullscreen) {
+    ToggleBorderlessWindowed();
+    correctWindow();
   }
 }
 
