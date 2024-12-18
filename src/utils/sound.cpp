@@ -11,6 +11,10 @@ using std::uniform_real_distribution, std::string;
 
 
 void SoundUtils::play(string sound_name) {
+  if (settings::sfx_volume == 0.0) {
+    return;
+  }
+
   const SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {
@@ -30,10 +34,15 @@ void SoundUtils::play(string sound_name) {
   }
 
   SetSoundPitch(*sound, pitch);
+  SetSoundVolume(*sound, settings::sfx_volume);
   PlaySound(*sound);
 }
 
 void SoundUtils::play(std::string sound_name, const float pitch) {
+  if (settings::sfx_volume == 0.0) {
+    return;
+  }
+
   const SoundMetaData *meta_data = getMetaData(sound_name);
 
   if (meta_data == NULL) {
@@ -43,12 +52,17 @@ void SoundUtils::play(std::string sound_name, const float pitch) {
 
   const Sound *sound = meta_data->sound;
   SetSoundPitch(*sound, pitch);
+  SetSoundVolume(*sound, settings::sfx_volume);
   PlaySound(*sound);
 }
 
 void SoundUtils::playPro(std::string sound_name, const float volume, 
                          const float pitch, const float pan)
 {
+  if (settings::sfx_volume == 0.0) {
+    return;
+  }
+
   const SoundMetaData *meta_data = getMetaData(sound_name);
   
   if (meta_data == NULL) {
@@ -57,7 +71,7 @@ void SoundUtils::playPro(std::string sound_name, const float volume,
   }
 
   const Sound *sound = meta_data->sound;
-  SetSoundVolume(*sound, volume);
+  SetSoundVolume(*sound, volume * settings::sfx_volume);
   SetSoundPitch(*sound, pitch);
   SetSoundPan(*sound, pan);
   PlaySound(*sound);
