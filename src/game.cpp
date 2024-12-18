@@ -8,6 +8,7 @@
 #include "sys_sprites.h"
 #include "sys_audio.h"
 #include "utils_music.h"
+#include "utils_settings.h"
 #include "scene_splash.h"
 #if DEV_BUILD
 #include "scene_debug.h"
@@ -49,6 +50,7 @@ Game::~Game() {
   sprite_loader.reset();
   audio_manager.reset();
 
+  Settings::save();
   PLOGI << "Thanks for playing!";
 }
 

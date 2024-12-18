@@ -1,12 +1,36 @@
 // utils/settings.cpp
+#include <fstream>
+#include <string>
 #include <raylib.h>
 #include <toml/get.hpp>
 #include <toml/parser.hpp>
+#include <toml/serializer.hpp>
 #include <toml/value.hpp>
 #include "globals.h"
 #include "utils_settings.h"
 #include <plog/Log.h>
 
+using std::string, std::ofstream;
+
+
+void Settings::save() {
+  PLOGI << "Saving settings to 'data/settings.toml'";
+
+  const toml::value data = {
+    {"sfx_volume", settings::sfx_volume},
+    {"bgm_volume", settings::bgm_volume},
+    {"framerate", settings::framerate},
+    {"fullscreen", settings::fullscreen}
+  };
+
+  ofstream file("data/settings.toml");
+  
+  PLOGD << "Writing to file...";
+  file << toml::format(data);
+  file.close();
+
+  PLOGI << "Settings saved successfully.";
+}
 
 void Settings::load() {
   PLOGI << "Loading settings...";
