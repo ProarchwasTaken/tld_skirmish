@@ -47,7 +47,7 @@ void TitleScene::setupEnter() {
 void TitleScene::checkInput() {
   int inputs = GetKeyPressed() + GetGamepadButtonPressed();
 
-  if (inputs != 0 && fading_out == false) {
+  if (inputs != 0 && fading_out == false && IsWindowFocused()) {
     SoundUtils::play("opt_confirm");
     fading_out = true;
   }
