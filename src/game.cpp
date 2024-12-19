@@ -80,7 +80,7 @@ void Game::correctWindow() {
 }
 
 void Game::fullscreenCheck() {
-  if (IsWindowFullscreen() != settings::fullscreen) {
+  if (IsWindowState(FLAG_WINDOW_UNDECORATED) != settings::fullscreen) {
     ToggleBorderlessWindowed();
     correctWindow();
   }

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
       PLOGI << "Toggling borderless fullscreen.";
       ToggleBorderlessWindowed();
       skirmish.correctWindow();
-      settings::fullscreen = IsWindowFullscreen();
+      settings::fullscreen = IsWindowState(FLAG_WINDOW_UNDECORATED);
     }
 
     if (DEV_BUILD && IsKeyPressed(KEY_F3)) {
