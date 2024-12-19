@@ -19,8 +19,10 @@ public:
   void updateScene() override;
   void transitionLerp();
 
-  void applyOptionSelected();
   void checkInput() override;
+  void incrementSetting();
+  void decrementSetting();
+  void applyOptionSelected();
 
   void drawOption(uint8_t option, float current_y);
   void drawMenuOptions();
