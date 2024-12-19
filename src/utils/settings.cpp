@@ -60,7 +60,8 @@ void Settings::apply(float sfx_volume, float bgm_volume, int framerate,
   settings::sfx_volume = sfx_volume;
 
   PLOGD << "Music Volume: " << bgm_volume;
-  settings::bgm_volume = bgm_volume;
+  settings::bgm_volume = bgm_volume; 
+  SetMusicVolume(audio::music_stream, settings::bgm_volume);
 
   PLOGD << "Framerate: " << framerate;
   settings::framerate = framerate;
