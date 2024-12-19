@@ -1,7 +1,15 @@
 // scene_settings.h
+#include <cstdint>
+#include "base/generics.h"
 #include "base/scene.h"
 #include "hud_menu.h"
 #include "game.h"
+
+#define OPT_SOUND 0
+#define OPT_MUSIC 1
+#define OPT_FRAMERATE 2
+#define OPT_FULLSCREEN 3
+#define OPT_APPLY 4
 
 
 class SettingsScene : public Scene {
@@ -11,7 +19,11 @@ public:
   void updateScene() override;
   void transitionLerp();
 
+  void applyOptionSelected();
   void checkInput() override;
+
+  void drawOption(uint8_t option, float current_y);
+  void drawMenuOptions();
   void drawScene() override;
 private:
   MenuHud menu_hud = MenuHud(false);
@@ -24,4 +36,19 @@ private:
 
   float box_y = 65;
   Color box_tint = {255, 255, 255, 0};
+
+  int sfx_volume;
+  int bgm_volume;
+  int framerate;
+  bool fullscreen;
+
+  menu_options options = {
+    OPT_SOUND,
+    OPT_MUSIC,
+    OPT_FRAMERATE,
+    OPT_FULLSCREEN,
+    OPT_APPLY
+  };
+
+  menu_options::iterator selected_option = options.begin();
 };
