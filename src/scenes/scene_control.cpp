@@ -57,7 +57,7 @@ void ControlScene::checkInput() {
   bool btn_b = false;
 
   if (gamepad_detected) {
-    btn_b = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
+    btn_b = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
   }
 
   if (key_x || btn_b) {
