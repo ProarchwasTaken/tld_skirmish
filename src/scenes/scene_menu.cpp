@@ -11,6 +11,7 @@
 #include "scene_subweapon.h"
 #include "scene_settings.h"
 #include "scene_control.h"
+#include "scene_index.h"
 #include "scene_menu.h"
 #include <plog/Log.h>
 
@@ -89,6 +90,10 @@ void MenuScene::selectOption() {
     }
     case OPT_CONTROLS: {
       skirmish->loadScene<ControlScene>();
+      break;
+    }
+    case OPT_INDEX: {
+      skirmish->loadScene<IndexScene>();
       break;
     }
     case OPT_QUIT: {

@@ -73,5 +73,5 @@ void IndexScene::drawScene() {
   menu_hud.draw();
   DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
 
-  DrawTexture(*sprites::hud_menubox[2], 81, box_y, box_tint);
+  DrawTexture(*sprites::hud_menubox[2], 109, box_y, box_tint);
 }
