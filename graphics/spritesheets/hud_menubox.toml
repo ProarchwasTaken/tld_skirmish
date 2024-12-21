@@ -8,3 +8,11 @@ area = {x = 0, y = 0, width = 264, height = 127}
 [[hud_menubox.sprites]] # ID: 1
 name = "settings"
 area = {x = 264, y = 0, width = 208, height = 120}
+
+[[hud_menubox.sprites]] # ID: 2
+name = "index"
+area = {x = 0, y = 127, width = 208, height = 118}
+
+[[hud_menubox.sprites]] # ID: 3
+name = "index_cursor"
+area = {x = 208, y = 128, width = 7, height = 6}
