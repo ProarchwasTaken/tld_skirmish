@@ -1,4 +1,5 @@
 // scenes/scene_index.cpp
+#include <cmath>
 #include <raylib.h>
 #include <raymath.h>
 #include "base/scene.h"
@@ -52,19 +53,59 @@ void IndexScene::checkInput() {
     return;
   }
 
+  bool key_down = IsKeyPressed(KEY_DOWN);
+  bool key_up = IsKeyPressed(KEY_UP);
   bool key_x = IsKeyPressed(KEY_X);
 
   bool gamepad_detected = IsGamepadAvailable(0);
+  bool btn_down = false; 
+  bool btn_up = false;
   bool btn_b = false;
 
   if (gamepad_detected) {
+    btn_down = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+    btn_up = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP);
     btn_b = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
   }
 
-  if (key_x || btn_b) {
+  if (key_down || btn_down) {
+    Menu::nextOption(skir_options, selected_option, true);
+  }
+  else if (key_up || btn_up) {
+    Menu::previousOption(skir_options, selected_option, true);
+  }
+  else if (key_x || btn_b) {
     SoundUtils::play("opt_cancel");
     ready = false;
     exiting = true;
+  }
+}
+
+void IndexScene::drawCursor(Vector2 position) {
+  float x = -8 + (cosf(CURRENT_TIME * 10) * 0.55);
+
+  position = Vector2Add(position, {x, 3});
+  DrawTextureV(*sprites::hud_menubox[3], position, WHITE);
+}
+
+void IndexScene::drawOptions() {
+  int size = fonts::skirmish->baseSize;
+  Vector2 position = {120, 68};
+
+  for (int option : skir_options) {
+    const char* text = TextFormat("%03i", option + 1);
+
+    Color color;
+    if (*selected_option == option) {
+      color = COLORS::PALETTE[42];
+      drawCursor(position);
+    }
+    else {
+      color = WHITE;
+    }
+
+    DrawTextEx(*fonts::skirmish, text, position, size, 0, color);
+    position.y += 11;
   }
 }
 
@@ -74,4 +115,8 @@ void IndexScene::drawScene() {
   DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
 
   DrawTexture(*sprites::hud_menubox[2], 109, box_y, box_tint);
+
+  if (ready && exiting == false) {
+    drawOptions();
+  }
 }
