@@ -52,7 +52,7 @@ void IndexScene::checkInput() {
     return;
   }
 
-  bool key_x = IsKeyReleased(KEY_X);
+  bool key_x = IsKeyPressed(KEY_X);
 
   bool gamepad_detected = IsGamepadAvailable(0);
   bool btn_b = false;

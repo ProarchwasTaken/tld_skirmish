@@ -66,7 +66,7 @@ void SettingsScene::checkInput() {
   bool key_down = IsKeyPressed(KEY_DOWN);
   bool key_up = IsKeyPressed(KEY_UP);
   bool key_z = IsKeyPressed(KEY_Z);
-  bool key_x = IsKeyReleased(KEY_X);
+  bool key_x = IsKeyPressed(KEY_X);
 
   bool gamepad_detected = IsGamepadAvailable(0);
   bool btn_right = false;
