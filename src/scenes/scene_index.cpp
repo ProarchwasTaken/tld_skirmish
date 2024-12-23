@@ -82,10 +82,13 @@ void IndexScene::checkInput() {
 }
 
 void IndexScene::drawCursor(Vector2 position) {
-  float x = -8 + (cosf(CURRENT_TIME * 10) * 0.55);
+  float percentage = (sinf(CURRENT_TIME * 10) * 0.5) + 0.5;
 
-  position = Vector2Add(position, {x, 3});
-  DrawTextureV(*sprites::hud_menubox[3], position, WHITE);
+  Color color = WHITE;
+  color.a = 255 * percentage;
+
+  position = Vector2Add(position, {-8, 3});
+  DrawTextureV(*sprites::hud_menubox[3], position, color);
 }
 
 void IndexScene::drawOptions() {
