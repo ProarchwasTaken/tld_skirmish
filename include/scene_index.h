@@ -1,6 +1,7 @@
 // scene_index.h
 #pragma once
 #include <raylib.h>
+#include <vector>
 #include "base/generics.h"
 #include "base/scene.h"
 #include "data/data_index.h"
@@ -20,8 +21,11 @@ public:
 
   void updateScene() override;
   void transitionLerp();
+  void scrolling();
 
   void checkInput() override;
+  void descInput(bool input_back, bool input_down, bool input_up,
+                 bool gamepad_detected);
 
   void drawCursor(Vector2 position);
   void drawOptions();
@@ -54,4 +58,26 @@ private:
   };
 
   menu_options::iterator selected_option = skir_options.begin();
+
+  bool desc_scrolling = false;
+  bool scrolling_down = false;
+  bool scrolling_up = false;
+
+  float scroll_speed = 2.0;
+
+  std::vector<IndexData> skir_entries = {
+    {"SKIRMISHER", "HUMAN - MID TIER", "ALIVE - ACTIVE", 
+      "Experience: C\n"
+      "Mental Fortitude: B\n"
+      "Intelligence: C\n"
+      "Cooperation: D\n"
+      "Emotional Intelligence: C\n"
+      "Planning: D\n"
+      "Quick Thinking: A\n"
+      "Versatility: A \n"
+    },
+    {"GHOUL", "EX-HUMAN", "IRRELEVANT", ""},
+    {"WRETCH", "EX-HUMAN", "IRRELEVANT", ""},
+    {"DAMNED", "EX-HUMAN", "IRRELEVANT", ""}
+  };
 };
