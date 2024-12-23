@@ -16,9 +16,19 @@
 using std::vector;
 constexpr float BOX_START_Y = 69;
 constexpr float BOX_END_Y = 61;
+constexpr float DESC_HEIGHT = 76;
 
 vector<IndexData> SKIR_ENTRIES = {
-  {"SKIRMISHER", "HUMAN - MID TIER", "ALIVE - ACTIVE", ""},
+  {"SKIRMISHER", "HUMAN - MID TIER", "ALIVE - ACTIVE", 
+    "Experience: C\n"
+    "Mental Fortitude: B\n"
+    "Intelligence: C\n"
+    "Cooperation: D\n"
+    "Emotional Intelligence: C\n"
+    "Planning: D\n"
+    "Quick Thinking: A\n"
+    "Versatility: A \n"
+  },
   {"GHOUL", "EX-HUMAN", "IRRELEVANT", ""},
   {"WRETCH", "EX-HUMAN", "IRRELEVANT", ""},
   {"DAMNED", "EX-HUMAN", "IRRELEVANT", ""}
@@ -26,7 +36,12 @@ vector<IndexData> SKIR_ENTRIES = {
 
 
 IndexScene::IndexScene(Game &skirmish) : Scene(skirmish) {
+  desc_canvas = LoadRenderTexture(171, DESC_HEIGHT);
   PLOGI << "Loaded Combatant Index scene.";
+}
+
+IndexScene::~IndexScene() {
+  UnloadRenderTexture(desc_canvas);
 }
 
 void IndexScene::updateScene() {
@@ -132,6 +147,27 @@ void IndexScene::drawEntryDetails() {
              size, -3, WHITE);
   DrawTextEx(*fonts::skirmish, entry->subject_status.c_str(), {201, 90}, 
              size, -3, WHITE);
+
+  drawEntryDescription(entry, size);
+}
+
+void IndexScene::drawEntryDescription(IndexData *entry, int font_size) {
+  Vector2 position = {0,  -1 - entry->desc_progress};
+
+  EndTextureMode();
+  BeginTextureMode(desc_canvas); 
+  {
+    ClearBackground(BLACK);
+    DrawTextEx(*fonts::skirmish, entry->description.c_str(), position, 
+               font_size, -3, WHITE);
+  }
+  EndTextureMode();
+
+  Rectangle source = {0, 0, 171, -DESC_HEIGHT};
+  Rectangle dest = {145, 102, 171, DESC_HEIGHT};
+
+  BeginTextureMode(skirmish->canvas);
+  DrawTexturePro(desc_canvas.texture, source, dest, {0.0}, 0, WHITE);
 }
 
 void IndexScene::drawScene() {
