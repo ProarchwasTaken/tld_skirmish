@@ -62,9 +62,9 @@ public:
   void refresh();
 
   WipeTransition transition;
+  RenderTexture canvas;
   Texture bg_main;
 private:
-  RenderTexture canvas;
   Rectangle canvas_source;
   Rectangle canvas_dest;
 
