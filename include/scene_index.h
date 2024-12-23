@@ -22,6 +22,7 @@ public:
 
   void drawCursor(Vector2 position);
   void drawOptions();
+  void drawEntryDetails();
   void drawScene() override;
 private:
   MenuHud menu_hud = MenuHud(false);

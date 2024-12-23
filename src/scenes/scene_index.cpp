@@ -2,7 +2,9 @@
 #include <cmath>
 #include <raylib.h>
 #include <raymath.h>
+#include <vector>
 #include "base/scene.h"
+#include "data/data_index.h"
 #include "globals.h"
 #include "game.h"
 #include "utils_sound.h"
@@ -11,8 +13,16 @@
 #include "scene_index.h"
 #include <plog/Log.h>
 
+using std::vector;
 constexpr float BOX_START_Y = 69;
 constexpr float BOX_END_Y = 61;
+
+vector<IndexData> SKIR_ENTRIES = {
+  {"SKIRMISHER", "HUMAN - MID TIER", "ALIVE - ACTIVE", ""},
+  {"GHOUL", "EX-HUMAN", "IRRELEVANT", ""},
+  {"WRETCH", "EX-HUMAN", "IRRELEVANT", ""},
+  {"DAMNED", "EX-HUMAN", "IRRELEVANT", ""}
+};
 
 
 IndexScene::IndexScene(Game &skirmish) : Scene(skirmish) {
@@ -112,6 +122,18 @@ void IndexScene::drawOptions() {
   }
 }
 
+void IndexScene::drawEntryDetails() {
+  int size = fonts::skirmish->baseSize;
+  IndexData *entry = &SKIR_ENTRIES[*selected_option];
+
+  DrawTextEx(*fonts::skirmish, entry->subject_name.c_str(), {185, 68}, 
+             size, -3, WHITE);
+  DrawTextEx(*fonts::skirmish, entry->subject_class.c_str(), {192, 79},
+             size, -3, WHITE);
+  DrawTextEx(*fonts::skirmish, entry->subject_status.c_str(), {201, 90}, 
+             size, -3, WHITE);
+}
+
 void IndexScene::drawScene() {
   DrawTexture(skirmish->bg_main, 0, 0, WHITE);
   menu_hud.draw();
@@ -121,5 +143,6 @@ void IndexScene::drawScene() {
 
   if (ready && exiting == false) {
     drawOptions();
+    drawEntryDetails();
   }
 }
