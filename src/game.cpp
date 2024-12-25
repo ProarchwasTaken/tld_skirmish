@@ -37,6 +37,8 @@ Game::Game(bool debug_scene) {
     loadScene<DebugScene>();
     return;
   }
+#else
+  SetExitKey(KEY_NULL);
 #endif // DEV_BUILD
   loadScene<SplashScene>();
 }
