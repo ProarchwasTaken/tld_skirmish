@@ -17,7 +17,7 @@ using std::array, std::string, std::uniform_int_distribution;
 array<string, 14> message_pool = {
   "Resolve allows you to last a little bit longer.",
   "The will could never surpass the flesh.",
-  "Watch your Morale, it hard to gain it back once lost.",
+  "Watch your Morale, it's hard to gain it back once lost.",
   "You must die with the knowledge that you tried your best.",
   "Treasure any moment of respite.",
   "You only lasted this long because of luck.",
