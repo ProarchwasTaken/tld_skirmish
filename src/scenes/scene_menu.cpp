@@ -1,20 +1,32 @@
 // scenes/scene_menu.cpp
 #include <raylib.h>
 #include <string>
-#include <cstdint>
+#include "base/scene.h"
 #include "game.h"
 #include "globals.h"
 #include "utils_text.h"
 #include "utils_menu.h"
 #include "utils_sound.h"
-#include "scene_menu.h"
+#include "hud_menu.h"
 #include "scene_subweapon.h"
+#include "scene_settings.h"
+#include "scene_control.h"
+#include "scene_index.h"
+#include "scene_menu.h"
 #include <plog/Log.h>
 
 using std::string;
 
 
 MenuScene::MenuScene(Game &skirmish) : Scene(skirmish) {
+  menu_hud.fadeInSpade();
+  PLOGI << "Loaded MainMenu scene.";
+}
+
+MenuScene::MenuScene(Game &skirmish, MenuHud &menu_hud) : Scene(skirmish) 
+{
+  this->menu_hud = menu_hud;
+  this->menu_hud.fadeInSpade();
   PLOGI << "Loaded MainMenu scene.";
 }
 
@@ -24,7 +36,20 @@ MenuScene::~MenuScene() {
   PLOGI << "Successfully unloaded MainMenu scene.";
 }
 
+void MenuScene::updateScene() {
+  menu_hud.update();
+  menu_btns.update();
+
+  if (exiting_scene && menu_hud.spade_state == SPADE_STANDBY) {
+    selectOption();
+  }
+}
+
 void MenuScene::checkInput() {
+  if (menu_hud.opening || menu_hud.spade_state != SPADE_STANDBY) {
+    return;
+  }
+
   bool key_down = IsKeyPressed(KEY_DOWN);
   bool key_up = IsKeyPressed(KEY_UP);
   bool key_z = IsKeyPressed(KEY_Z);
@@ -48,7 +73,8 @@ void MenuScene::checkInput() {
   }
   else if (key_z || btn_a) {
     SoundUtils::play("opt_confirm");
-    selectOption();
+    menu_hud.fadeOutSpade();
+    exiting_scene = true;
   }
 }
 
@@ -58,6 +84,18 @@ void MenuScene::selectOption() {
       skirmish->loadScene<SubWeaponScene>(false);
       break;
     }
+    case OPT_SETTINGS: {
+      skirmish->loadScene<SettingsScene>();
+      break;
+    }
+    case OPT_CONTROLS: {
+      skirmish->loadScene<ControlScene>();
+      break;
+    }
+    case OPT_INDEX: {
+      skirmish->loadScene<IndexScene>();
+      break;
+    }
     case OPT_QUIT: {
       PLOGV << "Setting 'EXIT_GAME' to true.";
       EXIT_GAME = true;
@@ -65,30 +103,9 @@ void MenuScene::selectOption() {
     }
     default: {
       SoundUtils::play("opt_error");
+      exiting_scene = false;
       PLOGI << "Menu option not fully implemented yet!";
     } 
-  }
-}
-
-void MenuScene::drawMenuOptions() {
-  int size = fonts::skirmish->baseSize;
-  float current_y = 90;
-
-  for (uint8_t option : options) {
-    string *text = &options_text[option];
-    Vector2 position = Text::alignCenter(fonts::skirmish, *text, 
-                                         {213, current_y}, 1, 0);
-
-    Color color;
-    if (*selected_option == option) {
-      color = COLORS::PALETTE[22];
-    }
-    else {
-      color = WHITE;
-    }
-
-    DrawTextEx(*fonts::skirmish, text->c_str(), position, size, 0, color);
-    current_y += size;
   }
 }
 
@@ -109,8 +126,12 @@ void MenuScene::drawOptionDescription() {
       text = "Educate yourself on the game's controls.";
       break;
     }
+    case OPT_INDEX: {
+      text = "The Combatant Index. Written by an third-party.";
+      break;
+    }
     case OPT_QUIT: {
-      text = "Exit the game and take a break.";
+      text = "Close the game and take a break.";
       break;
     }
     default: {
@@ -118,13 +139,19 @@ void MenuScene::drawOptionDescription() {
     }
   }
 
-  Vector2 position = Text::alignCenter(fonts::skirmish, text, {213, 208},
-                                       1, -3);
+  Vector2 position = Text::alignRight(fonts::skirmish, text, {418, 20},
+                                      1, -3);
   DrawTextEx(*fonts::skirmish, text.c_str(), position, size, -3, 
              COLORS::PALETTE[2]);
 }
 
 void MenuScene::drawScene() {
-  drawMenuOptions();
-  drawOptionDescription();
+  DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+  menu_hud.draw();
+
+  if (menu_hud.opening == false) {
+    DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
+    menu_btns.drawMenuButtons();
+    drawOptionDescription();
+  }
 }

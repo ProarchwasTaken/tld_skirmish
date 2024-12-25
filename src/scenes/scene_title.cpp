@@ -1,11 +1,13 @@
 // scenes/scene_title.cpp
 #include <raylib.h>
+#include <raymath.h>
 #include <string>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
 #include "utils_text.h"
 #include "utils_music.h"
+#include "utils_sound.h"
 #include "scene_menu.h"
 #include "scene_title.h"
 #include <plog/Log.h>
@@ -15,7 +17,6 @@ using std::string;
 
 TitleScene::TitleScene(Game &skirmish, bool play_music) : Scene(skirmish) 
 {
-  setupTitle();
   setupCopyright();
   setupEnter();
 
@@ -30,13 +31,6 @@ TitleScene::~TitleScene() {
   PLOGI << "Successfully unloaded Title scene.";
 }
 
-void TitleScene::setupTitle() {
-  txt_title = "True Human Tribulation II";
-
-  title_position = Text::alignCenter(fonts::skirmish, txt_title, 
-                                     {213, 32}, 2, -3);
-}
-
 void TitleScene::setupCopyright() {
   txt_copyright = "@2024 Tyler Dillard";
 
@@ -45,24 +39,17 @@ void TitleScene::setupCopyright() {
 }
 
 void TitleScene::setupEnter() {
-  txt_enter = "PRESS ENTER";
-  enter_position = Text::alignCenter(fonts::skirmish, txt_enter.c_str(), 
-                                     {213, 160}, 1, 0);
+  txt_enter = "PRESS ANY BUTTON";
+  enter_position = Text::alignRight(fonts::skirmish, txt_enter.c_str(), 
+                                     {426, 218}, 1, 0);
 }
 
 void TitleScene::checkInput() {
-  bool key_enter = IsKeyPressed(KEY_ENTER);
+  int inputs = GetKeyPressed() + GetGamepadButtonPressed();
 
-  bool gamepad_detected = IsGamepadAvailable(0);
-  bool btn_start = false;
-
-  if (gamepad_detected) {
-    btn_start = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_RIGHT);
-  }
-
-  if (key_enter || btn_start) {
-    skirmish->loadScene<MenuScene>();
-    return;
+  if (inputs != 0 && fading_out == false && IsWindowFocused()) {
+    SoundUtils::play("opt_confirm");
+    fading_out = true;
   }
 }
 
@@ -73,18 +60,38 @@ void TitleScene::updateScene() {
     draw_enter = !draw_enter;
     blink_timestamp = GetTime();
   }
+
+  if (fading_out) {
+    interpolateAlpha();
+  }
+  else {
+    return;
+  }
+
+  if (fade_percentage == 0.0) {
+    skirmish->loadScene<MenuScene>();
+  }
+}
+
+void TitleScene::interpolateAlpha() {
+  if (fade_percentage != 0) {
+    fade_percentage -= GetFrameTime() / fade_time;
+    fade_percentage = Clamp(fade_percentage, 0, 1.0);
+
+    main_tint.a = Lerp(0, 255, fade_percentage);
+  }
 }
 
 void TitleScene::drawScene() {
-  int size = fonts::skirmish->baseSize;
-  
-  DrawTextEx(*fonts::skirmish, txt_title.c_str(), title_position, 
-             size * 2, -3, COLORS::PALETTE[42]);
-  DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
-             -3, WHITE);
+  DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+  DrawTexture(*sprites::hud_mainmenu[0], 8, 8, main_tint);
 
-  if (draw_enter) {
-    DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, size, 
-               0, WHITE);
+  int size = fonts::skirmish->baseSize;  
+  DrawTextEx(*fonts::skirmish, txt_copyright.c_str(), cpr_position, size,
+             -3, main_tint);
+
+  if (draw_enter && fading_out == false) {
+    DrawTextEx(*fonts::skirmish, txt_enter.c_str(), enter_position, 
+               size, 0, WHITE);
   }
 }

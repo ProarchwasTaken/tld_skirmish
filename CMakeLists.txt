@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
 project("skirmish" 
-VERSION 0.4.0
+VERSION 1.0.0
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
@@ -16,7 +16,7 @@ if(${BUILD_DEBUG})
   set(COMPILE_OPTIONS --debug -O0)
   set(LINK_OPTIONS "")
 else()
-  set(PROJECT_STAGE "Beta")
+  set(PROJECT_STAGE "Release")
   set(COMPILE_OPTIONS -DNDEBUG)
   set(LINK_OPTIONS -mwindows)
 endif()
@@ -48,6 +48,7 @@ set(SOURCE_FILES
 "src/base/combatant.cpp"
 "src/base/action_command.cpp"
 "src/base/sub-weapon.cpp"
+"src/utils/settings.cpp"
 "src/utils/camera.cpp"
 "src/utils/animation.cpp"
 "src/utils/enemies.cpp"
@@ -63,12 +64,18 @@ set(SOURCE_FILES
 "src/scenes/scene_title.cpp"
 "src/scenes/scene_menu.cpp"
 "src/scenes/scene_subweapon.cpp"
+"src/scenes/scene_settings.cpp"
+"src/scenes/scene_control.cpp"
+"src/scenes/scene_index.cpp"
 "src/scenes/scene_pregame.cpp"
 "src/scenes/scene_gameplay.cpp"
 "src/scenes/scene_win.cpp"
 "src/scenes/scene_gameover.cpp"
 "src/hud/hud_life.cpp"
 "src/hud/hud_morale.cpp"
+"src/hud/hud_menu.cpp"
+"src/hud/hud_menu_btn.cpp"
+"src/hud/hud_pause.cpp"
 "src/combatants/char_player.cpp"
 "src/combatants/enemy_ghoul.cpp"
 "src/combatants/enemy_wretch.cpp"
@@ -112,8 +119,11 @@ set(HEADER_FILES
 "include/base/sub-weapon.h"
 "include/data/data_sprites.h"
 "include/data/data_sound.h"
+"include/data/data_music.h"
 "include/data/data_enemy.h"
 "include/data/data_weapon.h"
+"include/data/data_index.h"
+"include/utils_settings.h"
 "include/utils_camera.h"
 "include/utils_sound.h"
 "include/utils_music.h"
@@ -130,12 +140,18 @@ set(HEADER_FILES
 "include/scene_title.h"
 "include/scene_menu.h"
 "include/scene_subweapon.h"
+"include/scene_settings.h"
+"include/scene_control.h"
+"include/scene_index.h"
 "include/scene_pregame.h"
 "include/scene_gameplay.h"
 "include/scene_win.h"
 "include/scene_gameover.h"
 "include/hud_life.h"
 "include/hud_morale.h"
+"include/hud_menu.h"
+"include/hud_menu_btn.h"
+"include/hud_pause.h"
 "include/char_player.h"
 "include/enemy_ghoul.h"
 "include/enemy_wretch.h"

@@ -10,6 +10,7 @@
 #include "utils_sequence.h"
 #include "hud_life.h"
 #include "hud_morale.h"
+#include "hud_pause.h"
 #include "char_player.h"
 
 #define PHASE_REST 0
@@ -100,6 +101,7 @@ private:
 
   LifeHud life_hud = LifeHud(player, phase);
   MoraleHud morale_hud = MoraleHud(player);
+  PauseHud pause_hud = PauseHud(this);
 
   WaveManager wave_manager = WaveManager(player, enemies);
   Camera2D camera;

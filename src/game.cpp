@@ -2,26 +2,33 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include <string>
+#include <filesystem>
+#include <chrono>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
 #include "sys_sprites.h"
 #include "sys_audio.h"
 #include "utils_music.h"
+#include "utils_settings.h"
 #include "scene_splash.h"
 #if DEV_BUILD
 #include "scene_debug.h"
 #endif // DEV_BUILD
 #include <plog/Log.h>
 
-using std::make_unique;
+using std::make_unique, std::filesystem::create_directory, std::string,
+std::chrono::system_clock;
 
 
 Game::Game(bool debug_scene) {
   setupCanvas();
   defineColorPalette();
   loadGameFonts();
+  fullscreenCheck();
 
+  bg_main = LoadTexture("graphics/bg_main.png");
   sprite_loader = make_unique<SpriteLoader>();
   audio_manager = make_unique<AudioManager>();
 
@@ -30,6 +37,8 @@ Game::Game(bool debug_scene) {
     loadScene<DebugScene>();
     return;
   }
+#else
+  SetExitKey(KEY_NULL);
 #endif // DEV_BUILD
   loadScene<SplashScene>();
 }
@@ -40,12 +49,14 @@ Game::~Game() {
   UnloadImagePalette(COLORS::PALETTE);
   UnloadImage(GAME_ICON);
 
+  UnloadTexture(bg_main);
   UnloadFont(skirmish_font);
 
   scene.reset();
   sprite_loader.reset();
   audio_manager.reset();
 
+  Settings::save();
   PLOGI << "Thanks for playing!";
 }
 
@@ -71,6 +82,29 @@ void Game::correctWindow() {
 
   if (lower_than_height || greater_than_height){
     SetWindowSize(screen_width, canvas_dest.height);
+  }
+}
+
+void Game::takeScreenshot() {
+  if (DirectoryExists("screenshots") == false) {
+    PLOGD << "'screenshots' directory not found!";
+    create_directory("screenshots");
+  }
+
+  system_clock::time_point today = system_clock::now();
+  long time = system_clock::to_time_t(today);
+
+  string file_path = "screenshots/skirmish_" + 
+    std::to_string(time) + ".png";
+
+  Image screenshot = LoadImageFromScreen();
+  ExportImage(screenshot, file_path.c_str());
+}
+
+void Game::fullscreenCheck() {
+  if (IsWindowState(FLAG_WINDOW_UNDECORATED) != settings::fullscreen) {
+    ToggleBorderlessWindowed();
+    correctWindow();
   }
 }
 

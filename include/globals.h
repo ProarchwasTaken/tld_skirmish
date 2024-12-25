@@ -21,6 +21,13 @@ extern double PAUSE_PENALTY;
 #define CURRENT_TIME (GetTime() - PAUSE_PENALTY)
 #define DELTA_TIME (GetFrameTime() * TARGET_FRAMERATE)
 
+namespace settings {
+  extern float sfx_volume;
+  extern float bgm_volume;
+  extern int framerate;
+  extern bool fullscreen;
+}
+
 namespace COLORS {
   extern Color *PALETTE;
 }
@@ -52,6 +59,8 @@ namespace sprites {
 
   extern std::vector<Texture*> hud_life;
   extern std::vector<Texture*> hud_morale;
+  extern std::vector<Texture*> hud_mainmenu;
+  extern std::vector<Texture*> hud_menubox;
 
   extern std::vector<Texture*> weapon_select;
 }
@@ -59,7 +68,6 @@ namespace sprites {
 namespace RNG {
   extern std::mt19937 generator;
 }
-
 
 namespace Dynamic {
   extern dynamic_list queue;

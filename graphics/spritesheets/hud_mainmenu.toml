@@ -1,0 +1,39 @@
+[hud_mainmenu]
+id = 10
+
+[[hud_mainmenu.sprites]] # ID: 0
+name = "title"
+area = {x = 0, y = 0, width = 144, height = 32}
+
+[[hud_mainmenu.sprites]] # ID: 1
+name = "button_frame"
+area = {x = 144, y = 0, width = 58, height = 10}
+
+[[hud_mainmenu.sprites]] # ID: 2
+name = "cursor"
+area = {x = 208, y = 0, width = 13, height = 10}
+
+[[hud_mainmenu.sprites]] # ID: 3
+name = "gradient"
+area = {x = 224, y = 0, width = 4, height = 172}
+
+[[hud_mainmenu.sprites]] # ID: 4
+name = "spade"
+area = {x = 229, y = 0, width = 67, height = 172}
+
+[[hud_mainmenu.sprites]] # ID: 5
+name = "top_bar"
+area = {x = 0, y = 32, width = 128, height = 34}
+
+[[hud_mainmenu.sprites]] # ID: 6
+name = "bottom_bar"
+area = {x = 0, y = 66, width = 32, height = 34}
+
+[[hud_mainmenu.sprites]] # ID: 7
+name = "mainmenu_text"
+area = {x = 128, y = 32, width = 96, height = 10}
+
+[[hud_mainmenu.sprites]] # ID: 8
+name = "paused_text"
+area = {x = 128, y = 48, width = 70, height = 10}
+

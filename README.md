@@ -32,7 +32,7 @@ out with a bit of experimenting.
 * **X** - Heavy Attack
 * **A** - Light Technique
 * **S** - Heavy Technique
-* **Space Bar** - Guard
+* **Space Bar** - Hold to Guard
 
 * **Tab Key** - Pause/Resume
 
@@ -57,7 +57,7 @@ this besides letting this be known.
 * **B** - Heavy Attack
 * **X** - Light Technique
 * **Y** - Heavy Technique
-* **L or R Buttons** - Guard
+* **L or R Buttons** - Hold to Guard
 
 * **Start** - Pause/Resume
 
@@ -79,3 +79,34 @@ much everything.
 **Twitter** - https://twitter.com/Tyler37961642
 
 **Dev Channel** - https://www.youtube.com/channel/UCzR-5I3KE2YAV-Ilndl8Y9w
+
+
+# Personal Thoughts
+This project began development on the 30th on August, and finished on
+Christmas day of 2024. That totals to around 3 months, and 26 days of 
+development time which is a lot shorter than I thought it would be. I
+thought I spent over half a year on it.
+
+It's pretty funny how I spent so much time on a game that only has like
+10 minutes of content, but I guess that's how game development is
+sometimes. I've long since learned that's it's a very time consuming 
+process. Sometimes, I wonder if I could have got it done faster if I had
+just used a game engine like Unity, Unreal, or Godot. Probably not since
+those engine have learning curves of their own, and given I would have 
+less control on how the engine functions, I probably wouldn't ran into
+even more issues.
+
+That's besides the point, I finally finished a game for one! Sure, it's 
+only 10 minute long and has a lot of flaws, but it's still a game
+nonetheless. I overcame development hell, now have something to show for 
+it!
+
+Now I have a lot more free time to focus on other things, and go back to
+making small projects to learn stuff. Eventually, when the time is right,
+I'll begin work on the third game of the series. Since I've already put
+in the time to make the engine, I'll probably reuse it for future games,
+since it would be a waste otherwise.
+
+If you're reading this, and are taking time out of your day just to play
+this 10 minute game; I would like to thank you. I really appreciate it.
+

@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <filesystem>
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -10,9 +11,10 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
+#include "utils_settings.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender;
+plog::ColorConsoleAppender, std::filesystem::create_directory;
 
 void setupCustomLogger();
 bool parseArguments(int argc, char *argv[]);
@@ -24,7 +26,7 @@ int main(int argc, char *argv[]) {
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "THT II: Skirmish - v" VERSION);
-  SetTargetFPS(TARGET_FRAMERATE);
+  Settings::load();
 
   InitAudioDevice();
   SetTextLineSpacing(11);
@@ -45,6 +47,12 @@ int main(int argc, char *argv[]) {
       PLOGI << "Toggling borderless fullscreen.";
       ToggleBorderlessWindowed();
       skirmish.correctWindow();
+      settings::fullscreen = IsWindowState(FLAG_WINDOW_UNDECORATED);
+    }
+
+    if (IsKeyPressed(KEY_F2)) {
+      PLOGI << "Attempting to take screenshot.";
+      skirmish.takeScreenshot();
     }
 
     if (DEV_BUILD && IsKeyPressed(KEY_F3)) {
@@ -62,6 +70,10 @@ int main(int argc, char *argv[]) {
 
 
 void setupCustomLogger() {
+  if (DirectoryExists("logs") == false) {
+    create_directory("logs");
+  }
+
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
                                                            1000000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;

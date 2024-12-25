@@ -9,6 +9,7 @@
 #include "dynamic_actor.h"
 
 class Game;
+class GameplayScene;
 
 class Combatant;
 class PlayerCharacter;

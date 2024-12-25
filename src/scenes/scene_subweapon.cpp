@@ -26,6 +26,7 @@ SubWeaponScene::SubWeaponScene(Game &skirmish, bool from_gameover) :
   Scene(skirmish) 
 {
   frame_dest = default_frame;
+  frame_dest.height = 0;
   this->from_gameover = from_gameover;
 
   start_timestamp = CURRENT_TIME;
@@ -39,6 +40,8 @@ SubWeaponScene::~SubWeaponScene() {
 }
 
 void SubWeaponScene::updateScene() {
+  menu_hud.update();
+
   if (ready) {
     return;
   }
@@ -60,7 +63,7 @@ void SubWeaponScene::updateScene() {
   }
   
   if (going_back) {
-    skirmish->loadScene<MenuScene>();
+    skirmish->loadScene<MenuScene>(menu_hud);
   }
   else {
     ready = true;
@@ -99,7 +102,7 @@ void SubWeaponScene::checkInput() {
     btn_right = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
     btn_left = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
     btn_a = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
-    btn_b = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
+    btn_b = IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
   }
 
   if (confirm) {
@@ -256,6 +259,12 @@ void SubWeaponScene::drawConfirmOptions() {
 }
 
 void SubWeaponScene::drawScene() {
+  if (from_gameover == false) {
+    DrawTexture(skirmish->bg_main, 0, 0, WHITE);
+    menu_hud.draw();
+    DrawTexture(*sprites::hud_mainmenu[7], 4, 21, WHITE);
+  }
+
   float frame_originY = frame_dest.height / 2;
   DrawTexturePro(*sprites::weapon_select[0], frame_source, frame_dest,
                  {0, frame_originY}, 0, WHITE);

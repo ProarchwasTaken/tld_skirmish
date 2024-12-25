@@ -22,6 +22,13 @@ public:
    * fit perfectly with the canvas' aspect ratio.*/
   void correctWindow();
 
+  void takeScreenshot();
+
+  /* Simple function that checks if the state of the window aligns with
+   * the fullscreen global variable. If not, then the method will make 
+   * sure it does.*/
+  void fullscreenCheck();
+
   /* The canvas is where everything in the game will be drawn on. The
    * canvas is actually smaller than the window itself being at a 
    * resolution of (426x240). Just scaled up to fit the windows 
@@ -57,8 +64,9 @@ public:
   void refresh();
 
   WipeTransition transition;
-private:
   RenderTexture canvas;
+  Texture bg_main;
+private:
   Rectangle canvas_source;
   Rectangle canvas_dest;
 

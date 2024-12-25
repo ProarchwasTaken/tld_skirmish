@@ -5,6 +5,7 @@
 #include "base/generics.h"
 #include "base/scene.h"
 #include "data/data_weapon.h"
+#include "hud_menu.h"
 #include "game.h"
 
 #define OPT_KNIFE 0
@@ -45,6 +46,8 @@ public:
   void drawScene() override;
 
 private:
+  MenuHud menu_hud = MenuHud(false);
+
   bool ready = false;
   bool from_gameover;
   bool going_back = false;

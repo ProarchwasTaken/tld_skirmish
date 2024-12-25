@@ -53,6 +53,10 @@ GameplayScene::~GameplayScene() {
     d_actor.reset();
   }
   dynamic_actors.clear();
+
+  if (paused) {
+    resumeGame();
+  }
   PLOGI << "Successfully unloaded Gameplay scene.";
 }
 
@@ -61,12 +65,15 @@ void GameplayScene::checkInput() {
   bool valid_phase = phase == PHASE_REST || phase == PHASE_ACTION;
 
   bool can_pause = valid_state && valid_phase && awaiting_win == false;
-  if (can_pause) {
+  if (can_pause && paused == false) {
     checkPauseInput();
   }
 
   if (paused == false) {
     player.inputPressed();
+  }
+  else {
+    pause_hud.checkInput();
   }
 
   player.inputReleased();
@@ -83,13 +90,13 @@ void GameplayScene::checkPauseInput() {
   }
 
   if (key_tab || btn_start) {
-    if (paused == false) pauseGame();
-    else resumeGame();
+    pauseGame();
   }
 }
 
 void GameplayScene::updateScene() {
   if (paused) {
+    pause_hud.update();
     return;
   }
 
@@ -242,6 +249,9 @@ void GameplayScene::pauseGame() {
   paused = true;
   PauseMusicStream(audio::music_stream);
   SoundUtils::pause();
+
+  SoundUtils::play("pause");
+  pause_hud.restartOpening();
   pause_timestamp = GetTime();
 }
 
@@ -391,7 +401,7 @@ void GameplayScene::drawScene() {
   }
 
   if (paused) {
-    drawPauseMenu();
+    pause_hud.draw();
   }
 }
 

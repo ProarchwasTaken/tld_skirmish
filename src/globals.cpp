@@ -16,6 +16,13 @@ bool EXIT_GAME = false;
 Image GAME_ICON;
 double PAUSE_PENALTY = 0;
 
+namespace settings {
+  float sfx_volume = 1.0;
+  float bgm_volume = 1.0;
+  int framerate = 60;
+  bool fullscreen = false;
+}
+
 namespace COLORS {
   Color *PALETTE;
 }
@@ -35,6 +42,8 @@ namespace sprites {
   vector<Texture*> weapon_select;
   vector<Texture*> damned;
   vector<Texture*> weapon_gun;
+  vector<Texture*> hud_mainmenu;
+  vector<Texture*> hud_menubox;
 
   vector<SpriteMetaData> plr_metadata;
 }

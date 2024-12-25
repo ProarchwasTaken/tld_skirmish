@@ -80,7 +80,8 @@ void SplashScene::interpolateSize() {
 }
 
 void SplashScene::checkInput() {
-  if (GetKeyPressed() + GetGamepadButtonPressed() > 0) {
+  int inputs = GetKeyPressed() + GetGamepadButtonPressed();
+  if (inputs != 0 && IsWindowFocused()) {
     skirmish->loadScene<TitleScene>();
   }
 }

@@ -50,7 +50,7 @@ void MusicUtils::play(const int music_id) {
     audio::music_stream = LoadMusicStream(meta_data->path.c_str());
     audio::music_stream.looping = meta_data->looping;
 
-    SetMusicVolume(audio::music_stream, 1.0);
+    SetMusicVolume(audio::music_stream, settings::bgm_volume);
     PlayMusicStream(audio::music_stream);
   } 
 }
@@ -77,7 +77,7 @@ void MusicUtils::resume(const int music_id) {
     audio::music_stream.looping = meta_data->looping;
 
     SeekMusicStream(audio::music_stream, meta_data->prev_time);
-    SetMusicVolume(audio::music_stream, 1.0);
+    SetMusicVolume(audio::music_stream, settings::bgm_volume);
     PlayMusicStream(audio::music_stream);
   }
 }
@@ -102,7 +102,7 @@ void MusicUtils::interpolateVolume() {
   *percentage = Clamp(*percentage, 0.0, 1.0);
 
   float volume = Lerp(end_volume, 1.0, *percentage);
-  SetMusicVolume(audio::music_stream, volume);
+  SetMusicVolume(audio::music_stream, volume * settings::bgm_volume);
 
   if (*percentage == 0.0) {
     StopMusicStream(audio::music_stream);
