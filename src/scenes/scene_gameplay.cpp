@@ -53,6 +53,10 @@ GameplayScene::~GameplayScene() {
     d_actor.reset();
   }
   dynamic_actors.clear();
+
+  if (paused) {
+    resumeGame();
+  }
   PLOGI << "Successfully unloaded Gameplay scene.";
 }
 
