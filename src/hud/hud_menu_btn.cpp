@@ -17,12 +17,12 @@ constexpr float DEF_HUD_X = 16;
 MenuButtonsHud::MenuButtonsHud(menu_options &options, 
                                menu_options_txt &text,
                                menu_options::iterator &selected_option,
-                               MenuHud &menu_hud)
+                               MenuHud *menu_hud)
 {
   this->options = &options;
   this->options_text = &text;
   this->selected_option = &selected_option;
-  this->menu_hud = &menu_hud;
+  this->menu_hud = menu_hud;
 }
 
 void MenuButtonsHud::update() {

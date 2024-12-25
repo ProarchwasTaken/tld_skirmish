@@ -8,7 +8,7 @@ class MenuButtonsHud {
 public:
   MenuButtonsHud(menu_options &options, menu_options_txt &text,
                  menu_options::iterator &selected_option, 
-                 MenuHud &menu_hud);
+                 MenuHud *menu_hud);
 
   void update();
   void syncSpade();
