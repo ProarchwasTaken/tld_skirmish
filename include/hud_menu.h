@@ -12,7 +12,9 @@ public:
   void fadeInSpade();
   void fadeOutSpade();
 
-  void update();
+  virtual void restartOpening();
+
+  virtual void update();
   void gradientShifting();
 
   void openingSequence();
@@ -21,9 +23,10 @@ public:
   void drawTopBar();
   void drawBottomBar();
   void drawGradient();
-  void draw();
+  virtual void draw();
 
   bool opening;
+  bool shift_gradient = true;
 
   int spade_state = SPADE_STANDBY;
   float spade_percentage;

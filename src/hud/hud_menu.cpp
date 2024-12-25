@@ -39,8 +39,21 @@ void MenuHud::fadeOutSpade() {
   spade_state = SPADE_FADEOUT;
 }
 
+void MenuHud::restartOpening() {
+  top_bar_y = START_TOP_Y;
+  bottom_bar_y = START_BOTTOM_Y;
+  gradient_tint.a = 0;
+
+  opening = true;
+  open_percentage = 0.0;
+  spade_percentage = 0.0;
+  shift_timestamp = CURRENT_TIME;
+}
+
 void MenuHud::update() {
-  gradientShifting();
+  if (shift_gradient) {
+    gradientShifting();  
+  }
 
   if (opening) {
     openingSequence();
