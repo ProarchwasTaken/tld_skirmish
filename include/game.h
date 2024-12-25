@@ -22,6 +22,8 @@ public:
    * fit perfectly with the canvas' aspect ratio.*/
   void correctWindow();
 
+  void takeScreenshot();
+
   /* Simple function that checks if the state of the window aligns with
    * the fullscreen global variable. If not, then the method will make 
    * sure it does.*/

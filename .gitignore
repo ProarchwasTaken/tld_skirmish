@@ -3,6 +3,7 @@ build/
 build_linux/
 build_win32/
 logs/
+screenshots/
 data/settings.toml
 doc/flowcharts/.$game_structure.html.bkp
 doc/flowcharts/.$roadmap.html.bkp

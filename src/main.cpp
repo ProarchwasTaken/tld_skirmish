@@ -49,6 +49,11 @@ int main(int argc, char *argv[]) {
       settings::fullscreen = IsWindowState(FLAG_WINDOW_UNDECORATED);
     }
 
+    if (IsKeyPressed(KEY_F2)) {
+      PLOGI << "Attempting to take screenshot.";
+      skirmish.takeScreenshot();
+    }
+
     if (DEV_BUILD && IsKeyPressed(KEY_F3)) {
       PLOGI << "Toggling Debug Mode";
       DEBUG_MODE = !DEBUG_MODE;
