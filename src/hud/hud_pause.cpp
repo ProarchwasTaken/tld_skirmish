@@ -1,10 +1,13 @@
 // hud/hud_pause.cpp
 #include <raylib.h>
+#include "globals.h"
 #include "scene_gameplay.h"
+#include "scene_title.h"
 #include "utils_menu.h"
 #include "utils_sound.h"
 #include "hud_menu.h"
 #include "hud_pause.h"
+#include <plog/Log.h>
 
 
 PauseHud::PauseHud(GameplayScene *scene) : MenuHud(true) { 
@@ -15,6 +18,34 @@ PauseHud::PauseHud(GameplayScene *scene) : MenuHud(true) {
 void PauseHud::restartOpening() {
   MenuHud::restartOpening();
   fadeInSpade();
+}
+
+void PauseHud::update() {
+  MenuHud::update();
+  menu_btns.update();
+
+  if (closing_menu && spade_state == SPADE_STANDBY) {
+    closing_menu = false;
+    selectOption();
+  }
+}
+
+void PauseHud::selectOption() {
+  switch (*selected_option) {
+    case OPT_RESUME: {
+      scene->resumeGame();
+      break;
+    }
+    case OPT_TITLE: {
+      scene->skirmish->loadScene<TitleScene>(true);
+      break;
+    }
+    case OPT_QUIT: {
+      PLOGV << "Setting 'EXIT_GAME' to true.";
+      EXIT_GAME = true;
+      break;
+    }
+  }
 }
 
 void PauseHud::checkInput() {
@@ -43,11 +74,11 @@ void PauseHud::checkInput() {
   else if (key_up || btn_up) {
     Menu::previousOption(options, selected_option, false);
   }
-}
-
-void PauseHud::update() {
-  MenuHud::update();
-  menu_btns.update();
+  else if (key_z || btn_a) {
+    SoundUtils::play("opt_confirm");
+    fadeOutSpade();
+    closing_menu = true;
+  }
 }
 
 void PauseHud::draw() {

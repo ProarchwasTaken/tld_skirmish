@@ -14,12 +14,16 @@ public:
   PauseHud(GameplayScene *scene);
 
   void restartOpening() override;
-  void checkInput();
 
   void update() override;
+  void selectOption();
+
+  void checkInput();
   void draw() override;
 private:
   GameplayScene *scene;
+
+  bool closing_menu = false;
 
   menu_options options = {
     OPT_RESUME,
