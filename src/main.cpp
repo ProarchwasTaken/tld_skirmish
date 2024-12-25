@@ -1,5 +1,6 @@
 // main.cpp
 #include <raylib.h>
+#include <filesystem>
 #include <string>
 #include <plog/Log.h>
 #include <plog/Init.h>
@@ -13,7 +14,7 @@
 #include "utils_settings.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
-plog::ColorConsoleAppender;
+plog::ColorConsoleAppender, std::filesystem::create_directory;
 
 void setupCustomLogger();
 bool parseArguments(int argc, char *argv[]);
@@ -69,6 +70,10 @@ int main(int argc, char *argv[]) {
 
 
 void setupCustomLogger() {
+  if (DirectoryExists("logs") == false) {
+    create_directory("logs");
+  }
+
   static RollingFileAppender<TxtFormatter> file_appender("logs/log.txt",
                                                            1000000, 10);
   static ColorConsoleAppender<TxtFormatter> console_appender;
