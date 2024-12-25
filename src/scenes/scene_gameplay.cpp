@@ -250,6 +250,7 @@ void GameplayScene::pauseGame() {
   PauseMusicStream(audio::music_stream);
   SoundUtils::pause();
 
+  SoundUtils::play("pause");
   pause_hud.restartOpening();
   pause_timestamp = GetTime();
 }

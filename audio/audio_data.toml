@@ -47,6 +47,10 @@ name = "wave_next"
 path = "audio/sfx/wave_next.wav"
 
 [[sfx]]
+name = "pause"
+path = "audio/sfx/pause.wav"
+
+[[sfx]]
 name = "damage" 
 path = "audio/sfx/damage.wav"
 
