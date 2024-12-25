@@ -145,7 +145,13 @@ private:
       "easy to control and use them as\n"
       "as minions. A single one is easy\n"
       "for a human to deal with on most\n"
-      "occasions."
+      "occasions.\n"
+      "---\n"
+      "Humanity: E\n"
+      "Threat Level: D\n"
+      "Mental Capacity: E\n"
+      "Volatility: E\n"
+      "Development Potential: E"
     },
 
     {"WRETCH", "EX-HUMAN", "IRRELEVANT", 
@@ -169,7 +175,13 @@ private:
       "With a giant sword being their\n"
       "most preferred option to use\n"
       "against anyone whose unfortunate\n"
-      "enough to encounter them."
+      "enough to encounter them.\n"
+      "---\n"
+      "Humanity: E\n"
+      "Threat Level: B\n"
+      "Mental Capacity: D\n"
+      "Volatility: D\n"
+      "Development Potential: C"
     },
     {"DAMNED", "NON-HUMAN", "IRRELEVANT", 
       "LIFE: 20 - MORALE: N/A\n"
