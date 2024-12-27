@@ -82,10 +82,10 @@ much everything.
 
 
 # Personal Thoughts
-This project began development on the 30th on August, and finished on
-Christmas day of 2024. That totals to around 3 months, and 26 days of 
-development time which is a lot shorter than I thought it would be. I
-thought I spent over half a year on it.
+This project began development on the 30th on April, and finished on
+Christmas day of 2024. That totals to around 7 months, and 26 days of 
+development time. Which is ironically almost the same amount of time I've
+spent working on Errand Run before I gave up.
 
 It's pretty funny how I spent so much time on a game that only has like
 10 minutes of content, but I guess that's how game development is
