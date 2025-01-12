@@ -3,7 +3,7 @@
 #include <memory>
 #include <cstdint>
 #include <string>
-#include "generics.h"
+#include <triblib/base/generics.h>
 
 
 /* Sub-Weapons are meant to act as an extension to the player's core

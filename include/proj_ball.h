@@ -3,8 +3,8 @@
 #include <raylib.h>
 #include <vector>
 #include <cstdint>
-#include "base/generics.h"
-#include "base/dynamic_actor.h"
+#include <triblib/base/generics.h>
+#include <triblib/base/dynamic_actor.h>
 
 
 /* DynamicActor created when the player successfully uses BallHeavy while

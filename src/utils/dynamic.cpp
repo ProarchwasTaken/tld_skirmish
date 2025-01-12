@@ -2,9 +2,9 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-#include "base/generics.h"
+#include <triblib/base/generics.h>
+#include <triblib/base/dynamic_actor.h>
 #include "globals.h"
-#include "base/dynamic_actor.h"
 #include "utils_dynamic.h"
 #include <plog/Log.h>
 

@@ -3,7 +3,6 @@
 #include <raylib.h>
 #include <cstdint>
 #include "base/action_command.h"
-#include "base/generics.h"
 #include "char_player.h"
 
 /* Light Technique that's associated with the Knife SubWeapon. Upon use,

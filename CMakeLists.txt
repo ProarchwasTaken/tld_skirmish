@@ -35,7 +35,8 @@ set(META_DATA
 -DHOME_URL="${CMAKE_PROJECT_HOMEPAGE_URL}"
 )
 
-add_subdirectory("tld_triblib")
+include_directories("triblib/include")
+add_subdirectory("triblib")
 
 set(SOURCE_FILES 
 "src/main.cpp"
@@ -45,8 +46,6 @@ set(SOURCE_FILES
 "src/system/sprites.cpp"
 "src/system/wave_manager.cpp"
 "src/system/transition.cpp"
-"src/base/actor.cpp"
-"src/base/dynamic_actor.cpp"
 "src/base/combatant.cpp"
 "src/base/action_command.cpp"
 "src/base/sub-weapon.cpp"
@@ -112,10 +111,6 @@ set(HEADER_FILES
 "include/sys_audio.h"
 "include/sys_wave_manager.h"
 "include/sys_transition.h"
-"include/base/generics.h"
-"include/base/scene.h"
-"include/base/actor.h"
-"include/base/dynamic_actor.h"
 "include/base/combatant.h"
 "include/base/action_command.h"
 "include/base/sub-weapon.h"
@@ -194,6 +189,7 @@ endif()
 
 add_executable("skirmish" ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries("skirmish" PRIVATE ${RAYLIB})
+target_link_libraries("skirmish" PRIVATE "triblib")
 target_compile_options("skirmish" PRIVATE ${COMPILE_OPTIONS} ${META_DATA})
 target_link_options("skirmish" PRIVATE ${LINK_OPTIONS})
 

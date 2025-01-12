@@ -7,8 +7,8 @@
 #include <raylib.h>
 #include <vector>
 #include <random>
+#include <triblib/base/generics.h>
 #include "defaults.h"
-#include "base/generics.h"
 #include "data/data_sprites.h"
 #include "data/data_sound.h"
 #include "data/data_music.h"

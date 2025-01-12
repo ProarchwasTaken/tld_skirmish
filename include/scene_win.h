@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <raylib.h>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "game.h"
 
 

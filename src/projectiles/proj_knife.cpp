@@ -1,11 +1,11 @@
 // projectiles/proj_knife.cpp
 #include <raylib.h>
 #include <cstdint>
+#include <triblib/base/generics.h>
+#include <triblib/base/dynamic_actor.h>
 #include "defaults.h"
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
 #include "utils_animation.h"
 #include "utils_camera.h"
 #include "proj_knife.h"

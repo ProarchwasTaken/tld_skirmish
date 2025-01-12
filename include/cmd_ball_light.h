@@ -1,8 +1,8 @@
 // cmd_ball_light.h
 #pragma once
 #include <vector>
+#include <triblib/base/generics.h>
 #include "base/action_command.h"
-#include "base/generics.h"
 #include "char_player.h"
 
 

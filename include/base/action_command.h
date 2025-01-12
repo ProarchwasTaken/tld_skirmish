@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <cstdint>
-#include "generics.h"
+#include <triblib/base/generics.h>
 
 #define CMD_NONE 0
 #define CMD_NORM_LIGHT 1

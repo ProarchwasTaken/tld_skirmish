@@ -1,10 +1,10 @@
 // projectiles/proj_ball.cpp
 #include <raylib.h>
+#include <triblib/base/generics.h>
+#include <triblib/base/dynamic_actor.h>
 #include "base/action_command.h"
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
 #include "utils_animation.h"
 #include "utils_sound.h"
 #include "utils_camera.h"

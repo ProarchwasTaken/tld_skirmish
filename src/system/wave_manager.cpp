@@ -11,7 +11,7 @@
 #include <string>
 #include <algorithm>
 #include <cassert>
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 #include "globals.h"
 #include "data/data_enemy.h"
 #include "enemy_ghoul.h"

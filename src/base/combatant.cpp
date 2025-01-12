@@ -5,8 +5,8 @@
 #include <vector>
 #include <raylib.h>
 #include <cassert>
+#include <triblib/base/actor.h>
 #include "globals.h"
-#include "base/actor.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "utils_sound.h"

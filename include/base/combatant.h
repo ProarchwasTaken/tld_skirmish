@@ -5,7 +5,7 @@
 #include <memory>
 #include <raylib.h>
 #include <vector>
-#include "actor.h"
+#include <triblib/base/actor.h>
 #include "action_command.h"
 
 #define TYPE_PLAYER 0

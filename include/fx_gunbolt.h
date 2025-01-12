@@ -1,7 +1,7 @@
 // fx_gunbolt.h
 #pragma once
 #include <vector>
-#include "base/dynamic_actor.h"
+#include <triblib/base/dynamic_actor.h>
 #include "char_player.h"
 
 

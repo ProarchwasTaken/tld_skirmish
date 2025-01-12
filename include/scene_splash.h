@@ -1,7 +1,7 @@
 // scene_splash.h
 #include <raylib.h>
 #include <string>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "game.h"
 #include "sys_transition.h"
 

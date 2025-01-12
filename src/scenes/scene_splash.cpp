@@ -1,8 +1,8 @@
 // scenes/scene_splash.cpp
 #include <raylib.h>
 #include <raymath.h>
+#include <triblib/base/scene.h>
 #include "globals.h"
-#include "base/scene.h"
 #include "utils_text.h"
 #include "game.h"
 #include "utils_music.h"

@@ -5,9 +5,9 @@
 #include <string>
 #include <cmath>
 #include <array>
+#include <triblib/base/scene.h>
 #include "game.h"
 #include "globals.h"
-#include "base/scene.h"
 #include "utils_text.h"
 #include "utils_menu.h"
 #include "utils_sound.h"

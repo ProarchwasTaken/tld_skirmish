@@ -2,7 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "game.h"
 
 #define PHASE_BLANK1 0

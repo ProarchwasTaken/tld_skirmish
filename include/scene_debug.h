@@ -3,8 +3,8 @@
 #include <raylib.h>
 #include <cstdint>
 #include <string>
-#include "base/generics.h"
-#include "base/scene.h"
+#include <triblib/base/scene.h>
+#include <triblib/base/generics.h>
 #include "game.h"
 #include "sys_wave_manager.h"
 #include "hud_life.h"

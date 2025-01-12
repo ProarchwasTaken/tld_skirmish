@@ -4,7 +4,7 @@
 #include <vector>
 #include <list>
 #include <toml/value.hpp>
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 #include "data/data_enemy.h"
 #include "char_player.h"
 

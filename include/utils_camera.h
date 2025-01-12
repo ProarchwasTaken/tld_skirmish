@@ -1,8 +1,8 @@
 // utils_camera.h
 #pragma once
 #include <raylib.h>
+#include <triblib/base/actor.h>
 #include "defaults.h"
-#include "base/actor.h"
 
 
 namespace CameraUtils {

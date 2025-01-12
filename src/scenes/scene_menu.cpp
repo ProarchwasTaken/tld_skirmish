@@ -1,7 +1,7 @@
 // scenes/scene_menu.cpp
 #include <raylib.h>
 #include <string>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "game.h"
 #include "globals.h"
 #include "utils_text.h"

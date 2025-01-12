@@ -4,7 +4,6 @@
 #include <vector>
 #include <raylib.h>
 #include <memory>
-#include "base/generics.h"
 #include "base/combatant.h"
 #include "base/sub-weapon.h"
 

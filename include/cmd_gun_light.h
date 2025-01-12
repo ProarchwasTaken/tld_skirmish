@@ -5,7 +5,6 @@
 #include <cstdint>
 #include "base/action_command.h"
 #include "base/combatant.h"
-#include "base/generics.h"
 #include "char_player.h"
 
 

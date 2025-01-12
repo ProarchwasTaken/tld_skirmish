@@ -1,5 +1,5 @@
 // utils/menu.cpp
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 #include "utils_sound.h"
 #include "utils_menu.h"
 

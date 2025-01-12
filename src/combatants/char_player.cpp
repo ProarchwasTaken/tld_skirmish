@@ -5,8 +5,8 @@
 #include <raymath.h>
 #include <random>
 #include <cassert>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "utils_animation.h"

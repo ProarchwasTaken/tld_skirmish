@@ -2,8 +2,8 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
-#include "base/generics.h"
-#include "base/scene.h"
+#include <triblib/base/generics.h>
+#include <triblib/base/scene.h>
 #include "data/data_index.h"
 #include "hud_menu.h"
 #include "game.h"

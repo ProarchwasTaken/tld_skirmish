@@ -1,7 +1,7 @@
 // scene_settings.h
 #include <cstdint>
-#include "base/generics.h"
-#include "base/scene.h"
+#include <triblib/base/generics.h>
+#include <triblib/base/scene.h>
 #include "hud_menu.h"
 #include "game.h"
 

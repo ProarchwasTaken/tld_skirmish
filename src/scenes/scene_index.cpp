@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "data/data_index.h"
 #include "globals.h"
 #include "game.h"

@@ -1,7 +1,7 @@
 // utils_dynamic.h
 #include <memory>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 
 
 /* Consists of functions tailored around DynamicActors, and classes that

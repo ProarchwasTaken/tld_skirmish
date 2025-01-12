@@ -1,6 +1,6 @@
 // utils_menu.h
 #pragma once
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 
 
 /* Helper functions for menu navigation. These functions can be very

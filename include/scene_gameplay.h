@@ -2,8 +2,8 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
-#include "base/generics.h"
-#include "base/scene.h"
+#include <triblib/base/generics.h>
+#include <triblib/base/scene.h>
 #include "game.h"
 #include "sys_wave_manager.h"
 #include "sys_transition.h"

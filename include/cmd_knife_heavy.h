@@ -1,7 +1,6 @@
 // cmd_knife_heavy.h
 #pragma once
 #include <raylib.h>
-#include "base/generics.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
 #include "char_player.h"

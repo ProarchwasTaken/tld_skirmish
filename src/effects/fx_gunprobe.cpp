@@ -1,9 +1,9 @@
 // effects/fx_gunprobe.cpp
 #include <cassert>
 #include <raylib.h>
+#include <triblib/base/dynamic_actor.h>
 #include "globals.h"
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
 #include "utils_camera.h"
 #include "char_player.h"
 #include "fx_gunprobe.h"

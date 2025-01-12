@@ -2,7 +2,6 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
-#include "base/generics.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
 

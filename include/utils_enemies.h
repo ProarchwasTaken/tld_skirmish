@@ -1,6 +1,6 @@
 // utils_enemies.h
 #pragma once
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 
 
 /* Consists of functions specifically for the game's enemies. Including

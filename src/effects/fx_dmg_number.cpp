@@ -1,7 +1,7 @@
 // effects/fx_dmg_number.h
 #include <raylib.h>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/dynamic_actor.h"
 #include "utils_camera.h"
 #include "fx_dmg_number.h"
 #include <plog/Log.h>

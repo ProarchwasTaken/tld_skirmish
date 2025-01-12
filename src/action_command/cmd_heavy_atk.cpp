@@ -1,7 +1,7 @@
 // action_command/cmd_heavy_atk.cpp
 #include <raylib.h>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "char_player.h"

@@ -1,8 +1,7 @@
 // fx_dmg_number.h
 #pragma once
 #include <raylib.h>
-#include "base/dynamic_actor.h"
-
+#include <triblib/base/dynamic_actor.h>
 
 /* DamageNumber is a DynamicActor that's of an special effect more than
  * anything. Not meant to affect anything in the game physically. It's

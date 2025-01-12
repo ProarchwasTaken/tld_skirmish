@@ -2,7 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
-#include "base/actor.h"
+#include <triblib/base/actor.h>
 
 
 /* Functions that have everything to do with sprite animations. This

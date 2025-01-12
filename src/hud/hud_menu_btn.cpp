@@ -4,8 +4,8 @@
 #include <string>
 #include <raylib.h>
 #include <raymath.h>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 #include "hud_menu.h"
 #include "hud_menu_btn.h"
 

@@ -1,7 +1,7 @@
 // fx_gunprobe.h
 #pragma once
+#include <triblib/base/dynamic_actor.h>
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
 #include "char_player.h"
 
 

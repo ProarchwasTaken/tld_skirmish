@@ -6,10 +6,10 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <triblib/base/generics.h>
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "base/generics.h"
 #include "utils_dynamic.h"
 #include "utils_sound.h"
 #include "char_player.h"

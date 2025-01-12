@@ -1,6 +1,6 @@
 // scene_control.h
 #pragma once
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "hud_menu.h"
 #include "game.h"
 

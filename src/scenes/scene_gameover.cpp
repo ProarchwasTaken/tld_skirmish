@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <string>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"

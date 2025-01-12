@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdint>
 #include <random>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
 #include "utils_text.h"

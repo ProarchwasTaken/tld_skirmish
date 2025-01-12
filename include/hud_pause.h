@@ -1,6 +1,6 @@
 // hud_pause.h
 #pragma once
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 #include "hud_menu.h"
 #include "hud_menu_btn.h"
 

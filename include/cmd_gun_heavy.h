@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <vector>
 #include <cstdint>
-#include "base/generics.h"
+#include <triblib/base/generics.h>
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
 #include "char_player.h"
