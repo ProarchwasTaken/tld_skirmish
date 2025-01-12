@@ -1,0 +1,7 @@
+[submodule "triblib"]
+  path = external
+  url = https://github.com/ProarchwasTaken/tld_triblib
+  branch = "v1.0.0"
+[submodule "tld_triblib"]
+	path = tld_triblib
+	url = https://github.com/ProarchwasTaken/tld_triblib
