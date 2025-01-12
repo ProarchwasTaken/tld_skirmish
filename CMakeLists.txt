@@ -35,6 +35,8 @@ set(META_DATA
 -DHOME_URL="${CMAKE_PROJECT_HOMEPAGE_URL}"
 )
 
+add_subdirectory("tld_triblib")
+
 set(SOURCE_FILES 
 "src/main.cpp"
 "src/globals.cpp"
