@@ -2,7 +2,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "data/data_sprites.h"
+#include <triblib/data/data_sprites.h>
 
 namespace Sprite {
   /* This is for getting a specific sprite by name rather than using an

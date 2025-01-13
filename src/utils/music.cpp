@@ -2,8 +2,8 @@
 #include <assert.h>
 #include <raylib.h>
 #include <raymath.h>
+#include <triblib/data/data_music.h>
 #include "globals.h"
-#include "data/data_music.h"
 #include "utils_music.h"
 #include <plog/Log.h>
 

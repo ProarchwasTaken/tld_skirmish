@@ -4,9 +4,9 @@
 #include <random>
 #include <triblib/base/generics.h>
 #include "globals.h"
-#include "data/data_sprites.h"
-#include "data/data_sound.h"
-#include "data/data_music.h"
+#include <triblib/data/data_sprites.h>
+#include <triblib/data/data_sound.h>
+#include <triblib/data/data_music.h>
 
 using std::vector, std::mt19937, std::random_device;
 

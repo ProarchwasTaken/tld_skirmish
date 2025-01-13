@@ -2,8 +2,8 @@
 #include <cstddef>
 #include <random>
 #include <raylib.h>
+#include <triblib/data/data_sound.h>
 #include "globals.h"
-#include "data/data_sound.h"
 #include "utils_sound.h"
 #include <plog/Log.h>
 

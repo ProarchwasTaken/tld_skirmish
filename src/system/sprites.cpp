@@ -6,8 +6,8 @@
 #include <toml/get.hpp>
 #include <string>
 #include <vector>
+#include <triblib/data/data_sprites.h>
 #include "globals.h"
-#include "data/data_sprites.h"
 #include "sys_sprites.h"
 #include <plog/Log.h>
 

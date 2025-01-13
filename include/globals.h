@@ -8,10 +8,10 @@
 #include <vector>
 #include <random>
 #include <triblib/base/generics.h>
+#include <triblib/data/data_sprites.h>
+#include <triblib/data/data_sound.h>
+#include <triblib/data/data_music.h>
 #include "defaults.h"
-#include "data/data_sprites.h"
-#include "data/data_sound.h"
-#include "data/data_music.h"
 
 extern bool DEBUG_MODE;
 extern bool EXIT_GAME;

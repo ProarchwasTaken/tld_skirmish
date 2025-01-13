@@ -3,9 +3,9 @@
 #include <cstdint>
 #include <raylib.h>
 #include <vector>
+#include <triblib/data/data_sprites.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "data/data_sprites.h"
 
 #define DEF_PARRY_WINDOW 0.20
 

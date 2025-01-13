@@ -2,7 +2,7 @@
 #pragma once
 #include <raylib.h>
 #include <string>
-#include "data/data_sound.h"
+#include <triblib/data/data_sound.h>
 
 
 /* Functions that have everything to do with sounds. In a way, they
