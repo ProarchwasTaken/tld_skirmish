@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++)
 
 project("skirmish" 
-VERSION 1.0.0
+VERSION 1.0.1
 DESCRIPTION "A short wave based fighter."
 HOMEPAGE_URL "https://github.com/ProarchwasTaken/tld_skirmish"
 LANGUAGES CXX
