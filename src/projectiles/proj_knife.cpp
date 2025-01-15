@@ -6,7 +6,7 @@
 #include "defaults.h"
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils_animation.h"
+#include <triblib/utils/animation.h>
 #include "utils_camera.h"
 #include "proj_knife.h"
 #include <plog/Log.h>

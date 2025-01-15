@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_sound.h"
+#include <triblib/utils/sound.h>
 #include "enemy_wretch.h"
 #include "cmd_wretch_atk.h"
 

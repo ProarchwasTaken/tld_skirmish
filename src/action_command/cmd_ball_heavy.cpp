@@ -2,10 +2,10 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
+#include <triblib/utils/sound.h>
+#include <triblib/utils/dynamic.h>
 #include "base/action_command.h"
 #include "base/combatant.h"
-#include "utils_sound.h"
-#include "utils_dynamic.h"
 #include "proj_ball.h"
 #include "char_player.h"
 #include "cmd_ball_heavy.h"

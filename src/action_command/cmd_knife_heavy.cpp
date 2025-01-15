@@ -3,8 +3,8 @@
 #include <raymath.h>
 #include "globals.h"
 #include "base/action_command.h"
-#include "utils_dynamic.h"
-#include "utils_sound.h"
+#include <triblib/utils/dynamic.h>
+#include <triblib/utils/sound.h>
 #include "proj_knife.h"
 #include "char_player.h"
 #include "cmd_knife_heavy.h"

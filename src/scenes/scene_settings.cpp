@@ -6,8 +6,8 @@
 #include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
-#include "utils_sound.h"
-#include "utils_text.h"
+#include <triblib/utils/sound.h>
+#include <triblib/utils/text.h>
 #include "utils_menu.h"
 #include "utils_settings.h"
 #include "scene_menu.h"

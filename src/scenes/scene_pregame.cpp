@@ -6,7 +6,7 @@
 #include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
-#include "utils_text.h"
+#include <triblib/utils/text.h>
 #include "scene_pregame.h"
 #include "scene_gameplay.h"
 #include <plog/Log.h>

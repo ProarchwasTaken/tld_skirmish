@@ -3,8 +3,8 @@
 #include <raymath.h>
 #include "globals.h"
 #include "base/action_command.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
 #include "char_player.h"
 #include "cmd_ball_light.h"
 

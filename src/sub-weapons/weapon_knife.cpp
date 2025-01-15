@@ -1,10 +1,10 @@
 // sub-weapons/weapon_knife.cpp
 #include <cstdint>
 #include <memory>
+#include <triblib/globals.h>
+#include <triblib/utils/sound.h>
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
-#include "globals.h"
-#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_knife_light.h"
 #include "cmd_knife_heavy.h"

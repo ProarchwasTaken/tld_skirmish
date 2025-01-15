@@ -3,9 +3,9 @@
 #include <raymath.h>
 #include <triblib/base/scene.h>
 #include "globals.h"
-#include "utils_text.h"
+#include <triblib/utils/text.h>
+#include <triblib/utils/music.h>
 #include "game.h"
-#include "utils_music.h"
 #include "scene_title.h"
 #include "scene_splash.h"
 #include <plog/Log.h>

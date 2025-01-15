@@ -4,7 +4,7 @@
 #include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
-#include "utils_text.h"
+#include <triblib/utils/text.h>
 #include "scene_title.h"
 #include "scene_win.h"
 #include <plog/Log.h>

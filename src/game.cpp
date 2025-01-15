@@ -10,7 +10,7 @@
 #include "globals.h"
 #include "game.h"
 #include "sys_sprites.h"
-#include "utils_music.h"
+#include <triblib/utils/music.h>
 #include "utils_settings.h"
 #include "scene_splash.h"
 #if DEV_BUILD

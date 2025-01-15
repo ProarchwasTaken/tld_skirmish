@@ -6,13 +6,13 @@
 #include <tuple>
 #include "base/combatant.h"
 #include "globals.h"
+#include <triblib/utils/sound.h>
+#include <triblib/utils/dynamic.h>
+#include <triblib/utils/music.h>
+#include <triblib/utils/text.h>
 #include "utils_stages.h"
 #include "utils_camera.h"
-#include "utils_sound.h"
-#include "utils_dynamic.h"
 #include "utils_enemies.h"
-#include "utils_text.h"
-#include "utils_music.h"
 #include "utils_sequence.h"
 #include "game.h"
 #include "scene_win.h"

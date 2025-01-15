@@ -2,7 +2,7 @@
 #include <string>
 #include <cstdint>
 #include <raylib.h>
-#include "globals.h"
+#include <triblib/globals.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include <plog/Log.h>

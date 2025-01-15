@@ -5,8 +5,8 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
 #include "utils_camera.h"
 #include "utils_ai_behavior.h"
 #include "utils_enemies.h"

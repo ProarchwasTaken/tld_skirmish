@@ -3,7 +3,7 @@
 #include <triblib/base/dynamic_actor.h>
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils_animation.h"
+#include <triblib/utils/animation.h>
 #include "utils_camera.h"
 #include "char_player.h"
 #include "fx_gunbolt.h"

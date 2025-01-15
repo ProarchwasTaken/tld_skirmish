@@ -1,6 +1,6 @@
 // utils/menu.cpp
 #include <triblib/base/generics.h>
-#include "utils_sound.h"
+#include <triblib/utils/sound.h>
 #include "utils_menu.h"
 
 

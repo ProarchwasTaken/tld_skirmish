@@ -5,8 +5,8 @@
 #include "base/action_command.h"
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
 #include "utils_camera.h"
 #include "char_player.h"
 #include "cmd_ball_heavy.h"

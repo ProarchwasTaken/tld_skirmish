@@ -4,7 +4,7 @@
 #include "scene_gameplay.h"
 #include "scene_title.h"
 #include "utils_menu.h"
-#include "utils_sound.h"
+#include <triblib/utils/sound.h>
 #include "hud_menu.h"
 #include "hud_pause.h"
 #include <plog/Log.h>

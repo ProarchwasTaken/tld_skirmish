@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <cassert>
 #include <triblib/base/generics.h>
-#include "globals.h"
+#include <triblib/globals.h>
 #include "data/data_enemy.h"
 #include "enemy_ghoul.h"
 #include "enemy_wretch.h"

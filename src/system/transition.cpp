@@ -2,7 +2,7 @@
 #include <cassert>
 #include <raylib.h>
 #include <raymath.h>
-#include "globals.h"
+#include <triblib/globals.h>
 #include "defaults.h"
 #include "sys_transition.h"
 #include <plog/Log.h>

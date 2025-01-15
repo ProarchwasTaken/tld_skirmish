@@ -10,8 +10,8 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_dynamic.h"
-#include "utils_sound.h"
+#include <triblib/utils/dynamic.h>
+#include <triblib/utils/sound.h>
 #include "char_player.h"
 #include "fx_gunprobe.h"
 #include "cmd_gun_light.h"

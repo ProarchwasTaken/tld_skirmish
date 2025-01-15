@@ -1,12 +1,12 @@
 // sub-weapons/weapons_gun.cpp
 #include <cstdint>
 #include <memory>
+#include <triblib/globals.h>
+#include <triblib/utils/sound.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
-#include "globals.h"
 #include "char_player.h"
-#include "utils_sound.h"
 #include "cmd_heavy_atk.h"
 #include "cmd_gun_light.h"
 #include "cmd_gun_heavy.h"

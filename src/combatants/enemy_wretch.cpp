@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <random>
 #include "globals.h"
-#include "utils_animation.h"
+#include <triblib/utils/animation.h>
 #include "utils_camera.h"
 #include "utils_ai_behavior.h"
 #include "utils_enemies.h"

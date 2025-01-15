@@ -8,11 +8,11 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
+#include <triblib/utils/sound.h>
+#include <triblib/utils/animation.h>
 #include "utils_ai_behavior.h"
 #include "utils_camera.h"
-#include "utils_animation.h"
 #include "utils_enemies.h"
-#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_damned_grb.h"
 #include "enemy_damned.h"

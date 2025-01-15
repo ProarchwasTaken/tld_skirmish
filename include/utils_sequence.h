@@ -2,7 +2,7 @@
 #pragma once
 #include <array>
 #include <cstddef>
-#include "globals.h"
+#include <triblib/globals.h>
 
 
 /* A template class rather than a series of functions. Could be seen as

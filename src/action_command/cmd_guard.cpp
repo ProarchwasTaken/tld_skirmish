@@ -5,11 +5,11 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
-#include "globals.h"
+#include <triblib/globals.h>
+#include <triblib/utils/sprite.h>
+#include <triblib/utils/sound.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_sprite.h"
-#include "utils_sound.h"
 #include "char_player.h"
 #include "cmd_guard.h"
 #include <plog/Log.h>

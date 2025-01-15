@@ -9,9 +9,9 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_animation.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
 #include "utils_camera.h"
-#include "utils_sound.h"
 #include "scene_gameplay.h"
 #include "cmd_light_atk.h"
 #include "cmd_heavy_atk.h"
