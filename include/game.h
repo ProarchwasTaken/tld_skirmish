@@ -2,8 +2,8 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
+#include <triblib/sys_audio.h>
 #include "sys_sprites.h"
-#include "sys_audio.h"
 #include "sys_transition.h"
 #include <triblib/base/scene.h>
 

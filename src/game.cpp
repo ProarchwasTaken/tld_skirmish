@@ -5,11 +5,11 @@
 #include <string>
 #include <filesystem>
 #include <chrono>
+#include <triblib/sys_audio.h>
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
 #include "sys_sprites.h"
-#include "sys_audio.h"
 #include "utils_music.h"
 #include "utils_settings.h"
 #include "scene_splash.h"
@@ -30,7 +30,7 @@ Game::Game(bool debug_scene) {
 
   bg_main = LoadTexture("graphics/bg_main.png");
   sprite_loader = make_unique<SpriteLoader>();
-  audio_manager = make_unique<AudioManager>();
+  audio_manager = make_unique<AudioManager>("audio/audio_data.toml");
 
 #if DEV_BUILD
   if (debug_scene) {
