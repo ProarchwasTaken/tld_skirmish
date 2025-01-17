@@ -111,16 +111,16 @@ private:
       "hurting himself trying.\n"
       "---\n"
       "Experience: C\n"
-      "Mental Fortitude: B\n"
-      "Intelligence: C\n"
-      "Cooperation: D\n"
-      "Emotional Intelligence: C\n"
+      "Mental Fortitude: C\n"
+      "Intelligence: D\n"
+      "Cooperation: E\n"
+      "Emotional Intelligence: D\n"
       "Planning: D\n"
-      "Quick Thinking: A\n"
+      "Quick Thinking: B\n"
       "Versatility: B"
     },
 
-    {"GHOUL", "EX-HUMAN", "IRRELEVANT", 
+    {"GHOUL", "EX-HUMAN", "SAFE", 
       "LIFE: 15 - MORALE: N/A\n"
       "---\n"
       "Turning a human into a vampire is\n"
@@ -148,13 +148,13 @@ private:
       "occasions.\n"
       "---\n"
       "Humanity: E\n"
-      "Threat Level: D\n"
+      "Threat Level: E\n"
       "Mental Capacity: E\n"
       "Volatility: E\n"
       "Development Potential: E"
     },
 
-    {"WRETCH", "EX-HUMAN", "IRRELEVANT", 
+    {"WRETCH", "EX-HUMAN", "DANGER", 
       "LIFE: 20 - MORALE: N/A\n"
       "---\n"
       "Soon enough, the vampires grown\n"
@@ -178,12 +178,12 @@ private:
       "enough to encounter them.\n"
       "---\n"
       "Humanity: E\n"
-      "Threat Level: B\n"
+      "Threat Level: C\n"
       "Mental Capacity: D\n"
       "Volatility: D\n"
       "Development Potential: C"
     },
-    {"DAMNED", "NON-HUMAN", "IRRELEVANT", 
+    {"DAMNED", "NON-HUMAN", "DANGER", 
       "LIFE: 20 - MORALE: N/A\n"
       "---\n"
       "Vampires now outnumber humans\n"
