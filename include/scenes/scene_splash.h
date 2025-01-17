@@ -3,7 +3,7 @@
 #include <string>
 #include <triblib/base/scene.h>
 #include "game.h"
-#include "sys_transition.h"
+#include "system/transition.h"
 
 
 class SplashScene : public Scene {

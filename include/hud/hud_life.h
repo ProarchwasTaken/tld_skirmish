@@ -2,8 +2,8 @@
 #pragma once
 #include <raylib.h>
 #include <cstdint>
-#include "utils_sequence.h"
-#include "char_player.h"
+#include "utils/sequence.h"
+#include "combatants/char_player.h"
 
 
 /* The LifeHud is a hud element that measures the player's health in two

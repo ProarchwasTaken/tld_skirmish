@@ -12,8 +12,8 @@
 #include <triblib/utils/sound.h>
 #include <triblib/utils/dynamic.h>
 #include <triblib/utils/animation.h>
-#include "cmd_guard.h"
-#include "fx_dmg_number.h"
+#include "action_command/cmd_guard.h"
+#include "effects/fx_dmg_number.h"
 #include <plog/Log.h>
 
 using std::string, std::unique_ptr, std::vector;

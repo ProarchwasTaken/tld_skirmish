@@ -2,7 +2,7 @@
 #pragma once
 #include <triblib/base/dynamic_actor.h>
 #include "base/combatant.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 class GunProbe : public DynamicActor {

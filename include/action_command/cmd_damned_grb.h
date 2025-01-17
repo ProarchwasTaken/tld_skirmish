@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <raylib.h>
 #include <vector>
-#include "enemy_damned.h"
-#include "char_player.h"
+#include "combatants/enemy_damned.h"
+#include "combatants/char_player.h"
 #include "base/action_command.h"
 
 

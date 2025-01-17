@@ -4,7 +4,7 @@
 #include <raymath.h>
 #include <triblib/globals.h>
 #include "defaults.h"
-#include "sys_transition.h"
+#include "system/transition.h"
 #include <plog/Log.h>
 
 void WipeTransition::interpolate() {

@@ -6,11 +6,11 @@
 #include "base/combatant.h"
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
-#include "char_player.h"
-#include "cmd_heavy_atk.h"
-#include "cmd_gun_light.h"
-#include "cmd_gun_heavy.h"
-#include "weapon_gun.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_heavy_atk.h"
+#include "action_command/cmd_gun_light.h"
+#include "action_command/cmd_gun_heavy.h"
+#include "sub-weapons/weapon_gun.h"
 #include <plog/Log.h>
 
 using std::make_unique, std::unique_ptr;

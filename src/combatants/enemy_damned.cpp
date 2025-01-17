@@ -10,12 +10,12 @@
 #include "base/action_command.h"
 #include <triblib/utils/sound.h>
 #include <triblib/utils/animation.h>
-#include "utils_ai_behavior.h"
-#include "utils_camera.h"
-#include "utils_enemies.h"
-#include "char_player.h"
-#include "cmd_damned_grb.h"
-#include "enemy_damned.h"
+#include "utils/ai_behavior.h"
+#include "utils/camera.h"
+#include "utils/enemies.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_damned_grb.h"
+#include "combatants/enemy_damned.h"
 
 using std::unique_ptr, std::make_unique;
 

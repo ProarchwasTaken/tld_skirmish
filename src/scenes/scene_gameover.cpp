@@ -9,10 +9,10 @@
 #include <triblib/utils/text.h>
 #include <triblib/utils/sound.h>
 #include <triblib/utils/music.h>
-#include "utils_menu.h"
-#include "scene_title.h"
-#include "scene_subweapon.h"
-#include "scene_gameover.h"
+#include "utils/menu.h"
+#include "scenes/scene_title.h"
+#include "scenes/scene_subweapon.h"
+#include "scenes/scene_gameover.h"
 #include <plog/Log.h>
 
 using std::string;

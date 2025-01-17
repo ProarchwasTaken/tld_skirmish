@@ -6,10 +6,10 @@
 #include <triblib/base/scene.h>
 #include <triblib/base/generics.h>
 #include "game.h"
-#include "sys_wave_manager.h"
-#include "hud_life.h"
-#include "hud_morale.h"
-#include "char_player.h"
+#include "system/wave_manager.h"
+#include "hud/hud_life.h"
+#include "hud/hud_morale.h"
+#include "combatants/char_player.h"
 
 
 /* The same as the GameplayScene, but with anything related to the 

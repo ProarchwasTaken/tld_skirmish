@@ -3,7 +3,7 @@
 #include <memory>
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* The third and final SubWeapon. It could be described as a stun gun 

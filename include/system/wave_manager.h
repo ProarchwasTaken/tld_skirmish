@@ -6,7 +6,7 @@
 #include <toml/value.hpp>
 #include <triblib/base/generics.h>
 #include "data/data_enemy.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 #define ENEMY_GHOUL 0
 #define ENEMY_WRETCH 1

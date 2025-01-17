@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <triblib/base/generics.h>
 #include <triblib/base/scene.h>
-#include "hud_menu.h"
+#include "hud/hud_menu.h"
 #include "game.h"
 
 #define OPT_SOUND 0

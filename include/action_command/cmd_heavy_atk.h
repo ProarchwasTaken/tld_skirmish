@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <raylib.h>
 #include "base/action_command.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* The HeavyAttack is a action command that's exclusive to the player

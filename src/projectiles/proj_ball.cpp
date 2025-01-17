@@ -7,10 +7,10 @@
 #include "base/combatant.h"
 #include <triblib/utils/animation.h>
 #include <triblib/utils/sound.h>
-#include "utils_camera.h"
-#include "char_player.h"
-#include "cmd_ball_heavy.h"
-#include "proj_ball.h"
+#include "utils/camera.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_ball_heavy.h"
+#include "projectiles/proj_ball.h"
 #include <plog/Log.h>
 
 

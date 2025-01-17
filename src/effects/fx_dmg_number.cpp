@@ -2,8 +2,8 @@
 #include <raylib.h>
 #include <triblib/base/generics.h>
 #include "globals.h"
-#include "utils_camera.h"
-#include "fx_dmg_number.h"
+#include "utils/camera.h"
+#include "effects/fx_dmg_number.h"
 #include <plog/Log.h>
 
 

@@ -8,7 +8,7 @@
 #include <vector>
 #include <triblib/data/data_sprites.h>
 #include "globals.h"
-#include "sys_sprites.h"
+#include "system/sprites.h"
 #include <plog/Log.h>
 
 using std::string, std::vector;

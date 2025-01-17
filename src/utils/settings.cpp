@@ -7,7 +7,7 @@
 #include <toml/serializer.hpp>
 #include <toml/value.hpp>
 #include "globals.h"
-#include "utils_settings.h"
+#include "utils/settings.h"
 #include <plog/Log.h>
 
 using std::string, std::ofstream;

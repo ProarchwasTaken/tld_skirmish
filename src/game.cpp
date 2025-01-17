@@ -9,12 +9,12 @@
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
-#include "sys_sprites.h"
+#include "system/sprites.h"
 #include <triblib/utils/music.h>
-#include "utils_settings.h"
-#include "scene_splash.h"
+#include "utils/settings.h"
+#include "scenes/scene_splash.h"
 #if DEV_BUILD
-#include "scene_debug.h"
+#include "scenes/scene_debug.h"
 #endif // DEV_BUILD
 #include <plog/Log.h>
 

@@ -6,7 +6,7 @@
 #include <triblib/base/generics.h>
 #include "base/action_command.h"
 #include "base/sub-weapon.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* Heavy Technique that's associated with the Gun SubWeapon. When 

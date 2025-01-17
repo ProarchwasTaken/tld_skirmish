@@ -5,8 +5,8 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "char_player.h"
-#include "cmd_light_atk.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_light_atk.h"
 
 
 LightAttack::LightAttack(PlayerCharacter *user): 

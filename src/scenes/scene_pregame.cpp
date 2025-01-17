@@ -7,8 +7,8 @@
 #include "globals.h"
 #include "game.h"
 #include <triblib/utils/text.h>
-#include "scene_pregame.h"
-#include "scene_gameplay.h"
+#include "scenes/scene_pregame.h"
+#include "scenes/scene_gameplay.h"
 #include <plog/Log.h>
 #include <raylib.h>
 

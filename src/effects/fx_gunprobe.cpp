@@ -4,9 +4,9 @@
 #include <triblib/base/dynamic_actor.h>
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils_camera.h"
-#include "char_player.h"
-#include "fx_gunprobe.h"
+#include "utils/camera.h"
+#include "combatants/char_player.h"
+#include "effects/fx_gunprobe.h"
 
 
 GunProbe::GunProbe(PlayerCharacter *player, Combatant *probed_enemy): 

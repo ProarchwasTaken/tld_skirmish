@@ -11,10 +11,10 @@
 #include <triblib/utils/text.h>
 #include <triblib/utils/sound.h>
 #include <triblib/utils/music.h>
-#include "utils_menu.h"
-#include "scene_menu.h"
-#include "scene_pregame.h"
-#include "scene_subweapon.h"
+#include "utils/menu.h"
+#include "scenes/scene_menu.h"
+#include "scenes/scene_pregame.h"
+#include "scenes/scene_subweapon.h"
 #include <plog/Log.h>
 
 using std::string, std::array;

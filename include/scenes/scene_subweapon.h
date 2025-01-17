@@ -5,7 +5,7 @@
 #include <triblib/base/generics.h>
 #include <triblib/base/scene.h>
 #include "data/data_weapon.h"
-#include "hud_menu.h"
+#include "hud/hud_menu.h"
 #include "game.h"
 
 #define OPT_KNIFE 0

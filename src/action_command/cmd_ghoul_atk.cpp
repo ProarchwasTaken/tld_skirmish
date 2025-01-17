@@ -4,8 +4,8 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "enemy_ghoul.h"
-#include "cmd_ghoul_atk.h"
+#include "combatants/enemy_ghoul.h"
+#include "action_command/cmd_ghoul_atk.h"
 
 
 GhoulAttack::GhoulAttack(GhoulEnemy *user):

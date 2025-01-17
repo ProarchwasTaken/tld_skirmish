@@ -6,9 +6,9 @@
 #include <triblib/utils/dynamic.h>
 #include "base/action_command.h"
 #include "base/combatant.h"
-#include "proj_ball.h"
-#include "char_player.h"
-#include "cmd_ball_heavy.h"
+#include "projectiles/proj_ball.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_ball_heavy.h"
 
 
 BallHeavy::BallHeavy(PlayerCharacter *player):

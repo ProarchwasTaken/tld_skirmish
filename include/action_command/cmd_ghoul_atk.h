@@ -2,8 +2,8 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
-#include "enemy_ghoul.h"
-#include "char_player.h"
+#include "combatants/enemy_ghoul.h"
+#include "combatants/char_player.h"
 #include "base/action_command.h"
 
 

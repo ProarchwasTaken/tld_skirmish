@@ -3,8 +3,8 @@
 #include <raylib.h>
 #include <triblib/base/generics.h>
 #include <triblib/base/scene.h>
-#include "hud_menu.h"
-#include "hud_menu_btn.h"
+#include "hud/hud_menu.h"
+#include "hud/hud_menu_btn.h"
 #include "game.h"
 
 #define OPT_PLAY 0

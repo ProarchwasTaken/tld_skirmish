@@ -8,8 +8,8 @@
 #include <triblib/utils/text.h>
 #include <triblib/utils/music.h>
 #include <triblib/utils/sound.h>
-#include "scene_menu.h"
-#include "scene_title.h"
+#include "scenes/scene_menu.h"
+#include "scenes/scene_title.h"
 #include <plog/Log.h>
 
 using std::string;

@@ -5,8 +5,8 @@
 #include "base/action_command.h"
 #include <triblib/utils/animation.h>
 #include <triblib/utils/sound.h>
-#include "char_player.h"
-#include "cmd_ball_light.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_ball_light.h"
 
 
 BallLight::BallLight(PlayerCharacter *user):

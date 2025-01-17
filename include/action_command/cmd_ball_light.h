@@ -3,7 +3,7 @@
 #include <vector>
 #include <triblib/base/generics.h>
 #include "base/action_command.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* Light weapon technique that's associated with the Ball Sub-Weapon. 

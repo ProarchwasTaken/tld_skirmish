@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <cstdint>
 #include <triblib/globals.h>
-#include "utils_ai_behavior.h"
+#include "utils/ai_behavior.h"
 
 
 void AIBehavior::tickPatience(uint8_t &patience, float &tick_timestamp, 

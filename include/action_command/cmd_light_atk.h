@@ -2,7 +2,7 @@
 #pragma once
 #include <cstdint>
 #include <raylib.h>
-#include "char_player.h"
+#include "combatants/char_player.h"
 #include "base/action_command.h"
 
 

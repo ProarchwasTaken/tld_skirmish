@@ -10,14 +10,14 @@
 #include <triblib/utils/dynamic.h>
 #include <triblib/utils/music.h>
 #include <triblib/utils/text.h>
-#include "utils_stages.h"
-#include "utils_camera.h"
-#include "utils_enemies.h"
-#include "utils_sequence.h"
+#include "utils/stages.h"
+#include "utils/camera.h"
+#include "utils/enemies.h"
+#include "utils/sequence.h"
 #include "game.h"
-#include "scene_win.h"
-#include "scene_gameover.h"
-#include "scene_gameplay.h"
+#include "scenes/scene_win.h"
+#include "scenes/scene_gameover.h"
+#include "scenes/scene_gameplay.h"
 #include <plog/Log.h>
 
 using std::tie, std::string;

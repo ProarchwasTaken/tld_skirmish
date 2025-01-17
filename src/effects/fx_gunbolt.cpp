@@ -4,9 +4,9 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include <triblib/utils/animation.h>
-#include "utils_camera.h"
-#include "char_player.h"
-#include "fx_gunbolt.h"
+#include "utils/camera.h"
+#include "combatants/char_player.h"
+#include "effects/fx_gunbolt.h"
 
 
 GunBolt::GunBolt(PlayerCharacter *player, float length): 

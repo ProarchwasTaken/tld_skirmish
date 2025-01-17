@@ -5,8 +5,8 @@
 #include "globals.h"
 #include "game.h"
 #include <triblib/utils/text.h>
-#include "scene_title.h"
-#include "scene_win.h"
+#include "scenes/scene_title.h"
+#include "scenes/scene_win.h"
 #include <plog/Log.h>
 
 WinScene::WinScene(Game &skirmish) : Scene(skirmish) {

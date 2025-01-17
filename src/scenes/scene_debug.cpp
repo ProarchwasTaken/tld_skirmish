@@ -8,12 +8,12 @@
 #include "game.h"
 #include <triblib/utils/text.h>
 #include <triblib/utils/dynamic.h>
-#include "utils_stages.h"
-#include "utils_camera.h"
-#include "utils_enemies.h"
-#include "enemy_dummy.h"
-#include "scene_gameplay.h"
-#include "scene_debug.h"
+#include "utils/stages.h"
+#include "utils/camera.h"
+#include "utils/enemies.h"
+#include "combatants/enemy_dummy.h"
+#include "scenes/scene_gameplay.h"
+#include "scenes/scene_debug.h"
 #include <plog/Log.h>
 
 using std::make_shared, std::tie;

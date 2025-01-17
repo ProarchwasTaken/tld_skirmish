@@ -2,7 +2,7 @@
 #pragma once
 #include <vector>
 #include <triblib/base/dynamic_actor.h>
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 class GunBolt : public DynamicActor {

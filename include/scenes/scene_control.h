@@ -1,7 +1,7 @@
 // scene_control.h
 #pragma once
 #include <triblib/base/scene.h>
-#include "hud_menu.h"
+#include "hud/hud_menu.h"
 #include "game.h"
 
 

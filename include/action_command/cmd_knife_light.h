@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <cstdint>
 #include "base/action_command.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 /* Light Technique that's associated with the Knife SubWeapon. Upon use,
  * the player will perform a simple slash attack.*/

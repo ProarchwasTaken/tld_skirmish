@@ -10,8 +10,8 @@
 #include <triblib/utils/sound.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "char_player.h"
-#include "cmd_guard.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_guard.h"
 #include <plog/Log.h>
 
 using std::vector;

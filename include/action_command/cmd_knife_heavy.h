@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* Heavy Technique that's associated with the Knife SubWeapon. Upon

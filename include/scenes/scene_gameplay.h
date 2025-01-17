@@ -5,13 +5,13 @@
 #include <triblib/base/generics.h>
 #include <triblib/base/scene.h>
 #include "game.h"
-#include "sys_wave_manager.h"
-#include "sys_transition.h"
-#include "utils_sequence.h"
-#include "hud_life.h"
-#include "hud_morale.h"
-#include "hud_pause.h"
-#include "char_player.h"
+#include "system/wave_manager.h"
+#include "system/transition.h"
+#include "utils/sequence.h"
+#include "hud/hud_life.h"
+#include "hud/hud_morale.h"
+#include "hud/hud_pause.h"
+#include "combatants/char_player.h"
 
 #define PHASE_REST 0
 #define PHASE_ACTION 1

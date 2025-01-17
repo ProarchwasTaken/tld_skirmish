@@ -8,10 +8,10 @@
 #include "game.h"
 #include <triblib/utils/sound.h>
 #include <triblib/utils/text.h>
-#include "utils_menu.h"
-#include "utils_settings.h"
-#include "scene_menu.h"
-#include "scene_settings.h"
+#include "utils/menu.h"
+#include "utils/settings.h"
+#include "scenes/scene_menu.h"
+#include "scenes/scene_settings.h"
 #include <plog/Log.h>
 
 using std::string, std::to_string;

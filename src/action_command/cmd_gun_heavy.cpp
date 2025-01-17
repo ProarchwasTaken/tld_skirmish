@@ -9,9 +9,9 @@
 #include <triblib/utils/animation.h>
 #include <triblib/utils/dynamic.h>
 #include <triblib/utils/sound.h>
-#include "char_player.h"
-#include "fx_gunbolt.h"
-#include "cmd_gun_heavy.h"
+#include "combatants/char_player.h"
+#include "effects/fx_gunbolt.h"
+#include "action_command/cmd_gun_heavy.h"
 #include <plog/Log.h>
 
 #define PITCH_FORMULA (1.0 + (0.05 * level))

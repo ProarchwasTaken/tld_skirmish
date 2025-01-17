@@ -6,13 +6,13 @@
 #include "globals.h"
 #include <triblib/utils/sound.h>
 #include <triblib/utils/text.h>
-#include "utils_menu.h"
-#include "hud_menu.h"
-#include "scene_subweapon.h"
-#include "scene_settings.h"
-#include "scene_control.h"
-#include "scene_index.h"
-#include "scene_menu.h"
+#include "utils/menu.h"
+#include "hud/hud_menu.h"
+#include "scenes/scene_subweapon.h"
+#include "scenes/scene_settings.h"
+#include "scenes/scene_control.h"
+#include "scenes/scene_index.h"
+#include "scenes/scene_menu.h"
 #include <plog/Log.h>
 
 using std::string;

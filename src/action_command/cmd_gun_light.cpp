@@ -12,9 +12,9 @@
 #include "base/action_command.h"
 #include <triblib/utils/dynamic.h>
 #include <triblib/utils/sound.h>
-#include "char_player.h"
-#include "fx_gunprobe.h"
-#include "cmd_gun_light.h"
+#include "combatants/char_player.h"
+#include "effects/fx_gunprobe.h"
+#include "action_command/cmd_gun_light.h"
 #include <plog/Log.h>
 
 using std::vector, std::min_element;

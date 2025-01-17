@@ -11,15 +11,15 @@
 #include "base/action_command.h"
 #include <triblib/utils/animation.h>
 #include <triblib/utils/sound.h>
-#include "utils_camera.h"
-#include "scene_gameplay.h"
-#include "cmd_light_atk.h"
-#include "cmd_heavy_atk.h"
-#include "cmd_guard.h"
-#include "weapon_knife.h"
-#include "weapon_ball.h"
-#include "weapon_gun.h"
-#include "char_player.h"
+#include "utils/camera.h"
+#include "scenes/scene_gameplay.h"
+#include "action_command/cmd_light_atk.h"
+#include "action_command/cmd_heavy_atk.h"
+#include "action_command/cmd_guard.h"
+#include "sub-weapons/weapon_knife.h"
+#include "sub-weapons/weapon_ball.h"
+#include "sub-weapons/weapon_gun.h"
+#include "combatants/char_player.h"
 #include <plog/Log.h>
 
 using std::make_unique, std::unique_ptr, std::uniform_real_distribution;

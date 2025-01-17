@@ -1,7 +1,7 @@
 // hud_morale.h
 #pragma once
 #include <raylib.h>
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* The MoraleHud is a hud element similar to the LifeHud. Obvious 

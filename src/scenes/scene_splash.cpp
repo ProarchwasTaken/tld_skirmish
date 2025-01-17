@@ -6,8 +6,8 @@
 #include <triblib/utils/text.h>
 #include <triblib/utils/music.h>
 #include "game.h"
-#include "scene_title.h"
-#include "scene_splash.h"
+#include "scenes/scene_title.h"
+#include "scenes/scene_splash.h"
 #include <plog/Log.h>
 
 

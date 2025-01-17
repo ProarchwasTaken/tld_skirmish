@@ -5,7 +5,7 @@
 #include <cstdint>
 #include "base/action_command.h"
 #include "base/combatant.h"
-#include "char_player.h"
+#include "combatants/char_player.h"
 
 
 /* Light technique that is associated with the Gun SubWeapon. Capable of
