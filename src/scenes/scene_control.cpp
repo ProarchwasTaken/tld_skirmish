@@ -1,12 +1,12 @@
 // scenes/scene_control.cpp
 #include <raylib.h>
 #include <raymath.h>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
-#include "utils_sound.h"
-#include "scene_menu.h"
-#include "scene_control.h"
+#include <triblib/utils/sound.h>
+#include "scenes/scene_menu.h"
+#include "scenes/scene_control.h"
 #include <plog/Log.h>
 
 constexpr float BOX_START_Y = 64;

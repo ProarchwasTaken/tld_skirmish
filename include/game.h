@@ -2,11 +2,10 @@
 #pragma once
 #include <memory>
 #include <raylib.h>
-#include "sys_sprites.h"
-#include "sys_audio.h"
-#include "sys_transition.h"
-#include "base/scene.h"
-
+#include <triblib/sys_audio.h>
+#include "system/sprites.h"
+#include "system/transition.h"
+#include <triblib/base/scene.h>
 
 /* As you may have guessed, this class is important as hell as it defines
  * the structure of the game itself. Holds several important properties

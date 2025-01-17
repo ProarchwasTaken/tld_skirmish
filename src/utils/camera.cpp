@@ -4,7 +4,7 @@
 #include <raymath.h>
 #include "defaults.h"
 #include "globals.h"
-#include "utils_camera.h"
+#include "utils/camera.h"
 
 
 void CameraUtils::follow(Camera2D &camera, const float x_position,

@@ -1,8 +1,8 @@
 // utils/ai_behavior.cpp
 #include <raylib.h>
 #include <cstdint>
-#include "utils_ai_behavior.h"
-#include "globals.h"
+#include <triblib/globals.h>
+#include "utils/ai_behavior.h"
 
 
 void AIBehavior::tickPatience(uint8_t &patience, float &tick_timestamp, 

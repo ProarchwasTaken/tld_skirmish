@@ -3,12 +3,12 @@
 #include <string>
 #include <cstdint>
 #include <random>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "globals.h"
 #include "game.h"
-#include "utils_text.h"
-#include "scene_pregame.h"
-#include "scene_gameplay.h"
+#include <triblib/utils/text.h>
+#include "scenes/scene_pregame.h"
+#include "scenes/scene_gameplay.h"
 #include <plog/Log.h>
 #include <raylib.h>
 

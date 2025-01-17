@@ -5,16 +5,16 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
-#include "utils_camera.h"
-#include "utils_ai_behavior.h"
-#include "utils_enemies.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
+#include "utils/camera.h"
+#include "utils/ai_behavior.h"
+#include "utils/enemies.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "cmd_ghoul_atk.h"
-#include "char_player.h"
-#include "enemy_ghoul.h"
+#include "action_command/cmd_ghoul_atk.h"
+#include "combatants/char_player.h"
+#include "combatants/enemy_ghoul.h"
 
 using std::make_unique, std::unique_ptr, std::uniform_int_distribution;
 

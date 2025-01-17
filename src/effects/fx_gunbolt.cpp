@@ -1,12 +1,12 @@
 // effects/fx_gunbolt.cpp
+#include <raylib.h>
+#include <triblib/base/dynamic_actor.h>
 #include "globals.h"
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
-#include "utils_animation.h"
-#include "utils_camera.h"
-#include "char_player.h"
-#include <raylib.h>
-#include "fx_gunbolt.h"
+#include <triblib/utils/animation.h>
+#include "utils/camera.h"
+#include "combatants/char_player.h"
+#include "effects/fx_gunbolt.h"
 
 
 GunBolt::GunBolt(PlayerCharacter *player, float length): 

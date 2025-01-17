@@ -8,10 +8,10 @@
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
-#include "enemy_damned.h"
-#include "cmd_damned_grb.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
+#include "combatants/enemy_damned.h"
+#include "action_command/cmd_damned_grb.h"
 #include <plog/Log.h>
 
 using std::uniform_int_distribution;

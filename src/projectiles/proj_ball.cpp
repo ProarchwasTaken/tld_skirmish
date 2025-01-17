@@ -1,16 +1,16 @@
 // projectiles/proj_ball.cpp
 #include <raylib.h>
+#include <triblib/base/generics.h>
+#include <triblib/base/dynamic_actor.h>
 #include "base/action_command.h"
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
-#include "base/dynamic_actor.h"
-#include "utils_animation.h"
-#include "utils_sound.h"
-#include "utils_camera.h"
-#include "char_player.h"
-#include "cmd_ball_heavy.h"
-#include "proj_ball.h"
+#include <triblib/utils/animation.h>
+#include <triblib/utils/sound.h>
+#include "utils/camera.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_ball_heavy.h"
+#include "projectiles/proj_ball.h"
 #include <plog/Log.h>
 
 

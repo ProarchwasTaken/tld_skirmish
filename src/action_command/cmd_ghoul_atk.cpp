@@ -1,11 +1,11 @@
 // action_command/cmd_ghoul_atk.cpp
 #include <raylib.h>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "enemy_ghoul.h"
-#include "cmd_ghoul_atk.h"
+#include "combatants/enemy_ghoul.h"
+#include "action_command/cmd_ghoul_atk.h"
 
 
 GhoulAttack::GhoulAttack(GhoulEnemy *user):

@@ -11,7 +11,7 @@
 #include "defaults.h"
 #include "game.h"
 #include "globals.h"
-#include "utils_settings.h"
+#include "utils/settings.h"
 
 using plog::RollingFileAppender, plog::TxtFormatter, std::string, 
 plog::ColorConsoleAppender, std::filesystem::create_directory;

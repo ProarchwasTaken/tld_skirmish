@@ -11,13 +11,13 @@
 #include <string>
 #include <algorithm>
 #include <cassert>
-#include "base/generics.h"
-#include "globals.h"
+#include <triblib/base/generics.h>
+#include <triblib/globals.h>
 #include "data/data_enemy.h"
-#include "enemy_ghoul.h"
-#include "enemy_wretch.h"
-#include "enemy_damned.h"
-#include "sys_wave_manager.h"
+#include "combatants/enemy_ghoul.h"
+#include "combatants/enemy_wretch.h"
+#include "combatants/enemy_damned.h"
+#include "system/wave_manager.h"
 #include <plog/Log.h>
 
 using std::vector, std::uniform_int_distribution, std::make_shared, 

@@ -5,10 +5,10 @@
 #include <string>
 #include "globals.h"
 #include "base/combatant.h"
-#include "utils_text.h"
-#include "scene_gameplay.h"
-#include "char_player.h"
-#include "hud_life.h"
+#include <triblib/utils/text.h>
+#include "scenes/scene_gameplay.h"
+#include "combatants/char_player.h"
+#include "hud/hud_life.h"
 #include <plog/Log.h>
 
 using std::string;

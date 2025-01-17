@@ -5,11 +5,11 @@
 #include "defaults.h"
 #include "globals.h"
 #include "game.h"
-#include "utils_text.h"
-#include "utils_music.h"
-#include "utils_sound.h"
-#include "scene_menu.h"
-#include "scene_title.h"
+#include <triblib/utils/text.h>
+#include <triblib/utils/music.h>
+#include <triblib/utils/sound.h>
+#include "scenes/scene_menu.h"
+#include "scenes/scene_title.h"
 #include <plog/Log.h>
 
 using std::string;

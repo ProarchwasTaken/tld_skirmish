@@ -3,9 +3,9 @@
 #include <string>
 #include <cmath>
 #include "globals.h"
-#include "utils_text.h"
-#include "char_player.h"
-#include "hud_morale.h"
+#include <triblib/utils/text.h>
+#include "combatants/char_player.h"
+#include "hud/hud_morale.h"
 #include <plog/Log.h>
 
 using std::string;

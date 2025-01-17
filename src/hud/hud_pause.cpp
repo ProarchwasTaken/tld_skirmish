@@ -1,12 +1,12 @@
 // hud/hud_pause.cpp
 #include <raylib.h>
 #include "globals.h"
-#include "scene_gameplay.h"
-#include "scene_title.h"
-#include "utils_menu.h"
-#include "utils_sound.h"
-#include "hud_menu.h"
-#include "hud_pause.h"
+#include "scenes/scene_gameplay.h"
+#include "scenes/scene_title.h"
+#include "utils/menu.h"
+#include <triblib/utils/sound.h>
+#include "hud/hud_menu.h"
+#include "hud/hud_pause.h"
 #include <plog/Log.h>
 
 

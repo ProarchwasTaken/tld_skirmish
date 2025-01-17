@@ -6,15 +6,15 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <triblib/base/generics.h>
 #include "globals.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "base/generics.h"
-#include "utils_dynamic.h"
-#include "utils_sound.h"
-#include "char_player.h"
-#include "fx_gunprobe.h"
-#include "cmd_gun_light.h"
+#include <triblib/utils/dynamic.h>
+#include <triblib/utils/sound.h>
+#include "combatants/char_player.h"
+#include "effects/fx_gunprobe.h"
+#include "action_command/cmd_gun_light.h"
 #include <plog/Log.h>
 
 using std::vector, std::min_element;

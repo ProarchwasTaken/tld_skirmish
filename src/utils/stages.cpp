@@ -6,8 +6,8 @@
 #include <vector>
 #include <random>
 #include <fstream>
-#include "globals.h"
-#include "utils_stages.h"
+#include <triblib/globals.h>
+#include "utils/stages.h"
 #include <plog/Log.h>
 
 using std::string, std::tuple, std::make_tuple, std::vector,

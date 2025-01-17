@@ -4,14 +4,14 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
-#include "base/scene.h"
+#include <triblib/base/scene.h>
 #include "data/data_index.h"
 #include "globals.h"
 #include "game.h"
-#include "utils_sound.h"
-#include "utils_menu.h"
-#include "scene_menu.h"
-#include "scene_index.h"
+#include <triblib/utils/sound.h>
+#include "utils/menu.h"
+#include "scenes/scene_menu.h"
+#include "scenes/scene_index.h"
 #include <plog/Log.h>
 
 constexpr float BOX_START_Y = 69;

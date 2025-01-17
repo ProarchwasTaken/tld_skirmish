@@ -5,16 +5,16 @@
 #include <string>
 #include <cmath>
 #include <array>
+#include <triblib/base/scene.h>
 #include "game.h"
 #include "globals.h"
-#include "base/scene.h"
-#include "utils_text.h"
-#include "utils_menu.h"
-#include "utils_sound.h"
-#include "utils_music.h"
-#include "scene_menu.h"
-#include "scene_pregame.h"
-#include "scene_subweapon.h"
+#include <triblib/utils/text.h>
+#include <triblib/utils/sound.h>
+#include <triblib/utils/music.h>
+#include "utils/menu.h"
+#include "scenes/scene_menu.h"
+#include "scenes/scene_pregame.h"
+#include "scenes/scene_subweapon.h"
 #include <plog/Log.h>
 
 using std::string, std::array;

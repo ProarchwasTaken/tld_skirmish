@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "globals.h"
-#include "hud_menu.h"
+#include "hud/hud_menu.h"
 
 constexpr float START_TOP_Y = -34;
 constexpr float START_BOTTOM_Y = 240;

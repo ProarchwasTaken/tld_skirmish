@@ -5,13 +5,13 @@
 #include "base/combatant.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
-#include "utils_sound.h"
-#include "char_player.h"
-#include "cmd_ball_light.h"
-#include "cmd_ball_heavy.h"
-#include "cmd_heavy_atk.h"
-#include "cmd_guard.h"
-#include "weapon_ball.h"
+#include <triblib/utils/sound.h>
+#include "combatants/char_player.h"
+#include "action_command/cmd_ball_light.h"
+#include "action_command/cmd_ball_heavy.h"
+#include "action_command/cmd_heavy_atk.h"
+#include "action_command/cmd_guard.h"
+#include "sub-weapons/weapon_ball.h"
 #include <plog/Log.h>
 
 using std::unique_ptr, std::make_unique;

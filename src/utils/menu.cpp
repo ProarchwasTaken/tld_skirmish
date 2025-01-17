@@ -1,7 +1,7 @@
 // utils/menu.cpp
-#include "base/generics.h"
-#include "utils_sound.h"
-#include "utils_menu.h"
+#include <triblib/base/generics.h>
+#include <triblib/utils/sound.h>
+#include "utils/menu.h"
 
 
 void Menu::nextOption(menu_options &options, 

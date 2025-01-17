@@ -2,8 +2,8 @@
 #include <cstdint>
 #include <memory>
 #include <string>
-#include "globals.h"
-#include "char_player.h"
+#include <triblib/globals.h>
+#include "combatants/char_player.h"
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
 #include <plog/Log.h>

@@ -5,15 +5,15 @@
 #include <vector>
 #include <raylib.h>
 #include <cassert>
-#include "globals.h"
-#include "base/actor.h"
+#include <triblib/base/actor.h>
+#include <triblib/globals.h>
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "utils_sound.h"
-#include "utils_dynamic.h"
-#include "utils_animation.h"
-#include "cmd_guard.h"
-#include "fx_dmg_number.h"
+#include <triblib/utils/sound.h>
+#include <triblib/utils/dynamic.h>
+#include <triblib/utils/animation.h>
+#include "action_command/cmd_guard.h"
+#include "effects/fx_dmg_number.h"
 #include <plog/Log.h>
 
 using std::string, std::unique_ptr, std::vector;

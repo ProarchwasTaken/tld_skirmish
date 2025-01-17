@@ -1,15 +1,15 @@
 // sub-weapons/weapon_knife.cpp
 #include <cstdint>
 #include <memory>
+#include <triblib/globals.h>
+#include <triblib/utils/sound.h>
 #include "base/sub-weapon.h"
 #include "base/action_command.h"
-#include "globals.h"
-#include "utils_sound.h"
-#include "char_player.h"
-#include "cmd_knife_light.h"
-#include "cmd_knife_heavy.h"
-#include "cmd_heavy_atk.h"
-#include "weapon_knife.h"
+#include "combatants/char_player.h"
+#include "action_command/cmd_knife_light.h"
+#include "action_command/cmd_knife_heavy.h"
+#include "action_command/cmd_heavy_atk.h"
+#include "sub-weapons/weapon_knife.h"
 #include <plog/Log.h>
 
 using std::unique_ptr, std::make_unique;

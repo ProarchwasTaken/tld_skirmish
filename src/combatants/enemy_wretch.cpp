@@ -6,15 +6,15 @@
 #include <cstdint>
 #include <random>
 #include "globals.h"
-#include "utils_animation.h"
-#include "utils_camera.h"
-#include "utils_ai_behavior.h"
-#include "utils_enemies.h"
+#include <triblib/utils/animation.h>
+#include "utils/camera.h"
+#include "utils/ai_behavior.h"
+#include "utils/enemies.h"
 #include "base/combatant.h"
 #include "base/action_command.h"
-#include "cmd_wretch_atk.h"
-#include "char_player.h"
-#include "enemy_wretch.h"
+#include "action_command/cmd_wretch_atk.h"
+#include "combatants/char_player.h"
+#include "combatants/enemy_wretch.h"
 
 using std::uniform_int_distribution, std::make_unique, std::unique_ptr;
 

@@ -4,10 +4,10 @@
 #include <algorithm>
 #include <memory>
 #include <vector>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
 #include "base/combatant.h"
-#include "utils_enemies.h"
+#include "utils/enemies.h"
 #include <plog/Log.h>
 
 using std::vector, std::shared_ptr, std::find;

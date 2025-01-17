@@ -4,10 +4,10 @@
 #include <string>
 #include <raylib.h>
 #include <raymath.h>
+#include <triblib/base/generics.h>
 #include "globals.h"
-#include "base/generics.h"
-#include "hud_menu.h"
-#include "hud_menu_btn.h"
+#include "hud/hud_menu.h"
+#include "hud/hud_menu_btn.h"
 
 using std::string;
 constexpr float START_HUD_X = -16;

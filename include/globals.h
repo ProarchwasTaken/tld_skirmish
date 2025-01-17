@@ -6,24 +6,20 @@
 #pragma once
 #include <raylib.h>
 #include <vector>
-#include <random>
+#include <triblib/globals.h>
+#include <triblib/base/generics.h>
+#include <triblib/data/data_sprites.h>
+#include <triblib/data/data_sound.h>
+#include <triblib/data/data_music.h>
 #include "defaults.h"
-#include "base/generics.h"
-#include "data/data_sprites.h"
-#include "data/data_sound.h"
-#include "data/data_music.h"
 
 extern bool DEBUG_MODE;
 extern bool EXIT_GAME;
 extern Image GAME_ICON;
 
-extern double PAUSE_PENALTY;
-#define CURRENT_TIME (GetTime() - PAUSE_PENALTY)
 #define DELTA_TIME (GetFrameTime() * TARGET_FRAMERATE)
 
 namespace settings {
-  extern float sfx_volume;
-  extern float bgm_volume;
   extern int framerate;
   extern bool fullscreen;
 }
@@ -34,15 +30,6 @@ namespace COLORS {
 
 namespace fonts {
   extern Font *skirmish;
-}
-
-namespace audio {
-  extern std::vector<SoundMetaData> sfx_metadata;
-  extern std::vector<MusicMetaData> bgm_metadata;
-
-  extern Music music_stream;
-  extern MusicMetaData *stream_data;
-  extern VolumeLerpData bgm_vol_lerp;
 }
 
 namespace sprites {
@@ -65,10 +52,3 @@ namespace sprites {
   extern std::vector<Texture*> weapon_select;
 }
 
-namespace RNG {
-  extern std::mt19937 generator;
-}
-
-namespace Dynamic {
-  extern dynamic_list queue;
-}

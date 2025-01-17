@@ -1,0 +1,4 @@
+[submodule "triblib"]
+	path = triblib
+	url = https://github.com/ProarchwasTaken/tld_triblib
+	branch = v1.0.0
